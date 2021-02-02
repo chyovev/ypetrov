@@ -1,0 +1,295 @@
+/* --------------------------- */
+@bodyPaddingTop:      35px;
+@navHeight:           70px;
+@navHeightSticky:     50px;
+@navLinkDistance:     9px;
+@openSubmenuBGColor:  #fbfbfb;
+@submenuBorderRadius: 3px;
+@desktopMaxWidth:     1280px;
+@darkblue:            #425795;
+/* --------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+html, body {
+    margin: 0px;
+}
+body {
+    font-family: sans-serif;
+    background: linear-gradient(#f7f7f7, #f0f0f0); /* yellowish #f9f2d2 */
+    padding-top: @bodyPaddingTop
+}
+
+.nav-wrapper-inner {
+    display: table;
+    width: 100%;
+    max-width: @desktopMaxWidth;
+    margin: 0px auto;
+    white-space: nowrap; /* logo part takes up remaining space in nav */
+}
+header {
+    /* Logo part */
+    .logo-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+       .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #160037;
+            text-decoration: none;
+            display: inline-block;
+            line-height: @navHeight;
+            transition: all 0.3s;
+            &:hover {
+                color: @darkblue;
+                background-color: @openSubmenuBGColor;
+            }
+        }
+        span {
+            font-size: 15px;
+            transition: opacity 0.3s;
+            opacity: 1;
+            &.hidden {
+                opacity: 0;
+            }
+        }
+    }
+
+    /* Navigation part */
+    nav {
+        display: table-cell;
+        position: relative;
+        font-size: 0px; /* takes care of white spaces between links */
+        z-index: 1;
+
+        /* applies to all submenus and links */
+        ul {
+            list-style: none;
+            padding: 0px;
+            display: inline-block;
+            li:hover > a {
+                color: @darkblue;
+                background-color: @openSubmenuBGColor;
+            }
+            li.active > a {
+                font-weight: bold;
+            }
+        }
+        a {
+            font-size: 16px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            color: #484848;
+            transition: all 0.3s;
+        }
+
+        /* first level */
+        > ul > li {
+            display: inline-block;
+            position: relative;
+            > a {
+                line-height: @navHeight;
+                padding: 0px @navLinkDistance;
+            }
+
+            /* second level  */
+            > ul {
+                position: absolute;
+                top: @navHeight;
+                right: 0px;
+                z-index: -1;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+                text-align: left;
+                background: @openSubmenuBGColor;
+                border-radius: @submenuBorderRadius 0px @submenuBorderRadius @submenuBorderRadius;
+                box-shadow: 0px 5px 5px 0px fade(black, 15%);
+                > li {
+                    > a {
+                        padding: 8px 10px;
+                        width: 300px;
+                        display: block;
+                        white-space: break-spaces; /* allow long line wraps in submenu */
+                        font-size: 15px;
+                        &:hover {
+                            background: white;
+                        }
+                    }
+                    &:first-child a {
+                        border-radius: @submenuBorderRadius 0px 0px 0px;
+                    }
+                    &:last-child a {
+                        border-radius: 0px 0px @submenuBorderRadius @submenuBorderRadius;
+                    }
+                }
+            }
+            /* when hovering li, display sublist ul */
+            &:hover > ul {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    /* Form */
+    .search-form {
+        display: inline-block;
+        margin-left: @navLinkDistance;
+        vertical-align: middle;
+        position: relative;
+        top: -5px;
+        .search-field {
+            width: 200px;
+            border: 1px solid #cecece;
+            border-radius: 5px;
+            padding: 7px;
+            line-height: 20px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            &:not([value]) {
+                display: none;
+            }
+            &:focus, &:focus + button {
+                border-color: darkblue;
+            }
+            &[value], &[style*="display"] {
+                border-radius: 5px 0px 0px 5px;
+                border-right: none;
+                + button {
+                    border-radius: 0px 5px 5px 0px;
+                    background-color: #f4f4f4;
+                }
+            }
+        }
+        .search-submit {
+            transition: all 0.2s;
+            background: url(../images/search.png) no-repeat 50% 50% #e8e8e8;
+            border: 1px solid #cecece;
+            border-radius: 5px;
+            font-size: 0px;
+            background-size: 23px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            vertical-align: top;
+            &:hover {
+                background-position: 50% 40%;
+                background-color: #f4f4f4;
+            }
+        }
+    }
+
+    .header-image {
+        max-width: @desktopMaxWidth;
+        margin: 0px auto;
+        background: url(../images/header.jpg) no-repeat;
+        background-size: cover;
+        height: 300px;
+        border: 1px solid #d9d9d9;
+        border-bottom: none;
+        border-radius: 10px 10px 0px 0px;
+    }
+}
+
+main {
+    max-width: @desktopMaxWidth;
+    margin: 0px auto;
+    font-size: 16px;
+    line-height: 1.8em;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    border-radius: 0px 0px 10px 10px;
+}
+footer {
+    max-width: @desktopMaxWidth;
+    text-align: center;
+    padding: 20px 0px;
+    margin: 0px auto;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0px;
+}
+
+.text {
+    padding: 60px;
+    a {
+        color: @darkblue;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    blockquote {
+        margin: 2em auto 2em 5em;
+        border-left: 6px solid #CECECE;
+        padding-left: 1em;
+    }
+}
+
+main.sidebar {
+    display: table;
+}
+aside {
+    display: table-cell;
+    width: 360px;
+    background: fade(@darkblue, 10%);
+    padding: 30px;
+    line-height: 1.6em;
+    .title {
+        text-transform: uppercase;
+        text-align: center;
+        border-top: 1px solid grey;
+        border-bottom: 1px solid grey;
+        color: @darkblue;
+        padding: 10px 0px;
+        margin-bottom: 0.5cm;
+        font-weight: bold;
+    }
+    ol {
+        list-style: none;
+        padding: 0px;
+        a {
+            color: @darkblue;
+            transition: all 0.3s;
+            &:hover {
+                text-decoration: none;
+                color: green;
+            }
+        }
+    }
+}
+aside + section {
+    display: table-cell;
+}
+
+
+/* when the user scrolls down, the body gets the class name sticky
+   which triggers various changes in the navigation bar */
+body.sticky {
+    padding-top: @navHeightSticky + @bodyPaddingTop + 20;
+    .logo {
+        line-height: @navHeightSticky;
+    }
+    .nav-wrapper-outer {
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(#F6F6F6, #F0F0F0); /* grey linear-gradient(#f2f2f2, #dfdfdf); */
+        border-bottom: 5px solid @darkblue;
+        box-shadow: 0px 0px 8px 0px fade(black, 25%);
+        .logo-wrapper span {
+            opacity: 0;
+        }
+    }
+    nav > ul > li > a {
+        line-height: @navHeightSticky;
+        + ul {
+            top: @navHeightSticky;
+        }
+    }
+}
