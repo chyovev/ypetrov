@@ -1,12 +1,21 @@
 /* --------------------------- */
+@laptop:    ~"(max-width: 1200px)";
+@mobile:    ~"(max-width: 720px)";
+@extrasmall:~"(max-width: 340px)";
+@notmobile: ~"(min-width: 721px)";
+/* --------------------------- */
+
+/* --------------------------- */
 @bodyPaddingTop:      35px;
 @navHeight:           70px;
+@navBorderHeight:     5px;
 @navHeightSticky:     50px;
 @navLinkDistance:     9px;
 @openSubmenuBGColor:  #fbfbfb;
 @submenuBorderRadius: 3px;
 @desktopMaxWidth:     1280px;
 @darkblue:            #425795;
+@grey:                #242424;
 /* --------------------------- */
 
 * {
@@ -18,9 +27,16 @@ html, body {
 body {
     font-family: sans-serif;
     background: linear-gradient(#f7f7f7, #f0f0f0); /* yellowish #f9f2d2 */
-    padding-top: @bodyPaddingTop
+    padding-top: @bodyPaddingTop;
+    @media @mobile {
+        padding-top: @navHeightSticky + @navBorderHeight;
+    }
 }
-
+.nav-wrapper-outer {
+    @media @mobile {
+        transformn: translate3d(0, 0, 0); /* ios scroll fix */
+    }
+}
 .nav-wrapper-inner {
     display: table;
     width: 100%;
@@ -41,10 +57,13 @@ header {
             text-decoration: none;
             display: inline-block;
             line-height: @navHeight;
-            transition: all 0.3s;
+            transition: color 0.3s;
             &:hover {
                 color: @darkblue;
                 background-color: @openSubmenuBGColor;
+            }
+            @media @mobile {
+                padding-left: 25px;
             }
         }
         span {
@@ -55,6 +74,11 @@ header {
                 opacity: 0;
             }
         }
+        @media @laptop {
+            span {
+                display: none;
+            }
+        }
     }
 
     /* Navigation part */
@@ -63,6 +87,18 @@ header {
         position: relative;
         font-size: 0px; /* takes care of white spaces between links */
         z-index: 1;
+        @media @mobile {
+            &:not(.open) {
+                display: none;
+            }
+            position: fixed;
+            left: 0px;
+            top: @navHeightSticky + @navBorderHeight;
+            background: #f0f0f0;
+            width: 100%;
+            box-shadow: 0px 0px 8px 0px fade(black, 25%);
+            border-bottom: 1px solid mix(black, white, 30%)
+        }
 
         /* applies to all submenus and links */
         ul {
@@ -76,72 +112,133 @@ header {
             li.active > a {
                 font-weight: bold;
             }
+            @media @mobile {
+                width: 100%;
+                li {
+                    a {
+                        border-bottom: 1px solid mix(black, white, 30%);
+                    }
+                    &.has-items > a {
+                        -webkit-tap-highlight-color: transparent; /* fix android highlight color */
+                        /* don't group under one property «background» because it replaces the hover background color */
+                        background-image: url(../images/menu-closed.svg);
+                        background-repeat: no-repeat;
+                        background-size: 15px;
+                        background-position: 10px 50%;
+                    }
+                    &.open > a {
+                        background-image: url(../images/menu-open.svg);
+                        background-color: @openSubmenuBGColor;
+                        color: @darkblue;
+                        + ul > li:first-child > a {
+                            box-shadow: 0 2px 5px fade(black, 10%) inset;
+                        }
+                    }
+                }
+            }
         }
         a {
             font-size: 16px;
             text-transform: uppercase;
             text-decoration: none;
-            display: inline-block;
             color: #484848;
-            transition: all 0.3s;
+            transition: color,background-color 0.3s;
+            @media @mobile {
+                display: block;
+            }
         }
 
         /* first level */
         > ul > li {
-            display: inline-block;
-            position: relative;
+            @media @notmobile {
+                display: inline-block;
+                position: relative;
+            }
             > a {
-                line-height: @navHeight;
-                padding: 0px @navLinkDistance;
+                @media @notmobile {
+                    display: inline-block;
+                    line-height: @navHeight;
+                    padding: 0px @navLinkDistance;
+                }
+                @media @mobile {
+                    line-height: 1em;
+                    padding: 13px 20px 13px 30px;
+                }
             }
 
             /* second level  */
             > ul {
-                position: absolute;
-                top: @navHeight;
-                right: 0px;
-                z-index: -1;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s;
                 text-align: left;
                 background: @openSubmenuBGColor;
-                border-radius: @submenuBorderRadius 0px @submenuBorderRadius @submenuBorderRadius;
-                box-shadow: 0px 5px 5px 0px fade(black, 15%);
+                @media @notmobile {
+                    z-index: -1;
+                    position: absolute;
+                    top: @navHeight;
+                    right: 0px;
+                    opacity: 0;
+                    visibility: hidden;
+                    box-shadow: 0px 5px 5px 0px fade(black, 15%);
+                    border-radius: @submenuBorderRadius 0px @submenuBorderRadius @submenuBorderRadius;
+                    transition: all 0.3s;
+                }
+                @media @mobile {
+                    display: none;
+                }
                 > li {
                     > a {
                         padding: 8px 10px;
-                        width: 300px;
                         display: block;
                         white-space: break-spaces; /* allow long line wraps in submenu */
                         font-size: 15px;
                         &:hover {
                             background: white;
+                            @media @mobile {
+                                padding-left: 40px;
+                            }
+                        }
+                        @media @notmobile {
+                            width: 300px;
+                        }
+                        @media @mobile {
+                            transition: padding-left 0.3s;
+                            padding-left: 35px;
+                            border-left: 10px solid mix(@darkblue, white, 60%);
                         }
                     }
-                    &:first-child a {
-                        border-radius: @submenuBorderRadius 0px 0px 0px;
-                    }
-                    &:last-child a {
-                        border-radius: 0px 0px @submenuBorderRadius @submenuBorderRadius;
+                    /* on desktop round the borders of the first and last links */
+                    @media @notmobile {
+                        &:first-child a {
+                            border-radius: @submenuBorderRadius 0px 0px 0px;
+                        }
+                        &:last-child a {
+                            border-radius: 0px 0px @submenuBorderRadius @submenuBorderRadius;
+                        }
                     }
                 }
             }
             /* when hovering li, display sublist ul */
             &:hover > ul {
-                opacity: 1;
-                visibility: visible;
+                @media @notmobile {
+                    opacity: 1;
+                    visibility: visible;
+                }
             }
         }
     }
 
     /* Form */
     .search-form {
-        display: inline-block;
-        margin-left: @navLinkDistance;
-        vertical-align: middle;
-        position: relative;
-        top: -5px;
+        @media @notmobile {
+            display: inline-block;
+            margin-left: @navLinkDistance;
+            vertical-align: middle;
+            position: relative;
+            top: -5px;
+        }
+        @media @mobile {
+            padding: 10px;
+            text-align: center;
+        }
         .search-field {
             width: 200px;
             border: 1px solid #cecece;
@@ -150,19 +247,21 @@ header {
             line-height: 20px;
             font-size: 16px;
             transition: border-color 0.3s;
-            &:not([value]) {
-                display: none;
+            text-align: left;
+            @media @notmobile {
+                &:not([value]) {
+                    display: none;
+                }
             }
             &:focus, &:focus + button {
                 border-color: darkblue;
+                outline: none;
             }
             &[value], &[style*="display"] {
-                border-radius: 5px 0px 0px 5px;
-                border-right: none;
-                + button {
-                    border-radius: 0px 5px 5px 0px;
-                    background-color: #f4f4f4;
-                }
+                .open-nav-search-field;
+            }
+            @media @mobile {
+                .open-nav-search-field;
             }
         }
         .search-submit {
@@ -170,7 +269,6 @@ header {
             background: url(../images/search.png) no-repeat 50% 50% #e8e8e8;
             border: 1px solid #cecece;
             border-radius: 5px;
-            font-size: 0px;
             background-size: 23px;
             width: 36px;
             height: 36px;
@@ -188,10 +286,15 @@ header {
         margin: 0px auto;
         background: url(../images/header.jpg) no-repeat;
         background-size: cover;
-        height: 300px;
-        border: 1px solid #d9d9d9;
-        border-bottom: none;
-        border-radius: 10px 10px 0px 0px;
+        @media @notmobile {
+            height: 300px;
+            border: 1px solid #d9d9d9;
+            border-bottom: none;
+            border-radius: 10px 10px 0px 0px;
+        }
+        @media @mobile {
+            height: 240px;
+        }
     }
 }
 
@@ -202,20 +305,39 @@ main {
     line-height: 1.8em;
     background-color: white;
     border: 1px solid #d9d9d9;
-    border-radius: 0px 0px 10px 10px;
+    @media @notmobile {
+        border-radius: 0px 0px 10px 10px;
+        &.sidebar {
+            display: table;
+        }
+    }
 }
 footer {
     max-width: @desktopMaxWidth;
     text-align: center;
-    padding: 20px 0px;
+    padding: 20px 10px;
     margin: 0px auto;
+    @media @notmobile {
+        br {
+            display: none;
+        }
+    }
+    @media @extrasmall {
+        font-size: 15px;
+        padding: 15px;
+    }
 }
 h1, h2, h3, h4, h5, h6 {
     margin: 0px;
 }
 
 .text {
-    padding: 60px;
+    @media @notmobile {
+        padding: 60px;
+    }
+    @media @mobile {
+        padding: 25px 20px 25px 35px;
+    }
     a {
         color: @darkblue;
         &:hover {
@@ -226,18 +348,82 @@ h1, h2, h3, h4, h5, h6 {
         margin: 2em auto 2em 5em;
         border-left: 6px solid #CECECE;
         padding-left: 1em;
+        @media @mobile {
+            margin-left: 20px;
+        }
     }
 }
 
-main.sidebar {
-    display: table;
+.aside-wrapper {
+    @media @notmobile {
+        display: table-cell;
+        vertical-align: top;
+    }
+    @media @mobile {
+        position: fixed;
+        top: 0px;
+        left: -80%;
+        width: 80%;
+        transition: left 0.5s;
+        z-index: 1;
+        &.open {
+            left: 0px;
+        }
+    }
+    + section {
+        display: table-cell;
+        padding: 15px 30px 30px 30px;
+        > .stickable {
+            background-color: white;
+            padding-top: 15px;
+            padding-bottom: 10px;
+        }
+    }
+}
+.aside-toggler {
+    -webkit-tap-highlight-color: transparent; /* fix android highlight color */
+    position: absolute;
+    top: 45vh;
+    width: 140px;
+    right: -139px;
+    transform: rotate(-90deg) translateX(-50%);
+    transform-origin: 0 0;
+    cursor: pointer;
+    box-shadow: -3px 3px 3px 0 fade(black, 15%);
+    border: 1px solid mix(black, white, 40%);
+    border-top: 0px;
+    border-radius: 0px 0px 5px 5px;
+    background:  linear-gradient(mix(@darkblue, white, 10%), fade(mix(@darkblue, white, 10%), 70%));
+    font-size: 14px;
+    padding: 0px 15px;
+    text-transform: uppercase;
+    color: @grey;
+    line-height: 2em;
+    transition: color 0.3s;
+    &.open, &:hover {
+        color: @darkblue;
+    }
 }
 aside {
-    display: table-cell;
     width: 360px;
-    background: fade(@darkblue, 10%);
-    padding: 30px;
-    line-height: 1.6em;
+    background: mix(@darkblue, white, 10%);
+    padding: 20px 30px 30px 30px;
+    @media @mobile {
+        border-right: 1px solid mix(black, white, 40%);
+        box-shadow: 2px 0px 10px 0px fade(black, 25%);
+        padding-top: 0px; /* to keep the sticky element */
+        width: 100%;
+        height: 100vh;
+        overflow: auto;
+    }
+    .title-wrapper {
+        background-color: mix(@darkblue, white, 10%);
+        padding-top: 15px;
+        padding-bottom: 10px;
+        @media @mobile {
+            margin-bottom: @navHeightSticky + 10; /* to prevent title from overlapping with list */
+        }
+    }
     .title {
         text-transform: uppercase;
         text-align: center;
@@ -245,15 +431,25 @@ aside {
         border-bottom: 1px solid grey;
         color: @darkblue;
         padding: 10px 0px;
-        margin-bottom: 0.5cm;
         font-weight: bold;
+        line-height: 1em;
     }
     ol {
         list-style: none;
         padding: 0px;
+        li {
+            margin: 0.3em 0;
+            line-height: 1.5em;
+        }
         a {
             color: @darkblue;
             transition: all 0.3s;
+            display: block;
+            @media @mobile {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
             &:hover {
                 text-decoration: none;
                 color: green;
@@ -261,35 +457,117 @@ aside {
         }
     }
 }
-aside + section {
-    display: table-cell;
-}
 
-
-/* when the user scrolls down, the body gets the class name sticky
-   which triggers various changes in the navigation bar */
-body.sticky {
-    padding-top: @navHeightSticky + @bodyPaddingTop + 20;
+/* use this shortcut both for sticky desktop AND mobile */
+.fixed-nav-to-top {
     .logo {
-        line-height: @navHeightSticky;
+        line-height: @navHeightSticky !important;
     }
     .nav-wrapper-outer {
         width: 100%;
         position: fixed;
         top: 0px;
-        left: 50%;
-        transform: translateX(-50%);
         background: linear-gradient(#F6F6F6, #F0F0F0); /* grey linear-gradient(#f2f2f2, #dfdfdf); */
-        border-bottom: 5px solid @darkblue;
+        border-bottom: @navBorderHeight solid @darkblue;
         box-shadow: 0px 0px 8px 0px fade(black, 25%);
-        .logo-wrapper span {
-            opacity: 0;
-        }
+        z-index: 2;
     }
-    nav > ul > li > a {
-        line-height: @navHeightSticky;
-        + ul {
-            top: @navHeightSticky;
+}
+/* this feature is not fully supported,
+   but it's not a crucial one, so that's okay */
+.stickable {
+    position: sticky;
+    top: 55px;
+}
+
+.open-nav-search-field {
+    border-radius: 5px 0px 0px 5px;
+    border-right: none;
+    + button {
+        border-radius: 0px 5px 5px 0px;
+        background-color: #f4f4f4;
+    }
+}
+
+/* when the user scrolls down, the body gets the class name sticky
+   which triggers various changes in the navigation bar */
+body.sticky {
+    @media @notmobile {
+        padding-top: @navHeightSticky + @bodyPaddingTop + 20; /* 20 is an arbitrary number to get more natural transition */
+
+        .fixed-nav-to-top;
+
+        nav > ul > li > a {
+            line-height: @navHeightSticky;
+            + ul {
+                top: @navHeightSticky;
+            }
         }
     }
 }
+
+@media @mobile {
+    .fixed-nav-to-top;
+}
+
+.nav-toggler-wrapper {
+    -webkit-tap-highlight-color: transparent; /* fix android highlight color */
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 6px;
+    width: 45px;
+    line-height: 45px;
+    height: 45px;
+    text-align: center;
+    z-index: 2;
+    #nav-toggler {
+        position: relative;
+        display: inline-block;
+        width: 1.25em;
+        height: 0.8em;
+        border-top: 0.2em solid @grey;
+        font-size: 20px;
+        &.active {
+            border: none;
+            height: 0.6em;
+            top: -2px;
+        }
+    }
+    #nav-toggler:before, #nav-toggler:after {
+        content: "";
+        position: absolute;
+        left: 0px;
+        width: 100%;
+        border-top: 0.2em solid @grey;
+        transition: transform 0.3s;
+    }
+    #nav-toggler:before {
+        top: 0.2em;
+    }
+    #nav-toggler:after {
+        top: 0.6em;
+    }
+    #nav-toggler.active:before {
+        top: 0.3em;
+        transform: rotate(-135deg);
+    }
+    #nav-toggler.active:after {
+        top: 0.3em;
+        transform: rotate(135deg);
+    }
+}
+
+/* --------------------------- */
+.mobile-only {
+    @media @notmobile {
+        display: none;
+    }
+}
+.desktop-only {
+    @media @mobile {
+        display: none;
+    }
+}
+/* --------------------------- */

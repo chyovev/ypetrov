@@ -19,16 +19,17 @@
             <div class="nav-wrapper-inner">
 
                 <div class="logo-wrapper">
-                    <a href="#" class="logo">Йосиф Петров</a>
+                    <a href="index.html" class="logo">Йосиф Петров</a>
                     <span>(1909 – 2004)</span>
                 </div>
 
-                <!-- <span class="nav-toggler"> </span> -->
+                <div class="nav-toggler-wrapper mobile-only"><span id="nav-toggler"></span></div>
+                
                 <nav>
                     <ul>
-                        <li class="active"><a href="#">Творчество</a></li>
+                        <li class="active"><a href="sidebar.html">Творчество</a></li>
                         <li><a href="#">Галерия</a></li>
-                        <li>
+                        <li class="has-items">
                             <a href="#">Видео</a>
                             <ul>
                                 <li><a href="#">90 години не стигат</a></li>
@@ -56,94 +57,99 @@
 
     <main class="sidebar">
 
-        <aside>
-            <div class="title">«Разпилени пъстроцветия»</div>
-            <ol>
-                <li><a href="#">Изповедно</a></li>
-                <li><a href="#">Светая светих</a></li>
-                <li><a href="#">Скръбна песен</a></li>
-                <li><a href="#">Равносметка</a></li>
-                <li><a href="#">Защо мълчим?</a></li>
-                <li><a href="#">Човекът</a></li>
-                <li><a href="#">Защо не пишеш?</a></li>
-                <li><a href="#">Към поета</a></li>
-                <li><a href="#">До сетен час!</a></li>
-                <li><a href="#">Елегия</a></li>
-                <li><a href="#">Народ</a></li>
-                <li><a href="#">Борба</a></li>
-                <li><a href="#">Сталин</a></li>
-                <li><a href="#">Пред буря</a></li>
-                <li><a href="#">Съдба</a></li>
-                <li><a href="#">SOS</a></li>
-                <li><a href="#">Великден</a></li>
-                <li><a href="#">Поетът</a></li>
-                <li><a href="#">Революцийо!</a></li>
-                <li><a href="#">Потоп</a></li>
-                <li><a href="#">Pro domo sua</a></li>
-                <li><a href="#">В Дряновския манастир</a></li>
-                <li><a href="#">Песен за родния край</a></li>
-                <li><a href="#">Човекът е роден за полет</a></li>
-                <li><a href="#">Огън е потребен</a></li>
-                <li><a href="#">Небето с плам ме е дарило</a></li>
-                <li><a href="#">Всеки иска да векува</a></li>
-                <li><a href="#">Привечер</a></li>
-                <li><a href="#">АЕЦ</a></li>
-                <li><a href="#">Свиден спомен</a></li>
-                <li><a href="#">Аз казах вече на света</a></li>
-                <li><a href="#">Старост</a></li>
-                <li><a href="#">Богатство</a></li>
-                <li><b>Предсмъртно</b></li>
-                <li><a href="#">Месия</a></li>
-                <li><a href="#">Човеколюбецът</a></li>
-                <li><a href="#">Стоикът</a></li>
-                <li><a href="#">Непобеденият</a></li>
-                <li><a href="#">Реквием</a></li>
-                <li><a href="#">Раздяла</a></li>
-                <li><a href="#">In memoriam</a></li>
-                <li><a href="#">На птиците завиждам аз</a></li>
-                <li><a href="#">В здрачен час</a></li>
-                <li><a href="#">След Интервю с Би Би Си</a></li>
-                <li><a href="#">Яворови дни</a></li>
-                <li><a href="#">На твоя гроб</a></li>
-                <li><a href="#">Жрицата</a></li>
-                <li><a href="#">Надгробно</a></li>
-                <li><a href="#">Гълъби</a></li>
-                <li><a href="#">Врабче</a></li>
-                <li><a href="#">Елхичката</a></li>
-                <li><a href="#">Мила моя бабо</a></li>
-                <li><a href="#">Учителят</a></li>
-                <li><a href="#">На моя техникум</a></li>
-                <li><a href="#">Юбилейно</a></li>
-                <li><a href="#">На моето училище</a></li>
-                <li><a href="#">Сбогом</a></li>
-                <li><a href="#">Прощално</a></li>
-                <li><a href="#">В Ялта</a></li>
-                <li><a href="#">Също като в нас</a></li>
-                <li><a href="#">Кримска балада</a></li>
-                <li><a href="#">В къщата-музей на Чехов</a></li>
-                <li><a href="#">В Бахчи сарай</a></li>
-                <li><a href="#">Към морето</a></li>
-                <li><a href="#">В такава нощ незабравима</a></li>
-                <li><a href="#">„Романтика“</a></li>
-                <li><a href="#">Довиждане, мой черноморски бряг!</a></li>
-                <li><a href="#">По Дунава</a></li>
-                <li><a href="#">И тази вечер...</a></li>
-                <li><a href="#">В този безпределно хубав свят</a></li>
-                <li><a href="#">Песен</a></li>
-                <li><a href="#">Вечерна среща</a></li>
-                <li><a href="#">Антонина</a></li>
-                <li><a href="#">Ти помниш ли, Меглена</a></li>
-                <li><a href="#">Жулиета</a></li>
-                <li><a href="#">Благодаря ти, Мариета</a></li>
-                <li><a href="#">Четвърта нощ...</a></li>
-                <li><a href="#">Писмо</a></li>
-                <li><a href="#">Недей тъгува!</a></li>
-                <li><a href="#">Венец от незабравки</a></li>
-            </ol>
-        </aside>
+        <div class="aside-wrapper">
+            <aside>
+                <div class="title-wrapper stickable">
+                    <div class="title">«Разпилени пъстроцветия»</div>
+                </div>
+                <ol>
+                    <li><a href="#">Изповедно</a></li>
+                    <li><a href="#">Светая светих</a></li>
+                    <li><a href="#">Скръбна песен</a></li>
+                    <li><a href="#">Равносметка</a></li>
+                    <li><a href="#">Защо мълчим?</a></li>
+                    <li><a href="#">Човекът</a></li>
+                    <li><a href="#">Защо не пишеш?</a></li>
+                    <li><a href="#">Към поета</a></li>
+                    <li><a href="#">До сетен час!</a></li>
+                    <li><a href="#">Елегия</a></li>
+                    <li><a href="#">Народ</a></li>
+                    <li><a href="#">Борба</a></li>
+                    <li><a href="#">Сталин</a></li>
+                    <li><a href="#">Пред буря</a></li>
+                    <li><a href="#">Съдба</a></li>
+                    <li><a href="#">SOS</a></li>
+                    <li><a href="#">Великден</a></li>
+                    <li><a href="#">Поетът</a></li>
+                    <li><a href="#">Революцийо!</a></li>
+                    <li><a href="#">Потоп</a></li>
+                    <li><a href="#">Pro domo sua</a></li>
+                    <li><a href="#">В Дряновския манастир</a></li>
+                    <li><a href="#">Песен за родния край</a></li>
+                    <li><a href="#">Човекът е роден за полет</a></li>
+                    <li><a href="#">Огън е потребен</a></li>
+                    <li><a href="#">Небето с плам ме е дарило</a></li>
+                    <li><a href="#">Всеки иска да векува</a></li>
+                    <li><a href="#">Привечер</a></li>
+                    <li><a href="#">АЕЦ</a></li>
+                    <li><a href="#">Свиден спомен</a></li>
+                    <li><a href="#">Аз казах вече на света</a></li>
+                    <li><a href="#">Старост</a></li>
+                    <li><a href="#">Богатство</a></li>
+                    <li><b>Предсмъртно</b></li>
+                    <li><a href="#">Месия</a></li>
+                    <li><a href="#">Човеколюбецът</a></li>
+                    <li><a href="#">Стоикът</a></li>
+                    <li><a href="#">Непобеденият</a></li>
+                    <li><a href="#">Реквием</a></li>
+                    <li><a href="#">Раздяла</a></li>
+                    <li><a href="#">In memoriam</a></li>
+                    <li><a href="#">На птиците завиждам аз</a></li>
+                    <li><a href="#">В здрачен час</a></li>
+                    <li><a href="#">След Интервю с Би Би Си</a></li>
+                    <li><a href="#">Яворови дни</a></li>
+                    <li><a href="#">На твоя гроб</a></li>
+                    <li><a href="#">Жрицата</a></li>
+                    <li><a href="#">Надгробно</a></li>
+                    <li><a href="#">Гълъби</a></li>
+                    <li><a href="#">Врабче</a></li>
+                    <li><a href="#">Елхичката</a></li>
+                    <li><a href="#">Мила моя бабо</a></li>
+                    <li><a href="#">Учителят</a></li>
+                    <li><a href="#">На моя техникум</a></li>
+                    <li><a href="#">Юбилейно</a></li>
+                    <li><a href="#">На моето училище</a></li>
+                    <li><a href="#">Сбогом</a></li>
+                    <li><a href="#">Прощално</a></li>
+                    <li><a href="#">В Ялта</a></li>
+                    <li><a href="#">Също като в нас</a></li>
+                    <li><a href="#">Кримска балада</a></li>
+                    <li><a href="#">В къщата-музей на Чехов</a></li>
+                    <li><a href="#">В Бахчи сарай</a></li>
+                    <li><a href="#">Към морето</a></li>
+                    <li><a href="#">В такава нощ незабравима</a></li>
+                    <li><a href="#">„Романтика“</a></li>
+                    <li><a href="#">Довиждане, мой черноморски бряг!</a></li>
+                    <li><a href="#">По Дунава</a></li>
+                    <li><a href="#">И тази вечер...</a></li>
+                    <li><a href="#">В този безпределно хубав свят</a></li>
+                    <li><a href="#">Песен</a></li>
+                    <li><a href="#">Вечерна среща</a></li>
+                    <li><a href="#">Антонина</a></li>
+                    <li><a href="#">Ти помниш ли, Меглена</a></li>
+                    <li><a href="#">Жулиета</a></li>
+                    <li><a href="#">Благодаря ти, Мариета</a></li>
+                    <li><a href="#">Четвърта нощ...</a></li>
+                    <li><a href="#">Писмо</a></li>
+                    <li><a href="#">Недей тъгува!</a></li>
+                    <li><a href="#">Венец от незабравки</a></li>
+                </ol>
+            </aside>
+            <div class="aside-toggler mobile-only"><span>Съдържание</span></div>
+        </div>
 
         <section class="text">
-            <h2>Lorem Ipsum</h2>
+            <h2 class="stickable">Lorem Ipsum</h2>
             
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet hendrerit felis, vitae efficitur augue viverra at. Ut id consectetur odio. Nunc id efficitur ex, a ultrices turpis. Vestibulum eget purus sit amet risus elementum ornare venenatis et eros. Integer malesuada et urna at finibus. Pellentesque risus risus, vestibulum et quam ut, pulvinar pretium felis. Morbi ac nunc ultricies, cursus dolor vel, fermentum ex. Aliquam commodo molestie mauris quis varius. Nam luctus enim ut tellus porta, in hendrerit elit rutrum. Morbi malesuada nunc ac rhoncus convallis. Vivamus quis lacus vel mauris semper interdum ac a tortor. Vivamus pellentesque lectus tellus, non dignissim lacus tempor a. Aliquam erat volutpat. Nam turpis sapien, fermentum vitae faucibus sit amet, porta sodales lectus. Sed consectetur nulla posuere accumsan congue.</p>
 
@@ -168,7 +174,7 @@
     </main>
 
     <footer>
-        Copyright &copy; 2016-2021 Йосиф Петров. Всички права запазени.
+        Copyright &copy; 2016-2021 Йосиф Петров.<br /> Всички права запазени.
     </footer>
 
 
