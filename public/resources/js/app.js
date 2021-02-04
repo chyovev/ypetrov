@@ -40,7 +40,7 @@ var App = {
     ///////////////////////////////////////////////////////////////////////////
     toggleNavigation: function(e) {
         $('#nav-toggler').toggleClass('active');
-        $('nav').slideToggle('normal', function() {
+        $('nav').slideToggle('fast', function() {
             $(this).toggleClass('open').removeAttr('style');
         });
     },

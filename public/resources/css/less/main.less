@@ -23,6 +23,7 @@
 }
 html, body {
     margin: 0px;
+    min-height: 100vh;
 }
 body {
     font-family: sans-serif;
@@ -57,12 +58,13 @@ header {
             text-decoration: none;
             display: inline-block;
             line-height: @navHeight;
-            transition: color 0.3s;
+            transition: color, text-align 0.3s;
             &:hover {
                 color: @darkblue;
                 background-color: @openSubmenuBGColor;
             }
             @media @mobile {
+                display: block;
                 padding-left: 25px;
             }
         }
@@ -121,13 +123,14 @@ header {
                     &.has-items > a {
                         -webkit-tap-highlight-color: transparent; /* fix android highlight color */
                         /* don't group under one property «background» because it replaces the hover background color */
-                        background-image: url(../images/menu-closed.svg);
+                        background-image: url(../img/layout/arrows.png);
                         background-repeat: no-repeat;
+                        background-position: 12px 0px;
                         background-size: 15px;
-                        background-position: 10px 50%;
+                        outline: 0; /* remove browser dotted border on focus */
                     }
                     &.open > a {
-                        background-image: url(../images/menu-open.svg);
+                        background-position-y: -40px;
                         background-color: @openSubmenuBGColor;
                         color: @darkblue;
                         + ul > li:first-child > a {
@@ -162,7 +165,8 @@ header {
                 }
                 @media @mobile {
                     line-height: 1em;
-                    padding: 13px 20px 13px 30px;
+                    height: 40px;
+                    padding: 12px 20px 13px 30px;
                 }
             }
 
@@ -236,11 +240,11 @@ header {
             top: -5px;
         }
         @media @mobile {
+            background-color: @openSubmenuBGColor;
             padding: 10px;
             text-align: center;
         }
         .search-field {
-            width: 200px;
             border: 1px solid #cecece;
             border-radius: 5px;
             padding: 7px;
@@ -248,10 +252,17 @@ header {
             font-size: 16px;
             transition: border-color 0.3s;
             text-align: left;
+            background-clip: padding-box; /* remove ios shadow */
+            vertical-align: middle;
             @media @notmobile {
+                width: 200px;
                 &:not([value]) {
                     display: none;
                 }
+            }
+            @media @mobile {
+                width: calc(~"95% - 36px"); /* 36 is the width of the submit button */
+                max-width: 300px;
             }
             &:focus, &:focus + button {
                 border-color: darkblue;
@@ -266,14 +277,14 @@ header {
         }
         .search-submit {
             transition: all 0.2s;
-            background: url(../images/search.png) no-repeat 50% 50% #e8e8e8;
+            background: url(../img/layout/search.png) no-repeat 50% 50% #e8e8e8;
             border: 1px solid #cecece;
             border-radius: 5px;
             background-size: 23px;
             width: 36px;
             height: 36px;
             cursor: pointer;
-            vertical-align: top;
+            vertical-align: middle;
             &:hover {
                 background-position: 50% 40%;
                 background-color: #f4f4f4;
@@ -284,7 +295,7 @@ header {
     .header-image {
         max-width: @desktopMaxWidth;
         margin: 0px auto;
-        background: url(../images/header.jpg) no-repeat;
+        background: url(../img/layout/header.jpg) no-repeat;
         background-size: cover;
         @media @notmobile {
             height: 300px;
@@ -336,7 +347,7 @@ h1, h2, h3, h4, h5, h6 {
         padding: 60px;
     }
     @media @mobile {
-        padding: 25px 20px 25px 35px;
+        padding: 30px;
     }
     a {
         color: @darkblue;
@@ -351,6 +362,25 @@ h1, h2, h3, h4, h5, h6 {
         @media @mobile {
             margin-left: 20px;
         }
+    }
+}
+.error {
+    text-align: center;
+    .title {
+        padding-top: 1cm;
+        font-weight: bold;
+        color: @darkblue;
+        @media @notmobile {
+            font-size: 35px;
+        }
+        @media @mobile {
+            font-size: 25px;
+            text-transform: uppercase;
+        }
+    }
+    p {
+        line-height: 1em;
+        padding-bottom: 1em;
     }
 }
 
@@ -372,11 +402,15 @@ h1, h2, h3, h4, h5, h6 {
     }
     + section {
         display: table-cell;
-        padding: 15px 30px 30px 30px;
+        @media @notmobile {
+            padding: 15px 30px 30px 30px;
+        }
+        @media @mobile {
+            padding: 25px 20px 25px 35px;
+        }
         > .stickable {
             background-color: white;
-            padding-top: 15px;
-            padding-bottom: 10px;
+            padding: 20px 0px 10px 0px;
         }
     }
 }
@@ -452,7 +486,7 @@ aside {
             }
             &:hover {
                 text-decoration: none;
-                color: green;
+                color: black;
             }
         }
     }

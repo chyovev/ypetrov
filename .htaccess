@@ -1,0 +1,15 @@
+Options -Indexes
+Options +SymLinksIfOwnerMatch
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$    public/$1     [L]
+
+# use a custom 404 page
+<If "%{HTTP_HOST} == 'yosifpetrov.com'">
+    ErrorDocument 404 /public/error404.php
+</If>
+<Else>
+    ErrorDocument 404 /ypetrov/public/error404.php
+</Else>
