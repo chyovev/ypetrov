@@ -1,0 +1,14 @@
+{
+    "name": "chyovev/ypetrov",
+    "description": "Website dedicated to the famous Bulgarian poet Yosif Petrov",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Christo Yovev",
+            "email": "yovev@xroads-bg.com"
+        }
+    ],
+    "require": {
+        "doctrine/orm": "^2.7"
+    }
+}
