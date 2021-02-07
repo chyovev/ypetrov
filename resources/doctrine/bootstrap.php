@@ -6,6 +6,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 $entitiesFolder = [DOCTRINE_PATH . '/xml'];
+$proxiesFolder  =  DOCTRINE_PATH . '/proxies';
 $dbParams       = [
     // development db configuration
     [
@@ -29,5 +30,5 @@ $dbParams       = [
     ],
 ];
 
-$config         = Setup::createXMLMetadataConfiguration($entitiesFolder, IS_DEV);
+$config         = Setup::createXMLMetadataConfiguration($entitiesFolder, IS_DEV, $proxiesFolder);
 $entityManager  = EntityManager::create($dbParams[IS_DEV], $config);

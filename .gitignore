@@ -12,3 +12,4 @@ node_modules
 *.sublime-workspace
 *.vscode
 vendor/
+public/resources/img/content/

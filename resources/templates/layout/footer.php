@@ -1,5 +1,5 @@
     <footer>
-        Copyright &copy; <?= date('Y') ?> Йосиф Петров.<br /> Всички права запазени.
+        <div class="footer-text">Copyright &copy; <?= date('Y') ?> Йосиф Петров.<br /> Всички права запазени.</div>
     </footer>
 </body>
 </html>

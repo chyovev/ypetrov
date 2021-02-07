@@ -13,9 +13,24 @@
 @navLinkDistance:     9px;
 @openSubmenuBGColor:  #fbfbfb;
 @submenuBorderRadius: 3px;
+@headerImgHeightMob:  240px;
+@footerHeightMob:     65px;
 @desktopMaxWidth:     1280px;
 @darkblue:            #425795;
 @grey:                #242424;
+/* --------------------------- */
+
+/* --------------------------- */
+@font-face {
+    font-family: 'Droid Sans Mono Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Droid Sans Mono Regular'), url('fonts/DroidSansMono.woff') format('woff');
+}
+@font-face {
+    font-family: roboto;
+    src: url('fonts/RobotoMono/RobotoMono-Regular.ttf');
+}
 /* --------------------------- */
 
 * {
@@ -23,7 +38,12 @@
 }
 html, body {
     margin: 0px;
-    min-height: 100vh;
+    @media @mobile {
+        height: 100%;
+    }
+    @media @notmobile {
+        min-height: 100vh;
+    }
 }
 body {
     font-family: sans-serif;
@@ -58,10 +78,12 @@ header {
             text-decoration: none;
             display: inline-block;
             line-height: @navHeight;
-            transition: color, text-align 0.3s;
+            transition: color 0.3s;
             &:hover {
                 color: @darkblue;
-                background-color: @openSubmenuBGColor;
+                @media @mobile {
+                    background-color: @openSubmenuBGColor;
+                }
             }
             @media @mobile {
                 display: block;
@@ -96,6 +118,8 @@ header {
             position: fixed;
             left: 0px;
             top: @navHeightSticky + @navBorderHeight;
+            max-height: calc(~"100%" - @navHeightSticky + @navBorderHeight);
+            overflow-y: auto;
             background: #f0f0f0;
             width: 100%;
             box-shadow: 0px 0px 8px 0px fade(black, 25%);
@@ -156,6 +180,12 @@ header {
             @media @notmobile {
                 display: inline-block;
                 position: relative;
+                border: 1px solid transparent;
+                border-bottom: none;
+                transition: border-color 0.3s;
+                &:hover {
+                    border-color: mix(black, white, 20%);
+                }
             }
             > a {
                 @media @notmobile {
@@ -177,13 +207,14 @@ header {
                 @media @notmobile {
                     z-index: -1;
                     position: absolute;
-                    top: @navHeight;
-                    right: 0px;
+                    top: @navHeight - 1;
+                    right: -1px;
                     opacity: 0;
                     visibility: hidden;
                     box-shadow: 0px 5px 5px 0px fade(black, 15%);
                     border-radius: @submenuBorderRadius 0px @submenuBorderRadius @submenuBorderRadius;
-                    transition: all 0.3s;
+                    transition: opacity 0.3s;
+                    border: 1px solid mix(black, white, 20%);
                 }
                 @media @mobile {
                     display: none;
@@ -192,18 +223,22 @@ header {
                     > a {
                         padding: 8px 10px;
                         display: block;
-                        white-space: break-spaces; /* allow long line wraps in submenu */
                         font-size: 15px;
                         &:hover {
-                            background: white;
+                            background: mix(@darkblue, white, 10%);
                             @media @mobile {
                                 padding-left: 40px;
                             }
                         }
-                        @media @notmobile {
-                            width: 300px;
+                        &.active {
+                            background: mix(@darkblue, white, 10%);
+                            font-weight: bold;
+                            @media @mobile {
+                                border-left-color: orange;
+                            }
                         }
                         @media @mobile {
+                            white-space: break-spaces; /* allow long line wraps in submenu */
                             transition: padding-left 0.3s;
                             padding-left: 35px;
                             border-left: 10px solid mix(@darkblue, white, 60%);
@@ -225,6 +260,11 @@ header {
                 @media @notmobile {
                     opacity: 1;
                     visibility: visible;
+                }
+            }
+            &.open > ul {
+                @media @mobile {
+                    display: block;
                 }
             }
         }
@@ -304,7 +344,7 @@ header {
             border-radius: 10px 10px 0px 0px;
         }
         @media @mobile {
-            height: 240px;
+            height: @headerImgHeightMob;
         }
     }
 }
@@ -320,17 +360,30 @@ main {
         border-radius: 0px 0px 10px 10px;
         &.sidebar {
             display: table;
+            height: 100%;
         }
+    }
+    @media @mobile {
+        min-height: calc(~"100%" - (@headerImgHeightMob + @footerHeightMob));
     }
 }
 footer {
     max-width: @desktopMaxWidth;
     text-align: center;
-    padding: 20px 10px;
     margin: 0px auto;
     @media @notmobile {
+        padding: 20px 10px;
         br {
             display: none;
+        }
+    }
+    @media @mobile {
+        display: table;
+        height: @footerHeightMob;
+        width: 100%;
+        .footer-text {
+            display: table-cell;
+            vertical-align: middle;
         }
     }
     @media @extrasmall {
@@ -388,6 +441,7 @@ h1, h2, h3, h4, h5, h6 {
     @media @notmobile {
         display: table-cell;
         vertical-align: top;
+        height: 100%;
     }
     @media @mobile {
         position: fixed;
@@ -398,19 +452,78 @@ h1, h2, h3, h4, h5, h6 {
         z-index: 1;
         &.open {
             left: 0px;
+            aside {
+                box-shadow: 2px 0px 10px 0px fade(black, 25%);
+            }
         }
     }
     + section {
-        display: table-cell;
+        width: 100%;
         @media @notmobile {
+            display: table-cell;
             padding: 15px 30px 30px 30px;
         }
         @media @mobile {
+            display: block;
             padding: 25px 20px 25px 35px;
         }
-        > .stickable {
+        &.monospace {
+            text-align: center;
+        }
+        > .title {
             background-color: white;
             padding: 20px 0px 10px 0px;
+        }
+        .dedication {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .poem {
+            font-family: 'roboto', 'Droid Sans Mono Regular', monospace;
+            text-align: left;
+            display: inline-block;
+            white-space: pre-wrap;
+            margin-top: 1em;
+        }
+        .story {
+            margin-top: 1em;
+            text-indent: 2em;
+        }
+        .book {
+            .cover img {
+                border: 1px solid mix(black, white, 10%);
+                border-radius: 5px;
+            }
+            .info {
+                text-align: left;
+            }
+            @media @notmobile {
+                display: table;
+                margin: 0px auto;
+                margin-top: 1cm;
+                .info, .cover {
+                    display: table-cell;
+                    vertical-align: top;
+                    padding: 0.5cm;
+                }
+                .cover img {
+                    width: 300px;
+                    height: 450px;
+                }
+            }
+            @media @mobile {
+                display: inline-block;
+                .cover {
+                    margin-top: 0.5cm;
+                    img {
+                        max-width: 100%;
+                    }
+                }
+                .info {
+                    margin-top: 0.5cm;
+                    margin-bottom: 1cm;
+                }
+            }
         }
     }
 }
@@ -444,11 +557,13 @@ aside {
     padding: 20px 30px 30px 30px;
     @media @mobile {
         border-right: 1px solid mix(black, white, 40%);
-        box-shadow: 2px 0px 10px 0px fade(black, 25%);
         padding-top: 0px; /* to keep the sticky element */
         width: 100%;
         height: 100vh;
         overflow: auto;
+    }
+    @media @notmobile {
+        height: 100%;
     }
     .title-wrapper {
         background-color: mix(@darkblue, white, 10%);
@@ -467,26 +582,43 @@ aside {
         padding: 10px 0px;
         font-weight: bold;
         line-height: 1em;
+        text-decoration: none;
+        &.active {
+            color: black;
+        }
+    }
+    a {
+        color: @darkblue;
+        transition: all 0.3s;
+        display: block;
+        &:hover {
+            text-decoration: none;
+            color: black;
+        }
     }
     ol {
         list-style: none;
         padding: 0px;
+        @media @notmobile {
+            margin-bottom: 0px;
+        }
+        @media @mobile {
+            margin-bottom: 1cm;
+        }
         li {
             margin: 0.3em 0;
             line-height: 1.5em;
         }
         a {
-            color: @darkblue;
-            transition: all 0.3s;
-            display: block;
             @media @mobile {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
-            &:hover {
-                text-decoration: none;
+            &.active {
+                font-weight: bold;
                 color: black;
+                text-decoration: none;
             }
         }
     }
@@ -531,10 +663,13 @@ body.sticky {
 
         .fixed-nav-to-top;
 
-        nav > ul > li > a {
-            line-height: @navHeightSticky;
-            + ul {
-                top: @navHeightSticky;
+        nav > ul > li {
+            border-top-color: transparent;
+            > a {
+                line-height: @navHeightSticky;
+                + ul {
+                    top: @navHeightSticky - 1;
+                }
             }
         }
     }
@@ -550,7 +685,7 @@ body.sticky {
     display: block;
     position: absolute;
     right: 10px;
-    top: 6px;
+    top: 5px;
     width: 45px;
     line-height: 45px;
     height: 45px;
@@ -566,7 +701,7 @@ body.sticky {
         &.active {
             border: none;
             height: 0.6em;
-            top: -2px;
+            top: -4px;
         }
     }
     #nav-toggler:before, #nav-toggler:after {
@@ -603,5 +738,8 @@ body.sticky {
     @media @mobile {
         display: none;
     }
+}
+.center {
+    text-align: center;
 }
 /* --------------------------- */

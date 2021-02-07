@@ -1,6 +1,7 @@
 <?php
 define('DOMAIN',         'yosifpetrov.com');
 define('IS_DEV',          (bool) preg_match('/'.DOMAIN.'/', $_SERVER['HTTP_HOST']));
+define('META_SUFFIX',    ' | Йосиф Петров');
 
 define('TEMPLATES_PATH', realpath(dirname(__FILE__) . '/templates'));
 define('LAYOUTS_PATH',   TEMPLATES_PATH . '/layout');
@@ -9,6 +10,7 @@ define('VENDOR_PATH',    realpath(dirname(__FILE__) . '/../vendor'));
 define('DOCTRINE_PATH',  realpath(dirname(__FILE__) . '/doctrine')); // this is not the vendor itself, but the doctrine code for the project
 
 define('WEBROOT',        preg_replace('/\/resources/', '', substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT'])) . '/'));
+define('IMG_CONTENT',    WEBROOT . 'resources/img/content');
 
 ini_set('error_reporting', 'true');
 error_reporting(E_ALL|E_STRCT);

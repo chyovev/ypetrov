@@ -3,8 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Официален сайт на Йосиф Петров (1909 – 2004)</title>
-    <meta property="og:title" content="Официален сайт на Йосиф Петров (1909 – 2004)" />
+    <title><?= isset($metaTitle) ? escape($metaTitle) . META_SUFFIX : 'Официален сайт на поета Йосиф Петров (1909 – 2004)' ?></title>
+    <meta property="og:title" content="<?= $metaTitle ? escape($metaTitle) : 'Официален сайт на поета Йосиф Петров (1909 – 2004)' ?>" />
     <script type="text/javascript" src="<?= WEBROOT ?>resources/js/script.js"></script>
     <link type="text/css" rel="stylesheet" href="<?= WEBROOT ?>resources/css/style.css" />
     <script>
@@ -24,8 +24,25 @@
                 <div class="nav-toggler-wrapper mobile-only"><span id="nav-toggler"></span></div>
 
                 <nav>
+                    <?php
+                        $navigation  = getGlobalNavigation();
+                        $currentPage = getCurrentNavPage();
+                    ?>
                     <ul>
-                        <li><a href="<?= WEBROOT ?>sidebar.php">Творчество</a></li>
+                        <?php if (isset($navigation['books']) && count($navigation['books']) > 0) { ?>
+                        <li class="has-items<?= ($currentPage['fileName'] == 'poem.php' ? ' active open' : '') ?>">
+                            <a href="javascript: void(0);">Творчество</a>
+                            <ul>
+                                <?php
+                                foreach ($navigation['books'] as $item) {
+                                    $bookItem = $item->getBookDetails();
+                                    $class    = (isset($currentPage['slug']) && $currentPage['slug'] === $bookItem['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generateBookUrl($bookItem['slug']) . '"' . $class . '>' . escape($bookItem['title']) .' (' . $bookItem['published_year'] . ')</a></li>'."\n";
+                                }
+                                ?>
+                            </ul>
+                        </li>
+                        <?php } ?>
                         <li><a href="#">Галерия</a></li>
                         <li class="has-items">
                             <a href="#">Видео</a>
