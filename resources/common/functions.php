@@ -22,6 +22,37 @@ function renderLayoutWithContentFile($contentFile, $variables = []): void {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+function renderContentWithNoLayout($contentFile, $variables = []): ?string {
+    $contentFileFullPath = TEMPLATES_PATH . '/' . $contentFile;
+ 
+    // convert the $variables array into single variables
+    extract($variables);
+ 
+    if (file_exists($contentFileFullPath)) {
+        ob_start();
+        require($contentFileFullPath);
+        return ob_get_clean();
+    }
+
+    return NULL;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function rederJSONContent($array): void {
+    if (!is_array($array)) {
+        $array = [$array];
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($array);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function isRequestAjax(): bool {
+    return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+}
+
+///////////////////////////////////////////////////////////////////////////////
 function throw404OnEmpty($item): void {
     if ( ! $item) {
         renderLayoutWithContentFile('error404.php');

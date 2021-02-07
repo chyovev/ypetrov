@@ -1,5 +1,8 @@
 var App = {
     hasInited: false,
+    stickyNavHeight: 55,
+    // animate functions triggers scroll, use this flag variable to semi-prevent it
+    animateScrollInProgress: false,
     
     ///////////////////////////////////////////////////////
     init: function() {
@@ -7,25 +10,47 @@ var App = {
             return;
         }
         App.bind();
-        App.toggleStickyNavigation();
+        App.detectScroll();
         App.scrollSidebarToCurrentPoem();
     },
     
     ///////////////////////////////////////////////////////
     bind: function() {
-        $(window).scroll(App.toggleStickyNavigation);
+        $(window).scroll(App.detectScroll);
         $('.search-submit').on('click', App.showSearchField);
         $('.nav-toggler-wrapper').on('click', App.toggleNavigation);
         $('nav li.has-items > a').on('click', App.toggleSubNavigation);
         $('.aside-toggler').on('click', App.togglePanel);
+        $('#scroll-top').on('click', App.scrollToTop);
+        $('aside a').on('click', App.loadPoemDynamicallyOnClick);
+        $(window).on('popstate', App.loadPoemDynamicallyOnPopstate);
     },
     
     ///////////////////////////////////////////////////////////////////////////
-    toggleStickyNavigation: function(e) {
+    detectScroll: function() {
+        App.toggleStickyNavigation();
+        App.toggleScrollToTopButton();
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    toggleStickyNavigation: function() {
         var posY = $(window).scrollTop();
-        
+
         (posY > 45) ? $('body').addClass('sticky')
                     : $('body').removeClass('sticky');
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    toggleScrollToTopButton: function() {
+        if ( ! $('.book-poem-wrapper').length || App.isMobile() || App.animateScrollInProgress) {
+            return;
+        }
+
+        var poemWrapperBottom = $('.book-poem-wrapper')[0].getBoundingClientRect().bottom;
+
+        // if the poem wrapper is merely 450px from getting hidden on scroll,
+        // show or hide the scroll-top button (450 is an arbitrary number)
+        poemWrapperBottom < 450 ? $('#scroll-top').fadeIn() : $('#scroll-top').fadeOut();
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -103,6 +128,136 @@ var App = {
                 scrollToY     = sidebarY + poemY - (sidebarHeight / 2);
 
             $sidebar.scrollTop(scrollToY);
+        }
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    scrollToTop: function() {
+        // subtract the sticky header height to get visible top
+        var poemContainerY = $('#container').offset().top - App.stickyNavHeight;
+
+        // set flag to true to avoid animate from firing the toggleScrollToTopButton function
+        App.animateScrollInProgress = true;
+
+        // once the animation is finished, reset the flag and retire the arrow
+        $('html, body').animate({ scrollTop: poemContainerY}, 500, function() {
+            App.animateScrollInProgress = false;
+            $('#scroll-top').fadeOut();
+        });
+
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    // to improve UX, poems should be browsed between using AJAX requests
+    loadPoemDynamicallyOnClick: function(e) {
+        e.preventDefault();
+
+        // don't refetch current poem
+        if ($(this).hasClass('active')) {
+            return false;
+        }
+
+        App.fadeOutPoemWrapper(App.initPoemAjax, $(this).attr('href'));
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    // onclick calls pushState which simulates a page reload,
+    // but that doesn't apply to navigation buttons;
+    // a separate popstate eventlistener is needed
+    loadPoemDynamicallyOnPopstate: function(e) {
+        // the ajax response was previously passed to pushState as a «state» property
+        // there's no need for a separate AJAX request on popstate
+        App.fadeOutPoemWrapper(App.updatePoem, e.originalEvent.state);
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    // first fade out the wrapper, then call the respective function with its params
+    fadeOutPoemWrapper: function(callbackFunction, callbackFunctionParams) {
+        $('#container').animate({opacity:0}, 150, function() {
+            callbackFunction(callbackFunctionParams);
+        });
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    fadeInPoemWrapper: function() {
+        $('#container').animate({opacity: 1}, 150);
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    initPoemAjax: function(url) {
+        return $.ajax({
+            url:      url,
+            type:     'GET',
+            dataType: 'JSON',
+
+            // save the url as a part of the response
+            // to use it later in the popstate event
+            success: function(response) {
+                response.url = url;
+
+                App.updatePoem(response);
+
+                // change the URL, but save the response
+                history.pushState(response, document.title, url);
+            },
+
+            // if the request fails, simply redirect the user to the page
+            error: function () {
+                window.location = url;
+            }
+        })
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    updatePoem: function(response) {
+        if (response == null) {
+            return;
+        }
+
+        var $title      = $('#title'),
+            $dedication = $('#dedication'),
+            $container  = $('#container'),
+            $poemBody   = $('#body'),
+            $sidebar    = $('aside');
+
+        // if whitespaces are crucial to the poem,
+        // add monospace class to the container
+        response.monospace ? $container.addClass('monospace') : $container.removeClass('monospace');
+
+        // replace the title
+        $title.html(response.title);
+
+        // update the dedication
+        $dedication.html(response.dedication);
+        response.dedication ? $dedication.fadeIn() : $dedication.hide();
+
+        // update the poem body and mark it as poem or story
+        $poemBody.html(response.body);
+
+        // replace the metatitle of the document
+        document.title = response.metaTitle;
+
+        // remove active class from previously selected poem
+        $sidebar.find('a.active').removeClass('active');
+
+        // add active class to current poem
+        $sidebar.find('a[href="'+response.url+'"]').addClass('active');
+
+        // fade back in the container to make for a smooth transition
+        App.fadeInPoemWrapper();
+
+        // on mobile scroll to top of poem
+        if (App.isMobile()) {
+            App.scrollToTop();
+        }
+
+        // on desktop show arrow to scroll to top if container is scrolled
+        else {
+            var containerTop = $container[0].getBoundingClientRect().top;
+
+            if ((containerTop - App.stickyNavHeight) < 0) {
+                $('#scroll-top').fadeIn();
+            }
         }
     },
 }

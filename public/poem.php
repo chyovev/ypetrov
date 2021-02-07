@@ -27,13 +27,30 @@ if (isset($poemSlug)) {
     $metaTitle  = $poem['title'] . ' | ' . $metaTitle;
 }
 
-// mark the current book in the navigation
-setCurrentNavPage(basename(__FILE__), $book['slug']);
+// for regular GET requests render complete page
+if ( ! isRequestAjax()) {
+    // mark the current book in the navigation
+    setCurrentNavPage(basename(__FILE__), $book['slug']);
 
-$vars = [
-    'book'      => $book,
-    'metaTitle' => $metaTitle,
-    'poem'      => $poem ?? NULL,
-];
+    $vars = [
+        'book'      => $book,
+        'metaTitle' => $metaTitle,
+        'poem'      => $poem ?? NULL,
+    ];
 
-renderLayoutWithContentFile('poem.php', $vars);
+    renderLayoutWithContentFile('poem.php', $vars);
+}
+
+// for AJAX requests send JSON response containing only what's needed
+else {
+    // if there's no $poem object, load the book information instead
+    $response = [
+        'metaTitle'  => escape($metaTitle . META_SUFFIX),
+        'title'      => $poem['title']      ?? $book['title'],
+        'dedication' => $poem['dedication'] ?? NULL,
+        'body'       => $poem['body']       ?? renderContentWithNoLayout('book-details.php', ['book' => $book]),
+        'monospace'  => (bool) ($poem['use_monospace_font'] ?? false),
+    ];
+
+    rederJSONContent($response);
+}

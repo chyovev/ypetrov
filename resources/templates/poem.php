@@ -24,29 +24,31 @@
 <?php
 // if there's a poem object, use it    
 if ($poem) {
-    $type  = $poem['use_monospace_font'] ? 'poem'       : 'story';
-    $class = $poem['use_monospace_font'] ? ' monospace' : '';
-    echo '<section class="text'.$class.'">
-              <h1 class="title stickable center">' . $poem['title'] . '</h1>
-              ' . ($poem['dedication'] ? '<div class="dedication">' . $poem['dedication'] . '</div>' : '') . '
-              <div class="'.$type.'">' . $poem['body'] . '</div>
-          </section>';
+    $class      = $poem['use_monospace_font'] ? ' monospace' : '';
+    $dedication = $poem['dedication'];
+
+    echo   '<section class="text'.$class.'" id="container">
+                <div class="book-poem-wrapper">
+                    <h1 class="stickable" id="title">' . $poem['title'] . '</h1>
+                    <div id="dedication"' . ( ! $dedication ? ' style="display: none"' : '') . '>' . $dedication . '</div>
+                    <div id="body">' . $poem['body'] . '</div>
+                </div>
+            </section>';
 
 }
 
 // otherwise show information about the book
 else {
-    echo '<section class="text center">
-              <h1 class="title">' . $book['title'] . '</h1>
-              <div class="book">
-                  <div class="cover"><img src="'.$book['image'].'" alt="'.escape($book['title']).'" /></div>
-                  <div class="info">
-                      <div><strong>Година на издаване:</strong> ' . $book['published_year'] . '</div>
-                      <div><strong>Стихотворения:</strong> '.count($book['contents']).'</div>
-                  </div>
-              </div>
-          </section>';
+    echo   '<section class="text" id="container">
+                <div class="book-poem-wrapper">
+                <h1 class="stickable" id="title">' . $book['title'] . '</h1>';
+
+        include 'book-details.php';
+
+    echo   '    </div>
+            </section>';
 }
 ?>
-
 </main>
+
+<div class="desktop-only none" id="scroll-top"></div>

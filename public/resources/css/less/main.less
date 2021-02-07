@@ -110,7 +110,7 @@ header {
         display: table-cell;
         position: relative;
         font-size: 0px; /* takes care of white spaces between links */
-        z-index: 1;
+        z-index: 3;
         @media @mobile {
             &:not(.open) {
                 display: none;
@@ -262,9 +262,16 @@ header {
                     visibility: visible;
                 }
             }
-            &.open > ul {
+            &.open {
                 @media @mobile {
-                    display: block;
+                    /* keep the parent sticky while scrolling through children */
+                    > a {
+                        position: sticky;
+                        top: 0px;
+                    }
+                    > ul {
+                        display: block;
+                    }
                 }
             }
         }
@@ -449,7 +456,7 @@ h1, h2, h3, h4, h5, h6 {
         left: -80%;
         width: 80%;
         transition: left 0.5s;
-        z-index: 1;
+        z-index: 2;
         &.open {
             left: 0px;
             aside {
@@ -467,62 +474,76 @@ h1, h2, h3, h4, h5, h6 {
             display: block;
             padding: 25px 20px 25px 35px;
         }
-        &.monospace {
-            text-align: center;
-        }
-        > .title {
-            background-color: white;
-            padding: 20px 0px 10px 0px;
-        }
-        .dedication {
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-        .poem {
-            font-family: 'roboto', 'Droid Sans Mono Regular', monospace;
-            text-align: left;
-            display: inline-block;
-            white-space: pre-wrap;
-            margin-top: 1em;
-        }
-        .story {
-            margin-top: 1em;
-            text-indent: 2em;
-        }
-        .book {
-            .cover img {
-                border: 1px solid mix(black, white, 10%);
-                border-radius: 5px;
+        .book-poem-wrapper {
+            opacity: 1;
+            transition: opacity 0.3s;
+            #title {
+                background-color: white;
+                padding: 20px 0px 5px 0px;
+                z-index: 1;
             }
-            .info {
-                text-align: left;
+            #dedication {
+                font-style: italic;
+                position: relative;
+                top: -5px;
             }
-            @media @notmobile {
-                display: table;
-                margin: 0px auto;
-                margin-top: 1cm;
-                .info, .cover {
-                    display: table-cell;
-                    vertical-align: top;
-                    padding: 0.5cm;
-                }
+            .book {
                 .cover img {
-                    width: 300px;
-                    height: 450px;
-                }
-            }
-            @media @mobile {
-                display: inline-block;
-                .cover {
-                    margin-top: 0.5cm;
-                    img {
-                        max-width: 100%;
-                    }
+                    border: 1px solid mix(black, white, 10%);
+                    border-radius: 5px;
                 }
                 .info {
-                    margin-top: 0.5cm;
-                    margin-bottom: 1cm;
+                    text-align: left;
                 }
+                @media @notmobile {
+                    display: table;
+                    margin: 0px auto;
+                    margin-top: 1cm;
+                    .info, .cover {
+                        display: table-cell;
+                        vertical-align: top;
+                        padding: 0.5cm;
+                    }
+                    .cover img {
+                        width: 300px;
+                        height: 450px;
+                    }
+                }
+                @media @mobile {
+                    .cover {
+                        margin-top: 0.5cm;
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                    .info {
+                        margin-top: 0.5cm;
+                        margin-bottom: 1cm;
+                    }
+                }
+            }
+        }
+        &.monospace {
+            text-align: center;
+            .book-poem-wrapper {
+                display: inline-block;
+                text-align: left;
+            }
+            #body {
+                font-family: 'roboto', 'Droid Sans Mono Regular', monospace;
+                text-align: left;
+                display: inline-block;
+                white-space: pre-wrap;
+                margin-top: 1em;
+            }
+        }
+        &:not(.monospace) {
+            #title {
+                text-align: center;
+            }
+            #body {
+                margin-top: 1em;
+                text-indent: 2em;
             }
         }
     }
@@ -636,7 +657,7 @@ aside {
         background: linear-gradient(#F6F6F6, #F0F0F0); /* grey linear-gradient(#f2f2f2, #dfdfdf); */
         border-bottom: @navBorderHeight solid @darkblue;
         box-shadow: 0px 0px 8px 0px fade(black, 25%);
-        z-index: 2;
+        z-index: 3;
     }
 }
 /* this feature is not fully supported,
@@ -727,6 +748,33 @@ body.sticky {
         transform: rotate(135deg);
     }
 }
+#scroll-top {
+    width: 46px;
+    height: 46px;
+    background: url(../img/layout/arrow-up.png) no-repeat 50% 50% fade(black, 20%);
+    border: 1px solid fade(black, 30%);
+    background-size: 30px;
+    position: fixed;
+    bottom: 45px;
+    right: 45px;
+    opacity: 0.5;
+    border-radius: 7px;
+    cursor: pointer;
+    animation-name: arrow-up;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+    transition: background-color 0.3s;
+    &:hover {
+        background-color: fade(black, 15%);
+    }
+}
+@keyframes arrow-up {
+    0%   {background-position-y: 50%;}
+    6%  {background-position-y: 35%;}
+    12%  {background-position-y: 50%;}
+    100% {background-position-y: 50%;}
+}
 
 /* --------------------------- */
 .mobile-only {
@@ -741,5 +789,8 @@ body.sticky {
 }
 .center {
     text-align: center;
+}
+.none {
+    display: none;
 }
 /* --------------------------- */
