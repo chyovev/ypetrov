@@ -44,14 +44,20 @@
                         </li>
                         <?php } ?>
                         <li><a href="#">Галерия</a></li>
-                        <li class="has-items">
-                            <a href="#">Видео</a>
+                        <?php if (isset($navigation['videos']) && count($navigation['videos']) > 0) { ?>
+                        <li class="has-items<?= (isset($currentPage['fileName']) && $currentPage['fileName'] == 'video.php' ? ' active open' : '') ?>">
+                            <a href="javascript: void(0);">Видео</a>
                             <ul>
-                                <li><a href="#">90 години не стигат</a></li>
-                                <li><a href="#">В памет на Йосиф Петров</a></li>
-                                <li><a href="#">Не мога да мълча</a></li>
+                                <?php
+                                foreach ($navigation['videos'] as $item) {
+                                    $videoItem = $item->getVideoDetails();
+                                    $class     = (isset($currentPage['slug']) && $currentPage['slug'] === $videoItem['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generateVideoUrl($videoItem['slug']) . '"' . $class . '>' . escape($videoItem['title']) .'</a></li>'."\n";
+                                }
+                                ?>
                             </ul>
                         </li>
+                        <?php } ?>
                         <li><a href="#">Интервюта</a></li>
                         <li><a href="#">Статии и спомени</a></li>
                         <li><a href="#">Контакт</a></li>

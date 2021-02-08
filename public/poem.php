@@ -20,7 +20,7 @@ if (isset($poemSlug)) {
     $poem       = $poemObject->getPoemDetails();
 
     // add +1 to the read count of the poem
-    $poemObject->increaseReadCount();
+    $poemObject->incrementReadCount();
     $entityManager->flush();
 
     // prepend meta title with poem

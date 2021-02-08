@@ -42,15 +42,30 @@ var App = {
 
     ///////////////////////////////////////////////////////////////////////////
     toggleScrollToTopButton: function() {
-        if ( ! $('.book-poem-wrapper').length || App.isMobile() || App.animateScrollInProgress) {
+        if ( ! $('.book-poem-wrapper').length || App.animateScrollInProgress) {
             return;
         }
 
-        var poemWrapperBottom = $('.book-poem-wrapper')[0].getBoundingClientRect().bottom;
+        var poemWrapperTop    = $('.book-poem-wrapper')[0].getBoundingClientRect().top - App.stickyNavHeight,
+            poemWrapperBottom = $('.book-poem-wrapper')[0].getBoundingClientRect().bottom,
+            footerTop         = $('footer')[0].getBoundingClientRect().top,
+            viewportHeight    = $(window).height(),
+            desktopThresholdY = 450, // arbitrary
+            mobileThresholdY  = viewportHeight + 30; //arbitrary
 
-        // if the poem wrapper is merely 450px from getting hidden on scroll,
-        // show or hide the scroll-top button (450 is an arbitrary number)
-        poemWrapperBottom < 450 ? $('#scroll-top').fadeIn() : $('#scroll-top').fadeOut();
+        // if poem wrapper is about to be scrolled out of viewport,
+        // or the end of page is about to be reached,
+        // show the scroll-top button
+        if ( ! App.isMobile()) {
+            ((poemWrapperBottom < desktopThresholdY) || (footerTop < viewportHeight)) && (poemWrapperTop < 0)
+            ? $('#scroll-top').fadeIn()
+            : $('#scroll-top').fadeOut();
+        }
+        else {
+            (poemWrapperBottom < mobileThresholdY) && (poemWrapperTop < 0)
+            ? $('#scroll-top').fadeIn()
+            : $('#scroll-top').fadeOut();
+        }
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -67,7 +82,7 @@ var App = {
     ///////////////////////////////////////////////////////////////////////////
     toggleNavigation: function(e) {
         $('#nav-toggler').toggleClass('active');
-        $('nav').slideToggle('fast', function() {
+        $('nav').slideToggle('normal', function() {
             $(this).toggleClass('open').removeAttr('style');
         });
     },
@@ -229,7 +244,7 @@ var App = {
 
         // update the dedication
         $dedication.html(response.dedication);
-        response.dedication ? $dedication.fadeIn() : $dedication.hide();
+        response.dedication ? $dedication.show() : $dedication.hide();
 
         // update the poem body and mark it as poem or story
         $poemBody.html(response.body);

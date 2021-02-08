@@ -3,9 +3,16 @@ Options +SymLinksIfOwnerMatch
 
 RewriteEngine on
 
+
+# remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^tvorchestvo/([^/]+)/?$            public/poem.php?book=$1            [QSA,L]
 RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?book=$1&poem=$2    [QSA,L]
+RewriteRule ^video/([^/]+)/?$                  public/video.php?video=$1          [QSA,L]
 RewriteRule ^(.*)$    public/$1     [L]
 
 # use a custom 404 page

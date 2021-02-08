@@ -12,6 +12,7 @@ define('DOCTRINE_PATH',  realpath(dirname(__FILE__) . '/doctrine')); // this is 
 define('WEBROOT',        preg_replace('/\/resources/', '', substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT'])) . '/'));
 define('IMG_CONTENT',    WEBROOT . 'resources/img/content');
 define('IMG_LAYOUT',     WEBROOT . 'resources/img/layout');
+define('VIDEO_PATH',     WEBROOT . 'resources/videos');
 
 ini_set('error_reporting', 'true');
 error_reporting(E_ALL|E_STRCT);

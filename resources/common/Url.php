@@ -14,4 +14,9 @@ class Url {
         return WEBROOT . 'tvorchestvo/' . $bookSlug . '/' . $poemSlug;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generateVideoUrl($videoSlug) {
+        return WEBROOT . 'video/' . $videoSlug;
+    }
+
 }

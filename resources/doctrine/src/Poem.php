@@ -75,7 +75,7 @@ class Poem {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function increaseReadCount(): void {
+    public function incrementReadCount(): void {
         $currentReadCount = $this->getReadCount();
         $this->setReadCount($currentReadCount + 1);
     }

@@ -13,3 +13,4 @@ node_modules
 *.vscode
 vendor/
 public/resources/img/content/
+public/resources/videos/

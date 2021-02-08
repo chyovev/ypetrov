@@ -51,4 +51,4 @@ else {
 ?>
 </main>
 
-<div class="desktop-only none" id="scroll-top"></div>
+<div class="none" id="scroll-top"></div>
