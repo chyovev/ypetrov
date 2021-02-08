@@ -68,6 +68,47 @@ function escape(string $string): string {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+function wordWrapCut(
+        string $string,
+        int    $length = 80,
+        string $etc = '...',
+        bool   $break_words = false,
+        bool   $middle = false,
+        string $encoding = 'UTF-8'
+    ): string {
+
+    $string = strip_tags($string);
+    $string = preg_replace('/\s+/i', ' ', $string);
+
+    if (($length === 0) || ($string === '')) {
+        return '';
+    }
+
+    if (mb_strlen($string, $encoding) > $length) {
+        $length -= min($length, mb_strlen($etc, $encoding));
+        if (!$break_words && !$middle) {
+            $string = preg_replace(
+                '/\s+?(\S+)?$/u',
+                '',
+                mb_substr($string, 0, $length + 1, $encoding)
+            );
+        }
+        if (!$middle) {
+            return mb_substr($string, 0, $length, $encoding) . $etc;
+        }
+        return mb_substr($string, 0, $length / 2, $encoding) . $etc .
+               mb_substr($string, -$length / 2, $length, $encoding);
+    }
+
+    return $string;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function truncate(string $string, int $length): string {
+    return wordWrapCut(escape($string), $length);
+}
+
+///////////////////////////////////////////////////////////////////////////////
 function setGlobalNavigation(array $array): void {
     $GLOBALS['navigation'] = $array;
 }
@@ -88,4 +129,16 @@ function setCurrentNavPage(string $fileName, ?string $slug): void {
 ///////////////////////////////////////////////////////////////////////////////
 function getCurrentNavPage(): array {
     return $GLOBALS['currentPage'] ?? [];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function getImageDimensions(string $relativeImage): array {
+    $completeImagePath = HOST_URL . $relativeImage;
+    $dimensions        = @getimagesize($completeImagePath);
+
+    if ($dimensions) {
+        return ['width' => $dimensions[0], 'height' => $dimensions[1]];
+    }
+
+    return [];
 }

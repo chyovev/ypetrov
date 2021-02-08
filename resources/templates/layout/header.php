@@ -3,10 +3,22 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title><?= isset($metaTitle) ? escape($metaTitle) . META_SUFFIX : 'Официален сайт на поета Йосиф Петров (1909 – 2004)' ?></title>
-    <meta property="og:title" content="<?= isset($metaTitle) ? escape($metaTitle) : 'Официален сайт на поета Йосиф Петров (1909 – 2004)' ?>" />
+    <title><?= isset($metaTitle) ? escape($metaTitle) . META_SUFFIX : 'Официален сайт в памет на поета Йосиф Петров (1909 – 2004)' ?></title>
+    <meta property="og:title" content="<?= isset($metaTitle) ? escape($metaTitle) : 'Официален сайт в памет на поета Йосиф Петров (1909 – 2004)' ?>" />
+    <meta name="description" content="<?= isset($metaDesc) ? truncate($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
+    <meta property="og:description" content="<?= isset($metaDesc) ? truncate($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
     <script type="text/javascript" src="<?= WEBROOT ?>resources/js/script.js"></script>
     <link type="text/css" rel="stylesheet" href="<?= WEBROOT ?>resources/css/style.css" />
+    <?php
+    if (isset($metaImage) && is_array($metaImage) && count(array_filter($metaImage)) > 1) {
+        echo   '<meta property="og:image:width" content="' . $metaImage['size']['width'] . '" />
+                <meta property="og:image:height" content="' . $metaImage['size']['height'] . '" />
+                <meta property="og:image" content="' . HOST_URL . $metaImage['url'] . '" />'."\n";
+    }
+    ?>
+    <meta property="og:image:width" content="768" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image" content="<?= HOST_URL . IMG_LAYOUT . '/og-image.jpg' ?>" />
     <script>
 
     </script>

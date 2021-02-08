@@ -11,10 +11,17 @@ $entityManager->flush();
 
 $video       = $videoObject->getVideoDetails();
 $metaTitle   = $video['title'];
+$metaDesc    = $video['summary'];
+$metaImage   = [
+    'url'  => $video['video']['jpg'],
+    'size' => getImageDimensions($video['video']['jpg']),
+];
 
 $vars = [
     'mainVideo' => $video,
     'metaTitle' => $metaTitle,
+    'metaDesc'  => $metaDesc,
+    'metaImage' => $metaImage,
 ];
 
 // mark the current video in the navigation

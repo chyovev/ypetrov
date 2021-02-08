@@ -9,6 +9,7 @@ throw404OnEmpty($bookObject);
 
 $book       = $bookObject->getBookDetails(true);
 $metaTitle  = $book['title'] . ' (' . $book['published_year'] . ')';
+$metaDesc   = sprintf('Година на издаване: %s г.; Стихотворения: %s', $book['published_year'], count($book['contents']));
 
 // if there's a poem slug, make sure it exists as a book contents key
 if (isset($poemSlug)) {
@@ -25,6 +26,7 @@ if (isset($poemSlug)) {
 
     // prepend meta title with poem
     $metaTitle  = $poem['title'] . ' | ' . $metaTitle;
+    $metaDesc   = $poem['body'];
 }
 
 // for regular GET requests render complete page
@@ -32,9 +34,16 @@ if ( ! isRequestAjax()) {
     // mark the current book in the navigation
     setCurrentNavPage(basename(__FILE__), $book['slug']);
 
+    $metaImage  = [
+        'url'  => $book['image'],
+        'size' => getImageDimensions($book['image']),
+    ];
+
     $vars = [
         'book'      => $book,
         'metaTitle' => $metaTitle,
+        'metaDesc'  => $metaDesc ?? NULL,
+        'metaImage' => $metaImage,
         'poem'      => $poem ?? NULL,
     ];
 
