@@ -55,7 +55,7 @@
                             </ul>
                         </li>
                         <?php } ?>
-                        <li><a href="#">Галерия</a></li>
+                        <li<?= (isset($currentPage['fileName']) && $currentPage['fileName'] == 'gallery.php' ? ' class="active"' : '') ?>><a href="<?= Url::generateGalleryUrl() ?>">Галерия</a></li>
                         <?php if (isset($navigation['videos']) && count($navigation['videos']) > 0) { ?>
                         <li class="has-items<?= (isset($currentPage['fileName']) && $currentPage['fileName'] == 'video.php' ? ' active open' : '') ?>">
                             <a href="javascript: void(0);">Видео</a>

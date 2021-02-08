@@ -476,6 +476,7 @@ h1, h2, h3, h4, h5, h6 {
             padding: 25px 20px 25px 35px;
         }
         .content-wrapper {
+            height: 100%;
             opacity: 1;
             transition: opacity 0.3s;
             #title {
@@ -668,8 +669,9 @@ aside {
                     }
                 }
                 a {
+                    outline: 0;
                     img {
-                        opacity: 0.75;
+                        opacity: 0.5;
                         transition: opacity 0.3s;
                     }
                     &:hover img, &.active img {
@@ -702,19 +704,19 @@ aside {
         &.images {
             display: flex;
             flex-wrap: wrap;
-            @media @mobile {
-                li {
-                    flex: 1;
-                }
+            justify-content: space-between;
+            li {
+                flex: 1;
             }
-            @media @notmobile {
-                li {
-                    flex: 1;
-                    flex-basis: 90px;
-                }
-                img {
+            img {
+                transition: border-color 0.3s;
+                border: 3px solid transparent;
+               @media @notmobile {
                     width: 90px;
                 }
+            }
+            a.active img {
+                border-color: @darkblue;
             }
         }
     }
@@ -886,6 +888,78 @@ body.sticky {
             max-width: 100%;
             + .poem {
                 margin-top: 0px;
+            }
+        }
+    }
+}
+@media @notmobile {
+    .gallery-wrapper-outer {
+        display: table;
+        margin: 0px auto;
+    }
+    .gallery-wrapper-inner {
+        display: table-cell;
+    }
+}
+.swipe-nav {
+    @media @notmobile {
+        display: table-cell;
+        width: 45px;
+        cursor: pointer;
+        transition: background-position-x 0.3s;
+    }
+    @media @mobile {
+        display: none;
+    }
+    &.next {
+        background: url(../img/layout/next.png) no-repeat 50% 30%;
+        &:hover {
+            background-position-x: calc(~"50% + 5px");
+        }
+    }
+    &.prev {
+        background: url(../img/layout/prev.png) no-repeat 50% 30%;
+        &:hover {
+            background-position-x: calc(~"50% - 5px");
+        }
+    }
+}
+#swipe-gallery {
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+    text-align: center;
+    @media @notmobile {
+        margin: 1cm auto;
+        width: 700px;
+    }
+    @media @mobile {
+        margin: 0.5cm auto
+    }
+    .swipe-wrap {
+        overflow: hidden;
+        position: relative;
+        > div {
+            float: left;
+            width: 100%;
+            position: relative;
+            span {
+                display: block;
+                margin-top: 0.5cm;
+                line-height: 1.4em;
+            }
+            img {
+                border-radius: 5px;
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.20);
+                @media @notmobile {
+                    max-width: 600px;
+                    max-height: 500px;
+                }
+                @media @mobile {
+                    max-width: 95%;
+                    margin: 0px auto;
+                }
             }
         }
     }

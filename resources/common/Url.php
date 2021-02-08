@@ -5,18 +5,23 @@
 class Url {
     
     ///////////////////////////////////////////////////////////////////////////////
-    public static function generateBookUrl($bookSlug) {
+    public static function generateBookUrl(string $bookSlug): string {
         return WEBROOT . 'tvorchestvo/' . $bookSlug;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    public static function generatePoemUrl($bookSlug, $poemSlug) {
+    public static function generatePoemUrl(string $bookSlug, string $poemSlug): string {
         return WEBROOT . 'tvorchestvo/' . $bookSlug . '/' . $poemSlug;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    public static function generateVideoUrl($videoSlug) {
+    public static function generateVideoUrl(string $videoSlug): string {
         return WEBROOT . 'video/' . $videoSlug;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generateGalleryUrl(): string {
+        return WEBROOT . 'galeriya';
     }
 
 }

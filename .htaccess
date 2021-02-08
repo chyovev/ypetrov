@@ -13,6 +13,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^tvorchestvo/([^/]+)/?$            public/poem.php?book=$1            [QSA,L]
 RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?book=$1&poem=$2    [QSA,L]
 RewriteRule ^video/([^/]+)/?$                  public/video.php?video=$1          [QSA,L]
+RewriteRule ^galeriya/?$                       public/gallery.php                 [QSA,L]
 RewriteRule ^(.*)$    public/$1     [L]
 
 # use a custom 404 page

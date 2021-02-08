@@ -3,6 +3,7 @@ var App = {
     stickyNavHeight: 55,
     // animate functions triggers scroll, use this flag variable to semi-prevent it
     animateScrollInProgress: false,
+    swiperObject: null,
     
     ///////////////////////////////////////////////////////
     init: function() {
@@ -12,6 +13,7 @@ var App = {
         App.bind();
         App.detectScroll();
         App.scrollSidebarToCurrentPoem();
+        App.initSwiper();
     },
     
     ///////////////////////////////////////////////////////
@@ -24,6 +26,8 @@ var App = {
         $('#scroll-top').on('click', App.scrollToTop);
         $('aside:not("#no-ajax") a').on('click', App.loadPoemDynamicallyOnClick);
         $(window).on('popstate', App.loadPoemDynamicallyOnPopstate);
+        $('.thumb').on('click', App.jumpToImage);
+        $('.swipe-nav').on('click', App.navigateGallery);
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -272,6 +276,41 @@ var App = {
                 $('#scroll-top').fadeIn();
             }
         }
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    initSwiper: function() {
+        var element = $('#swipe-gallery')[0];
+        
+        App.swiperObject = new Swipe(element, {
+            startSlide: 0,
+            auto: 0,
+            draggable: true,
+            autoRestart: false,
+            continuous: true,
+            disableScroll: true,
+            stopPropagation: true,
+            callback: function(index, element) {
+                $('.thumb').removeClass('active');
+                $('#thumb-' + index).addClass('active');
+            },
+            transitionEnd: function(index, element) {}
+        });
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    jumpToImage: function(e) {
+        e.preventDefault();
+        var id = $(this).attr('id').replace('thumb-', '');
+
+        App.swiperObject.slide(id);
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    navigateGallery: function(e) {
+        e.preventDefault();
+
+        $(this).hasClass('next') ?  App.swiperObject.next() : App.swiperObject.prev();
     },
 }
 
