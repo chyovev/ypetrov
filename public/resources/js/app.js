@@ -22,7 +22,7 @@ var App = {
         $('nav li.has-items > a').on('click', App.toggleSubNavigation);
         $('.aside-toggler').on('click', App.togglePanel);
         $('#scroll-top').on('click', App.scrollToTop);
-        $('aside:not("#videos") a').on('click', App.loadPoemDynamicallyOnClick);
+        $('aside:not("#no-ajax") a').on('click', App.loadPoemDynamicallyOnClick);
         $(window).on('popstate', App.loadPoemDynamicallyOnPopstate);
     },
     
@@ -55,13 +55,13 @@ var App = {
         // if poem top is 200px scrolled down
         // or the footer is about to be reached,
         // show the scroll-top button
-        (poemWrapperTop < thresholdY) || (footerTop < viewportHeight)
+        (poemWrapperTop < thresholdY)
             ? $scrollTopBtn.fadeIn()
             : $scrollTopBtn.fadeOut();
 
         // when the footer is almost reached on mobile,
         // shift button upwards to avoid footer overlap
-        (App.isMobile() && (footerTop - 50) < viewportHeight)
+        (App.isMobile() && (footerTop + 20) < viewportHeight)
             ? $scrollTopBtn.addClass('overlap-footer')
             : $scrollTopBtn.removeClass('overlap-footer');
     },

@@ -10,6 +10,8 @@ class Book {
 
     private $slug;
 
+    private $publisher;
+
     private $publishedYear;
 
     private $ord;
@@ -34,6 +36,7 @@ class Book {
             'active'         => $this->getActive(),
             'title'          => $this->getTitle(),
             'slug'           => $this->getSlug(),
+            'publisher'      => $this->getPublisher(),
             'published_year' => $this->getPublishedYear(),
             'image'          => $this->getImage(),
         ];
@@ -64,6 +67,11 @@ class Book {
     ///////////////////////////////////////////////////////////////////////////
     private function getSlug(): string {
         return $this->slug;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getPublisher(): ?string {
+        return $this->publisher;
     }
 
     ///////////////////////////////////////////////////////////////////////////

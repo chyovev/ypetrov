@@ -66,10 +66,10 @@ class Book extends \Book implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'Book' . "\0" . 'id', '' . "\0" . 'Book' . "\0" . 'active', '' . "\0" . 'Book' . "\0" . 'title', '' . "\0" . 'Book' . "\0" . 'slug', '' . "\0" . 'Book' . "\0" . 'publishedYear', '' . "\0" . 'Book' . "\0" . 'ord', '' . "\0" . 'Book' . "\0" . 'createdAt', '' . "\0" . 'Book' . "\0" . 'modifiedAt', '' . "\0" . 'Book' . "\0" . 'contents'];
+            return ['__isInitialized__', '' . "\0" . 'Book' . "\0" . 'id', '' . "\0" . 'Book' . "\0" . 'active', '' . "\0" . 'Book' . "\0" . 'title', '' . "\0" . 'Book' . "\0" . 'slug', '' . "\0" . 'Book' . "\0" . 'publisher', '' . "\0" . 'Book' . "\0" . 'publishedYear', '' . "\0" . 'Book' . "\0" . 'ord', '' . "\0" . 'Book' . "\0" . 'createdAt', '' . "\0" . 'Book' . "\0" . 'modifiedAt', '' . "\0" . 'Book' . "\0" . 'contents'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'Book' . "\0" . 'id', '' . "\0" . 'Book' . "\0" . 'active', '' . "\0" . 'Book' . "\0" . 'title', '' . "\0" . 'Book' . "\0" . 'slug', '' . "\0" . 'Book' . "\0" . 'publishedYear', '' . "\0" . 'Book' . "\0" . 'ord', '' . "\0" . 'Book' . "\0" . 'createdAt', '' . "\0" . 'Book' . "\0" . 'modifiedAt', '' . "\0" . 'Book' . "\0" . 'contents'];
+        return ['__isInitialized__', '' . "\0" . 'Book' . "\0" . 'id', '' . "\0" . 'Book' . "\0" . 'active', '' . "\0" . 'Book' . "\0" . 'title', '' . "\0" . 'Book' . "\0" . 'slug', '' . "\0" . 'Book' . "\0" . 'publisher', '' . "\0" . 'Book' . "\0" . 'publishedYear', '' . "\0" . 'Book' . "\0" . 'ord', '' . "\0" . 'Book' . "\0" . 'createdAt', '' . "\0" . 'Book' . "\0" . 'modifiedAt', '' . "\0" . 'Book' . "\0" . 'contents'];
     }
 
     /**

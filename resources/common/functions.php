@@ -119,7 +119,7 @@ function getGlobalNavigation(): array {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function setCurrentNavPage(string $fileName, ?string $slug): void {
+function setCurrentNavPage(string $fileName, ?string $slug = NULL): void {
     $GLOBALS['currentPage'] = [
         'fileName' => $fileName,
         'slug'     => $slug,

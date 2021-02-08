@@ -1,11 +1,11 @@
 <main class="sidebar">
 
     <div class="aside-wrapper">
-        <aside id="videos">
+        <aside id="no-ajax">
             <div class="title-wrapper stickable">
                 <div class="title">Видео</div>
             </div>
-            <ol class="images">
+            <ol class="videos">
             <?php
             $navigation = getGlobalNavigation();
             $allVideos  = $navigation['videos'];
@@ -30,7 +30,7 @@
 
     <section class="text monospace" id="container">
         <div class="content-wrapper">
-            <h1 class="stickable" id="title"><?= $mainVideo['title']; ?></h1>
+            <h1 class="stickable center" id="title"><?= $mainVideo['title']; ?></h1>
             <?php
             if ($mainVideo['summary']) {
                 echo '<div id="summary">' . nl2br(trim($mainVideo['summary'])) .'</div>';
