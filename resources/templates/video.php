@@ -1,7 +1,7 @@
 <main class="sidebar">
 
     <div class="aside-wrapper">
-        <aside>
+        <aside id="videos">
             <div class="title-wrapper stickable">
                 <div class="title">Видео</div>
             </div>
@@ -29,7 +29,7 @@
     </div>
 
     <section class="text monospace" id="container">
-        <div class="book-poem-wrapper">
+        <div class="content-wrapper">
             <h1 class="stickable" id="title"><?= $mainVideo['title']; ?></h1>
             <?php
             if ($mainVideo['summary']) {
@@ -49,5 +49,3 @@
         </div>
     </section>
 </main>
-
-<div class="none" id="scroll-top"></div>

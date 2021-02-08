@@ -22,7 +22,7 @@ var App = {
         $('nav li.has-items > a').on('click', App.toggleSubNavigation);
         $('.aside-toggler').on('click', App.togglePanel);
         $('#scroll-top').on('click', App.scrollToTop);
-        $('aside a').on('click', App.loadPoemDynamicallyOnClick);
+        $('aside:not("#videos") a').on('click', App.loadPoemDynamicallyOnClick);
         $(window).on('popstate', App.loadPoemDynamicallyOnPopstate);
     },
     
@@ -42,30 +42,28 @@ var App = {
 
     ///////////////////////////////////////////////////////////////////////////
     toggleScrollToTopButton: function() {
-        if ( ! $('.book-poem-wrapper').length || App.animateScrollInProgress) {
+        if ( ! $('.content-wrapper').length || App.animateScrollInProgress) {
             return;
         }
 
-        var poemWrapperTop    = $('.book-poem-wrapper')[0].getBoundingClientRect().top - App.stickyNavHeight,
-            poemWrapperBottom = $('.book-poem-wrapper')[0].getBoundingClientRect().bottom,
+        var poemWrapperTop    = $('.content-wrapper')[0].getBoundingClientRect().top - App.stickyNavHeight,
             footerTop         = $('footer')[0].getBoundingClientRect().top,
             viewportHeight    = $(window).height(),
-            desktopThresholdY = 450, // arbitrary
-            mobileThresholdY  = viewportHeight + 30; //arbitrary
+            thresholdY        = -200, // arbitrary
+            $scrollTopBtn     = $('#scroll-top');
 
-        // if poem wrapper is about to be scrolled out of viewport,
-        // or the end of page is about to be reached,
+        // if poem top is 200px scrolled down
+        // or the footer is about to be reached,
         // show the scroll-top button
-        if ( ! App.isMobile()) {
-            ((poemWrapperBottom < desktopThresholdY) || (footerTop < viewportHeight)) && (poemWrapperTop < 0)
-            ? $('#scroll-top').fadeIn()
-            : $('#scroll-top').fadeOut();
-        }
-        else {
-            (poemWrapperBottom < mobileThresholdY) && (poemWrapperTop < 0)
-            ? $('#scroll-top').fadeIn()
-            : $('#scroll-top').fadeOut();
-        }
+        (poemWrapperTop < thresholdY) || (footerTop < viewportHeight)
+            ? $scrollTopBtn.fadeIn()
+            : $scrollTopBtn.fadeOut();
+
+        // when the footer is almost reached on mobile,
+        // shift button upwards to avoid footer overlap
+        (App.isMobile() && (footerTop - 50) < viewportHeight)
+            ? $scrollTopBtn.addClass('overlap-footer')
+            : $scrollTopBtn.removeClass('overlap-footer');
     },
     
     ///////////////////////////////////////////////////////////////////////////
