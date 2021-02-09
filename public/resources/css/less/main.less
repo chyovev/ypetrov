@@ -486,8 +486,8 @@ h1, h2, h3, h4, h5, h6 {
             }
             #dedication {
                 font-style: italic;
-                position: relative;
-                top: -5px;
+                line-height: 1.4em;
+                margin-bottom: 10px;
             }
             #summary {
                 margin-top: 0.7cm;
@@ -603,8 +603,20 @@ aside {
         background-color: mix(@darkblue, white, 10%);
         padding-top: 15px;
         padding-bottom: 10px;
-        @media @mobile {
-            margin-bottom: @navHeightSticky + 10; /* to prevent title from overlapping with list */
+        &.stickable {
+            @media @mobile {
+                margin-bottom: @navHeightSticky + 10; /* to prevent title from overlapping with list */
+            }
+        }
+        &:not(.stickable) {
+            @media @mobile {
+                margin-top: 55px;
+            }
+            + ol {
+                @media @mobile {
+                    margin-top: 5px;
+                }
+            }
         }
     }
     .title {
@@ -670,6 +682,7 @@ aside {
                 }
                 a {
                     outline: 0;
+                    .android-highlight-fix;
                     img {
                         opacity: 0.5;
                         transition: opacity 0.3s;
@@ -711,8 +724,11 @@ aside {
             img {
                 transition: border-color 0.3s;
                 border: 3px solid transparent;
-               @media @notmobile {
+                @media @notmobile {
                     width: 90px;
+                }
+                @media @extrasmall {
+                    width: 55px;
                 }
             }
             a.active img {
@@ -951,12 +967,13 @@ body.sticky {
             }
             img {
                 border-radius: 5px;
-                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.20);
                 @media @notmobile {
+                    box-shadow: 4px 4px 10px fade(black, 15%);
                     max-width: 600px;
                     max-height: 500px;
                 }
                 @media @mobile {
+                    box-shadow: 1px 2px 5px fade(black, 15%);
                     max-width: 95%;
                     margin: 0px auto;
                 }
@@ -1028,5 +1045,10 @@ body.sticky {
 }
 .android-highlight-fix {
     -webkit-tap-highlight-color: transparent; /* fix android highlight color */
+}
+/* start out with images hidden and show them on window load */
+.op-0-fadein {
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 /* --------------------------- */

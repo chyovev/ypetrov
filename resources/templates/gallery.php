@@ -2,10 +2,10 @@
 
     <div class="aside-wrapper">
         <aside id="no-ajax">
-            <div class="title-wrapper stickable">
+            <div class="title-wrapper">
                 <div class="title">Галерия</div>
             </div>
-            <ol class="images">
+            <ol class="images op-0-fadein">
             <?php
             $i = 0;
             foreach ($images as $imageItem) {
@@ -22,6 +22,7 @@
             }
             ?>
             </ol>
+            <div class="center op-0-fadein"><span id="current-image">1</span>/<?= count($images) ?></div>
 
         </aside>
         <div class="aside-toggler mobile-only"><span>Галерия</span></div>
@@ -29,7 +30,7 @@
 
     <section class="text" id="container">
         <div class="content-wrapper">
-            <h1 class="stickable center" id="title">Снимки на Йосиф Петров</h1>
+            <h1 class="center" id="title">Снимки на Йосиф Петров</h1>
 
             <div class="gallery-wrapper-outer">
 
@@ -37,7 +38,7 @@
 
                 <div class="gallery-wrapper-inner">
                     <div id="swipe-gallery">
-                        <div class="swipe-wrap">
+                        <div class="swipe-wrap op-0-fadein">
                             <?php
                             $i = 0;
                             foreach ($images as $imageItem) {

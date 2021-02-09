@@ -19,6 +19,15 @@
     <meta property="og:image:width" content="768" />
     <meta property="og:image:height" content="1024" />
     <meta property="og:image" content="<?= HOST_URL . IMG_LAYOUT . '/og-image.jpg' ?>" />
+    <link rel="apple-touch-icon" sizes="120x120" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= IMG_LAYOUT ?>/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= IMG_LAYOUT ?>/favicon/favicon-16x16.png" />
+    <link rel="shortcut icon" href="<?= IMG_LAYOUT ?>/favicon/favicon.ico" />
+    <link rel="manifest" href="<?= IMG_LAYOUT ?>/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="<?= IMG_LAYOUT ?>/favicon/favicon.png" color="#F6F6F6" />
+    <meta name="msapplication-TileColor" content="#F6F6F6" />
+    <meta name="theme-color" content="#F6F6F6" />
     <script>
 
     </script>

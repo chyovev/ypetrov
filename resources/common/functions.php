@@ -61,10 +61,10 @@ function throw404OnEmpty($item): void {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function escape(string $string): string {
+function escape(?string $string): string {
     // replace <br /> tag with a space
     $string = preg_replace('/<br ?\/?>/i', ' ', $string);
-    return trim(preg_replace('/\s{2,}/i', ' ', htmlspecialchars(strip_tags($string))));
+    return trim(preg_replace('/\s{1,}/i', ' ', htmlspecialchars(strip_tags($string))));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

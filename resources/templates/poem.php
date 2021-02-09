@@ -30,7 +30,7 @@ if ($poem) {
     echo   '<section class="text'.$class.'" id="container">
                 <div class="content-wrapper">
                     <h1 class="stickable" id="title">' . $poem['title'] . '</h1>
-                    <div id="dedication"' . ( ! $dedication ? ' style="display: none"' : '') . '>' . $dedication . '</div>
+                    <div id="dedication"' . ( ! $dedication ? ' style="display: none"' : '') . '>' . nl2br($dedication) . '</div>
                     <div id="body">' . $poem['body'] . '</div>
                 </div>
             </section>';

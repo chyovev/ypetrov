@@ -56,7 +56,7 @@ else {
     $response = [
         'metaTitle'  => escape($metaTitle . META_SUFFIX),
         'title'      => $poem['title']      ?? $book['title'],
-        'dedication' => $poem['dedication'] ?? NULL,
+        'dedication' => $poem['dedication'] ?  nl2br($poem['dedication']) : NULL,
         'body'       => $poem['body']       ?? renderContentWithNoLayout('book-details.php', ['book' => $book]),
         'monospace'  => (bool) ($poem['use_monospace_font'] ?? false),
     ];

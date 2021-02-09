@@ -13,7 +13,7 @@ var App = {
         App.bind();
         App.detectScroll();
         App.scrollSidebarToCurrentPoem();
-        App.initSwiper();
+        App.initGallerySwiper();
     },
     
     ///////////////////////////////////////////////////////
@@ -279,22 +279,22 @@ var App = {
     },
 
     ///////////////////////////////////////////////////////////////////////////
-    initSwiper: function() {
+    initGallerySwiper: function() {
         var element = $('#swipe-gallery')[0];
         
         App.swiperObject = new Swipe(element, {
-            startSlide: 0,
             auto: 0,
             draggable: true,
-            autoRestart: false,
-            continuous: true,
             disableScroll: true,
             stopPropagation: true,
             callback: function(index, element) {
+                // set respective thumbnail as active
                 $('.thumb').removeClass('active');
                 $('#thumb-' + index).addClass('active');
-            },
-            transitionEnd: function(index, element) {}
+
+                // update the current image indicator
+                $('#current-image').html(index+1);
+            }
         });
     },
 
@@ -312,8 +312,16 @@ var App = {
 
         $(this).hasClass('next') ?  App.swiperObject.next() : App.swiperObject.prev();
     },
+
+    ///////////////////////////////////////////////////////////////////////////
+    fadeObjectsOnLoad: function() {
+        $('.op-0-fadein').animate({opacity: 1}, 150);
+    },
 }
 
 $(document).ready(function() {
     App.init();
 });
+window.onload = function() {
+    App.fadeObjectsOnLoad();
+}
