@@ -292,14 +292,6 @@ header {
             text-align: center;
         }
         .search-field {
-            border: 1px solid #cecece;
-            border-radius: 5px;
-            padding: 7px;
-            line-height: 20px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-            text-align: left;
-            background-clip: padding-box; /* remove ios shadow */
             vertical-align: middle;
             @media @notmobile {
                 width: 200px;
@@ -311,7 +303,7 @@ header {
                 width: calc(~"95% - 36px"); /* 36 is the width of the submit button */
                 max-width: 300px;
             }
-            &:focus, &:focus + button {
+            &:focus + button {
                 border-color: darkblue;
                 outline: none;
             }
@@ -536,7 +528,7 @@ h1, h2, h3, h4, h5, h6 {
         }
         &.monospace {
             text-align: center;
-            .content-wrapper {
+            .poem-wrapper {
                 display: inline-block;
                 text-align: left;
             }
@@ -637,6 +629,7 @@ aside {
         color: @darkblue;
         transition: all 0.3s;
         display: block;
+        outline: 0;
         &:hover {
             text-decoration: none;
             color: black;
@@ -681,7 +674,6 @@ aside {
                     }
                 }
                 a {
-                    outline: 0;
                     .android-highlight-fix;
                     img {
                         opacity: 0.5;
@@ -980,6 +972,110 @@ body.sticky {
             }
         }
     }
+}
+input[type="text"], input[type="password"], textarea {
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    padding: 7px;
+    line-height: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    text-align: left;
+    background-clip: padding-box; /* remove ios shadow */
+    &:focus {
+        border-color: darkblue;
+        outline: none;
+    }
+    &.error-field {
+        border-color: red;
+    }
+}
+input[type="submit"] {
+    text-transform: uppercase;
+    background-color: white;
+    padding: 10px 50px;
+    border: 2px solid #cecece;
+    color: @darkblue;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    outline: 0;
+    transition: border-color 0.3s;
+    -webkit-appearance: none; /* override ios default button style */
+    &:hover, &:focus {
+        border-color: @darkblue;
+    }
+}
+textarea {
+    resize: vertical;
+    min-height: 5em;
+    max-height: 20em;
+}
+.comments-wrapper {
+    display: block;
+    text-align: left;
+    margin: 1.5cm auto;
+    padding-top: 1cm;
+    border-top: 1px dotted mix(@grey, white, 20%);
+    @media @notmobile {
+        max-width: 600px;
+        min-width: 400px;
+    }
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        background-color: white;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        margin-bottom: 0.4cm;
+    }
+}
+.comments {
+    .comment {
+        border: 1px solid mix(black, white, 15%);
+        border-radius: 5px;
+        margin-bottom: 1cm;
+        .title {
+            background-color: @darkblue;
+            color: white;
+            width: 100%;
+            padding: 5px 15px;
+            border-radius: 5px 5px 0px 0px;
+            font-size: 0.95em;
+            display: table;
+            .username {
+                display: table-cell;
+            }
+            .date {
+                display: table-cell;
+                text-align: right;
+            }
+        }
+        .body {
+            border-radius: 0px 0px 5px 5px;
+            background-color: mix(black, white, 2%);
+            padding: 15px;
+        }
+    }
+}
+.comment-form {
+    input[type="text"], textarea {
+        width: 100%;
+    }
+    textarea {
+        margin: 0.5cm 0px;
+        height: 150px;
+    }
+    input[type="submit"] {
+        display: inherit;
+        margin: 0px auto;
+    }
+}
+.error-message {
+    color: red;
+    display: block;
+    padding-bottom: 20px;
+    line-height: 1em;
 }
 #scroll-top {
     background: url(../img/layout/arrow-up.png) no-repeat 50% 50% fade(black, 20%);

@@ -2,8 +2,10 @@
 require_once(VENDOR_PATH . '/autoload.php');
 require_once('autoload_classes.php');
 
+use Doctrine\Common\EventManager;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Events;
 
 $entitiesFolder = [DOCTRINE_PATH . '/xml'];
 $proxiesFolder  =  DOCTRINE_PATH . '/proxies';
@@ -30,5 +32,9 @@ $dbParams       = [
     ],
 ];
 
+// register comment event subscriber for validation
+$eventManager   = new EventManager();
+$eventManager->addEventSubscriber(new CommentValidatorSubscriber());
+
 $config         = Setup::createXMLMetadataConfiguration($entitiesFolder, IS_DEV, $proxiesFolder);
-$entityManager  = EntityManager::create($dbParams[IS_DEV], $config);
+$entityManager  = EntityManager::create($dbParams[IS_DEV], $config, $eventManager);

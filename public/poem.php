@@ -1,8 +1,8 @@
 <?php
 require_once('../resources/autoload.php');
 
-$bookSlug   = $_GET['book'] ?? NULL;
-$poemSlug   = $_GET['poem'] ?? NULL;
+$bookSlug   = getGetRequestVar('book');
+$poemSlug   = getGetRequestVar('poem');
 
 $bookObject = $bookRepository->findBySlug($bookSlug);
 throw404OnEmpty($bookObject);
@@ -18,11 +18,24 @@ if (isset($poemSlug)) {
 
     // poem is already pre-fetched through book contents association
     $poemObject = $book['contents'][$poemSlug]->getPoem();
+
+    // if there's a POST ajax request,
+    // process it as an attempt to add a comment
+    if (isRequestAjax() && isRequest('POST')) {
+        $response = processSaveCommentRequest($poemObject);
+        rederJSONContent($response);
+        exit;
+    }
+
+    // otherwise, continue loading the poem
     $poem       = $poemObject->getPoemDetails();
 
     // add +1 to the read count of the poem
     $poemObject->incrementReadCount();
     $entityManager->flush();
+
+    $commentUrl = Url::generatePoemUrl($bookSlug, $poemSlug);
+    $comments   = $commentRepository->getAllCommentsForEntity($poemObject);
 
     // prepend meta title with poem
     $metaTitle  = $poem['title'] . ' | ' . $metaTitle;
@@ -45,21 +58,44 @@ if ( ! isRequestAjax()) {
         'metaDesc'  => $metaDesc ?? NULL,
         'metaImage' => $metaImage,
         'poem'      => $poem ?? NULL,
+        'commentUrl'=> $commentUrl ?? NULL,
+        'comments'  => $comments ?? NULL,
     ];
 
     renderLayoutWithContentFile('poem.php', $vars);
+    exit;
 }
 
 // for AJAX requests send JSON response containing only what's needed
 else {
-    // if there's no $poem object, load the book information instead
-    $response = [
-        'metaTitle'  => escape($metaTitle . META_SUFFIX),
-        'title'      => $poem['title']      ?? $book['title'],
-        'dedication' => $poem['dedication'] ?  nl2br($poem['dedication']) : NULL,
-        'body'       => $poem['body']       ?? renderContentWithNoLayout('book-details.php', ['book' => $book]),
-        'monospace'  => (bool) ($poem['use_monospace_font'] ?? false),
-    ];
+    // if there's a poem, load its content
+    if (isset($poem)) {
+        $commentsHTML = renderContentWithNoLayout('elements/comment-section.php', ['commentUrl' => $commentUrl, 'comments' => $comments]);
+        
+        $response = [
+            'metaTitle'  => escape($metaTitle . META_SUFFIX),
+            'title'      => $poem['title'],
+            'dedication' => nl2br($poem['dedication']),
+            'body'       => $poem['body'],
+            'monospace'  => (bool) $poem['use_monospace_font'],
+            'comments'   => $commentsHTML,
+        ];
+    }
+
+    // otherwise load book details
+    else {
+        $bookHTML = renderContentWithNoLayout('elements/book-details.php', ['book' => $book]);
+        
+        $response = [
+            'metaTitle'  => escape($metaTitle . META_SUFFIX),
+            'title'      => $book['title'],
+            'dedication' => NULL,
+            'body'       => $bookHTML,
+            'monospace'  => false,
+            'comments'   => NULL,
+        ];
+    }
 
     rederJSONContent($response);
+    exit;
 }

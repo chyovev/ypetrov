@@ -4,6 +4,7 @@ var App = {
     // animate functions triggers scroll, use this flag variable to semi-prevent it
     animateScrollInProgress: false,
     swiperObject: null,
+    isAjaxInProgress: false,
     
     ///////////////////////////////////////////////////////
     init: function() {
@@ -28,6 +29,7 @@ var App = {
         $(window).on('popstate', App.loadPoemDynamicallyOnPopstate);
         $('.thumb').on('click', App.jumpToImage);
         $('.swipe-nav').on('click', App.navigateGallery);
+        $(document).on('submit', '#comment-form', App.submitComment); // using document because of ajax loaded poems
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -235,6 +237,7 @@ var App = {
             $dedication = $('#dedication'),
             $container  = $('#container'),
             $poemBody   = $('#body'),
+            $comments   = $('.comments-wrapper'),
             $sidebar    = $('aside');
 
         // if whitespaces are crucial to the poem,
@@ -250,6 +253,12 @@ var App = {
 
         // update the poem body and mark it as poem or story
         $poemBody.html(response.body);
+
+        // update comments – remove old comments, then append new ones (if any) 
+        $comments.remove();
+        if (response.comments) {
+            $('.content-wrapper').append(response.comments);
+        }
 
         // replace the metatitle of the document
         document.title = response.metaTitle;
@@ -316,6 +325,93 @@ var App = {
     ///////////////////////////////////////////////////////////////////////////
     fadeObjectsOnLoad: function() {
         $('.op-0-fadein').animate({opacity: 1}, 150);
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    submitComment: function(e) {
+        e.preventDefault();
+
+        // don't send new requests before finishing already started requests
+        if (App.isAjaxInProgress) {
+            return false;
+        }
+
+        var $form = $(this),
+            url   = $form.attr('action'),
+            type  = $form.attr('method'),
+            data  = $form.serialize();
+
+        // mark current request as «in progress»
+        App.isAjaxInProgress = true;
+
+        // reset all previous errors on submit
+        $('.error-field').removeClass('error-field');
+        $('.error-message').slideUp('fast');
+
+        return $.ajax({
+            url:      url,
+            type:     type,
+            data:     data,
+            dataType: 'JSON',
+
+            success: function(response) {
+
+                // if the status is false, there were errors – show them
+                if ( ! response.status) {
+
+                    // if there's a general error, it has higher priority; don't show other errors
+                    if ('general' in response.errors) {
+                        $('.error-message').html(response.errors.general[0]).slideDown();
+                    }
+
+                    // otherwise mark respective fields as erroneous
+                    // and show all errors above the submit button
+                    else {
+                        // all error messages are stored in an array which then gets joined
+                        var errorMsgs = [];
+                        $.each(response.errors, function(field, errors) {
+                            $('#' + field).addClass('error-field');
+                            errorMsgs.push(errors);
+                        });
+
+                        // show all error messages on new lines
+                        $('.error-message').html(errorMsgs.join('<br />')).slideDown();
+                    }
+                }
+
+                // if the status was true, the comment was added
+                else {
+                    var $commentForm     = $('.comment-form'),
+                        $commentSection  = $('.comments'),
+                        isSectionVisible = $commentSection.is(':visible'),
+                        counter          = $('.comment').length + 1,
+                        $comment         = $(response.html);
+
+                    // update the comment counter which is 0 by default on AJAX load
+                    $comment.find('.counter').html(counter);
+
+                    // if other comments are present, mark the new one as hidden to fade it in afterwards
+                    if (isSectionVisible) {
+                        $comment.hide();
+                    }
+
+                    // hide the comment form, reset all input fields' values
+                    // and then completely remove form from DOM
+                    $commentForm.slideUp('normal', function() {
+                        $(this).find("input[type='text'], textarea").val('')
+                        $(this).remove();
+                    });
+
+                    // add comment to section
+                    $commentSection.append($comment)
+
+                    // fade in the new comment or the whole section based on section visibility
+                    isSectionVisible ? $comment.fadeIn(2000) : $commentSection.fadeIn(2000);
+                }
+            }
+        }).always(function() {
+            App.isAjaxInProgress = false;
+        });
     },
 }
 

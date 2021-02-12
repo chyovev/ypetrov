@@ -1,5 +1,7 @@
 <?php
-class Video {
+use Interfaces\Commentable;
+
+class Video implements Commentable {
     private $id;
 
     private $active;
@@ -33,7 +35,7 @@ class Video {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function getId(): int {
+    public function getId(): int {
         return $this->id;
     }
 

@@ -46,6 +46,7 @@
                     </div>
                 </video>
             </div>
+            <?php include 'elements/comment-section.php'; ?>
         </div>
     </section>
 </main>

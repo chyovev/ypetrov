@@ -29,11 +29,17 @@ if ($poem) {
 
     echo   '<section class="text'.$class.'" id="container">
                 <div class="content-wrapper">
-                    <h1 class="stickable" id="title">' . $poem['title'] . '</h1>
-                    <div id="dedication"' . ( ! $dedication ? ' style="display: none"' : '') . '>' . nl2br($dedication) . '</div>
-                    <div id="body">' . $poem['body'] . '</div>
-                </div>
+                    <div class="poem-wrapper">
+                        <h1 class="stickable" id="title">' . $poem['title'] . '</h1>
+                        <div id="dedication"' . ( ! $dedication ? ' style="display: none"' : '') . '>' . nl2br($dedication) . '</div>
+                        <div id="body">' . $poem['body'] . '</div>
+                    </div>';
+
+    include 'elements/comment-section.php';
+
+    echo   '    </div>
             </section>';
+
 
 }
 
@@ -41,11 +47,13 @@ if ($poem) {
 else {
     echo   '<section class="text" id="container">
                 <div class="content-wrapper">
-                <h1 class="stickable" id="title">' . $book['title'] . '</h1>';
+                    <div class="poem-wrapper">
+                        <h1 class="stickable" id="title">' . $book['title'] . '</h1>';
 
-        include 'book-details.php';
+        include 'elements/book-details.php';
 
-    echo   '    </div>
+    echo   '        </div>
+                </div>
             </section>';
 }
 ?>

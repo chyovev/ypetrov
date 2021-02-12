@@ -1,7 +1,8 @@
 <?php
 use Doctrine\Common\Collections\ArrayCollection;
+use Interfaces\Commentable;
 
-class Poem {
+class Poem implements Commentable {
     private $id;
 
     private $title;
@@ -23,6 +24,11 @@ class Poem {
     private $contents;
 
     ///////////////////////////////////////////////////////////////////////////
+    public function __construct() {
+        $this->contents = new ArrayCollection();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     public function getPoemDetails(): array {
         $poem = [
             'id'                 => $this->getId(),
@@ -38,7 +44,7 @@ class Poem {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function getId(): int {
+    public function getId(): int {
         return $this->id;
     }
 

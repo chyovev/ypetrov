@@ -8,3 +8,4 @@ require_once(COMMON_PATH   . '/functions.php');
 require_once(DOCTRINE_PATH . '/bootstrap.php');
 require_once(COMMON_PATH   . '/Url.php');
 require_once(COMMON_PATH   . '/navigation-db-fetch.php');
+require_once(COMMON_PATH   . '/commentable-functions.php');
