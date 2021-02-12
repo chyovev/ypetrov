@@ -347,7 +347,7 @@ var App = {
 
         // reset all previous errors on submit
         $('.error-field').removeClass('error-field');
-        $('.error-message').slideUp('fast').removeClass('center');
+        $('.error-message').slideUp('fast', function() { $(this).removeClass('center'); });
 
         return $.ajax({
             url:      url,

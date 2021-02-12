@@ -92,8 +92,8 @@ class Poem implements Commentable {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function getBooks(): array {
-        return $this->books;
+    public function getContentsAsArray(): array {
+        return $this->contents->toArray();
     }
 
 }

@@ -27,7 +27,7 @@ class Logger {
             return $code . ': ' . $message . ' (' . $file . ')';
         }
 
-        return $error;
+        return preg_replace('/\s+/', ' ', $error);
     }
 
     ///////////////////////////////////////////////////////////////////////////////

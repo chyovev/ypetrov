@@ -22,3 +22,60 @@ error_reporting(E_ALL|E_STRCT);
 
 // set locale to bulgarian for dates and times
 setlocale(LC_TIME, "bg_BG.UTF-8", "bg_BG.UTF-8@euro", "bul_bul.UTF-8", "bul.UTF-8", "bgr_BGR.UTF-8", "bgr.UTF-8", "bulgarian.UTF-8");
+
+// database parameters are passed to doctrine in doctrine/bootstrap.php
+$dbParams = [
+    // development db configuration
+    [
+        'driver'        => 'pdo_mysql',
+        'host'          => 'localhost',
+        'dbname'        => 'database',
+        'user'          => 'username',
+        'password'      => 'password',
+        'charset'       => 'utf8mb4',
+        'driverOptions' => ['1002' => "SET NAMES 'UTF8MB4' COLLATE 'utf8mb4_general_ci'"],
+    ],
+
+    // production db configuration
+    [
+        'driver'        => 'pdo_mysql',
+        'host'          => 'localhost',
+        'dbname'        => 'database',
+        'user'          => 'username',
+        'password'      => 'password',
+        'charset'       => 'utf8mb4',
+        'driverOptions' => ['1002' => "SET NAMES 'UTF8MB4' COLLATE 'utf8mb4_general_ci'"],
+    ],
+];
+
+
+// email settings are used for notification emails (see CommentSubscriber.php)
+$emailSettings = [
+    // development email settings
+    [
+        'is_smtp'       => true,
+        'has_smtp_auth' => true,
+        'smtp_secure'   => '',
+        'port'          => 25,
+        'host'          => 'mail.example.com',
+        'username'      => 'user@example.com',
+        'password'      => 'password',
+        'from_address'  => 'user@example.com',
+        'from_name'     => 'Joe User',
+        'charset'       => 'UTF-8',
+    ],
+
+    // production email settings
+    [
+        'is_smtp'       => true,
+        'has_smtp_auth' => true,
+        'smtp_secure'   => '',
+        'port'          => 25,
+        'host'          => 'mail.example.com',
+        'username'      => 'user@example.com',
+        'password'      => 'password',
+        'from_address'  => 'user@example.com',
+        'from_name'     => 'Joe User',
+        'charset'       => 'UTF-8',
+    ],
+];

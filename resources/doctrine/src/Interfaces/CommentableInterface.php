@@ -18,6 +18,11 @@
 //
 //    Classes of Entities which can be commented on
 //    should implement this Commentable interface.
+//
+//
+//    NB!
+//    When an entity implements this interface, don't forget to set it up
+//    in CommentSubscriber.php's getMainEntity method as well.
 
 namespace Interfaces;
 
