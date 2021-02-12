@@ -14,3 +14,4 @@ node_modules
 vendor/
 public/resources/img/content/
 public/resources/videos/
+logs/

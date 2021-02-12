@@ -7,9 +7,9 @@ function renderLayoutWithContentFile($contentFile, $variables = []): void {
     // convert the $variables array into single variables
     extract($variables);
  
- 
     if ($contentFile === 'error404.php' ||  ! file_exists($contentFileFullPath)) {
         header('HTTP/1.1 404 Not Found'); 
+        Logger::logError('Resource not found');
         require_once(LAYOUTS_PATH . '/header.php');
         require_once(LAYOUTS_PATH . '/error404.php');
     }
@@ -60,8 +60,13 @@ function isRequest(string $type): bool {
 ///////////////////////////////////////////////////////////////////////////////
 function throw404OnEmpty($item): void {
     if ( ! $item) {
-        renderLayoutWithContentFile('error404.php');
-        die;
+        if ( ! IS_DEV) {
+            renderLayoutWithContentFile('error404.php');
+            die;
+        }
+
+        $backtrace = debug_backtrace();
+        throw new Exception('Backtrace: calling function "' . $backtrace[0]['function'] . '" in file ' . $backtrace[0]['file']);
     }
 }
 

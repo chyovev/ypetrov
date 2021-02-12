@@ -28,11 +28,12 @@ function processSaveCommentRequest($object) {
             'errors' => $e->getErrors(),
         ];
     }
-    catch (LogicException $e) {
-        return [
-            'status' => false,
-            'errors' => ['global' => 'Няма как да добавите коментар тук.<br /> Моля, докладвайте грешката през страница «Контакт».'],
-        ];
+
+    // if some sort of an internal error occurs,
+    // log it and use 500 http code
+    catch (Exception $e) {
+        http_response_code(500);
+        Logger::logError($e);
     }
 }
 

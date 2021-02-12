@@ -36,5 +36,5 @@ $dbParams       = [
 $eventManager   = new EventManager();
 $eventManager->addEventSubscriber(new CommentValidatorSubscriber());
 
-$config         = Setup::createXMLMetadataConfiguration($entitiesFolder, IS_DEV, $proxiesFolder);
-$entityManager  = EntityManager::create($dbParams[IS_DEV], $config, $eventManager);
+$config         = Setup::createXMLMetadataConfiguration($entitiesFolder, !IS_DEV, $proxiesFolder);
+$entityManager  = EntityManager::create($dbParams[!IS_DEV], $config, $eventManager);

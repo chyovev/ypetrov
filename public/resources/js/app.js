@@ -5,6 +5,7 @@ var App = {
     animateScrollInProgress: false,
     swiperObject: null,
     isAjaxInProgress: false,
+    genericErrorMessage: 'Възникна грешка. Моля, опитайте по-късно.',
     
     ///////////////////////////////////////////////////////
     init: function() {
@@ -346,7 +347,7 @@ var App = {
 
         // reset all previous errors on submit
         $('.error-field').removeClass('error-field');
-        $('.error-message').slideUp('fast');
+        $('.error-message').slideUp('fast').removeClass('center');
 
         return $.ajax({
             url:      url,
@@ -361,7 +362,7 @@ var App = {
 
                     // if there's a general error, it has higher priority; don't show other errors
                     if ('general' in response.errors) {
-                        $('.error-message').html(response.errors.general[0]).slideDown();
+                        $('.error-message').html(response.errors.general[0]).addClass('center').slideDown();
                     }
 
                     // otherwise mark respective fields as erroneous
@@ -408,6 +409,11 @@ var App = {
                     // fade in the new comment or the whole section based on section visibility
                     isSectionVisible ? $comment.fadeIn(2000) : $commentSection.fadeIn(2000);
                 }
+            },
+
+            // on server error show a generic message (the error was logged)
+            error: function() {
+                $('.error-message').html(App.genericErrorMessage).addClass('center').slideDown();
             }
         }).always(function() {
             App.isAjaxInProgress = false;
