@@ -304,6 +304,10 @@ var App = {
 
                 // update the current image indicator
                 $('#current-image').html(index+1);
+
+                // lazy load images by copying data-src to src attribute
+                var $img = $(element).find('img');
+                $img.attr('src', $img.attr('data-src'));
             }
         });
     },

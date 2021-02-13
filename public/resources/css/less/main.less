@@ -489,6 +489,7 @@ h1, h2, h3, h4, h5, h6 {
             }
             .book {
                 text-indent: 0px;
+                margin: 0px auto;
                 .cover img {
                     border: 1px solid mix(black, white, 10%);
                     border-radius: 5px;
@@ -499,7 +500,6 @@ h1, h2, h3, h4, h5, h6 {
                 }
                 @media @notmobile {
                     display: table;
-                    margin: 0px auto;
                     margin-top: 1cm;
                     .info, .cover {
                         display: table-cell;
@@ -512,7 +512,7 @@ h1, h2, h3, h4, h5, h6 {
                     }
                 }
                 @media @mobile {
-                    display: block;
+                    display: table;
                     .cover {
                         margin-top: 0.5cm;
                         img {

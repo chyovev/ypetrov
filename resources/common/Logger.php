@@ -5,6 +5,7 @@ class Logger {
     const LOGFILE          = 'errors.log';
     const LOG_PATH         = ROOT . '/logs';
     const LOGFILE_FULLPATH = self::LOG_PATH . '/' . self::LOGFILE;
+    const MAXSIZE          = 10; // MB
 
     ///////////////////////////////////////////////////////////////////////////////
     public static function logError($error) {
@@ -32,6 +33,13 @@ class Logger {
 
     ///////////////////////////////////////////////////////////////////////////////
     private static function openLogFile() {
+        // if there's a file with the same name as the folder, remove it
+        if (file_exists(self::LOG_PATH) && ! is_dir(self::LOG_PATH)) {
+            if (@unlink(SELF::LOG_PATH) === false) {
+                throw new Exception('File with same name as log folder already exists and cannot be removed.');
+            }
+        }
+
         // try to create log folder if missing
         if ( ! file_exists(self::LOG_PATH)) {
             if (@mkdir(self::LOG_PATH) === false) {
@@ -39,8 +47,19 @@ class Logger {
             }
         }
 
+        $fileName      = self::LOGFILE_FULLPATH;
+        $maxSizeBytes  = self::MAXSIZE * 1024 * 1024;
+
+        $i             = 0;
+        $pathinfo      = pathinfo($fileName);
+
+        // if the file exists and its size exceeds $maxSize, write to a new file using $i counter
+        while (file_exists($fileName) && filesize($fileName) >= $maxSizeBytes) {
+            $fileName = self::LOG_PATH . '/' . $pathinfo['filename'] . ++$i . '.' . $pathinfo['extension'];
+        }
+
         // try to open log file for writing
-        if ( ($file = @fopen(self::LOGFILE_FULLPATH, 'a')) === false) {
+        if ( ($file = @fopen($fileName, 'a')) === false) {
             throw new Exception('Log file does not exist or has no write permissions.');
         }
 
