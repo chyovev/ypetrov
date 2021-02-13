@@ -24,4 +24,9 @@ class Url {
         return WEBROOT . 'galeriya';
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generateSearchUrl(): string {
+        return WEBROOT . 'tarsene';
+    }
+
 }

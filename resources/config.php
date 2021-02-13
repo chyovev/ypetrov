@@ -1,7 +1,7 @@
 <?php
 define('DOMAIN',         'yosifpetrov.com');
 define('IS_DEV',         (bool) ! preg_match('/'.DOMAIN.'/', $_SERVER['HTTP_HOST']));
-define('META_SUFFIX',    ' | Йосиф Петров');
+define('META_SUFFIX',    ' | Йосиф Петров (1909 – 2004)');
 
 define('TEMPLATES_PATH', realpath(dirname(__FILE__) . '/templates'));
 define('LAYOUTS_PATH',   realpath(dirname(__FILE__) . '/templates/layout'));

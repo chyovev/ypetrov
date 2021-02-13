@@ -50,7 +50,7 @@ class Book {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function getId(): int {
+    public function getId(): int {
         return $this->id;
     }
 

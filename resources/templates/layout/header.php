@@ -1,3 +1,7 @@
+<?php
+$currentPage = getCurrentNavPage();
+$searchStr   = getGetRequestVar('s');
+?>
 <!DOCTYPE html>
 <html lang="bg">
 <head>
@@ -5,8 +9,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title><?= isset($metaTitle) ? escape($metaTitle) . META_SUFFIX : 'Официален сайт в памет на поета Йосиф Петров (1909 – 2004)' ?></title>
     <meta property="og:title" content="<?= isset($metaTitle) ? escape($metaTitle) : 'Официален сайт в памет на поета Йосиф Петров (1909 – 2004)' ?>" />
-    <meta name="description" content="<?= isset($metaDesc) ? truncate($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
-    <meta property="og:description" content="<?= isset($metaDesc) ? truncate($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
+    <meta name="description" content="<?= isset($metaDesc) ? truncateString($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
+    <meta property="og:description" content="<?= isset($metaDesc) ? truncateString($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
     <script type="text/javascript" src="<?= WEBROOT ?>resources/js/script.js"></script>
     <link type="text/css" rel="stylesheet" href="<?= WEBROOT ?>resources/css/style.css" />
     <?php
@@ -28,9 +32,9 @@
     <link rel="mask-icon" href="<?= IMG_LAYOUT ?>/favicon/favicon.png" color="#F6F6F6" />
     <meta name="msapplication-TileColor" content="#F6F6F6" />
     <meta name="theme-color" content="#F6F6F6" />
-    <script>
-
-    </script>
+    <?php if (isset($currentPage['noindex']) && $currentPage['noindex']) {
+        echo '<meta name="robots" content="noindex" />'."\n";
+    } ?>
 </head>
 <body>
     <header>
@@ -39,7 +43,7 @@
 
                 <div class="logo-wrapper">
                     <a href="<?= WEBROOT ?>" class="logo">Йосиф Петров</a>
-                    <span>(1909 – 2004)</span>
+                    <span<?= ( isset($searchStr) ? ' style="display: none"' : '') ?>>(1909 – 2004)</span>
                 </div>
 
                 <div class="nav-toggler-wrapper mobile-only"><span id="nav-toggler"></span></div>
@@ -47,7 +51,6 @@
                 <nav>
                     <?php
                         $navigation  = getGlobalNavigation();
-                        $currentPage = getCurrentNavPage();
                     ?>
                     <ul>
                         <?php if (isset($navigation['books']) && count($navigation['books']) > 0) { ?>
@@ -84,8 +87,8 @@
                         <li><a href="#">Контакт</a></li>
                     </ul>
                     <div class="search-form">
-                        <form action="#">
-                            <input type="text" class="search-field" name="s" placeholder="Търси..." />
+                        <form action="<?= Url::generateSearchUrl() ?>" method="GET">
+                            <input type="text" class="search-field" name="s" placeholder="Търси..."<?= ( $searchStr != NULL ? ' value="' . htmlspecialchars($searchStr) . '"' : '') ?> />
                             <button type="submit" class="search-submit" title="Търсене"></button>
                         </form>
                     </div>

@@ -78,44 +78,38 @@ function escape(?string $string): string {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function wordWrapCut(
+function truncateString(
         string $string,
-        int    $length = 80,
-        string $etc = '...',
-        bool   $break_words = false,
-        bool   $middle = false,
-        string $encoding = 'UTF-8'
+        int    $targetLength = 80,
+        string $suffix       = '...',
+        bool   $breakWords   = false,
+        string $encoding     = 'UTF-8'
     ): string {
 
+    // removing tags, unify white spaces and trim input string
     $string = strip_tags($string);
-    $string = preg_replace('/\s+/i', ' ', $string);
+    $string = trim(preg_replace('/\s/', ' ', $string));
 
-    if (($length === 0) || ($string === '')) {
-        return '';
+    // calculate string length after clean up
+    $stringLength = mb_strlen($string, $encoding);
+
+    // if target length is too small or too big, return string
+    if (($targetLength <= 0) || $targetLength >= $stringLength) {
+        return $string;
     }
 
-    if (mb_strlen($string, $encoding) > $length) {
-        $length -= min($length, mb_strlen($etc, $encoding));
-        if (!$break_words && !$middle) {
-            $string = preg_replace(
-                '/\s+?(\S+)?$/u',
-                '',
-                mb_substr($string, 0, $length + 1, $encoding)
-            );
-        }
-        if (!$middle) {
-            return mb_substr($string, 0, $length, $encoding) . $etc;
-        }
-        return mb_substr($string, 0, $length / 2, $encoding) . $etc .
-               mb_substr($string, -$length / 2, $length, $encoding);
+    // subtract suffix length from target length
+    $targetLength -= min($targetLength, mb_strlen($suffix, $encoding));
+
+    // if words can be broken, simply cut the string and add suffix
+    if ($breakWords) {
+        return mb_substr($string, 0, $targetLength, $encoding) . $suffix;
     }
 
-    return $string;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-function truncate(string $string, int $length): string {
-    return wordWrapCut(escape($string), $length);
+    // otherwise cut one character too long and replace last word (if any) with suffix
+    $string = mb_substr($string, 0, $targetLength + 1, $encoding);
+    
+    return preg_replace('/\s+?(\S+)?$/u', $suffix, $string);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -129,10 +123,11 @@ function getGlobalNavigation(): array {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function setCurrentNavPage(string $fileName, ?string $slug = NULL): void {
+function setCurrentNavPage(string $fileName, ?string $slug = NULL, bool $noindex = false): void {
     $GLOBALS['currentPage'] = [
         'fileName' => $fileName,
         'slug'     => $slug,
+        'noindex'  => $noindex,
     ];
 }
 
@@ -187,4 +182,117 @@ function getRequestVariables(string $type, array $vars, $defaultNull = false) {
 ///////////////////////////////////////////////////////////////////////////////
 function beautifyDate(string $pattern, DateTime $source): string {
     return strftime($pattern, $source->getTimestamp());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function getTextSample(string $haystack, string $needle, int $wordsAround, int $maxLength) {
+    // separate all words of the needle, sort them by length,
+    // add the needle as a whole to the beginning
+    // and filter out duplicates
+    $needleWords = explodeWords($needle);
+    usort($needleWords, 'sortArrayByLength');
+    array_unshift($needleWords , $needle);
+    $needleWords = array_filter($needleWords);
+
+    // then try to find context for each element
+    foreach ($needleWords as $word) {
+        $context = showStringInContext($haystack, $word, $wordsAround);
+        if ($context !== false) {
+            break;
+        }
+    }
+
+    // if there was no match,
+    // fallback to truncating haystack from beginning
+    if ( ! $context) {
+        $context = truncateString($haystack, $maxLength);
+    }
+
+    // bolden needle in haystack while keeping original case
+    $context = outlineElementsInText($needleWords, $context);
+
+    return $context;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function showStringInContext(string $haystack, string $needle, int $wordsAround, string $encoding = 'utf-8') {
+    $haystack       = ' ' . escape($haystack) . ' ' ;
+    $haystackLength = mb_strlen($haystack, $encoding);
+
+    // if the needle is not present in the haystack at all, return false
+    if (($needlePos = mb_stripos($haystack, $needle, 0, $encoding)) === false) {
+        return false;
+    }
+
+    // add context marker at beginning and end (if text is in the middle)
+    $contextMarker = '...';
+
+    // how many words to get on the left and right
+    $wordsLeft    = (int) ($wordsAround / 2);
+    $wordsRight   = $wordsAround + 1;
+    $stashedWords = 0;
+
+    // start searching for words both directions where the needle was found
+    $startPos = $needlePos;
+    $endPos   = $needlePos;
+
+    // start going left character by character
+    // and break only after $wordsLeft matches $stashedWords
+    // or the beginning of the string has been reached
+    while ($stashedWords < $wordsLeft && $startPos > 0) {
+        $startPos--;
+        if (mb_substr($haystack, $startPos, 1, $encoding) === ' ') {
+            $stashedWords++;
+        }
+    }
+
+    // do the same when going right and stop if end of haystack is reached
+    // or $stashedWords matches $wordsRight
+    while ($stashedWords < $wordsRight && $endPos < $haystackLength) {
+        $endPos++;
+        if (mb_substr($haystack, $endPos, 1, $encoding) === ' ') {
+            $stashedWords++;
+        }
+    }
+
+    // finally if not enough words were stashed and the $startPos is still not
+    // at the beginning of the haystack, stash some more
+    while ($stashedWords < $wordsRight && $startPos > 0) {
+        $startPos--;
+        if (mb_substr($haystack, $startPos, 1, $encoding) === ' ') {
+            $stashedWords++;
+        }
+    }
+
+    $trimmed = trim(mb_substr($haystack, $startPos, ($endPos - $startPos), $encoding));
+    $context = $trimmed;
+
+    // add prefix marker if beginning of haystack does not match beginning of context
+    // (1 because spaces were added to surround the haystack)
+    if (mb_strpos($haystack, $trimmed, 0, $encoding) !== 1) {
+        $context = $contextMarker . $trimmed;
+    }
+
+    // add suffix marker if haystack ends on context + white space
+    if (preg_match('/' . preg_quote($trimmed) . '\s$/ui', $haystack) == 0) {
+        $context .= $contextMarker;
+    }
+
+    return $context;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// split words into array
+function explodeWords(string $string): array {
+    return preg_split('~[^\p{L}\p{N}\']+~u', $string);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function sortArrayByLength($a, $b){
+    return mb_strlen($b, 'utf-8') - mb_strlen($a, 'utf-8');
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function outlineElementsInText(array $words, string $haystack): string {
+    return preg_replace('/(' . implode('|', $words) . ')/ui', '<strong>$1</strong>', $haystack);
 }

@@ -5,7 +5,9 @@ class BookRepository extends EntityRepository {
 
     ///////////////////////////////////////////////////////////////////////////
     public function getAllActiveBooks() {
-        return $this->findBy(['active' => 1], ['ord' => 'ASC']);
+        $books = $this->findBy(['active' => 1], ['ord' => 'ASC']);
+
+        return $this->useBookIdAsKey($books);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -20,6 +22,18 @@ class BookRepository extends EntityRepository {
                              ->execute();
 
        return $queryBuilder[0] ?? NULL;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function useBookIdAsKey(array $books): array {
+        $result = [];
+
+        foreach ($books as $bookObject) {
+            $id          = $bookObject->getId();
+            $result[$id] = $bookObject;
+        }
+
+        return $result;
     }
     
 }

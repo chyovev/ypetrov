@@ -20,7 +20,7 @@
 
         <field name="value" column="`value`" type="string" nullable="true" />
 
-        <field name="modifiedAt" column="modified_at" type="datetime" />
+        <field name="modifiedAt" column="modified_at" type="datetime" nullable="true" />
         
     </entity>
     

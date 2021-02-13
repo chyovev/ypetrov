@@ -68,7 +68,7 @@ var App = {
 
         // when the footer is almost reached on mobile,
         // shift button upwards to avoid footer overlap
-        (App.isMobile() && (footerTop + 20) < viewportHeight)
+        (App.isMobile() && (footerTop - 20) < viewportHeight)
             ? $scrollTopBtn.addClass('overlap-footer')
             : $scrollTopBtn.removeClass('overlap-footer');
     },

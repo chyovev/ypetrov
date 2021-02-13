@@ -8,8 +8,12 @@
         <one-to-many field="contents" target-entity="BookContent" mapped-by="poem" fetch="EXTRA_LAZY" />
 
         <unique-constraints>
-            <unique-constraint columns="book_id,slug" name="slug" />
+            <unique-constraint columns="slug" name="slug" />
         </unique-constraints>
+
+        <indexes>
+            <index columns="title,dedication,body" name="search" flags="fulltext" />
+        </indexes>
 
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
@@ -24,7 +28,7 @@
         
         <field name="dedication" type="string" nullable="true" />
         
-        <field name="body" type="text" length="65536" nullable="true" />
+        <field name="body" type="text" length="65535" nullable="true" />
 
         <field name="readCount" column="read_count" type="integer">
             <options>
@@ -35,7 +39,6 @@
 
         <field name="useMonospaceFont" column="use_monospace_font" type="boolean">
             <options>
-                <option name="unsigned">true</option>
                 <option name="default">0</option>
                 <option name="comment">monospace fonts benefit text alignment for certain poems</option>
             </options>

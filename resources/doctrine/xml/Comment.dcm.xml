@@ -23,9 +23,13 @@
         
         <field name="username" type="string" />
         
-        <field name="body" type="text" length="65536" />
+        <field name="body" type="text" length="65535" />
         
-        <field name="ip" type="bigint" nullable="true" />
+        <field name="ip" type="bigint" nullable="true">
+            <options>
+                <option name="comment">long2ip to decode; using bigint instead of string for faster search</option>
+            </options>
+        </field>
 
         <field name="createdAt" column="created_at" type="datetime" nullable="true" />
 
