@@ -6,7 +6,7 @@
             <div class="search-form-fullpage center">
                 <h1>Търсене на стихотворение</h1>
                 <form action="<?= Url::generateSearchUrl() ?>" method="GET">
-                    <input type="text" name="s" value="<?= htmlspecialchars($searchString) ?>" />
+                    <input type="text" name="s" value="<?= htmlspecialchars($searchString) ?>" placeholder="Въведете ключова дума" />
                     <input type="submit" value="Търси" />
                 </form>
             </div>
@@ -33,7 +33,7 @@
                     foreach ($group as $item) {
                         echo '      <div class="poem-result">
                                         <a href="' . Url::generatePoemUrl($book['slug'], $item['slug']) . '">' . outlineElementsInText($searchWords, escape($item['title'])) . '</a>
-                                        <div class="sample">' . getTextSample($item['body'], $searchString, 30, 200) . '</div>
+                                        <div class="sample">' . getTextSample($item['body'], $searchString, 35) . '</div>
                                     </div>';
                     }
 

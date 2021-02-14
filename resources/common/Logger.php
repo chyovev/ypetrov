@@ -21,11 +21,12 @@ class Logger {
         // if the error is actually an exception,
         // get the important information out of it and concatenate it into a string
         if ($error instanceof Exception) {
+            $name    = get_class($error);
             $message = preg_replace('/\s+/', ' ', $error->getMessage());
             $code    = $error->getCode();
             $file    = $error->getFile();
 
-            return $code . ': ' . $message . ' (' . $file . ')';
+            return $error . ' ' . $code . ': ' . $message . ' (' . $file . ')';
         }
 
         return preg_replace('/\s+/', ' ', $error);

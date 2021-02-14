@@ -137,6 +137,20 @@ function getCurrentNavPage(): array {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+function isCurrentPageFile(string $fileName): bool {
+    $currentPage = getCurrentNavPage();
+
+    return (isset($currentPage['fileName']) && $currentPage['fileName'] == $fileName);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function isCurrentPageSlug(string $slug): bool {
+    $currentPage = getCurrentNavPage();
+
+    return (isset($currentPage['slug']) && $currentPage['slug'] == $slug);   
+}
+
+///////////////////////////////////////////////////////////////////////////////
 function getImageDimensions(string $relativeImage): array {
     $completeImagePath = HOST_URL . $relativeImage;
     $dimensions        = @getimagesize($completeImagePath);
@@ -185,7 +199,7 @@ function beautifyDate(string $pattern, DateTime $source): string {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function getTextSample(string $haystack, string $needle, int $wordsAround, int $maxLength) {
+function getTextSample(string $haystack, string $needle, int $wordsAround) {
     // separate all words of the needle, sort them by length,
     // add the needle as a whole to the beginning
     // and filter out duplicates
@@ -205,7 +219,7 @@ function getTextSample(string $haystack, string $needle, int $wordsAround, int $
     // if there was no match,
     // fallback to truncating haystack from beginning
     if ( ! $context) {
-        $context = truncateString($haystack, $maxLength);
+        $context = cutFirstNWords($haystack, $wordsAround);
     }
 
     // bolden needle in haystack while keeping original case
@@ -282,8 +296,47 @@ function showStringInContext(string $haystack, string $needle, int $wordsAround,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+function cutFirstNWords(string $string, int $wordsCount, string $encoding = 'utf-8'): string {
+    if ($wordsCount <= 1) {
+        return $string;
+    }
+
+    // remove html tags and double spaces
+    $string       = escape($string);
+    $stringLength = mb_strlen($string, $encoding);
+    $stashedWords = 0;
+    $endPos       = 0;
+
+    // until the needed words are collected,
+    // get the position of space with offset = last space pos + 1
+    while ($stashedWords < $wordsCount) {
+        // when there is no next space, break the cycle
+        if (($spacePos = mb_strpos($string, ' ', $endPos, $encoding)) === false) {
+            break;
+        }
+        $endPos = $spacePos + 1;
+        $stashedWords++;
+    }
+
+    // if there were no spaces to begin with, return the original string
+    if ( ! $stashedWords) {
+        return $string;
+    }
+
+    $cut = mb_substr($string, 0, $endPos - 1, 'utf-8');
+
+    // if the length of the cut version is shorter than source,
+    // add suffix
+    if (mb_strlen($cut, 'utf-8') < $stringLength) {
+        $cut .= '...';
+    }
+
+    return $cut;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // split words into array
-function explodeWords(string $string): array {
+function explodeWords(?string $string = NULL): array {
     return preg_split('~[^\p{L}\p{N}\']+~u', $string);
 }
 
@@ -295,4 +348,9 @@ function sortArrayByLength($a, $b){
 ///////////////////////////////////////////////////////////////////////////////
 function outlineElementsInText(array $words, string $haystack): string {
     return preg_replace('/(' . implode('|', $words) . ')/ui', '<strong>$1</strong>', $haystack);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function isEmailValid(string $email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL);
 }

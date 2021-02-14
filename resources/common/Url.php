@@ -29,4 +29,9 @@ class Url {
         return WEBROOT . 'tarsene';
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generateContactUrl(): string {
+        return WEBROOT . 'kontakt';
+    }
+
 }

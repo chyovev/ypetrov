@@ -54,28 +54,28 @@ $searchStr   = getGetRequestVar('s');
                     ?>
                     <ul>
                         <?php if (isset($navigation['books']) && count($navigation['books']) > 0) { ?>
-                        <li class="has-items<?= (isset($currentPage['fileName']) && $currentPage['fileName'] == 'poem.php' ? ' active open' : '') ?>">
+                        <li class="has-items<?= (isCurrentPageFile('poem.php') ? ' active open' : '') ?>">
                             <a href="javascript: void(0);">Творчество</a>
                             <ul>
                                 <?php
                                 foreach ($navigation['books'] as $item) {
                                     $bookItem = $item->getBookDetails();
-                                    $class    = (isset($currentPage['slug']) && $currentPage['slug'] === $bookItem['slug']) ? ' class="active"' : '';
+                                    $class    = isCurrentPageSlug($bookItem['slug']) ? ' class="active"' : '';
                                     echo '<li><a href="' . Url::generateBookUrl($bookItem['slug']) . '"' . $class . '>' . escape($bookItem['title']) .' (' . $bookItem['published_year'] . ')</a></li>'."\n";
                                 }
                                 ?>
                             </ul>
                         </li>
                         <?php } ?>
-                        <li<?= (isset($currentPage['fileName']) && $currentPage['fileName'] == 'gallery.php' ? ' class="active"' : '') ?>><a href="<?= Url::generateGalleryUrl() ?>">Галерия</a></li>
+                        <li<?= (isCurrentPageFile('gallery.php') ? ' class="active"' : '') ?>><a href="<?= Url::generateGalleryUrl() ?>">Галерия</a></li>
                         <?php if (isset($navigation['videos']) && count($navigation['videos']) > 0) { ?>
-                        <li class="has-items<?= (isset($currentPage['fileName']) && $currentPage['fileName'] == 'video.php' ? ' active open' : '') ?>">
+                        <li class="has-items<?= (isCurrentPageFile('video.php') ? ' active open' : '') ?>">
                             <a href="javascript: void(0);">Видео</a>
                             <ul>
                                 <?php
                                 foreach ($navigation['videos'] as $item) {
                                     $videoItem = $item->getVideoDetails();
-                                    $class     = (isset($currentPage['slug']) && $currentPage['slug'] === $videoItem['slug']) ? ' class="active"' : '';
+                                    $class     = isCurrentPageSlug($videoItem['slug']) ? ' class="active"' : '';
                                     echo '<li><a href="' . Url::generateVideoUrl($videoItem['slug']) . '"' . $class . '>' . escape($videoItem['title']) .'</a></li>'."\n";
                                 }
                                 ?>
@@ -84,7 +84,7 @@ $searchStr   = getGetRequestVar('s');
                         <?php } ?>
                         <li><a href="#">Интервюта</a></li>
                         <li><a href="#">Статии и спомени</a></li>
-                        <li><a href="#">Контакт</a></li>
+                        <li<?= (isCurrentPageFile('contact.php') ? ' class="active"' : '') ?>><a href="<?= Url::generateContactUrl() ?>">Контакт</a></li>
                     </ul>
                     <div class="search-form">
                         <form action="<?= Url::generateSearchUrl() ?>" method="GET">

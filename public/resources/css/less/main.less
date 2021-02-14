@@ -1018,7 +1018,7 @@ input[type="submit"] {
 }
 textarea {
     resize: vertical;
-    min-height: 5em;
+    min-height: 10em;
     max-height: 20em;
 }
 .comments-wrapper {
@@ -1074,17 +1074,15 @@ textarea {
     }
     textarea {
         margin: 0.5cm 0px;
-        height: 150px;
     }
     input[type="submit"] {
         display: inherit;
-        margin: 0px auto;
+        margin: 20px auto;
     }
 }
 .error-message {
     color: red;
     display: block;
-    padding-bottom: 20px;
     line-height: 1em;
 }
 .search-form-fullpage {
@@ -1192,6 +1190,22 @@ textarea {
         }
     }
 }
+.contact-form {
+    max-width: 500px;
+    @media @notmobile {
+        margin: 2cm auto 1cm auto;
+    }
+    @media @mobile {
+        margin: 1cm auto;
+    }
+    input, textarea {
+        display: block;
+        margin: 20px auto;
+    }
+    input[type="text"], textarea {
+        width: 100%;
+    }
+}
 #scroll-top {
     background: url(../img/layout/arrow-up.png) no-repeat 50% 50% fade(black, 20%);
     border: 1px solid fade(black, 30%);
@@ -1264,5 +1278,8 @@ textarea {
 .op-0-fadein {
     opacity: 0;
     transition: opacity 0.3s;
+}
+.green {
+    color: green;
 }
 /* --------------------------- */

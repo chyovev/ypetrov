@@ -19,4 +19,6 @@ function includeAllFilesRecursively($folder, $extension) {
     }
 }
 
+// load traits before everything else, otherwise an error occurs
+includeAllFilesRecursively(DOCTRINE_PATH . '/src/Traits', 'php');
 includeAllFilesRecursively(DOCTRINE_PATH . '/src', 'php');

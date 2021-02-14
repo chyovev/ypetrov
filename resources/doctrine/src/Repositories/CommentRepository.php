@@ -41,5 +41,26 @@ class CommentRepository extends EntityRepository {
                     ->getQuery()
                     ->getSingleScalarResult();
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function prepareCommentFromPostRequest($object) {
+        if ( ! $this->isEntityCommentable($object)) {
+            throw new LogicException("Class '{$objectClass}' is not commentable.");
+        }
+
+        $requestVars = getRequestVariables('POST', ['username', 'comment']);
+        $ip          = $_SERVER['REMOTE_ADDR'];
+        $objectClass = ClassUtils::getClass($object);
+        
+        $comment = new Comment();
+        $comment->setUsername($requestVars['username'])
+                ->setBody($requestVars['comment'])
+                ->setIp($ip)
+                ->setEntityClass($objectClass)
+                ->setEntityId($object->getId())
+                ->setCreatedAt();
+
+        return $comment;
+    }
     
 }
