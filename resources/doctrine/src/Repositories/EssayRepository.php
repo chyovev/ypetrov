@@ -1,7 +1,7 @@
 <?php
 use Doctrine\ORM\EntityRepository;
 
-class VideoRepository extends EntityRepository {
+class EssayRepository extends EntityRepository {
 
     ///////////////////////////////////////////////////////////////////////////
     public function findActive() {
@@ -9,7 +9,7 @@ class VideoRepository extends EntityRepository {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function findBySlug(?string $slug): ?Video {
+    public function findBySlug(?string $slug): ?Essay {
         return $this->findOneBy(['slug' => $slug, 'active' => 1]);
     }
     

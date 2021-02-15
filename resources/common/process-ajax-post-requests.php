@@ -20,7 +20,7 @@ function processSaveCommentRequest($object): array {
         return [
             'status'      => true,
             'type'        => 'comment',
-            'html'        => renderContentWithNoLayout('elements/single-comment.php', ['comment' => $comment->getCommentDetails()]),
+            'html'        => renderContentWithNoLayout('elements/single-comment.php', ['comment' => $comment->getDetails()]),
             'success_msg' => renderContentWithNoLayout('elements/form-success-message.php', ['type' => 'comment']),
         ];
     }

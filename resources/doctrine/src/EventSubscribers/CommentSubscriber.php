@@ -114,6 +114,12 @@ class CommentSubscriber implements EventSubscriber {
             case 'Video':
                 return $this->getVideoLink($entityId);
                 break;
+            case 'PressArticle':
+                return $this->getArticleLink($entityId);
+                break;
+            case 'Essay':
+                return $this->getEssayLink($entityId);
+                break;
         }
 
         return NULL;
@@ -121,28 +127,48 @@ class CommentSubscriber implements EventSubscriber {
 
     ///////////////////////////////////////////////////////////////////////////
     private function getPoemLink(int $id): array {
-        $poemRepository = $this->entityManager->getRepository('Poem');
-        $poemObject     = $poemRepository->findOneBy(['id' => $id]);
-        $poemDetails    = $poemObject->getPoemDetails();
-        $contents       = $poemObject->getContentsAsArray();
+        $repository = $this->entityManager->getRepository('Poem');
+        $entity     = $repository->findOneBy(['id' => $id]);
+        $item       = $entity->getDetails();
+        $contents   = $entity->getContentsAsArray();
 
         if (isset($contents[0])) {
-            $bookObject  = $contents[0]->getBook();
-            $bookDetails = $bookObject->getBookDetails();
-            $url         = HOST_URL . Url::generatePoemUrl($bookDetails['slug'], $poemDetails['slug']);
+            $bookEntity = $contents[0]->getBook();
+            $bookItem   = $bookEntity->getDetails();
+            $url        = HOST_URL . Url::generatePoemUrl($bookItem['slug'], $item['slug']);
 
-            return ['стихотворение', $url, $poemDetails['title']];
+            return ['стихотворение', $url, $item['title']];
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////
     private function getVideoLink(int $id): array {
-        $videoRepository = $this->entityManager->getRepository('Video');
-        $videoObject     = $videoRepository->findOneBy(['id' => $id]);
-        $videoDetails    = $videoObject->getVideoDetails();
-        $url             = HOST_URL . Url::generateVideoUrl($videoDetails['slug']);
+        $repository = $this->entityManager->getRepository('Video');
+        $entity     = $repository->findOneBy(['id' => $id]);
+        $item       = $entity->getDetails();
+        $url        = HOST_URL . Url::generateVideoUrl($item['slug']);
 
-        return ['видео', $url, $videoDetails['title']];
+        return ['видео', $url, $item['title']];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getArticleLink(int $id): array {
+        $repository = $this->entityManager->getRepository('PressArticle');
+        $entity     = $repository->findOneBy(['id' => $id]);
+        $item       = $entity->getDetails();
+        $url        = HOST_URL . Url::generatePressUrl($item['slug']);
+
+        return ['статия', $url, $item['title']];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getEssayLink(int $id): array {
+        $repository = $this->entityManager->getRepository('Essay');
+        $entity     = $repository->findOneBy(['id' => $id]);
+        $item       = $entity->getDetails();
+        $url        = HOST_URL . Url::generateEssayUrl($item['slug']);
+
+        return ['есе', $url, $item['title']];
     }
 
     ///////////////////////////////////////////////////////////////////////////

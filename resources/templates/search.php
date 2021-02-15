@@ -23,7 +23,7 @@
                 foreach ($results as $bookId => $group) {
                     $bookObject = $navigation['books'][$bookId];
 
-                    $book       = $bookObject->getBookDetails();
+                    $book       = $bookObject->getDetails();
                     $image      = $book['image'];
 
                     echo   '<div class="book-result-wrapper">

@@ -179,12 +179,12 @@ class Book extends \Book implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getBookDetails($contents = false): array
+    public function getDetails($contents = false): array
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getBookDetails', [$contents]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDetails', [$contents]);
 
-        return parent::getBookDetails($contents);
+        return parent::getDetails($contents);
     }
 
     /**

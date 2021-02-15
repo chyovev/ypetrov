@@ -194,7 +194,11 @@ function getRequestVariables(string $type, array $vars, $defaultNull = false) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function beautifyDate(string $pattern, DateTime $source): string {
+function beautifyDate(string $pattern, ?DateTime $source = NULL): ?string {
+    if ( ! $source) {
+        return NULL;
+    }
+    
     return strftime($pattern, $source->getTimestamp());
 }
 

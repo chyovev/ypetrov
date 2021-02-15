@@ -1,36 +1,37 @@
 <?php
 require_once('../resources/autoload.php');
 
-$articleSlug   = getGetRequestVar('article');
-$articleObject = $pressRepository->findBySlug($articleSlug);
-throw404OnEmpty($articleObject);
+$slug   = getGetRequestVar('article');
+$entity = $pressRepository->findBySlug($slug);
+throw404OnEmpty($entity);
 
 // on a POST ajax request, try to add a comment
 if (isRequestAjax() && isRequest('POST')) {
-    $response = processSaveCommentRequest($articleObject);
+    $response = processSaveCommentRequest($entity);
     rederJSONContent($response);
     exit;
 }
 
 // add +1 to the read count of the article and fetch comments
-$articleObject->incrementReadCount();
+$entity->incrementReadCount();
 $entityManager->flush();
 
-$commentUrl  = Url::generatePressUrl($articleSlug);
-$comments    = $commentRepository->getAllCommentsForEntity($articleObject);
-$article     = $articleObject->getArticleDetails();
-$metaTitle   = $article['title'];
-$metaDesc    = $article['body'];
+$commentUrl = Url::generatePressUrl($slug);
+$comments   = $commentRepository->getAllCommentsForEntity($entity);
+$article    = $entity->getDetails();
+$subtitle   = implode(', ', array_filter([$article['press'], beautifyDate('%d.%m.%Y г.', $article['published_date'])]));
 
 $vars = [
-    'article'    => $article,
-    'metaTitle'  => $metaTitle,
-    'metaDesc'   => $metaDesc,
+    'title'      => $article['title'],
+    'subtitle'   => $subtitle,
+    'metaTitle'  => $article['title'],
+    'body'       => $article['body'],
+    'metaDesc'   => $subtitle ?? $article['body'],
     'commentUrl' => $commentUrl,
     'comments'   => $comments,
 ];
 
 // mark the current article in the navigation
-setCurrentNavPage(basename(__FILE__), $article['slug']);
+setCurrentNavPage(basename(__FILE__), $slug);
 
-renderLayoutWithContentFile('press.php', $vars);
+renderLayoutWithContentFile('textpage.php', $vars);

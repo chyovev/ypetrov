@@ -39,4 +39,9 @@ class Url {
         return WEBROOT . 'presa/' . $articleSlug;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generateEssayUrl(string $essaySlug): string {
+        return WEBROOT . 'za-yosif-petrov/' . $essaySlug;
+    }
+
 }

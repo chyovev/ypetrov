@@ -68,10 +68,10 @@ $searchStr   = getGetRequestVar('s');
                             <a href="javascript: void(0);">Творчество</a>
                             <ul>
                                 <?php
-                                foreach ($navigation['books'] as $item) {
-                                    $bookItem = $item->getBookDetails();
-                                    $class    = isCurrentPageSlug($bookItem['slug']) ? ' class="active"' : '';
-                                    echo '<li><a href="' . Url::generateBookUrl($bookItem['slug']) . '"' . $class . '>' . escape($bookItem['title']) .' (' . $bookItem['published_year'] . ')</a></li>'."\n";
+                                foreach ($navigation['books'] as $entity) {
+                                    $item  = $entity->getDetails();
+                                    $class = isCurrentPageSlug($item['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generateBookUrl($item['slug']) . '"' . $class . '>' . escape($item['title']) .' (' . $item['published_year'] . ')</a></li>'."\n";
                                 }
                                 ?>
                             </ul>
@@ -85,10 +85,10 @@ $searchStr   = getGetRequestVar('s');
                             <a href="javascript: void(0);">Видео</a>
                             <ul>
                                 <?php
-                                foreach ($navigation['videos'] as $item) {
-                                    $videoItem = $item->getVideoDetails();
-                                    $class     = isCurrentPageSlug($videoItem['slug']) ? ' class="active"' : '';
-                                    echo '<li><a href="' . Url::generateVideoUrl($videoItem['slug']) . '"' . $class . '>' . escape($videoItem['title']) .'</a></li>'."\n";
+                                foreach ($navigation['videos'] as $entity) {
+                                    $item  = $entity->getDetails();
+                                    $class = isCurrentPageSlug($item['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generateVideoUrl($item['slug']) . '"' . $class . '>' . escape($item['title']) .'</a></li>'."\n";
                                 }
                                 ?>
                             </ul>
@@ -100,16 +100,30 @@ $searchStr   = getGetRequestVar('s');
                             <a href="javascript: void(0);">Преса</a>
                             <ul>
                                 <?php
-                                foreach ($navigation['articles'] as $item) {
-                                    $articleItem = $item->getArticleDetails();
-                                    $class       = isCurrentPageSlug($articleItem['slug']) ? ' class="active"' : '';
-                                    echo '<li><a href="' . Url::generatePressUrl($articleItem['slug']) . '"' . $class . '>' . ($articleItem['short_title'] ?? $articleItem['title']) .'</a></li>'."\n";
+                                foreach ($navigation['articles'] as $entity) {
+                                    $item  = $entity->getDetails();
+                                    $class = isCurrentPageSlug($item['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generatePressUrl($item['slug']) . '"' . $class . '>' . ($item['short_title'] ?? $item['title']) .'</a></li>'."\n";
                                 }
                                 ?>
                             </ul>
                         <?php } ?>
 
-                        <li><a href="#">Спомени</a></li>
+                        <?php if (isset($navigation['essays']) && count($navigation['essays']) > 0) { ?>
+                        <li class="has-items<?= (isCurrentPageFile('essays.php') ? ' active open' : '') ?>">
+                            <a href="javascript: void(0);">За Йосиф Петров</a>
+                            <ul>
+                                <?php
+                                foreach ($navigation['essays'] as $entity) {
+                                    $item  = $entity->getDetails();
+                                    $class = isCurrentPageSlug($item['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generateEssayUrl($item['slug']) . '"' . $class . '>' . $item['title'] .'</a></li>'."\n";
+                                }
+                                ?>
+                            </ul>
+                        </li>
+                        <?php } ?>
+
                         <li<?= (isCurrentPageFile('contact.php') ? ' class="active"' : '') ?>><a href="<?= Url::generateContactUrl() ?>">Контакт</a></li>
                     </ul>
                     <div class="search-form">

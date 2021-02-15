@@ -30,7 +30,7 @@ class Book {
     /* no need for setters yet, data is only read from the DB */
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getBookDetails($contents = false): array {
+    public function getDetails($contents = false): array {
         $book = [
             'id'             => $this->getId(),
             'active'         => $this->getActive(),
@@ -91,7 +91,7 @@ class Book {
 
         /** @var BookContent $item */
         foreach ($contents as $item) {
-            $poem              = $item->getPoem()->getPoemDetails();
+            $poem              = $item->getPoem()->getDetails();
             $poemSlug          = $poem['slug'];
             $result[$poemSlug] = $item;
         }

@@ -21,7 +21,7 @@ class Video implements Commentable {
     private $modifiedAt;
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getVideoDetails(): array {
+    public function getDetails(): array {
         $video = [
             'id'      => $this->getId(),
             'active'  => $this->getActive(),

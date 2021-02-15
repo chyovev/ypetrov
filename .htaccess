@@ -17,6 +17,7 @@ RewriteRule ^galeriya/?$                       public/gallery.php               
 RewriteRule ^tarsene/?$                        public/search.php                  [QSA,L]
 RewriteRule ^kontakt/?$                        public/contact.php                 [QSA,L]
 RewriteRule ^presa/([^/]+)/?$                  public/press.php?article=$1        [QSA,L]
+RewriteRule ^za-yosif-petrov/([^/]+)/?$        public/essay.php?essay=$1          [QSA,L]
 RewriteRule ^(.*)$    public/$1     [L]
 
 # use a custom 404 page

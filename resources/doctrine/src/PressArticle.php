@@ -28,7 +28,7 @@ class PressArticle implements Commentable {
     private $modifiedAt;
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getArticleDetails(): array {
+    public function getDetails(): array {
         $article = [
             'id'             => $this->getId(),
             'active'         => $this->getActive(),

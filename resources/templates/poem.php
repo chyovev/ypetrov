@@ -11,7 +11,7 @@
             <ol>
                 <?php
                 foreach ($book['contents'] as $poemSlug => $contentItem) {
-                    $item  = $contentItem->getPoem()->getPoemDetails();
+                    $item  = $contentItem->getPoem()->getDetails();
                     $class = ($poem && $poemSlug === $poem['slug']) ? ' class="active"' : '';
                     echo '<li><a href="' . Url::generatePoemUrl($book['slug'], $poemSlug) . '"'.$class.' title="' . escape($item['title']) . '">' . escape($item['title']) . '</a></li>';
                 }

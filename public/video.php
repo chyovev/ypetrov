@@ -19,7 +19,7 @@ $entityManager->flush();
 
 $commentUrl  = Url::generateVideoUrl($videoSlug);
 $comments    = $commentRepository->getAllCommentsForEntity($videoObject);
-$video       = $videoObject->getVideoDetails();
+$video       = $videoObject->getDetails();
 $metaTitle   = $video['title'];
 $metaDesc    = $video['summary'];
 $metaImage   = [

@@ -1,0 +1,57 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Essay" table="essays" repository-class="EssayRepository">
+
+        <unique-constraints>
+            <unique-constraint columns="slug" name="slug" />
+        </unique-constraints>
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+            <options>
+                <option name="unsigned">true</option>
+            </options>
+        </id>
+
+        <field name="active" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+
+        <field name="title" type="string" />
+
+        <field name="slug" type="string" unique="true" />
+
+        <field name="shortTitle" column="short_title" type="string" nullable="true">
+            <options>
+                <option name="comment">used in the navigation</option>
+            </options>
+        </field>
+
+        <field name="body" type="text" length="65535" />
+
+        <field name="readCount" column="read_count" type="integer">
+            <options>
+                <option name="unsigned">true</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+
+        <field name="ord" type="integer">
+            <options>
+                <option name="unsigned">true</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+
+        <field name="createdAt" column="created_at" type="datetime" nullable="true" />
+
+        <field name="modifiedAt" column="modified_at" type="datetime" nullable="true" />
+        
+    </entity>
+    
+</doctrine-mapping>

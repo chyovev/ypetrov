@@ -179,12 +179,12 @@ class Video extends \Video implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getVideoDetails(): array
+    public function getDetails(): array
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getVideoDetails', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDetails', []);
 
-        return parent::getVideoDetails();
+        return parent::getDetails();
     }
 
     /**

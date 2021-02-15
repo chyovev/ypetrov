@@ -179,12 +179,12 @@ class Comment extends \Comment implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
-    public function getCommentDetails(): array
+    public function getDetails(): array
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCommentDetails', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDetails', []);
 
-        return parent::getCommentDetails();
+        return parent::getDetails();
     }
 
     /**

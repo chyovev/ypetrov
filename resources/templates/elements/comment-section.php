@@ -5,7 +5,7 @@
         <?php
         $i = 1;
         foreach ($comments as $item) {
-            $comment = $item->getCommentDetails();
+            $comment = $item->getDetails();
             include 'single-comment.php';
             $i++;
         }

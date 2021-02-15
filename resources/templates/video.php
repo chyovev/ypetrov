@@ -11,7 +11,7 @@
             $allVideos  = $navigation['videos'];
 
             foreach ($allVideos as $videoItem) {
-                $item  = $videoItem->getVideoDetails();
+                $item  = $videoItem->getDetails();
                 $image = $item['video']['jpg'];
                 $class = ($mainVideo['slug'] === $item['slug']) ? ' class="active"' : '';
                 echo   '<li>

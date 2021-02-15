@@ -7,7 +7,7 @@ $poemSlug   = getGetRequestVar('poem');
 $bookObject = $bookRepository->findBySlug($bookSlug);
 throw404OnEmpty($bookObject);
 
-$book       = $bookObject->getBookDetails(true);
+$book       = $bookObject->getDetails(true);
 $metaTitle  = $book['title'] . ' (' . $book['published_year'] . ')';
 $metaDesc   = sprintf('Година на издаване: %s г.; Стихотворения: %s', $book['published_year'], count($book['contents']));
 
@@ -28,7 +28,7 @@ if (isset($poemSlug)) {
     }
 
     // otherwise, continue loading the poem
-    $poem       = $poemObject->getPoemDetails();
+    $poem       = $poemObject->getDetails();
 
     // add +1 to the read count of the poem
     $poemObject->incrementReadCount();

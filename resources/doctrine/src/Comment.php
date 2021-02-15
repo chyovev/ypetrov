@@ -17,7 +17,7 @@ class Comment {
     private $entity;
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getCommentDetails(): array {
+    public function getDetails(): array {
         $comment = [
             'id'           => $this->getId(),
             'entity_class' => $this->getEntityClass(),

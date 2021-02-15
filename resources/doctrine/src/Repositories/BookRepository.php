@@ -4,7 +4,7 @@ use Doctrine\ORM\EntityRepository;
 class BookRepository extends EntityRepository {
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getAllActiveBooks() {
+    public function findActive() {
         $books = $this->findBy(['active' => 1], ['ord' => 'ASC']);
 
         return $this->useBookIdAsKey($books);
