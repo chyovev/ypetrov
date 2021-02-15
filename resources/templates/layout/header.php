@@ -31,6 +31,9 @@ $searchStr   = getGetRequestVar('s');
               <meta property="og:video" content="' . HOST_URL . $mainVideo['video']['webm'] . '" />
               <meta property="og:video:type" content="video/webm" />'."\n";
     }
+    if (isset($canonical)) {
+        echo '<link rel="canonical" href="' . $canonical . '" />';
+    }
     ?>
     <link rel="apple-touch-icon" sizes="120x120" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />
     <link rel="apple-touch-icon-precomposed" type="image/png" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />

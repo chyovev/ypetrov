@@ -52,6 +52,8 @@ if ( ! isRequestAjax()) {
         'size' => getImageDimensions($book['image']),
     ];
 
+    $canonicalUrl = getPoemCanonicalUrl($poemObject, $poemSlug) ?? Url::generatePoemUrl($bookSlug, $poemSlug);;
+
     $vars = [
         'book'      => $book,
         'metaTitle' => $metaTitle,
@@ -60,6 +62,7 @@ if ( ! isRequestAjax()) {
         'poem'      => $poem ?? NULL,
         'commentUrl'=> $commentUrl ?? NULL,
         'comments'  => $comments ?? NULL,
+        'canonical' => HOST_URL . $canonicalUrl,
     ];
 
     renderLayoutWithContentFile('poem.php', $vars);
@@ -98,4 +101,27 @@ else {
 
     rederJSONContent($response);
     exit;
+}
+
+
+function getPoemCanonicalUrl(Poem $poemEntity, string $poemSlug): ?string {
+    // check how many books this poem is listed in
+    $poemContent = $poemEntity->getContentsAsArray();
+
+    // if it's just one, it's the current one: generate current url
+    if ($poemContent == 1) {
+        return NULL;
+    }
+
+    // otherwise cycle through all books and return the first active one
+    foreach ($poemContent as $bookAssociation) {
+        $bookEntity = $bookAssociation->getBook();
+        $book       = $bookEntity->getDetails();
+
+        if ($book['active']) {
+            return Url::generatePoemUrl($book['slug'], $poemSlug);
+        }
+    }
+
+    return NULL;
 }
