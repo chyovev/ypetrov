@@ -72,7 +72,7 @@ class Logger {
         if ($file) {
             $httpCode = http_response_code();
             $date     = date('Y-m-d H:i:s');
-            $url      = $_SERVER['REQUEST_URI'];
+            $url      = rawurldecode($_SERVER['REQUEST_URI']);
             
             $message  = '[' . $date . '] ::: ' . (HOST_URL . $url) . ' (' . $httpCode . ') ::: ' . $message . "\n";
             fwrite($file, $message);

@@ -32,7 +32,7 @@ $searchStr   = getGetRequestVar('s');
               <meta property="og:video:type" content="video/webm" />'."\n";
     }
     if (isset($canonical)) {
-        echo '<link rel="canonical" href="' . $canonical . '" />';
+        echo '<link rel="canonical" href="' . $canonical . '" />'."\n";
     }
     ?>
     <link rel="apple-touch-icon" sizes="120x120" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />

@@ -9,7 +9,7 @@ function renderLayoutWithContentFile($contentFile, $variables = []): void {
  
     if ($contentFile === 'error404.php' ||  ! file_exists($contentFileFullPath)) {
         header('HTTP/1.1 404 Not Found'); 
-        Logger::logError('Resource not found');
+        Logger::logError('Page not found');
         require_once(LAYOUTS_PATH . '/header.php');
         require_once(LAYOUTS_PATH . '/error404.php');
     }
@@ -292,7 +292,7 @@ function showStringInContext(string $haystack, string $needle, int $wordsAround,
     }
 
     // add suffix marker if haystack ends on context + white space
-    if (preg_match('/' . preg_quote($trimmed) . '\s$/ui', $haystack) == 0) {
+    if (preg_match('/' . preg_quote($trimmed, '/') . '\s$/ui', $haystack) == 0) {
         $context .= $contextMarker;
     }
 

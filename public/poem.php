@@ -52,7 +52,7 @@ if ( ! isRequestAjax()) {
         'size' => getImageDimensions($book['image']),
     ];
 
-    $canonicalUrl = getPoemCanonicalUrl($poemObject, $poemSlug) ?? Url::generatePoemUrl($bookSlug, $poemSlug);;
+    $canonicalUrl = isset($poemObject) ? (getPoemCanonicalUrl($poemObject, $poemSlug) ?? Url::generatePoemUrl($bookSlug, $poemSlug)) : NULL;
 
     $vars = [
         'book'      => $book,
@@ -62,7 +62,7 @@ if ( ! isRequestAjax()) {
         'poem'      => $poem ?? NULL,
         'commentUrl'=> $commentUrl ?? NULL,
         'comments'  => $comments ?? NULL,
-        'canonical' => HOST_URL . $canonicalUrl,
+        'canonical' => $canonicalUrl ? (HOST_URL . $canonicalUrl) : NULL,
     ];
 
     renderLayoutWithContentFile('poem.php', $vars);
