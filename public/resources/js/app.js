@@ -17,11 +17,14 @@ var App = {
         App.scrollSidebarToCurrentPoem();
         App.initGallerySwiper();
     },
-    
+
     ///////////////////////////////////////////////////////
     bind: function() {
         $(window).scroll(App.detectScroll);
+        $(document).keyup(App.onKeyUp);
         $('.search-submit').on('click', App.showSearchField);
+        $('.filter button').on('click', App.showFilterField);
+        $('#filter-field').on("input propertychange", App.filterPoems);
         $('.nav-toggler-wrapper').on('click', App.toggleNavigation);
         $('nav li.has-items > a').on('click', App.toggleSubNavigation);
         $('.aside-toggler').on('click', App.togglePanel);
@@ -74,6 +77,28 @@ var App = {
     },
     
     ///////////////////////////////////////////////////////////////////////////
+    onKeyUp: function(e) {
+        if (e.key === 'Escape') {
+
+            // if the search field is visible, blur it and hide it
+            if ($('.search-field').is(':focus')) {
+                $('.logo-wrapper span').animate({width:'toggle'}, 350);
+                $('.search-field').blur().animate({width:'toggle'}, 350, function() {
+                    // remove style attribute to fix border radius of submit button
+                    $(this).removeAttr('style');
+                });
+            }
+
+            // if the filter field is visible,
+            // reset it and hide it
+            else if ($('#filter-field').is(':visible')) {
+                $('#filter-field').val('').trigger('input');
+                $('.filter button').trigger('click');
+            }
+        }
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
     showSearchField: function(e) {
         // if the field is not visible, show it and prevent default action
         // otherwise just submit the form
@@ -82,6 +107,28 @@ var App = {
             $('.logo-wrapper span').animate({width:'toggle'}, 350);
             $('.search-field').animate({width:'toggle'}, 350).focus();
         }
+
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    showFilterField: function(e) {
+        e.preventDefault();
+        $('#filter-field').animate({width:'toggle'}, 350).focus();
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    filterPoems: function(e) {
+        var value   = $(this).val().toLowerCase(),
+            $target = $('.aside-wrapper ol li');
+
+        $target.filter(function() {
+            var $link = $(this).find('a'),
+                // keep only if title or data-dedication attribute matches
+                match =    ($link.text().toLowerCase().indexOf(value) > -1)
+                        || ($link.attr('data-dedication').toLowerCase().indexOf(value) > -1);
+
+            $(this).toggle(match);
+        });
     },
 
     ///////////////////////////////////////////////////////////////////////////

@@ -3,17 +3,25 @@
     <div class="aside-wrapper">
         <aside>
             <div class="title-wrapper stickable">
-                <?php
-                $class = !$poem ? ' active' : '';
-                echo '<a href="' . Url::generateBookUrl($book['slug']) . '" class="title'.$class.'">«' . $book['title'] . '»</a>';
-                ?>
+                <div class="title">
+                    <?php
+                        $class = !$poem ? ' class="active"' : '';
+                        echo '<a href="' . Url::generateBookUrl($book['slug']) . '"'.$class.'>«' . $book['title'] . '»</a>';
+                    ?>
+                    <div class="filter">
+                        <div class="filter-inner-wrapper">
+                            <input type="text" id="filter-field" placeholder="Филтрирай по име" />
+                            <button type="button" title="Филтър">Филтър</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <ol>
                 <?php
                 foreach ($book['contents'] as $poemSlug => $contentItem) {
                     $item  = $contentItem->getPoem()->getDetails();
                     $class = ($poem && $poemSlug === $poem['slug']) ? ' class="active"' : '';
-                    echo '<li><a href="' . Url::generatePoemUrl($book['slug'], $poemSlug) . '"'.$class.' title="' . escape($item['title']) . '">' . escape($item['title']) . '</a></li>';
+                    echo '<li><a href="' . Url::generatePoemUrl($book['slug'], $poemSlug) . '"'.$class.' title="' . escape($item['title']) . '" data-dedication="' . escape($item['dedication']) . '">' . escape($item['title']) . '</a></li>';
                 }
                 ?>
             </ol>

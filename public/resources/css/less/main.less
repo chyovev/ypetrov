@@ -151,7 +151,7 @@ header {
                         background-repeat: no-repeat;
                         background-position: 12px 0px;
                         background-size: 15px;
-                        outline: 0; /* remove browser dotted border on focus */
+                        outline: none; /* remove browser dotted border on focus */
                     }
                     &.open > a {
                         background-position-y: -40px;
@@ -620,16 +620,56 @@ aside {
         padding: 10px 0px;
         font-weight: bold;
         line-height: 1em;
-        text-decoration: none;
-        &.active {
-            color: black;
+        position: relative;
+        a {
+            text-decoration: none;
+            &.active {
+                color: black;
+            }
+        }
+        .filter {
+            display: table;
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: mix(@darkblue, white, 10%);
+            font-size: 0px;
+            height: calc(~"100% - 2px"); /* 2px because of wrapper border */
+            .filter-inner-wrapper {
+                display: table-cell;
+                vertical-align: middle;
+            }
+            input[type="text"] {
+                display: none;
+                width: calc(~"100% - 30px");
+                background: none;
+                border: none;
+                vertical-align: middle;
+                line-height: 18px;
+                height: 30px;
+            }
+            button {
+                font-size: 0px;
+                background: url(../img/layout/filter.png) no-repeat right center transparent;
+                background-size: 23px;
+                border: none;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                vertical-align: middle;
+                &:focus, &::-moz-focus-inner {
+                    outline: none;
+                    border: none;
+                }
+            }
         }
     }
     a {
         color: @darkblue;
         transition: all 0.3s;
         display: block;
-        outline: 0;
+        outline: none;
         &:hover {
             text-decoration: none;
             color: black;
@@ -1014,7 +1054,7 @@ input[type="submit"] {
     font-weight: bold;
     letter-spacing: 2px;
     cursor: pointer;
-    outline: 0;
+    outline: none;
     transition: border-color 0.3s;
     -webkit-appearance: none; /* override ios default button style */
     &:hover, &:focus {
@@ -1135,7 +1175,7 @@ textarea {
         }
     }
     .book-title {
-        outline: 0;
+        outline: none;
         font-size: 24px;
         font-weight: bold;
         display: block;
