@@ -32,8 +32,8 @@ $vars = [
     'metaTitle' => $metaTitle,
     'metaDesc'  => $metaDesc,
     'metaImage' => $metaImage,
-    'commentUrl'=> $commentUrl ?? NULL,
-    'comments'  => $comments ?? NULL,
+    'commentUrl'=> $commentUrl,
+    'comments'  => $comments,
 ];
 
 // mark the current video in the navigation

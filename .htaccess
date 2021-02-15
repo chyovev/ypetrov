@@ -16,6 +16,7 @@ RewriteRule ^video/([^/]+)/?$                  public/video.php?video=$1        
 RewriteRule ^galeriya/?$                       public/gallery.php                 [QSA,L]
 RewriteRule ^tarsene/?$                        public/search.php                  [QSA,L]
 RewriteRule ^kontakt/?$                        public/contact.php                 [QSA,L]
+RewriteRule ^presa/([^/]+)/?$                  public/press.php?article=$1        [QSA,L]
 RewriteRule ^(.*)$    public/$1     [L]
 
 # use a custom 404 page

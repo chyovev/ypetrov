@@ -38,7 +38,7 @@ if (isset($poemSlug)) {
     $comments   = $commentRepository->getAllCommentsForEntity($poemObject);
 
     // prepend meta title with poem
-    $metaTitle  = $poem['title'] . ' | ' . $metaTitle;
+    $metaTitle  = $poem['title'];
     $metaDesc   = $poem['body'];
 }
 

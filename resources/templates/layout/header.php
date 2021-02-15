@@ -11,6 +11,7 @@ $searchStr   = getGetRequestVar('s');
     <meta property="og:title" content="<?= isset($metaTitle) ? escape($metaTitle) : 'Официален сайт в памет на поета Йосиф Петров (1909 – 2004)' ?>" />
     <meta name="description" content="<?= isset($metaDesc) ? truncateString($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
     <meta property="og:description" content="<?= isset($metaDesc) ? truncateString($metaDesc, 250) : 'Йосиф Петров е български поет, общественик и политик'; ?>" />
+    <meta name="keywods" content="Йосиф Петров, поезия, поет, общественик, депутат, стихосбирки, стихотворения, VII Велико Народно събрание, Персин" />
     <script type="text/javascript" src="<?= WEBROOT ?>resources/js/script.js"></script>
     <link type="text/css" rel="stylesheet" href="<?= WEBROOT ?>resources/css/style.css" />
     <?php
@@ -23,6 +24,14 @@ $searchStr   = getGetRequestVar('s');
     <meta property="og:image:width" content="768" />
     <meta property="og:image:height" content="1024" />
     <meta property="og:image" content="<?= HOST_URL . IMG_LAYOUT . '/og-image.jpg' ?>" />
+    <?php
+    if (isset($mainVideo)) {
+        echo '<meta property="og:video" content="' . HOST_URL . $mainVideo['video']['mp4'] . '" />
+              <meta property="og:video:type" content="video/mp4" />
+              <meta property="og:video" content="' . HOST_URL . $mainVideo['video']['webm'] . '" />
+              <meta property="og:video:type" content="video/webm" />'."\n";
+    }
+    ?>
     <link rel="apple-touch-icon" sizes="120x120" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />
     <link rel="apple-touch-icon-precomposed" type="image/png" href="<?= IMG_LAYOUT ?>/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="<?= IMG_LAYOUT ?>/favicon/favicon-32x32.png" />
@@ -53,6 +62,7 @@ $searchStr   = getGetRequestVar('s');
                         $navigation  = getGlobalNavigation();
                     ?>
                     <ul>
+
                         <?php if (isset($navigation['books']) && count($navigation['books']) > 0) { ?>
                         <li class="has-items<?= (isCurrentPageFile('poem.php') ? ' active open' : '') ?>">
                             <a href="javascript: void(0);">Творчество</a>
@@ -67,7 +77,9 @@ $searchStr   = getGetRequestVar('s');
                             </ul>
                         </li>
                         <?php } ?>
+
                         <li<?= (isCurrentPageFile('gallery.php') ? ' class="active"' : '') ?>><a href="<?= Url::generateGalleryUrl() ?>">Галерия</a></li>
+
                         <?php if (isset($navigation['videos']) && count($navigation['videos']) > 0) { ?>
                         <li class="has-items<?= (isCurrentPageFile('video.php') ? ' active open' : '') ?>">
                             <a href="javascript: void(0);">Видео</a>
@@ -82,8 +94,22 @@ $searchStr   = getGetRequestVar('s');
                             </ul>
                         </li>
                         <?php } ?>
-                        <li><a href="#">Интервюта</a></li>
-                        <li><a href="#">Статии и спомени</a></li>
+
+                        <?php if (isset($navigation['articles']) && count($navigation['articles']) > 0) { ?>
+                        <li class="has-items<?= (isCurrentPageFile('press.php') ? ' active open' : '') ?>">
+                            <a href="javascript: void(0);">Преса</a>
+                            <ul>
+                                <?php
+                                foreach ($navigation['articles'] as $item) {
+                                    $articleItem = $item->getArticleDetails();
+                                    $class       = isCurrentPageSlug($articleItem['slug']) ? ' class="active"' : '';
+                                    echo '<li><a href="' . Url::generatePressUrl($articleItem['slug']) . '"' . $class . '>' . ($articleItem['short_title'] ?? $articleItem['title']) .'</a></li>'."\n";
+                                }
+                                ?>
+                            </ul>
+                        <?php } ?>
+
+                        <li><a href="#">Спомени</a></li>
                         <li<?= (isCurrentPageFile('contact.php') ? ' class="active"' : '') ?>><a href="<?= Url::generateContactUrl() ?>">Контакт</a></li>
                     </ul>
                     <div class="search-form">

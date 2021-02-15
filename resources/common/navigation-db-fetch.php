@@ -7,11 +7,15 @@ $allBooks        = $bookRepository->getAllActiveBooks();
 $videoRepository = $entityManager->getRepository('Video');
 $allVideos       = $videoRepository->getAllActiveVideos();
 
+$pressRepository = $entityManager->getRepository('PressArticle');
+$allArticles     = $pressRepository->getAllActiveArticles();
+
 // this variable is global for the renderLayoutWithContentFile() function
 // so it can be used in the header.php layout
 $navigation = [
-    'books'  => $allBooks,
-    'videos' => $allVideos,
+    'articles' => $allArticles,
+    'books'    => $allBooks,
+    'videos'   => $allVideos,
 ];
 
 setGlobalNavigation($navigation);

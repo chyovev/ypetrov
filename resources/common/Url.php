@@ -34,4 +34,9 @@ class Url {
         return WEBROOT . 'kontakt';
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generatePressUrl(string $articleSlug): string {
+        return WEBROOT . 'presa/' . $articleSlug;
+    }
+
 }
