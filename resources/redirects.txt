@@ -1,5 +1,6 @@
 Творчество	/
-Творчество/Селски-и-войнишки-хуморески/За-него-за-войника	/tvorchestvo/selski-i-voinishki-humoreski/za-nego-za-voinika
+Творчество/Селски-и-войнишки-хуморески	/tvorchestvo/selski-i-voinishki-humoreski
+Творчество/Селски-и-войнишки-хуморески/За-него-за-войника   /tvorchestvo/selski-i-voinishki-humoreski/za-nego-za-voinika
 Творчество/Селски-и-войнишки-хуморески/Златка	/tvorchestvo/selski-i-voinishki-humoreski/zlatka
 Творчество/Селски-и-войнишки-хуморески/На-нея	/tvorchestvo/selski-i-voinishki-humoreski/na-neya
 Творчество/Селски-и-войнишки-хуморески/По-пътя	/tvorchestvo/selski-i-voinishki-humoreski/po-patya
@@ -20,7 +21,8 @@
 Творчество/Селски-и-войнишки-хуморески/Герго-се-обажда	/tvorchestvo/selski-i-voinishki-humoreski/gergo-se-obazhda
 Творчество/Селски-и-войнишки-хуморески/Носталгия	/tvorchestvo/selski-i-voinishki-humoreski/nostalgiya
 Творчество/Селски-и-войнишки-хуморески/Мика	/tvorchestvo/selski-i-voinishki-humoreski/mika
-Творчество/Босилкова-китка/Две-очи-горят-във-мрака	/tvorchestvo/bosilkova-kitka/dve-ochi-goryat-vav-mraka
+Творчество/Босилкова-китка	/tvorchestvo/bosilkova-kitka
+Творчество/Босилкова-китка/Две-очи-горят-във-мрака  /tvorchestvo/bosilkova-kitka/dve-ochi-goryat-vav-mraka
 Творчество/Босилкова-китка/Гладен-съм-Ангелино-мари	/tvorchestvo/bosilkova-kitka/gladen-sam-angelino-mari
 Творчество/Босилкова-китка/Късни-нощи-полунощи	/tvorchestvo/bosilkova-kitka/kasni-noshti-polunoshti
 Творчество/Босилкова-китка/Лиляно-девойче-попово	/tvorchestvo/bosilkova-kitka/lilyano-devoiche-popovo
@@ -70,7 +72,8 @@
 Творчество/Босилкова-китка/Снощи-тъжен-ми-се-върна	/tvorchestvo/bosilkova-kitka/snoshti-tazhen-mi-se-varna
 Творчество/Босилкова-китка/Вест-вестявам-коня-разигравам	/tvorchestvo/bosilkova-kitka/vest-vestyavam-konya-razigravam
 Творчество/Босилкова-китка/Харамийско-либе	/tvorchestvo/bosilkova-kitka/haramiisko-libe
-Творчество/Вик-от-каторгата/Персин	/tvorchestvo/vik-ot-katorgata/persin
+Творчество/Вик-от-каторгата	/tvorchestvo/vik-ot-katorgata
+Творчество/Вик-от-каторгата/Персин  /tvorchestvo/vik-ot-katorgata/persin
 Творчество/Вик-от-каторгата/Защо	/tvorchestvo/vik-ot-katorgata/zashto
 Творчество/Вик-от-каторгата/На-заточение	/tvorchestvo/vik-ot-katorgata/na-zatochenie
 Творчество/Вик-от-каторгата/Клетва	/tvorchestvo/vik-ot-katorgata/kletva
@@ -101,7 +104,8 @@
 Творчество/Вик-от-каторгата/Превъдворяване	/tvorchestvo/vik-ot-katorgata/prevadvoryavane
 Творчество/Вик-от-каторгата/В-часа-на-страшната-раздяла	/tvorchestvo/vik-ot-katorgata/v-chasa-na-strashnata-razdyala
 Творчество/Вик-от-каторгата/Пролет-тъжовна	/tvorchestvo/vik-ot-katorgata/prolet-tazhovna
-Творчество/Разпилени-пъстроцветия/Изповедно	/tvorchestvo/razpileni-pastrotsvetiya/izpovedno
+Творчество/Разпилени-пъстроцветия	/tvorchestvo/razpileni-pastrotsvetiya
+Творчество/Разпилени-пъстроцветия/Изповедно /tvorchestvo/razpileni-pastrotsvetiya/izpovedno
 Творчество/Разпилени-пъстроцветия/Светая-светих	/tvorchestvo/razpileni-pastrotsvetiya/svetaya-svetih
 Творчество/Разпилени-пъстроцветия/Скръбна-песен	/tvorchestvo/razpileni-pastrotsvetiya/skrabna-pesen
 Творчество/Разпилени-пъстроцветия/Равносметка	/tvorchestvo/razpileni-pastrotsvetiya/ravnosmetka
@@ -181,7 +185,8 @@
 Творчество/Разпилени-пъстроцветия/Писмо	/tvorchestvo/razpileni-pastrotsvetiya/pismo
 Творчество/Разпилени-пъстроцветия/Недей-тъгува	/tvorchestvo/razpileni-pastrotsvetiya/nedei-taguva
 Творчество/Разпилени-пъстроцветия/Венец-от-незабравки	/tvorchestvo/razpileni-pastrotsvetiya/venec-ot-nezabravki
-Творчество/Ти-ли-ме-повика-мое-родно-село/Синът	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/sinat
+Творчество/Ти-ли-ме-повика-мое-родно-село	/tvorchestvo/ti-li-me-povika-moe-rodno-selo
+Творчество/Ти-ли-ме-повика-мое-родно-село/Синът /tvorchestvo/ti-li-me-povika-moe-rodno-selo/sinat
 Творчество/Ти-ли-ме-повика-мое-родно-село/Утринна-песен	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/utrinna-pesen
 Творчество/Ти-ли-ме-повика-мое-родно-село/Пролетна-песен	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/proletna-pesen
 Творчество/Ти-ли-ме-повика-мое-родно-село/Майско-утро	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/maisko-utro
@@ -246,7 +251,8 @@
 Творчество/Ти-ли-ме-повика-мое-родно-село/Из-жетварски-песни	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/iz-zhetvarski-pesni
 Творчество/Ти-ли-ме-повика-мое-родно-село/Из-харамийско-либе	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/iz-haramiisko-libe
 Творчество/Ти-ли-ме-повика-мое-родно-село/Угърчински-нощи	/tvorchestvo/ti-li-me-povika-moe-rodno-selo/ugarchinski-noshti
-Творчество/Смях-и-жлъч/Диктатори	/tvorchestvo/smyah-i-zhlach/diktatorat
+Творчество/Смях-и-жлъч	/tvorchestvo/smyah-i-zhlach
+Творчество/Смях-и-жлъч/Диктатори    /tvorchestvo/smyah-i-zhlach/diktatorat
 Творчество/Смях-и-жлъч/Селякът	/tvorchestvo/smyah-i-zhlach/selyakot
 Творчество/Смях-и-жлъч/Новият-човек	/tvorchestvo/smyah-i-zhlach/noviqt-chovek
 Творчество/Смях-и-жлъч/Вълци	/tvorchestvo/smyah-i-zhlach/valci
@@ -321,7 +327,8 @@
 Творчество/Смях-и-жлъч/Простакът	/tvorchestvo/smyah-i-zhlach/prostakat
 Творчество/Смях-и-жлъч/Защо-ти-трябваше-Исусе	/tvorchestvo/smyah-i-zhlach/zashto-ti-tryabvashe-isuse
 Творчество/Смях-и-жлъч/Безсмъртният	/tvorchestvo/smyah-i-zhlach/bezsmartniyat
-Творчество/Декамеронки-като-бонбонки/Жени-жени	/tvorchestvo/dekameronki-kato-bonbonki/zheni-zheni
+Творчество/Декамеронки-като-бонбонки	/tvorchestvo/dekameronki-kato-bonbonki
+Творчество/Декамеронки-като-бонбонки/Жени-жени  /tvorchestvo/dekameronki-kato-bonbonki/zheni-zheni
 Творчество/Декамеронки-като-бонбонки/Златната-кука	/tvorchestvo/dekameronki-kato-bonbonki/zlatnata-kuka
 Творчество/Декамеронки-като-бонбонки/Жената	/tvorchestvo/dekameronki-kato-bonbonki/zhenata
 Творчество/Декамеронки-като-бонбонки/Богатство	/tvorchestvo/dekameronki-kato-bonbonki/bogatstvo
@@ -352,7 +359,8 @@
 Творчество/Декамеронки-като-бонбонки/Божествената	/tvorchestvo/dekameronki-kato-bonbonki/bozhestvenata
 Творчество/Декамеронки-като-бонбонки/Мънистено-герданче	/tvorchestvo/dekameronki-kato-bonbonki/manisteno-gerdanche
 Творчество/Декамеронки-като-бонбонки/Безсмъртният	/tvorchestvo/dekameronki-kato-bonbonki/bezsmartniyat
-Творчество/Добър-ден-народе-мой/Равносметка	/tvorchestvo/dobar-den-narode-moi/ravnosmetka
+Творчество/Добър-ден-народе-мой	/tvorchestvo/dobar-den-narode-moi
+Творчество/Добър-ден-народе-мой/Равносметка /tvorchestvo/dobar-den-narode-moi/ravnosmetka
 Творчество/Добър-ден-народе-мой/История	/tvorchestvo/dobar-den-narode-moi/istoriya
 Творчество/Добър-ден-народе-мой/Досието	/tvorchestvo/dobar-den-narode-moi/dosieto
 Творчество/Добър-ден-народе-мой/Синовен-зов	/tvorchestvo/dobar-den-narode-moi/sinoven-zov
@@ -482,7 +490,8 @@
 Творчество/Добър-ден-народе-мой/Акрани	/tvorchestvo/dobar-den-narode-moi/akrani
 Творчество/Добър-ден-народе-мой/Химн-на-селските-кооператори	/tvorchestvo/dobar-den-narode-moi/himn-na-selskite-kooperatori
 Творчество/Добър-ден-народе-мой/Шабла-дуранкулак	/tvorchestvo/dobar-den-narode-moi/shabla-durankulak
-Творчество/Избрано/Изповедно	/tvorchestvo/izbrano/izpovedno
+Творчество/Избрано	/tvorchestvo/izbrano
+Творчество/Избрано/Изповедно    /tvorchestvo/izbrano/izpovedno
 Творчество/Избрано/Късче-синя-вис	/tvorchestvo/izbrano/kasche-sinya-vis
 Творчество/Избрано/Равносметка	/tvorchestvo/izbrano/ravnosmetka
 Творчество/Избрано/Небето-с-плам-ме-е-дарило	/tvorchestvo/izbrano/nebeto-s-plam-me-e-darilo
@@ -621,7 +630,8 @@
 Творчество/Избрано/Закрилникът	/tvorchestvo/izbrano/zakrilnikat
 Творчество/Избрано/В-бащиния-дом	/tvorchestvo/izbrano/v-bashtiniya-dom
 Творчество/Избрано/Безсмъртният	/tvorchestvo/izbrano/bezsmartniyat
-Творчество/Родна-земя/Пролетен-химн	/tvorchestvo/rodna-zemya/proleten-himn
+Творчество/Родна-земя	/tvorchestvo/rodna-zemya
+Творчество/Родна-земя/Пролетен-химн /tvorchestvo/rodna-zemya/proleten-himn
 Творчество/Родна-земя/Конници	/tvorchestvo/rodna-zemya/konnici
 Творчество/Родна-земя/Пролетна-песен	/tvorchestvo/rodna-zemya/proletna-pesen
 Творчество/Родна-земя/Пролет	/tvorchestvo/rodna-zemya/prolet

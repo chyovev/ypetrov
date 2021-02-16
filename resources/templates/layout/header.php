@@ -55,7 +55,7 @@ $searchStr   = getGetRequestVar('s');
 
                 <div class="logo-wrapper">
                     <a href="<?= WEBROOT ?>" class="logo">Йосиф Петров</a>
-                    <span<?= ( isset($searchStr) ? ' style="display: none"' : '') ?>>(1909 – 2004)</span>
+                    <span<?= ( isset($searchStr) && $searchStr != '' ? ' style="display: none"' : '') ?>>(1909 – 2004)</span>
                 </div>
 
                 <div class="nav-toggler-wrapper mobile-only"><span id="nav-toggler"></span></div>

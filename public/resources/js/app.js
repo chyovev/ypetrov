@@ -84,7 +84,12 @@ var App = {
 
             // if the search field is visible, blur it and hide it
             if ($('.search-field').is(':focus')) {
-                $('.logo-wrapper span').animate({width:'toggle'}, 350);
+                
+                // show logo span if it's not visible
+                if ( ! $('.logo-wrapper span').is(':visible')) {
+                    $('.logo-wrapper span').animate({width:'toggle'}, 350);
+                }
+
                 $('.search-field').blur().animate({width:'toggle'}, 350, function() {
                     // remove style attribute to fix border radius of submit button
                     $(this).removeAttr('style');

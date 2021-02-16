@@ -206,11 +206,11 @@ function beautifyDate(string $pattern, ?DateTime $source = NULL): ?string {
 function getTextSample(string $haystack, string $needle, int $wordsAround) {
     // separate all words of the needle, sort them by length,
     // add the needle as a whole to the beginning
-    // and filter out duplicates
+    // and filter out duplicates and empty elements
     $needleWords = explodeWords($needle);
     usort($needleWords, 'sortArrayByLength');
-    array_unshift($needleWords , $needle);
-    $needleWords = array_filter($needleWords);
+    array_unshift($needleWords , preg_quote($needle, '/'));
+    $needleWords = array_filter(array_unique($needleWords));
 
     // then try to find context for each element
     foreach ($needleWords as $word) {
@@ -341,7 +341,7 @@ function cutFirstNWords(string $string, int $wordsCount, string $encoding = 'utf
 ///////////////////////////////////////////////////////////////////////////////
 // split words into array
 function explodeWords(?string $string = NULL): array {
-    return preg_split('~[^\p{L}\p{N}\']+~u', $string);
+    return array_unique(preg_split('~[^\p{L}\p{N}\']+~u', $string));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

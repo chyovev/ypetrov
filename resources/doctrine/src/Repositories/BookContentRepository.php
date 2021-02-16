@@ -11,6 +11,9 @@ class BookContentRepository extends EntityRepository {
             return [];
         }
 
+        // escape some special characters to avoid the query from getting broken
+        $string = preg_replace('/[+\-><\(\)~"@]+/', ' ', $string);
+
         // Doctrine is not really fond of MATCH AGAINST,
         // so a raw SQL is needed which joins both poems and books tables
         try {
