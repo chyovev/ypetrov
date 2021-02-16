@@ -10,9 +10,10 @@
                     ?>
                     <div class="filter">
                         <div class="filter-inner-wrapper">
-                            <input type="text" id="filter-field" placeholder="Филтрирай по име" />
-                            <button type="button" title="Филтър">Филтър</button>
+                            <input type="text" id="filter-field" placeholder="Филтър" />
+                            <button type="button" class="show" title="Покажи/скрий филтър">Филтър</button>
                         </div>
+                        <button type="button" class="clear none" title="Изтрий">Изтрий</button>
                     </div>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+@import (inline) "../../js/magnific-popup/magnific-popup.min.css";
+
 /* --------------------------- */
 @laptop:    ~"(max-width: 1200px)";
 @mobile:    ~"(max-width: 720px)";
@@ -622,6 +624,7 @@ aside {
         line-height: 1em;
         position: relative;
         a {
+            display: inline-block;
             text-decoration: none;
             &.active {
                 color: black;
@@ -642,25 +645,40 @@ aside {
             }
             input[type="text"] {
                 display: none;
-                width: calc(~"100% - 30px");
+                width: calc(~"100% - 55px");
                 background: none;
                 border: none;
                 vertical-align: middle;
                 line-height: 18px;
                 height: 30px;
+                margin-left: 15px;
             }
-            button {
-                font-size: 0px;
-                background: url(../img/layout/filter.png) no-repeat right center transparent;
-                background-size: 23px;
-                border: none;
-                width: 30px;
-                height: 30px;
+            button{
                 cursor: pointer;
                 vertical-align: middle;
+                border: none;
+                font-size: 0px;
                 &:focus, &::-moz-focus-inner {
                     outline: none;
                     border: none;
+                }
+                &.show {
+                    background: url(../img/layout/filter.png) no-repeat right center transparent;
+                    background-size: 23px;
+                    width: 30px;
+                    height: 30px;
+                }
+                &.clear {
+                    background: url(../img/layout/close.png) no-repeat 50% 50% fade(black, 20%);
+                    background-size: 13px;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    opacity: 0.3;
+                    position: absolute;
+                    left: 0px;
+                    top: 50%;
+                    transform: translateY(-50%);
                 }
             }
         }

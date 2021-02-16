@@ -45,7 +45,7 @@
                                 $item  = $imageItem->getImageDetails();
                                 $image = $item['image']['image'];
                                 $lazy  = ($i > 0) ? 'data-' : ''; // all images after the first one have data-src attr instead of src which shortens loading time
-                                echo '<div><img ' . $lazy . 'src="'.$image.'" alt="Изображение #' . $i . '" /><span>' . nl2br($item['caption']) . '</span></div>'."\n";
+                                echo '<div><img ' . $lazy . 'src="'.$image.'" alt="Изображение #' . $i . '" title="' . nl2br($item['caption']) . '" /><span>' . nl2br($item['caption']) . '</span></div>'."\n";
                                 $i++;
                             }
                             ?>

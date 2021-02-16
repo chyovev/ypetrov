@@ -16,6 +16,7 @@ var App = {
         App.detectScroll();
         App.scrollSidebarToCurrentPoem();
         App.initGallerySwiper();
+        App.initMagnificPopup();
     },
 
     ///////////////////////////////////////////////////////
@@ -23,7 +24,8 @@ var App = {
         $(window).scroll(App.detectScroll);
         $(document).keyup(App.onKeyUp);
         $('.search-submit').on('click', App.showSearchField);
-        $('.filter button').on('click', App.showFilterField);
+        $('.filter .show').on('click', App.showFilterField);
+        $('.filter .clear').on('click', App.clearFilterField);
         $('#filter-field').on("input propertychange", App.filterPoems);
         $('.nav-toggler-wrapper').on('click', App.toggleNavigation);
         $('nav li.has-items > a').on('click', App.toggleSubNavigation);
@@ -113,7 +115,24 @@ var App = {
     ///////////////////////////////////////////////////////////////////////////
     showFilterField: function(e) {
         e.preventDefault();
-        $('#filter-field').animate({width:'toggle'}, 350).focus();
+
+        var $field = $('#filter-field');
+
+        $field.animate({width:'toggle'}, 350)
+              .toggleClass('open');
+
+        $('.clear').fadeToggle();
+
+        $field.hasClass('open')
+            ? $field.focus()
+            : $field.val('').blur().trigger('input');
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    clearFilterField: function(e) {
+        e.preventDefault();
+
+        $('#filter-field').val('').trigger('input').focus();
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -488,6 +507,26 @@ var App = {
     resetFormFields: function($form) {
         $form.find('input[type="text"], textarea').each(function() {
             $(this).val('');
+        });
+    },
+
+    ///////////////////////////////////////////////////////
+    initMagnificPopup: function() {
+        $('.content-wrapper').magnificPopup({
+            delegate:            'img',
+            type:                'image',
+            gallery:             {enabled: false},
+            closeOnContentClick: true,
+            closeBtnInside:      false,
+            fixedContentPos:     true,
+            image:               { verticalFit: true, titleSrc: 'title' },
+            zoom: {
+                enabled: true,
+                duration: 300
+            },
+            callbacks: {
+                elementParse: function(item) { item.src = item.el.attr('src'); }
+            }
         });
     },
 }

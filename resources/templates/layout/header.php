@@ -120,7 +120,7 @@ $searchStr   = getGetRequestVar('s');
                                 foreach ($navigation['essays'] as $entity) {
                                     $item  = $entity->getDetails();
                                     $class = isCurrentPageSlug($item['slug']) ? ' class="active"' : '';
-                                    echo '<li><a href="' . Url::generateEssayUrl($item['slug']) . '"' . $class . '>' . $item['title'] .'</a></li>'."\n";
+                                    echo '<li><a href="' . Url::generateEssayUrl($item['slug']) . '"' . $class . '>' . ($item['short_title'] ?? $item['title']) .'</a></li>'."\n";
                                 }
                                 ?>
                             </ul>
