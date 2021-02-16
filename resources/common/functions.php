@@ -151,9 +151,15 @@ function isCurrentPageSlug(string $slug): bool {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function getImageDimensions(string $relativeImage): array {
-    $completeImagePath = HOST_URL . $relativeImage;
-    $dimensions        = @getimagesize($completeImagePath);
+function getImageDimensions(string $image): array {
+    // if the address does not start with http(s),
+    // treat it as a local one: strip WEBROOT and add public/
+    if ( ! preg_match('/^https?:\/\//', $image)) {
+        $relativeImage = preg_replace('/^('.preg_quote(WEBROOT, '/').')/i', '', $image);
+        $image         = ROOT . '/public/' . $relativeImage;
+    }
+    
+    $dimensions = @getimagesize($image);
 
     if ($dimensions) {
         return ['width' => $dimensions[0], 'height' => $dimensions[1]];

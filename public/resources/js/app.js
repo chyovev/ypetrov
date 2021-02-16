@@ -529,8 +529,19 @@ var App = {
                 enabled: true,
                 duration: 300
             },
+            // resize image if there's caption so that it all fits inside viewport
             callbacks: {
-                elementParse: function(item) { item.src = item.el.attr('src'); }
+                elementParse: function(item) { item.src = item.el.attr('src'); },
+                resize: function() {
+                    var img           = this.content.find('img'),
+                        $caption      = this.content.find('.mfp-title'),
+                        captionText   = $caption.html(),
+                        captionHeight = $caption.height();
+
+                    if (captionText !== '') {
+                        img.css('max-height', parseFloat(img.css('max-height')) - captionHeight - 30);
+                    }
+                }
             }
         });
     },
