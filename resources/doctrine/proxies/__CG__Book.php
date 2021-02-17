@@ -202,4 +202,15 @@ class Book extends \Book implements \Doctrine\ORM\Proxy\Proxy
         return parent::getId();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getSlug(): string
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getSlug', []);
+
+        return parent::getSlug();
+    }
+
 }

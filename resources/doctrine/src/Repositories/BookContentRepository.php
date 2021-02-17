@@ -79,5 +79,23 @@ class BookContentRepository extends EntityRepository {
         return $this->resultsCount;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // use simple DQL query to get only active books' slugs and active poems' slugs
+    public function getActiveBooksAndPoemsSlugs(): array {
+        $dql = "SELECT
+                    Book.id   book_id,
+                    Book.slug book_slug,
+                    Poem.slug poem_slug
+                FROM BookContent bc
+                    LEFT JOIN bc.book Book
+                    LEFT JOIN bc.poem Poem
+                WHERE Book.active = 1 AND bc.active = 1
+                ORDER BY Book.ord, bc.ord";
+
+        $query  = $this->getEntityManager()->createQuery($dql);
+        $result = $query->getResult();
+
+        return $this->groupResultsByBookId($result);
+    }
     
 }

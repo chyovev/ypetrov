@@ -20,7 +20,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^tvorchestvo/([^/]+)/?$            public/book.php?book=$1            [QSA,L]
 RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?book=$1&poem=$2    [QSA,L]
 RewriteRule ^video/([^/]+)/?$                  public/video.php?video=$1          [QSA,L]
@@ -35,6 +34,9 @@ RewriteRule ^za-yosif-petrov/([^/]+)/?$        public/essay.php?essay=$1        
 # which will either 301 redirect to the new address (if any) or show error 404
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^[А-Яа-я]+                         public/redirector.php              [QSA,L] 
+
+RewriteRule ^sitemap.xml$                      public/sitemap.php                 [QSA,L]
+RewriteRule ^robots.txt$                       public/robots.php                  [QSA,L]
 
 # for all other cases redirect to the public/ folder
 RewriteRule ^(.*)$    public/$1     [L]
