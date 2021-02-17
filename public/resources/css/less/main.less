@@ -597,6 +597,7 @@ aside {
         background-color: mix(@darkblue, white, 10%);
         padding-top: 15px;
         padding-bottom: 10px;
+        width: 100%;
         &.stickable {
             @media @mobile {
                 margin-bottom: @navHeightSticky + 10; /* to prevent title from overlapping with list */
@@ -639,6 +640,11 @@ aside {
             background: mix(@darkblue, white, 10%);
             font-size: 0px;
             height: calc(~"100% - 2px"); /* 2px because of wrapper border */
+            max-height: 50px;
+            text-align: right;
+            &.open {
+                width: 100%;
+            }
             .filter-inner-wrapper {
                 display: table-cell;
                 vertical-align: middle;
@@ -658,6 +664,7 @@ aside {
                 vertical-align: middle;
                 border: none;
                 font-size: 0px;
+                .android-highlight-fix;
                 &:focus, &::-moz-focus-inner {
                     outline: none;
                     border: none;
@@ -1334,8 +1341,11 @@ textarea {
 .none {
     display: none;
 }
+ /* fix android highlight color */
 .android-highlight-fix {
-    -webkit-tap-highlight-color: transparent; /* fix android highlight color */
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
+    outline: none !important;
 }
 /* start out with images hidden and show them on window load */
 .op-0-fadein {
@@ -1361,4 +1371,7 @@ img.mfp-img {
 .mfp-bottom-bar {
     padding-top: 10px;
     padding-bottom: 10px;
+}
+.mfp-content.has-caption {
+    vertical-align: top;
 }

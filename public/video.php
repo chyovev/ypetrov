@@ -2,24 +2,24 @@
 require_once('../resources/autoload.php');
 
 $videoSlug   = getGetRequestVar('video');
-$videoObject = $videoRepository->findBySlug($videoSlug);
-throw404OnEmpty($videoObject);
+$videoEntity = $videoRepository->findBySlug($videoSlug);
+throw404OnEmpty($videoEntity);
 
 // on a POST ajax request, try to add a comment
 if (isRequestAjax() && isRequest('POST')) {
-    $response = processSaveCommentRequest($videoObject);
-    rederJSONContent($response);
+    $response = processSaveCommentRequest($videoEntity);
+    renderJSONContent($response);
     exit;
 }
 
 // if the request is *NOT* an add-comment ajax request,
 // add +1 to the views count of the video and fetch comments
-$videoObject->incrementViews();
+$videoEntity->incrementViews();
 $entityManager->flush();
 
 $commentUrl  = Url::generateVideoUrl($videoSlug);
-$comments    = $commentRepository->getAllCommentsForEntity($videoObject);
-$video       = $videoObject->getDetails();
+$comments    = $commentRepository->getAllCommentsForEntity($videoEntity);
+$video       = $videoEntity->getDetails();
 $metaTitle   = $video['title'];
 $metaDesc    = $video['summary'];
 $metaImage   = [

@@ -8,7 +8,7 @@ throw404OnEmpty($entity);
 // on a POST ajax request, try to add a comment
 if (isRequestAjax() && isRequest('POST')) {
     $response = processSaveCommentRequest($entity);
-    rederJSONContent($response);
+    renderJSONContent($response);
     exit;
 }
 
@@ -18,7 +18,7 @@ $entityManager->flush();
 
 $commentUrl = Url::generateEssayUrl($slug);
 $comments   = $commentRepository->getAllCommentsForEntity($entity);
-$essay    = $entity->getDetails();
+$essay      = $entity->getDetails();
 
 $vars = [
     'title'      => $essay['title'],

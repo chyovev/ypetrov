@@ -61,8 +61,10 @@ else {
 
         include 'elements/book-details.php';
 
-    echo   '        </div>
-                </div>
+    echo   '        </div>';
+
+    include 'elements/comment-section.php';
+    echo   '    </div>
             </section>';
 }
 ?>

@@ -121,16 +121,21 @@ var App = {
     showFilterField: function(e) {
         e.preventDefault();
 
-        var $field = $('#filter-field');
-
-        $field.animate({width:'toggle'}, 350)
-              .toggleClass('open');
+        var $field  = $('#filter-field'),
+            $filter = $field.parents('.filter');
 
         $('.clear').fadeToggle();
+        
+        $field.animate({width:'toggle'}, 350, function() {
+            $filter.toggleClass('open');
+        });
 
-        $field.hasClass('open')
+        // class open is toggled only after the field animation has finished
+        // therefore condition to focus/reset the field is reversed
+        ( ! $filter.hasClass('open'))
             ? $field.focus()
             : $field.val('').blur().trigger('input');
+
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -537,9 +542,15 @@ var App = {
                         $caption      = this.content.find('.mfp-title'),
                         captionText   = $caption.html(),
                         captionHeight = $caption.height();
+                        $wrapper      = this.content.parent();
+
 
                     if (captionText !== '') {
-                        img.css('max-height', parseFloat(img.css('max-height')) - captionHeight - 30);
+                        img.css('max-height', parseFloat(img.css('max-height')) - captionHeight);
+                        $wrapper.addClass('has-caption');
+                    }
+                    else {
+                        $wrapper.removeClass('has-caption');
                     }
                 }
             }

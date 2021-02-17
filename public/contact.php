@@ -1,11 +1,9 @@
 <?php
 require_once('../resources/autoload.php');
 
-use Exceptions\ValidationException;
-
 if (isRequestAjax() && isRequest('POST')) {
     $response = processContactMessageRequest();
-    rederJSONContent($response);
+    renderJSONContent($response);
     exit;
 }
 

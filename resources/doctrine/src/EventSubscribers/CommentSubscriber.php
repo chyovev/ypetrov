@@ -108,6 +108,9 @@ class CommentSubscriber implements EventSubscriber {
         $entityId    = $comment->getEntityId();
 
         switch ($entityClass) {
+            case 'Book':
+                return $this->getBookLink($entityId);
+                break;
             case 'Poem':
                 return $this->getPoemLink($entityId);
                 break;
@@ -123,6 +126,16 @@ class CommentSubscriber implements EventSubscriber {
         }
 
         return NULL;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getBookLink(int $id): array {
+        $repository = $this->entityManager->getRepository('Book');
+        $entity     = $repository->findOneBy(['id' => $id]);
+        $item       = $entity->getDetails();
+        $url        = HOST_URL . Url::generateBookUrl($item['slug']);
+
+        return ['книга', $url, $item['title']];
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -176,7 +189,6 @@ class CommentSubscriber implements EventSubscriber {
         $subject = 'Нов коментар на сайта';
 
         $body    = '<strong>Име:</strong> ' . escape($comment->getUsername()) . '<br />';
-        $body   .= '<strong>IP:</strong> ' . $comment->getActualIp() . '<br />';
         $body   .= '<strong>Коментар:</strong> ' . escape($comment->getBody()) . '<br />';
 
         // if there's a link to page, add info about it in subject and body
@@ -186,6 +198,8 @@ class CommentSubscriber implements EventSubscriber {
             $subject .= ' към ' . $type . ' „' . escape($title) . '“';
             $body    .= '<strong>Линк:</strong> <a href="' . $url . '">' . escape($title) . '</a><br />';
         }
+
+        $body    .= '<strong>IP:</strong> ' . $comment->getActualIp();
 
         // add comment date to subject
         $date     = beautifyDate('%A, %d.%m.%Y г., %H:%M ч.', $comment->getCreatedAt());

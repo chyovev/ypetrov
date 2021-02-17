@@ -1,7 +1,8 @@
 <?php
 use Doctrine\Common\Collections\ArrayCollection;
+use Interfaces\Commentable;
 
-class Book {
+class Book implements Commentable {
     private $id;
 
     private $active;

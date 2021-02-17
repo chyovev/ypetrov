@@ -8,7 +8,7 @@ throw404OnEmpty($entity);
 // on a POST ajax request, try to add a comment
 if (isRequestAjax() && isRequest('POST')) {
     $response = processSaveCommentRequest($entity);
-    rederJSONContent($response);
+    renderJSONContent($response);
     exit;
 }
 

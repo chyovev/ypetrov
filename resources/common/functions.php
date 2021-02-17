@@ -38,7 +38,7 @@ function renderContentWithNoLayout($contentFile, $variables = []): ?string {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function rederJSONContent($array): void {
+function renderJSONContent($array): void {
     if (!is_array($array)) {
         $array = [$array];
     }

@@ -21,7 +21,7 @@ RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^tvorchestvo/([^/]+)/?$            public/poem.php?book=$1            [QSA,L]
+RewriteRule ^tvorchestvo/([^/]+)/?$            public/book.php?book=$1            [QSA,L]
 RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?book=$1&poem=$2    [QSA,L]
 RewriteRule ^video/([^/]+)/?$                  public/video.php?video=$1          [QSA,L]
 RewriteRule ^galeriya/?$                       public/gallery.php                 [QSA,L]

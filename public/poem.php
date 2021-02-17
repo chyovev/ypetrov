@@ -4,43 +4,33 @@ require_once('../resources/autoload.php');
 $bookSlug   = getGetRequestVar('book');
 $poemSlug   = getGetRequestVar('poem');
 
-$bookObject = $bookRepository->findBySlug($bookSlug);
-throw404OnEmpty($bookObject);
+$bookEntity = $bookRepository->findBySlug($bookSlug);
+$book       = $bookEntity->getDetails(true);
 
-$book       = $bookObject->getDetails(true);
-$metaTitle  = $book['title'] . ' (' . $book['published_year'] . ')';
-$metaDesc   = sprintf('Година на издаване: %s г.; Стихотворения: %s', $book['published_year'], count($book['contents']));
+// proceed only if there's a book entity AND a content record with the poem slug
+throw404OnEmpty($bookEntity && isset($book['contents'][$poemSlug]));
 
-// if there's a poem slug, make sure it exists as a book contents key
-if (isset($poemSlug)) {
+// poem is already pre-fetched through book contents association
+$poemEntity = $book['contents'][$poemSlug]->getPoem();
 
-    throw404OnEmpty(isset($book['contents'][$poemSlug]));
-
-    // poem is already pre-fetched through book contents association
-    $poemObject = $book['contents'][$poemSlug]->getPoem();
-
-    // if there's a POST ajax request,
-    // process it as an attempt to add a comment
-    if (isRequestAjax() && isRequest('POST')) {
-        $response = processSaveCommentRequest($poemObject);
-        rederJSONContent($response);
-        exit;
-    }
-
-    // otherwise, continue loading the poem
-    $poem       = $poemObject->getDetails();
-
-    // add +1 to the read count of the poem
-    $poemObject->incrementReadCount();
-    $entityManager->flush();
-
-    $commentUrl = Url::generatePoemUrl($bookSlug, $poemSlug);
-    $comments   = $commentRepository->getAllCommentsForEntity($poemObject);
-
-    // prepend meta title with poem
-    $metaTitle  = $poem['title'];
-    $metaDesc   = $poem['body'];
+// if there's a POST ajax request,
+// process it as an attempt to add a comment
+if (isRequestAjax() && isRequest('POST')) {
+    $response = processSaveCommentRequest($poemEntity);
+    renderJSONContent($response);
+    exit;
 }
+
+// add +1 to the read count of the poem
+$poemEntity->incrementReadCount();
+$entityManager->flush();
+
+$commentUrl = Url::generatePoemUrl($bookSlug, $poemSlug);
+$comments   = $commentRepository->getAllCommentsForEntity($poemEntity);
+
+$poem       = $poemEntity->getDetails();
+$metaTitle  = $poem['title'];
+$metaDesc   = $poem['body'];
 
 // for regular GET requests render complete page
 if ( ! isRequestAjax()) {
@@ -52,17 +42,17 @@ if ( ! isRequestAjax()) {
         'size' => getImageDimensions($book['image']),
     ];
 
-    $canonicalUrl = isset($poemObject) ? (getPoemCanonicalUrl($poemObject, $poemSlug) ?? Url::generatePoemUrl($bookSlug, $poemSlug)) : NULL;
+    $canonicalUrl = isset($poemEntity) ? (getPoemCanonicalUrl($poemEntity, $poemSlug) ?? Url::generatePoemUrl($bookSlug, $poemSlug)) : NULL;
 
     $vars = [
         'book'      => $book,
         'metaTitle' => $metaTitle,
-        'metaDesc'  => $metaDesc ?? NULL,
+        'metaDesc'  => $metaDesc,
         'metaImage' => $metaImage,
-        'poem'      => $poem ?? NULL,
-        'commentUrl'=> $commentUrl ?? NULL,
+        'poem'      => $poem,
+        'commentUrl'=> $commentUrl,
         'comments'  => $comments ?? NULL,
-        'canonical' => $canonicalUrl ? (HOST_URL . $canonicalUrl) : NULL,
+        'canonical' => HOST_URL . $canonicalUrl,
     ];
 
     renderLayoutWithContentFile('poem.php', $vars);
@@ -72,38 +62,23 @@ if ( ! isRequestAjax()) {
 // for AJAX requests send JSON response containing only what's needed
 else {
     // if there's a poem, load its content
-    if (isset($poem)) {
-        $commentsHTML = renderContentWithNoLayout('elements/comment-section.php', ['commentUrl' => $commentUrl, 'comments' => $comments]);
-        
-        $response = [
-            'metaTitle'  => escape($metaTitle . META_SUFFIX),
-            'title'      => $poem['title'],
-            'dedication' => nl2br($poem['dedication']),
-            'body'       => $poem['body'],
-            'monospace'  => (bool) $poem['use_monospace_font'],
-            'comments'   => $commentsHTML,
-        ];
-    }
+    $commentsHTML = renderContentWithNoLayout('elements/comment-section.php', ['commentUrl' => $commentUrl, 'comments' => $comments]);
+    
+    $response = [
+        'metaTitle'  => escape($metaTitle . META_SUFFIX),
+        'title'      => $poem['title'],
+        'dedication' => nl2br($poem['dedication']),
+        'body'       => $poem['body'],
+        'monospace'  => (bool) $poem['use_monospace_font'],
+        'comments'   => $commentsHTML,
+    ];
 
-    // otherwise load book details
-    else {
-        $bookHTML = renderContentWithNoLayout('elements/book-details.php', ['book' => $book]);
-        
-        $response = [
-            'metaTitle'  => escape($metaTitle . META_SUFFIX),
-            'title'      => $book['title'],
-            'dedication' => NULL,
-            'body'       => $bookHTML,
-            'monospace'  => false,
-            'comments'   => NULL,
-        ];
-    }
-
-    rederJSONContent($response);
+    renderJSONContent($response);
     exit;
 }
 
 
+///////////////////////////////////////////////////////////////////////////////
 function getPoemCanonicalUrl(Poem $poemEntity, string $poemSlug): ?string {
     // check how many books this poem is listed in
     $poemContent = $poemEntity->getContentsAsArray();
