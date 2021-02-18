@@ -44,4 +44,9 @@ class Url {
         return WEBROOT . 'za-yosif-petrov/' . $essaySlug;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    public static function generateTextPageUrl(string $slug): string {
+        return WEBROOT . $slug;
+    }
+
 }

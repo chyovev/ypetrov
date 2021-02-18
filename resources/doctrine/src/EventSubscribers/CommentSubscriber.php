@@ -123,6 +123,9 @@ class CommentSubscriber implements EventSubscriber {
             case 'Essay':
                 return $this->getEssayLink($entityId);
                 break;
+            case 'TextPage':
+                return $this->getTextPageLink($entityId);
+                break;
         }
 
         return NULL;
@@ -182,6 +185,16 @@ class CommentSubscriber implements EventSubscriber {
         $url        = HOST_URL . Url::generateEssayUrl($item['slug']);
 
         return ['есе', $url, $item['title']];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getTextPageLink(int $id): array {
+        $repository = $this->entityManager->getRepository('TextPage');
+        $entity     = $repository->findOneBy(['id' => $id]);
+        $item       = $entity->getDetails();
+        $url        = HOST_URL . Url::generateTextPageUrl($item['slug']);
+
+        return ['страница', $url, $item['title']];
     }
 
     ///////////////////////////////////////////////////////////////////////////

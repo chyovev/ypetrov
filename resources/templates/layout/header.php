@@ -127,6 +127,8 @@ $searchStr   = getGetRequestVar('s');
                         </li>
                         <?php } ?>
 
+                        <li<?= (isCurrentPageFile('textpage.php') && isCurrentPageSlug('hristomatiya') ? ' class="active"' : '') ?>><a href="<?= Url::generateTextPageUrl('hristomatiya') ?>">Христоматия</a></li>
+
                         <li<?= (isCurrentPageFile('contact.php') ? ' class="active"' : '') ?>><a href="<?= Url::generateContactUrl() ?>">Контакт</a></li>
                     </ul>
                     <div class="search-form">

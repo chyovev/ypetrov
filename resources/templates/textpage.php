@@ -9,8 +9,10 @@
                 }
                 echo '<hr />';
                 echo $body;
-                
-                include 'elements/comment-section.php';
+
+                if (isset($commentUrl)) {
+                    include 'elements/comment-section.php';
+                }
             ?>
         </div>
     </section>

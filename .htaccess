@@ -38,6 +38,9 @@ RewriteRule ^[А-Яа-я]+                         public/redirector.php        
 RewriteRule ^sitemap.xml$                      public/sitemap.php                 [QSA,L]
 RewriteRule ^robots.txt$                       public/robots.php                  [QSA,L]
 
+# all /something URLs should be regarded as text pages
+RewriteRule ^([^/]+)/?$                        public/textpage.php?slug=$1        [QSA,L]
+
 # for all other cases redirect to the public/ folder
 RewriteRule ^(.*)$    public/$1     [L]
 

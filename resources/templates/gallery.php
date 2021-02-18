@@ -22,14 +22,17 @@
             }
             ?>
             </ol>
+            <?php if ($images) { ?>
             <div class="center op-0-fadein"><span id="current-image">1</span>/<?= count($images) ?></div>
+            <?php } ?>
 
         </aside>
         <div class="aside-toggler mobile-only"><span>Галерия</span></div>
     </div>
 
-    <section class="text" id="container">
+    <section class="text<?= (!$images ? ' error' : '') ?>" id="container">
         <div class="content-wrapper">
+            <?php if ($images) { ?>
             <h1 class="center" id="title">Снимки на Йосиф Петров</h1>
 
             <div class="gallery-wrapper-outer">
@@ -54,6 +57,13 @@
                 </div>
 
                 <div class="swipe-nav next" title="Следваща"> </div>
+                <?php } ?>
+                <?php
+                    if ( ! $images) {
+                        echo   '<div class="title">Галерия</div><br />
+                                <p>В момента няма добавени снимки в галерията.</p>';
+                    }
+                ?>
 
             </div>
         </div>

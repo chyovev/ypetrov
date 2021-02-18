@@ -92,7 +92,7 @@ var App = {
 
                 $('.search-field').blur().animate({width:'toggle'}, 350, function() {
                     // remove style attribute to fix border radius of submit button
-                    $(this).removeAttr('style');
+                    $(this).removeClass('open').removeAttr('style');
                 });
             }
 
@@ -109,10 +109,16 @@ var App = {
     showSearchField: function(e) {
         // if the field is not visible, show it and prevent default action
         // otherwise just submit the form
-        if ( ! $('.search-field:visible').length) {
+        var $field = $('.search-field');
+
+        if ( ! $field.is(':visible') || $field.val() === '') {
             e.preventDefault();
             $('.logo-wrapper span').animate({width:'toggle'}, 350);
-            $('.search-field').animate({width:'toggle'}, 350).focus();
+
+            // if the field gets shown, focus it; otherwise remove style attribute
+            $field.toggleClass('open').animate({width:'toggle'}, 350, function() {
+                $(this).hasClass('open') ? $(this).focus() : $(this).removeAttr('style');
+            });
         }
 
     },
