@@ -1,6 +1,16 @@
 <?php
 require_once('../resources/autoload.php');
 
+// some search engines have indexed some poems not respecting the .htaccess rules,
+// but directly calling the poems.php file with parameters which bypasses this redirector
+// in such cases the REQUEST_URI needs to be overwritten
+if (preg_match('/poems.php/ui', $_SERVER['REQUEST_URI'])) {
+    $bookSlug   = getGetRequestVar('book');
+    $poemSlug   = getGetRequestVar('poem');
+    
+    $_SERVER['REQUEST_URI'] = 'Творчество/' . $bookSlug . '/' . $poemSlug;
+}
+
 $redirectFile         = 'redirects.txt';
 $redirectFolder       = realpath(COMMON_PATH . '/..');
 $redirectFileFullPath = $redirectFolder . '/' . $redirectFile;
