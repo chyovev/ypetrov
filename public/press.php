@@ -30,8 +30,9 @@ $vars = [
     'commentUrl' => $commentUrl,
     'comments'   => $comments,
 ];
+$smarty->assign($vars);
 
 // mark the current article in the navigation
 setCurrentNavPage(basename(__FILE__), $slug);
 
-renderLayoutWithContentFile('textpage.php', $vars);
+renderLayoutWithContentFile('textpage.tpl');

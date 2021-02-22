@@ -7,11 +7,12 @@ A website in memory of the famous Bulgarian poet Yosif Petrov containing his wor
 
 
 ## Back-end development:
-- PHP 7.1
+- PHP 7.1 to 7.4
 - MySQL 5.7
 - [Doctrine ORM](#doctrine-orm)
 - [PHPMailer library](#phpmailer)
 - [Custom MVC](#mvc)
+- [Smarty 3.1+](#smarty)
 
 ### Doctrine ORM
 The general [recommendation](https://getcomposer.org/doc/faqs/should-i-commit-the-dependencies-in-my-vendor-directory.md) that I stumbled upon while researching was **NOT** to include the `/vendor` folder in the repository, but rather let composer install all dependencies.
@@ -53,6 +54,10 @@ The project uses some sort of a simplified MVC design pattern inspired by [this]
 - **Views** are located in `/resources/templates`
 
 **Routes** are declared in the root `.htaccess` file which is not that flexible, but works for smaller projects like this one.
+
+### Smarty
+To improve readability in the **Views** part of the MVC architectural pattern, all templates use [Smarty](https://github.com/smarty-php/smarty) PHP template engine.
+> **NB!** Since Smarty requires PHP version no greater than 7.4, the same applies to the current project, too.
 
 
 ### Error logging

@@ -20,8 +20,8 @@ function processSaveCommentRequest($object): array {
         return [
             'status'      => true,
             'type'        => 'comment',
-            'html'        => renderContentWithNoLayout('elements/single-comment.php', ['comment' => $comment->getDetails()]),
-            'success_msg' => renderContentWithNoLayout('elements/form-success-message.php', ['type' => 'comment']),
+            'html'        => renderContentWithNoLayout('elements/single-comment.tpl',       ['comment' => $comment->getDetails()]),
+            'success_msg' => renderContentWithNoLayout('elements/form-success-message.tpl', ['type'    => 'comment']),
         ];
     }
     catch (ValidationException $e) {
@@ -53,7 +53,7 @@ function processContactMessageRequest(): array {
         return [
             'status'      => true,
             'type'        => 'contact_message',
-            'success_msg' => renderContentWithNoLayout('elements/form-success-message.php', ['type' => 'contact']),
+            'success_msg' => renderContentWithNoLayout('elements/form-success-message.tpl', ['type' => 'contact']),
         ];
     }
     catch (ValidationException $e) {

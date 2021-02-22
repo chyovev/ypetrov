@@ -17,10 +17,8 @@ $vars = [
     'searchString' => $searchString,
     'resultsCount' => $resultsCount,
     'results'      => $results,
+    'noindex'      => true, 
 ];
+$smarty->assign($vars);
 
-
-// set noindex param to true for current page to add respective meta tag in header.php
-setCurrentNavPage(basename(__FILE__), NULL, $noindex = true);
-
-renderLayoutWithContentFile('search.php', $vars);
+renderLayoutWithContentFile('search.tpl');

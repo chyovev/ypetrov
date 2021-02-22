@@ -1,40 +1,33 @@
 <?php
 
 ///////////////////////////////////////////////////////////////////////////////
-function renderLayoutWithContentFile($contentFile, $variables = []): void {
-    $contentFileFullPath = TEMPLATES_PATH . '/' . $contentFile;
- 
-    // convert the $variables array into single variables
-    extract($variables);
- 
-    if ($contentFile === 'error404.php' ||  ! file_exists($contentFileFullPath)) {
+function renderLayoutWithContentFile($contentFile): void {
+    global $smarty;
+
+    $layout = $smarty->fetch('layout/header.tpl');
+
+    if ($contentFile === 'error404.tpl' ||  ! file_exists(TEMPLATES_PATH . '/' . $contentFile)) {
         header('HTTP/1.1 404 Not Found'); 
         Logger::logError('Page not found');
-        require_once(LAYOUTS_PATH . '/header.php');
-        require_once(LAYOUTS_PATH . '/error404.php');
+        $layout .= $smarty->fetch('error404.tpl');
     }
     else {
-        require_once(LAYOUTS_PATH . '/header.php');
-        require_once($contentFileFullPath);
+        $layout .= $smarty->fetch($contentFile);
     }
- 
-    require_once(LAYOUTS_PATH . '/footer.php');
+
+    $layout .= $smarty->fetch('layout/footer.tpl');
+
+    print($layout);
+    die;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 function renderContentWithNoLayout($contentFile, $variables = []): ?string {
-    $contentFileFullPath = TEMPLATES_PATH . '/' . $contentFile;
- 
-    // convert the $variables array into single variables
-    extract($variables);
- 
-    if (file_exists($contentFileFullPath)) {
-        ob_start();
-        require($contentFileFullPath);
-        return ob_get_clean();
-    }
+    global $smarty;
 
-    return NULL;
+    $smarty->assign($variables);
+
+    return $smarty->fetch($contentFile);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,7 +54,7 @@ function isRequest(string $type): bool {
 function throw404OnEmpty($item): void {
     if ( ! $item) {
         if ( ! IS_DEV) {
-            renderLayoutWithContentFile('error404.php');
+            renderLayoutWithContentFile('error404.tpl');
             die;
         }
 
@@ -113,41 +106,29 @@ function truncateString(
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function setGlobalNavigation(array $array): void {
-    $GLOBALS['navigation'] = $array;
-}
+function setCurrentNavPage(string $fileName, ?string $slug = NULL): void {
+    global $smarty;
 
-///////////////////////////////////////////////////////////////////////////////
-function getGlobalNavigation(): array {
-    return $GLOBALS['navigation'] ?? [];
-}
-
-///////////////////////////////////////////////////////////////////////////////
-function setCurrentNavPage(string $fileName, ?string $slug = NULL, bool $noindex = false): void {
-    $GLOBALS['currentPage'] = [
+    $smarty->assign('currentPage', [
         'fileName' => $fileName,
         'slug'     => $slug,
-        'noindex'  => $noindex,
-    ];
-}
-
-///////////////////////////////////////////////////////////////////////////////
-function getCurrentNavPage(): array {
-    return $GLOBALS['currentPage'] ?? [];
+    ]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 function isCurrentPageFile(string $fileName): bool {
-    $currentPage = getCurrentNavPage();
+    global $smarty;
+    $currentPage = $smarty->tpl_vars['currentPage'] ?? NULL;
 
-    return (isset($currentPage['fileName']) && $currentPage['fileName'] == $fileName);
+    return (isset($currentPage->value['fileName']) && $currentPage->value['fileName'] == $fileName);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 function isCurrentPageSlug(string $slug): bool {
-    $currentPage = getCurrentNavPage();
+    global $smarty;
+    $currentPage = $smarty->tpl_vars['currentPage'] ?? NULL;
 
-    return (isset($currentPage['slug']) && $currentPage['slug'] == $slug);   
+    return (isset($currentPage->value['slug']) && $currentPage->value['slug'] == $slug);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

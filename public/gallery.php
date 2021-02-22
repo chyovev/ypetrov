@@ -12,8 +12,9 @@ $vars = [
     'metaDesc'  => $metaDesc,
     'images'    => $allGalleryImages,
 ];
+$smarty->assign($vars);
 
 // mark the current video in the navigation
 setCurrentNavPage(basename(__FILE__));
 
-renderLayoutWithContentFile('gallery.php', $vars);
+renderLayoutWithContentFile('gallery.tpl');

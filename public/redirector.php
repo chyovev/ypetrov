@@ -55,4 +55,4 @@ else {
 }
 
 // if there was no match, show error 404
-renderLayoutWithContentFile('error404.php');
+renderLayoutWithContentFile('error404.tpl');

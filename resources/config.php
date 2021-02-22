@@ -8,6 +8,7 @@ define('LAYOUTS_PATH',   realpath(dirname(__FILE__) . '/templates/layout'));
 define('COMMON_PATH',    realpath(dirname(__FILE__) . '/common'));
 define('VENDOR_PATH',    realpath(dirname(__FILE__) . '/../vendor'));
 define('DOCTRINE_PATH',  realpath(dirname(__FILE__) . '/doctrine')); // this is not the vendor itself, but the doctrine code for the project
+define('SMARTY_PATH',    realpath(dirname(__FILE__) . '/smarty'));
 
 define('ROOT',           realpath(dirname(__FILE__).'/../'));
 define('WEBROOT',        preg_replace('/\/resources/', '', substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT'])) . '/'));

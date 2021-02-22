@@ -35,8 +35,9 @@ $vars = [
     'commentUrl'=> $commentUrl,
     'comments'  => $comments,
 ];
+$smarty->assign($vars);
 
 // mark the current video in the navigation
 setCurrentNavPage(basename(__FILE__), $video['slug']);
 
-renderLayoutWithContentFile('video.php', $vars);
+renderLayoutWithContentFile('video.tpl');

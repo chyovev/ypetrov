@@ -54,15 +54,16 @@ if ( ! isRequestAjax()) {
         'comments'  => $comments ?? NULL,
         'canonical' => HOST_URL . $canonicalUrl,
     ];
+    $smarty->assign($vars);
 
-    renderLayoutWithContentFile('poem.php', $vars);
+    renderLayoutWithContentFile('poem.tpl');
     exit;
 }
 
 // for AJAX requests send JSON response containing only what's needed
 else {
     // if there's a poem, load its content
-    $commentsHTML = renderContentWithNoLayout('elements/comment-section.php', ['commentUrl' => $commentUrl, 'comments' => $comments]);
+    $commentsHTML = renderContentWithNoLayout('elements/comment-section.tpl', ['commentUrl' => $commentUrl, 'comments' => $comments]);
     
     $response = [
         'metaTitle'  => escape($metaTitle . META_SUFFIX),

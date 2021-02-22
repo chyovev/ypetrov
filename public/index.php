@@ -12,6 +12,8 @@ $entityManager->flush();
 $vars = [
     'title' => $page['title'],
     'body'  => $page['body'],
+    'nohr'  => true,
 ];
+$smarty->assign($vars);
 
-renderLayoutWithContentFile('textpage.php', $vars);
+renderLayoutWithContentFile('textpage.tpl');

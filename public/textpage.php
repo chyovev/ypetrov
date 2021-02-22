@@ -29,8 +29,9 @@ $vars = [
     'commentUrl' => $commentUrl,
     'comments'   => $comments,
 ];
+$smarty->assign($vars);
 
 // mark the current page in the navigation
 setCurrentNavPage(basename(__FILE__), $slug);
 
-renderLayoutWithContentFile('textpage.php', $vars);
+renderLayoutWithContentFile('textpage.tpl');

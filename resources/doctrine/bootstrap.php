@@ -4,7 +4,6 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Events;
 
-require_once(VENDOR_PATH . '/autoload.php');
 require_once('autoload_doctrine_classes.php');
 
 $entitiesFolder = [DOCTRINE_PATH . '/xml'];

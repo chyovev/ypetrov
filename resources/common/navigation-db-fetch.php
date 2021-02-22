@@ -13,8 +13,6 @@ $allArticles     = $pressRepository->findActive();
 $essayRepository = $entityManager->getRepository('Essay');
 $allEssays       = $essayRepository->findActive();
 
-// this variable is global for the renderLayoutWithContentFile() function
-// so it can be used in the header.php layout
 $navigation = [
     'articles' => $allArticles,
     'books'    => $allBooks,
@@ -22,4 +20,4 @@ $navigation = [
     'videos'   => $allVideos,
 ];
 
-setGlobalNavigation($navigation);
+$smarty->assign(['navigation' => $navigation]);

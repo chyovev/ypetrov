@@ -9,7 +9,8 @@ if (isRequestAjax() && isRequest('POST')) {
 
 $metaTitle = 'Контакт';
 $vars      = ['metaTitle' => $metaTitle];
+$smarty->assign($vars);
 
 setCurrentNavPage(basename(__FILE__), NULL);
 
-renderLayoutWithContentFile('contact.php', $vars);
+renderLayoutWithContentFile('contact.tpl');

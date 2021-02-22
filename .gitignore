@@ -16,3 +16,5 @@ public/resources/img/content/
 public/resources/videos/
 logs/
 public/resources/downloads/
+resources/smarty/cache/*.php
+resources/smarty/compile/*.php

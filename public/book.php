@@ -38,15 +38,16 @@ if ( ! isRequestAjax()) {
         'commentUrl'=> $commentUrl,
         'comments'  => $comments ?? NULL,
     ];
+    $smarty->assign($vars);
 
-    renderLayoutWithContentFile('poem.php', $vars);
+    renderLayoutWithContentFile('poem.tpl');
     exit;
 }
 
 // for AJAX requests send JSON response containing only what's needed
 else {
-    $bookHTML = renderContentWithNoLayout('elements/book-details.php', ['book' => $book]);
-    $commentsHTML = renderContentWithNoLayout('elements/comment-section.php', ['commentUrl' => $commentUrl, 'comments' => $comments]);
+    $bookHTML     = renderContentWithNoLayout('elements/book-details.tpl',    ['book'       => $book]);
+    $commentsHTML = renderContentWithNoLayout('elements/comment-section.tpl', ['commentUrl' => $commentUrl, 'comments' => $comments]);
     
     $response = [
         'metaTitle'  => escape($metaTitle . META_SUFFIX),
