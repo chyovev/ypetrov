@@ -31,7 +31,4 @@ $vars = [
 ];
 $smarty->assign($vars);
 
-// mark the current page in the navigation
-setCurrentNavPage(basename(__FILE__), $slug);
-
 renderLayoutWithContentFile('textpage.tpl');

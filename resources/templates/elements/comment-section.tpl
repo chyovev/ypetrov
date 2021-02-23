@@ -3,9 +3,7 @@
     <div class="comments"{if $comments|@count == 0} style="display: none"{/if}>
         <div class="section-title">Коментари</div>
         {foreach $comments as $item}
-            {$i=$item@iteration}
-            {$comment = $item->getDetails()}
-            {include './single-comment.tpl'}
+            {include './single-comment.tpl' comment=$item->getDetails() i=$item@iteration}
         {/foreach}
     </div>
 

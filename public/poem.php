@@ -1,7 +1,7 @@
 <?php
 require_once('../resources/autoload.php');
 
-$bookSlug   = getGetRequestVar('book');
+$bookSlug   = getGetRequestVar('slug');
 $poemSlug   = getGetRequestVar('poem');
 
 $bookEntity = $bookRepository->findBySlug($bookSlug);
@@ -34,9 +34,6 @@ $metaDesc   = $poem['body'];
 
 // for regular GET requests render complete page
 if ( ! isRequestAjax()) {
-    // mark the current book in the navigation
-    setCurrentNavPage(basename(__FILE__), $book['slug']);
-
     $metaImage  = [
         'url'  => $book['image'],
         'size' => getImageDimensions($book['image']),

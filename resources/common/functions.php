@@ -9,7 +9,7 @@ function renderLayoutWithContentFile($contentFile): void {
     if ($contentFile === 'error404.tpl' ||  ! file_exists(TEMPLATES_PATH . '/' . $contentFile)) {
         header('HTTP/1.1 404 Not Found'); 
         Logger::logError('Page not found');
-        $layout .= $smarty->fetch('error404.tpl');
+        $layout .= $smarty->fetch('layout/error404.tpl');
     }
     else {
         $layout .= $smarty->fetch($contentFile);
@@ -106,14 +106,21 @@ function truncateString(
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function setCurrentNavPage(string $fileName, ?string $slug = NULL): void {
+function setCurrentNavPage(): void {
     global $smarty;
+
+    // get the file name which includes functions, not current file name
+    $fileName = basename($_SERVER['SCRIPT_NAME'], '.php');
+    $slug     = getGetRequestVar('slug');
 
     $smarty->assign('currentPage', [
         'fileName' => $fileName,
         'slug'     => $slug,
     ]);
 }
+
+// call function
+setCurrentNavPage();
 
 ///////////////////////////////////////////////////////////////////////////////
 function isCurrentPageFile(string $fileName): bool {

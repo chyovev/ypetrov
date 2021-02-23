@@ -11,10 +11,12 @@
     <meta name="keywods" content="Йосиф Петров, поезия, поет, общественик, депутат, стихосбирки, стихотворения, VII Велико Народно събрание, Персин" />
     <script type="text/javascript" src="{WEBROOT}resources/js/script.js"></script>
     <link type="text/css" rel="stylesheet" href="{WEBROOT}resources/css/style.css" />
-    {if isset($metaImage) && is_array($metaImage) && array_filter($metaImage)|@count > 1}
+    {if isset($metaImage) && is_array($metaImage)}
+        <meta property="og:image" content="{HOST_URL}{$metaImage['url']}" />
+    {/if}
+    {if isset($metaImage['size']['width']) && isset($metaImage['size']['height'])}
         <meta property="og:image:width" content="{$metaImage['size']['width']}" />
         <meta property="og:image:height" content="{$metaImage['size']['height']}" />
-        <meta property="og:image" content="{HOST_URL}{$metaImage['url']}" />
     {/if}
     <meta property="og:image:width" content="768" />
     <meta property="og:image:height" content="1024" />
@@ -62,7 +64,7 @@
                     <ul>
 
                         {if isset($navigation['books']) && $navigation['books']|@count > 0}
-                        <li class="has-items{if isCurrentPageFile('poem.php') || isCurrentPageFile('book.php')} active open{/if}">
+                        <li class="has-items{if isCurrentPageFile('poem') || isCurrentPageFile('book')} active open{/if}">
                             <a href="javascript: void(0);">Творчество</a>
                             <ul>
                                 {foreach $navigation['books'] as $entity}
@@ -73,10 +75,10 @@
                         </li>
                         {/if}
 
-                        <li{if isCurrentPageFile('gallery.php')} class="active"{/if}><a href="{Url::generateGalleryUrl()}">Галерия</a></li>
+                        <li{if isCurrentPageFile('gallery')} class="active"{/if}><a href="{Url::generateGalleryUrl()}">Галерия</a></li>
 
                         {if isset($navigation['videos']) && $navigation['videos']|@count > 0}
-                        <li class="has-items{if isCurrentPageFile('video.php')} active open{/if}">
+                        <li class="has-items{if isCurrentPageFile('video')} active open{/if}">
                             <a href="javascript: void(0);">Видео</a>
                             <ul>
                                 {foreach $navigation['videos'] as $entity}
@@ -88,7 +90,7 @@
                         {/if}
 
                         {if isset($navigation['articles']) && $navigation['articles']|@count > 0}
-                        <li class="has-items{if isCurrentPageFile('press.php')} active open{/if}">
+                        <li class="has-items{if isCurrentPageFile('press')} active open{/if}">
                             <a href="javascript: void(0);">Преса</a>
                             <ul>
                                 {foreach $navigation['articles'] as $entity}
@@ -99,7 +101,7 @@
                         {/if}
 
                         {if isset($navigation['essays']) && $navigation['essays']|@count > 0}
-                        <li class="has-items{if isCurrentPageFile('essay.php')} active open{/if}">
+                        <li class="has-items{if isCurrentPageFile('essay')} active open{/if}">
                             <a href="javascript: void(0);">За Йосиф Петров</a>
                             <ul>
                                 {foreach $navigation['essays'] as $entity}
@@ -110,9 +112,9 @@
                         </li>
                         {/if}
 
-                        <li{if isCurrentPageFile('textpage.php') && isCurrentPageSlug('hristomatiya')} class="active"{/if}><a href="{Url::generateTextPageUrl('hristomatiya')}">Христоматия</a></li>
+                        <li{if isCurrentPageFile('textpage') && isCurrentPageSlug('hristomatiya')} class="active"{/if}><a href="{Url::generateTextPageUrl('hristomatiya')}">Христоматия</a></li>
 
-                        <li{if isCurrentPageFile('contact.php')} class="active"{/if}><a href="{Url::generateContactUrl()}">Контакт</a></li>
+                        <li{if isCurrentPageFile('contact')} class="active"{/if}><a href="{Url::generateContactUrl()}">Контакт</a></li>
                     </ul>
                     <div class="search-form">
                         <form action="{Url::generateSearchUrl()}" method="GET">

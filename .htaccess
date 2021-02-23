@@ -20,14 +20,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-RewriteRule ^tvorchestvo/([^/]+)/?$            public/book.php?book=$1            [QSA,L]
-RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?book=$1&poem=$2    [QSA,L]
-RewriteRule ^video/([^/]+)/?$                  public/video.php?video=$1          [QSA,L]
+RewriteRule ^tvorchestvo/([^/]+)/?$            public/book.php?slug=$1            [QSA,L]
+RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?slug=$1&poem=$2    [QSA,L]
+RewriteRule ^video/([^/]+)/?$                  public/video.php?slug=$1          [QSA,L]
 RewriteRule ^galeriya/?$                       public/gallery.php                 [QSA,L]
 RewriteRule ^tarsene/?$                        public/search.php                  [QSA,L]
 RewriteRule ^kontakt/?$                        public/contact.php                 [QSA,L]
-RewriteRule ^presa/([^/]+)/?$                  public/press.php?article=$1        [QSA,L]
-RewriteRule ^za-yosif-petrov/([^/]+)/?$        public/essay.php?essay=$1          [QSA,L]
+RewriteRule ^presa/([^/]+)/?$                  public/press.php?slug=$1        [QSA,L]
+RewriteRule ^za-yosif-petrov/([^/]+)/?$        public/essay.php?slug=$1          [QSA,L]
 
 # previously all pages used cyrillic characters in their URLs
 # so for every request starting with cyrillic character load up the redirector

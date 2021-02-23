@@ -1,7 +1,7 @@
 <?php
 require_once('../resources/autoload.php');
 
-$videoSlug   = getGetRequestVar('video');
+$videoSlug   = getGetRequestVar('slug');
 $videoEntity = $videoRepository->findBySlug($videoSlug);
 throw404OnEmpty($videoEntity);
 
@@ -36,8 +36,5 @@ $vars = [
     'comments'  => $comments,
 ];
 $smarty->assign($vars);
-
-// mark the current video in the navigation
-setCurrentNavPage(basename(__FILE__), $video['slug']);
 
 renderLayoutWithContentFile('video.tpl');

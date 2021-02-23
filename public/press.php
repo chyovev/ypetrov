@@ -1,7 +1,7 @@
 <?php
 require_once('../resources/autoload.php');
 
-$slug   = getGetRequestVar('article');
+$slug   = getGetRequestVar('slug');
 $entity = $pressRepository->findBySlug($slug);
 throw404OnEmpty($entity);
 
@@ -31,8 +31,5 @@ $vars = [
     'comments'   => $comments,
 ];
 $smarty->assign($vars);
-
-// mark the current article in the navigation
-setCurrentNavPage(basename(__FILE__), $slug);
 
 renderLayoutWithContentFile('textpage.tpl');

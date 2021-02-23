@@ -1,7 +1,7 @@
 <?php
 require_once('../resources/autoload.php');
 
-$slug   = getGetRequestVar('essay');
+$slug   = getGetRequestVar('slug');
 $entity = $essayRepository->findBySlug($slug);
 throw404OnEmpty($entity);
 
@@ -30,8 +30,5 @@ $vars = [
 ];
 
 $smarty->assign($vars);
-
-// mark the current essay in the navigation
-setCurrentNavPage(basename(__FILE__), $slug);
 
 renderLayoutWithContentFile('textpage.tpl');

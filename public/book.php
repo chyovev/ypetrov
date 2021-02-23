@@ -1,7 +1,7 @@
 <?php
 require_once('../resources/autoload.php');
 
-$bookSlug   = getGetRequestVar('book');
+$bookSlug   = getGetRequestVar('slug');
 $bookEntity = $bookRepository->findBySlug($bookSlug);
 throw404OnEmpty($bookEntity);
 
@@ -21,9 +21,6 @@ $metaDesc   = sprintf('Година на издаване: %s г.; Стихот�
 
 // for regular GET requests render complete page
 if ( ! isRequestAjax()) {
-    // mark the current book in the navigation
-    setCurrentNavPage(basename(__FILE__), $book['slug']);
-
     $metaImage  = [
         'url'  => $book['image'],
         'size' => getImageDimensions($book['image']),
