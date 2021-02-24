@@ -97,6 +97,11 @@ class ContactMessageSubscriber implements EventSubscriber {
             $this->addError('Дължината на поле «Съобщение» не може да надвишава ' . $bodyMaxLength . ' символа.', 'body');
         }
 
+        // check if captcha matches
+        if ( ! $this->isCaptchaCorrect()) {
+            $this->addError('Моля, попълнете анти-спам защитата.', 'captcha');
+        }
+
         // check whether X minutes have passed between consecutive messages
         $minutes       = $this->timeoutBetweenRequests;
         $messagesCount = $this->repository->messagesCountInLastMinutes($entity->getIp(), $minutes);

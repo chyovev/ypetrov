@@ -352,3 +352,13 @@ function outlineElementsInText(array $words, string $haystack): string {
 function isEmailValid(string $email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+function setCaptchaSession(string $code): void {
+    $_SESSION['code'] = $code;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+function getCaptchaSession(): string {
+    return $_SESSION['code'];
+}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36c82e830b5d0387d34da96e933eed94",
+    "content-hash": "d33521bd2a9b3c00435a0e1851d59801",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -918,6 +918,41 @@
                 "persistence"
             ],
             "time": "2020-10-24T22:13:54+00:00"
+        },
+        {
+            "name": "mobicms/captcha",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mobicms/captcha.git",
+                "reference": "ee6586fe9cebd7dcdf0708ef1faa75c284f844b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mobicms/captcha/zipball/ee6586fe9cebd7dcdf0708ef1faa75c284f844b4",
+                "reference": "ee6586fe9cebd7dcdf0708ef1faa75c284f844b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mobicms\\Captcha\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "mobiCMS, Captcha package",
+            "homepage": "https://github.com/mobicms/captcha",
+            "keywords": [
+                "captcha",
+                "mobicms"
+            ],
+            "time": "2017-09-01T12:00:41+00:00"
         },
         {
             "name": "phpmailer/phpmailer",

@@ -74,6 +74,9 @@ Previosly the website has used exclusively URLs written in the Cyrillic script. 
 
 Requests starting with a cyrillic letter are routed via the root `.htaccess` to the redirector which has already loaded up an array with all old addresses and their respective relocations. If the requested URL is present in this array, a 301 redirect to the new address is issued; otherwise error page 404 gets shown.
 
+### Captcha
+[mobiCMS Captcha](https://github.com/mobicms/captcha) is used as a simple spam prevention tool. A captcha code gets generated on page load or mouse click which then gets stored in a session variable. Its validity is verified in the `prePersist` method of both `Comment-` and `ContactMessageSubscriber`-s.
+
 ## Front-end development:
 - HTML5
 - LESS/CSS3

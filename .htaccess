@@ -28,6 +28,7 @@ RewriteRule ^tarsene/?$                        public/search.php                
 RewriteRule ^kontakt/?$                        public/contact.php                 [QSA,L]
 RewriteRule ^presa/([^/]+)/?$                  public/press.php?slug=$1        [QSA,L]
 RewriteRule ^za-yosif-petrov/([^/]+)/?$        public/essay.php?slug=$1          [QSA,L]
+RewriteRule ^captcha/?$                        public/captcha.php                 [QSA,L]
 
 # previously all pages used cyrillic characters in their URLs
 # so for every request starting with cyrillic character load up the redirector

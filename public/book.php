@@ -19,6 +19,10 @@ $comments   = $commentRepository->getAllCommentsForEntity($bookEntity);
 $metaTitle  = $book['title'] . ' (' . $book['published_year'] . ')';
 $metaDesc   = sprintf('Година на издаване: %s г.; Стихотворения: %s', $book['published_year'], count($book['contents']));
 
+$code       = new Captcha();
+$smarty->assign('captchaImg', $code->getImage());
+
+
 // for regular GET requests render complete page
 if ( ! isRequestAjax()) {
     $metaImage  = [

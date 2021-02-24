@@ -32,6 +32,9 @@ $poem       = $poemEntity->getDetails();
 $metaTitle  = $poem['title'];
 $metaDesc   = $poem['body'];
 
+$code       = new Captcha();
+$smarty->assign('captchaImg', $code->getImage());
+
 // for regular GET requests render complete page
 if ( ! isRequestAjax()) {
     $metaImage  = [

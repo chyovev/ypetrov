@@ -90,6 +90,11 @@ class CommentSubscriber implements EventSubscriber {
             $this->addError('Дължината на поле «Коментар» не може да надвишава ' . $bodyMaxLength . ' символа.', 'body');
         }
 
+        // check if captcha matches
+        if ( ! $this->isCaptchaCorrect()) {
+            $this->addError('Моля, попълнете анти-спам защитата.', 'captcha');
+        }
+
         // check whether X minutes have passed between consecutive comments
         $minutes      = $this->timeoutBetweenRequests;
         $commentCount = $this->repository->commentCountInLastMinutes($entity->getIp(), $minutes);

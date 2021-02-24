@@ -36,6 +36,7 @@ var App = {
         $('.thumb').on('click', App.jumpToImage);
         $('.swipe-nav').on('click', App.navigateGallery);
         $(document).on('submit', '.ajax-form', App.submitFormAjax); // using document because of ajax loaded poems
+        $(document).on('click', '.captcha', App.generateNewCaptcha);
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -485,6 +486,9 @@ var App = {
                     else if (response.type === 'contact_message') {
                         App.resetFormFields($('.contact-form'));
                     }
+
+                    // reset captcha
+                    $('.captcha').trigger('click');
                 }
             },
 
@@ -529,7 +533,7 @@ var App = {
     ///////////////////////////////////////////////////////
     initMagnificPopup: function() {
         $('.content-wrapper').magnificPopup({
-            delegate:            'img',
+            delegate:            'img:not(.no-zoom)',
             type:                'image',
             gallery:             {enabled: false},
             closeOnContentClick: true,
@@ -559,6 +563,20 @@ var App = {
                         $wrapper.removeClass('has-caption');
                     }
                 }
+            }
+        });
+    },
+
+    ///////////////////////////////////////////////////////
+    generateNewCaptcha: function(e) {
+        e.preventDefault();
+        var $img = $(this);
+
+        return $.ajax({
+            url:      root + 'captcha',
+            dataType: 'JSON',
+            success: function(response) {
+                $img.attr('src', response.image);
             }
         });
     },

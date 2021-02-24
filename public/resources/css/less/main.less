@@ -1261,6 +1261,7 @@ textarea {
     }
 }
 .contact-form {
+    width: 100%;
     max-width: 500px;
     @media @notmobile {
         margin: 2cm auto 1cm auto;
@@ -1354,6 +1355,28 @@ textarea {
 }
 .green {
     color: green;
+}
+.table {
+    width: 100%;
+    display: table;
+    .column {
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+form .column:last-child {
+    width: 100%;
+    padding-left: 20px;
+}
+/* code */
+.captcha {
+    box-shadow: none !important;
+    cursor: pointer !important;
+    margin: 0px auto 20px auto !important;
+}
+/* input field */
+#captcha {
+    margin: 10px auto !important;
 }
 /* --------------------------- */
 .content-wrapper {

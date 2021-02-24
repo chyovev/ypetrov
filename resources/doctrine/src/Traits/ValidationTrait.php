@@ -16,5 +16,13 @@ trait ValidationTrait {
     private function getErrors(): array {
         return $this->errors;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function isCaptchaCorrect(): bool {
+        $request = getRequestVariables('post', ['captcha']);
+        $session = getCaptchaSession();
+
+        return (mb_strtolower($request['captcha'], 'utf-8') === mb_strtolower($session, 'utf-8'));
+    }
     
 }

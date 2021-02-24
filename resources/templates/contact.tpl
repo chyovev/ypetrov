@@ -11,6 +11,7 @@
                 <input type="text" name="username" id="username" placeholder="*Име" />
                 <input type="text" name="email" id="email" placeholder="E-mail" />
                 <textarea name="message" id="message" placeholder="*Съобщение"></textarea>
+                {include file='elements/captcha.tpl'}
                 <div class="error-message none"></div>
                 <div class="success-message center green none"></div>
                 <input type="submit" value="Изпрати" />

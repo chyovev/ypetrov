@@ -7,8 +7,13 @@ if (isRequestAjax() && isRequest('POST')) {
     exit;
 }
 
-$metaTitle = 'Контакт';
-$vars      = ['metaTitle' => $metaTitle];
+// generate captcha code on GET request
+$code = new Captcha();
+
+$vars = [
+    'metaTitle'  => 'Контакт',
+    'captchaImg' => $code->getImage(),
+];
 $smarty->assign($vars);
 
 renderLayoutWithContentFile('contact.tpl');
