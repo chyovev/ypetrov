@@ -16,7 +16,6 @@ if (isRequestAjax() && isRequest('POST')) {
 $entity->incrementReadCount();
 $entityManager->flush();
 
-$commentUrl = Url::generateEssayUrl($slug);
 $comments   = $commentRepository->getAllCommentsForEntity($entity);
 $essay      = $entity->getDetails();
 
@@ -25,7 +24,6 @@ $vars = [
     'metaTitle'  => $essay['title'],
     'body'       => $essay['body'],
     'metaDesc'   => $essay['body'],
-    'commentUrl' => $commentUrl,
     'comments'   => $comments,
 ];
 

@@ -268,9 +268,14 @@ var App = {
     // but that doesn't apply to navigation buttons;
     // a separate popstate eventlistener is needed
     loadPoemDynamicallyOnPopstate: function(e) {
+        // strip host part from current URL
+        var href = (window.location.href).replace(window.location.origin, '');
+
         // the ajax response was previously passed to pushState as a «state» property
-        // there's no need for a separate AJAX request on popstate
-        App.fadeOutPoemWrapper(App.updatePoem, e.originalEvent.state);
+        // however, if there's no state property, initiate AJAX request
+        e.originalEvent.state
+            ? App.fadeOutPoemWrapper(App.updatePoem, e.originalEvent.state)
+            : App.fadeOutPoemWrapper(App.initPoemAjax, href);
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -342,6 +347,9 @@ var App = {
         $comments.remove();
         if (response.comments) {
             $('.content-wrapper').append(response.comments);
+
+            // update comment action url
+            $('#comment-form').attr('action', response.url);
         }
 
         // replace the metatitle of the document

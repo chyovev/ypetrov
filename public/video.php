@@ -17,7 +17,6 @@ if (isRequestAjax() && isRequest('POST')) {
 $videoEntity->incrementViews();
 $entityManager->flush();
 
-$commentUrl  = Url::generateVideoUrl($videoSlug);
 $comments    = $commentRepository->getAllCommentsForEntity($videoEntity);
 $video       = $videoEntity->getDetails();
 $metaTitle   = $video['title'];
@@ -32,7 +31,6 @@ $vars = [
     'metaTitle' => $metaTitle,
     'metaDesc'  => $metaDesc,
     'metaImage' => $metaImage,
-    'commentUrl'=> $commentUrl,
     'comments'  => $comments,
 ];
 $smarty->assign($vars);

@@ -17,7 +17,6 @@ if (isRequestAjax() && isRequest('POST')) {
 $entity->incrementReadCount();
 $entityManager->flush();
 
-$commentUrl = Url::generateTextPageUrl($slug);
 $comments   = $commentRepository->getAllCommentsForEntity($entity);
 $page       = $entity->getDetails();
 
@@ -26,7 +25,6 @@ $vars = [
     'metaTitle'  => $page['title'],
     'body'       => $page['body'],
     'metaDesc'   => $page['body'],
-    'commentUrl' => $commentUrl,
     'comments'   => $comments,
 ];
 $smarty->assign($vars);

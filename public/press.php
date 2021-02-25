@@ -16,7 +16,6 @@ if (isRequestAjax() && isRequest('POST')) {
 $entity->incrementReadCount();
 $entityManager->flush();
 
-$commentUrl = Url::generatePressUrl($slug);
 $comments   = $commentRepository->getAllCommentsForEntity($entity);
 $article    = $entity->getDetails();
 $subtitle   = implode(', ', array_filter([$article['press'], beautifyDate('%d.%m.%Y г.', $article['published_date'])]));
@@ -27,7 +26,6 @@ $vars = [
     'metaTitle'  => $article['title'],
     'body'       => $article['body'],
     'metaDesc'   => $subtitle ?? $article['body'],
-    'commentUrl' => $commentUrl,
     'comments'   => $comments,
 ];
 $smarty->assign($vars);

@@ -9,7 +9,7 @@
 
     <div class="comment-form">
         <div class="section-title">Добавяне на коментар</div>
-        <form method="POST" id="comment-form" class="ajax-form" action="{$commentUrl}">
+        <form method="POST" id="comment-form" class="ajax-form">
             <input type="text" id="username" name="username" placeholder="*Име" />
             <textarea name="comment" id="comment" placeholder="*Коментар"></textarea>
             {include file='./captcha.tpl'}

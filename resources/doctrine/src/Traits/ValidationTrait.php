@@ -22,7 +22,7 @@ trait ValidationTrait {
         $request = getRequestVariables('post', ['captcha']);
         $session = getCaptchaSession();
 
-        return (mb_strtolower($request['captcha'], 'utf-8') === mb_strtolower($session, 'utf-8'));
+        return (mb_strtolower(trim($request['captcha']), 'utf-8') === mb_strtolower($session, 'utf-8'));
     }
     
 }

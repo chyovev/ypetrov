@@ -25,7 +25,6 @@ if (isRequestAjax() && isRequest('POST')) {
 $poemEntity->incrementReadCount();
 $entityManager->flush();
 
-$commentUrl = Url::generatePoemUrl($bookSlug, $poemSlug);
 $comments   = $commentRepository->getAllCommentsForEntity($poemEntity);
 
 $poem       = $poemEntity->getDetails();
@@ -50,7 +49,6 @@ if ( ! isRequestAjax()) {
         'metaDesc'  => $metaDesc,
         'metaImage' => $metaImage,
         'poem'      => $poem,
-        'commentUrl'=> $commentUrl,
         'comments'  => $comments ?? NULL,
         'canonical' => HOST_URL . $canonicalUrl,
     ];
@@ -63,7 +61,7 @@ if ( ! isRequestAjax()) {
 // for AJAX requests send JSON response containing only what's needed
 else {
     // if there's a poem, load its content
-    $commentsHTML = renderContentWithNoLayout('elements/comment-section.tpl', ['commentUrl' => $commentUrl, 'comments' => $comments]);
+    $commentsHTML = renderContentWithNoLayout('elements/comment-section.tpl', ['comments' => $comments]);
     
     $response = [
         'metaTitle'  => escape($metaTitle . META_SUFFIX),

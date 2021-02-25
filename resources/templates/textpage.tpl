@@ -7,7 +7,7 @@
             {if ! isset($nohr) || !$nohr}<hr />{/if}
             {$body}
 
-            {if isset($commentUrl)}
+            {if isset($comments)}
                 {include 'elements/comment-section.tpl'}
             {/if}
         </div>
