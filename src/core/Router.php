@@ -1,6 +1,8 @@
 <?php
 
-// class should not initiateable, all methods are static
+use Doctrine\ORM\EntityManager;
+
+// class should not be initiateable, all methods are static
 abstract class Router {
 
     private static $requestParams = [];
@@ -315,10 +317,12 @@ abstract class Router {
         // try to process current request to get controller and action out of it
         // and then call the respective action method in controller class
         try {
-            $params = self::getCurrentRequestParams();
-            $controller      = $params['controller'];
-            $action          = $params['action'];
+            $params     = self::getCurrentRequestParams();
+            $controller = $params['controller'];
+            $action     = $params['action'];
 
+            self::loadControllerFile($controller);
+            self::checkControllerAndActionCallability($controller, $action);
             self::callControllerAction($controller, $action, $smarty, $doctrine);
         }
         catch (Exception $e) {
@@ -333,7 +337,7 @@ abstract class Router {
         // and show 404 page
         if (IS_PROD) {
             Logger::logError($errorMessage);
-            $smarty->showPage('layout/error404.tpl');
+            self::showErrorPage($smarty, $doctrine);
         }
 
         // otherwise just display the error message
@@ -342,11 +346,8 @@ abstract class Router {
         }
     }
 
-        ///////////////////////////////////////////////////////////////////////////////
-    protected static function callControllerAction(string $controller, string $action, ExtendedSmarty $smarty, $doctrine): void {
-        self::loadControllerFile($controller);
-        self::checkControllerAndActionCallability($controller, $action);
-
+    ///////////////////////////////////////////////////////////////////////////////
+    protected static function callControllerAction(string $controller, string $action, ExtendedSmarty $smarty, EntityManager $doctrine): void {
         $controllerClass = self::getControllerClass($controller);
 
         $class = new $controllerClass($smarty, $doctrine);
@@ -373,7 +374,7 @@ abstract class Router {
 
     ///////////////////////////////////////////////////////////////////////////////
     protected static function getControllerClass(string $controller): string {
-        return ucfirst($controller) . 'Controller';
+        return ucfirst(basename($controller)) . 'Controller';
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -397,6 +398,12 @@ abstract class Router {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // call the index method of base errors_controller
+    // use smarty and doctrine to load navigation also on 404 pages
+    protected static function showErrorPage(ExtendedSmarty $smarty, EntityManager $doctrine): void {
+        self::callControllerAction('base/errors', 'index', $smarty, $doctrine);
+    }
 
 
 }

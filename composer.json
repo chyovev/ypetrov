@@ -17,7 +17,7 @@
     "autoload": {
         "classmap": [
             "src/models/doctrine/src/",
-            "src/controllers/abstract/",
+            "src/controllers/base/",
             "src/core/"
         ],
         "files": [

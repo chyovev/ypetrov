@@ -58,10 +58,10 @@ As a result, comments get stored in the same table, but as a trade-off they must
 > **NB!** Classes which can be commented on should implement the **CommentableInterface**.
 
 ### Controllers
-All controllers extend either the `CommentableController` class (which in turn extends `AppController`) or the `AppController` itself. Both these classes are abstract and hold methods and properties which can be used across all controllers. For instance, the array property `$globalModels` in `AppController` stores all [Doctrine models](#models-doctrine-classes) which are needed on most pages (such as loading data for the navigation). They get initialized on Controller load.
+All controllers extend either the `CommentableController` class (which in turn extends `AppController`) or the `AppController` itself. Both are abstract base classes and hold methods and properties which can be used across all controllers. For instance, the array property `$globalModels` in `AppController` stores all [Doctrine models](#models-doctrine-classes) which are needed on most pages (such as loading data for the navigation). They get initialized on Controller load.
 > **NB!** Models which are to be used only per-controller are declared in the `$models` array property of said controller.
 
-Each request loads up only its corresponding controller (if any). Abstract controllers are loaded automatically using the `autoload` declaration in `composer.json`. The downside to that is that `autoload` cannot “see” newly introduced abstract controllers: `composer dump-autoload` needs to be executed first.
+Each request loads up only its corresponding controller (if any). Base controllers are loaded automatically using the `autoload` declaration in `composer.json`. The downside to that is that `autoload` cannot “see” newly introduced base controllers: `composer dump-autoload` needs to be executed first.
 
 ### Views
 To improve readability in the **Views** part of the MVC architectural pattern, all templates use [Smarty](https://github.com/smarty-php/smarty) PHP template engine.
