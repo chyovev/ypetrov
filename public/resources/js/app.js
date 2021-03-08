@@ -108,20 +108,22 @@ var App = {
 
     ///////////////////////////////////////////////////////////////////////////
     showSearchField: function(e) {
-        // if the field is not visible, show it and prevent default action
-        // otherwise just submit the form
-        var $field = $('.search-field');
+        var $field    = $('.search-field'),
+            isVisible = $field.is(':visible')
 
-        if ( ! $field.is(':visible') || $field.val() === '') {
-            e.preventDefault();
-            $('.logo-wrapper span').animate({width:'toggle'}, 350);
-
-            // if the field gets shown, focus it; otherwise remove style attribute
-            $field.toggleClass('open').animate({width:'toggle'}, 350, function() {
-                $(this).hasClass('open') ? $(this).focus() : $(this).removeAttr('style');
-            });
+        // if the field is visible and there's value, submit the form
+        if (isVisible && $field.val() !== '') {
+            return true;
         }
 
+        e.preventDefault();
+        $('.logo-wrapper span').animate({width:'toggle'}, 350);
+
+        $field.animate({width:'toggle'}, 350, function() {
+            isVisible // if it was visible before the click, hide it, otherwise focus it
+                    ? $(this).removeClass('open')
+                    : $(this).addClass('open').focus();
+        });
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -456,8 +458,13 @@ var App = {
                 // if the status is false, there were errors – show them
                 if ( ! response.status) {
 
+                    // if no errors are shown, use the generic one
+                    if ( ! response.errors) {
+                        $('.error-message').html(App.genericErrorMessage).addClass('center').fadeIn();
+                    }
+
                     // if there's a general error, it has higher priority; don't show other errors
-                    if ('general' in response.errors) {
+                    else if ('general' in response.errors) {
                         $('.error-message').html(response.errors.general[0]).addClass('center').fadeIn();
                     }
 

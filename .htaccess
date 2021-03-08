@@ -20,38 +20,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} (.+)/$
 RewriteRule ^ %1 [R=301,L]
 
-RewriteRule ^tvorchestvo/([^/]+)/?$            public/book.php?slug=$1            [QSA,L]
-RewriteRule ^tvorchestvo/([^/]+)/([^/]+)/?$    public/poem.php?slug=$1&poem=$2    [QSA,L]
-RewriteRule ^video/([^/]+)/?$                  public/video.php?slug=$1          [QSA,L]
-RewriteRule ^galeriya/?$                       public/gallery.php                 [QSA,L]
-RewriteRule ^tarsene/?$                        public/search.php                  [QSA,L]
-RewriteRule ^kontakt/?$                        public/contact.php                 [QSA,L]
-RewriteRule ^presa/([^/]+)/?$                  public/press.php?slug=$1        [QSA,L]
-RewriteRule ^za-yosif-petrov/([^/]+)/?$        public/essay.php?slug=$1          [QSA,L]
-RewriteRule ^captcha/?$                        public/captcha.php                 [QSA,L]
-
-# previously all pages used cyrillic characters in their URLs
-# so for every request starting with cyrillic character load up the redirector
-# which will either 301 redirect to the new address (if any) or show error 404
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^[А-Яа-я]+                         public/redirector.php              [QSA,L] 
-
-RewriteRule ^sitemap.xml$                      public/sitemap.php                 [QSA,L]
-RewriteRule ^robots.txt$                       public/robots.php                  [QSA,L]
-
-# take care of edge-case redirects
-RewriteRule ^poems.php                         public/redirector.php              [QSA,L]
-
-# all /something URLs should be regarded as text pages
-RewriteRule ^([^/]+)/?$                        public/textpage.php?slug=$1        [QSA,L]
-
-# for all other cases redirect to the public/ folder
-RewriteRule ^(.*)$    public/$1     [L]
-
-# use a custom 404 page
-<If "%{HTTP_HOST} == 'yosifpetrov.com'">
-    ErrorDocument 404 /public/error404.php
-</If>
-<Else>
-    ErrorDocument 404 /ypetrov/public/error404.php
-</Else>
+# send all requests to public where they will be re-routed
+RewriteRule ^$   public/      [L]
+RewriteRule (.*) public/$1    [L]

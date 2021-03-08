@@ -298,7 +298,7 @@ header {
             vertical-align: middle;
             @media @notmobile {
                 width: 200px;
-                &:not([value]) {
+                &:not(.open) {
                     display: none;
                 }
             }
@@ -310,7 +310,7 @@ header {
                 border-color: darkblue;
                 outline: none;
             }
-            &[value], &[style*="display"] {
+            &.open {
                 .open-nav-search-field;
             }
             @media @mobile {
