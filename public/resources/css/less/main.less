@@ -974,7 +974,9 @@ body.sticky {
             }
             float: none;
             margin: 1cm 0px;
-            max-width: 100% !important;
+            &:not('.captcha') {
+                max-width: 100% !important;
+            }
             + .poem {
                 margin-top: 0px;
             }

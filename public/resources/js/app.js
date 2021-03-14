@@ -111,18 +111,19 @@ var App = {
         var $field    = $('.search-field'),
             isVisible = $field.is(':visible')
 
-        // if the field is visible and there's value, submit the form
-        if (isVisible && $field.val() !== '') {
+        // if the field is visible, submit the form
+        if (isVisible) {
             return true;
         }
 
+        // otherwise abort submission, hide years
+        // show field and focus it
         e.preventDefault();
+
         $('.logo-wrapper span').animate({width:'toggle'}, 350);
 
         $field.animate({width:'toggle'}, 350, function() {
-            isVisible // if it was visible before the click, hide it, otherwise focus it
-                    ? $(this).removeClass('open')
-                    : $(this).addClass('open').focus();
+            $(this).addClass('open').focus();
         });
     },
 

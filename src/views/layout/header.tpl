@@ -8,8 +8,8 @@
     <meta name="description" content="{if isset($metaDesc)}{truncateString($metaDesc, 250)}{else}Йосиф Петров е български поет, общественик и политик{/if}" />
     <meta property="og:description" content="{if isset($metaDesc)}{truncateString($metaDesc, 250)}{else}Йосиф Петров е български поет, общественик и политик{/if}" />
     <meta name="keywods" content="Йосиф Петров, поезия, поет, общественик, депутат, стихосбирки, стихотворения, VII Велико Народно събрание, Персин" />
-    <script type="text/javascript" src="{WEBROOT}resources/js/script.js?v=20210307"></script>
-    <link type="text/css" rel="stylesheet" href="{WEBROOT}resources/css/style.css?v=20210307" />
+    <script type="text/javascript" src="{WEBROOT}resources/js/script.js?v=20210314"></script>
+    <link type="text/css" rel="stylesheet" href="{WEBROOT}resources/css/style.css?v=20210314" />
     {if isset($metaImage) && is_array($metaImage)}
         <meta property="og:image" content="{HOST_URL}{$metaImage['url']}" />
     {/if}

@@ -681,3 +681,4 @@
 Контакти	/kontakt
 favicon.ico /resources/img/layout/favicon/favicon.ico
 images/yosif-petrov-icon.jpg /resources/img/layout/favicon/favicon.png
+interview.php   /presa/na-balkanite-e-neobhodim-ne-nacionalizam-a-tarpimost
