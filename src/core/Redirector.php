@@ -53,8 +53,14 @@ abstract class Redirector {
         if (preg_match('/^poems.php/ui', $currentUrl)) {
             $bookSlug   = Router::getQueryParam('book');
             $poemSlug   = Router::getQueryParam('poem');
+            $currentUrl = 'Творчество/' . $bookSlug;
+
+            // if a poem was specified, add it to the url
+            if ($poemSlug) {
+                $currentUrl .= '/' . $poemSlug;
+            }
             
-            return 'Творчество/' . $bookSlug . '/' . $poemSlug;
+            return $currentUrl;
         }
 
         // otherwise strip the root part
