@@ -18,9 +18,9 @@
         
         <field name="body" type="text" length="65535" />
         
-        <field name="ip" type="bigint" nullable="true">
+        <field name="ip" type="string" length="45" nullable="true">
             <options>
-                <option name="comment">long2ip to decode; using bigint instead of string for faster search</option>
+                <option name="comment">length 45 to support IPv6</option>
             </options>
         </field>
 

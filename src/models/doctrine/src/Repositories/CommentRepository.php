@@ -30,7 +30,7 @@ class CommentRepository extends EntityRepository {
     ///////////////////////////////////////////////////////////////////////////
     // check how many comments are written in the last $minutes minutes
     // from $ip IP address
-    public function commentCountInLastMinutes(int $ip, int $minutes) {
+    public function commentCountInLastMinutes(string $ip, int $minutes) {
         $pastDateTime = new DateTime('-' . $minutes . ' min');
 
         return $this->createQueryBuilder('c')

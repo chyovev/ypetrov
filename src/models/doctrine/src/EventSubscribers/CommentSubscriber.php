@@ -217,7 +217,7 @@ class CommentSubscriber implements EventSubscriber {
             $body    .= '<strong>Линк:</strong> <a href="' . $url . '">' . escape($title) . '</a><br />';
         }
 
-        $body    .= '<strong>IP:</strong> ' . $comment->getActualIp();
+        $body    .= '<strong>IP:</strong> ' . $comment->getIp();
 
         // add comment date to subject
         $date     = beautifyDate('%A, %d.%m.%Y г., %H:%M ч.', $comment->getCreatedAt());

@@ -260,23 +260,12 @@ class ContactMessage extends \ContactMessage implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
-    public function getIp(): ?int
+    public function getIp(): ?string
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIp', []);
 
         return parent::getIp();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getActualIp(): ?string
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getActualIp', []);
-
-        return parent::getActualIp();
     }
 
     /**

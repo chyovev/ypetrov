@@ -7,7 +7,7 @@ class ContactMessageRepository extends EntityRepository {
     ///////////////////////////////////////////////////////////////////////////
     // check how many contact messages are written in the last $minutes minutes
     // from $ip IP address
-    public function messagesCountInLastMinutes(int $ip, int $minutes) {
+    public function messagesCountInLastMinutes(string $ip, int $minutes) {
         $pastDateTime = new DateTime('-' . $minutes . ' min');
 
         return $this->createQueryBuilder('c')

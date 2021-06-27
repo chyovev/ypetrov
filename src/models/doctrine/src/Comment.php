@@ -85,19 +85,13 @@ class Comment {
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getIp(): ?int {
+    public function getIp(): ?string {
         return $this->ip;
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getActualIp(): ?string {
-        return isset($this->ip) ? long2ip($this->ip) : NULL;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     public function setIp(?string $ip = NULL): self {
-        $intIp = isset($ip) ? ip2long($ip) : NULL;
-        $this->ip = $intIp;
+        $this->ip = $ip;
 
         return $this;
     }

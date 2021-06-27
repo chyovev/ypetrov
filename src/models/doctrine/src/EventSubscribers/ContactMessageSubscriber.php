@@ -120,7 +120,7 @@ class ContactMessageSubscriber implements EventSubscriber {
 
         $body    = '<strong>Име:</strong> ' . escape($message->getUsername()) . '<br />';
         $body   .= '<strong>E-mail:</strong> ' . ($message->getEmail() ?? '--') . '<br />';
-        $body   .= '<strong>IP:</strong> ' . $message->getActualIp() . '<br />';
+        $body   .= '<strong>IP:</strong> ' . $message->getIp() . '<br />';
         $body   .= '<strong>Съобщение:</strong> ' . escape($message->getBody()) . '<br />';
 
         // add message date to subject

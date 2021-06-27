@@ -213,6 +213,6 @@ function setCaptchaSession(string $code): void {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function getCaptchaSession(): string {
-    return $_SESSION['code'];
+function getCaptchaSession(): ?string {
+    return $_SESSION['code'] ?? NULL;
 }
