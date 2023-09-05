@@ -12,9 +12,3 @@ node_modules
 *.sublime-workspace
 *.vscode
 vendor/
-public/resources/img/content/
-public/resources/videos/
-logs/
-public/resources/downloads/
-src/core/smarty/cache/
-src/core/smarty/compile/

@@ -7,22 +7,5 @@
             "name": "Christo Yovev",
             "email": "yovev@xroads-bg.com"
         }
-    ],
-    "require": {
-        "smarty/smarty": "^3.1",
-        "doctrine/orm": "^2.7",
-        "phpmailer/phpmailer": "^6.2",
-        "mobicms/captcha": "^1.0",
-        "symfony/cache": "^4.4"
-    },
-    "autoload": {
-        "classmap": [
-            "src/models/doctrine/src/",
-            "src/controllers/base/",
-            "src/core/"
-        ],
-        "files": [
-            "src/core/functions.php"
-        ]
-    }
+    ]
 }
