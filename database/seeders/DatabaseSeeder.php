@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             PoemSeeder::class,
             BookPoemSeeder::class,
+            PressArticleSeeder::class,
         ]);
     }
 }
