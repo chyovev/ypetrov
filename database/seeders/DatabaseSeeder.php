@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BookPoemSeeder::class,
             PressArticleSeeder::class,
             VideoSeeder::class,
+            GalleryImageSeeder::class,
         ]);
     }
 }
