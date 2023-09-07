@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             VideoSeeder::class,
             GalleryImageSeeder::class,
             EssaySeeder::class,
+            ContactMessageSeeder::class,
         ]);
     }
 }
