@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\NewContactMessage;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,5 +37,23 @@ class ContactMessage extends Model
         return Attribute::make(
             set: fn (string $value) => hash('sha256', $value),
         );
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Once a ContactMessage record gets created, an observer
+     * listening for this event calls this method in order to
+     * send the contact message as a notification to all
+     * administrators.
+     * 
+     * @see \App\Observers\ContactMessageObserver
+     * @see \App\Notifications\NewContactMessage
+     * 
+     * @return void
+     */
+    public function sendAsNotification(): void {
+        $users = User::getAllAdministrators();
+
+        $users->each->notify((new NewContactMessage($this))->afterCommit());
     }
 }
