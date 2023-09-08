@@ -3,12 +3,15 @@
 namespace App\Notifications;
 
 use App\Models\ContactMessage;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewContactMessage extends Notification
+class NewContactMessage extends Notification implements ShouldQueue
 {
-    
+    use Queueable;
+
     /**
      * The ContactMessage object whose properties
      * will be used in the notification email.

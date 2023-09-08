@@ -46,6 +46,11 @@ class ContactMessage extends Model
      * send the contact message as a notification to all
      * administrators.
      * 
+     * NB! Keep in mind that the notification class implements
+     *     the ShouldQueue interface, so instead of the email
+     *     being sent straight away, it will be added to a queue
+     *     which should be processed by a queue worker.
+     * 
      * @see \App\Observers\ContactMessageObserver
      * @see \App\Notifications\NewContactMessage
      * 
