@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use LogicException;
 use App\Models\Comment;
 use App\Models\Poem;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,16 @@ use Illuminate\Database\Seeder;
 
 class CommentSeeder extends Seeder
 {
+
+    /**
+     * There is an observer listening for create event
+     * on the Comment model, but it should not be fired
+     * during the seeding of comments.
+     * 
+     * @see \App\Observers\CommentObserver
+     */
+    use WithoutModelEvents;
+
 
     ///////////////////////////////////////////////////////////////////////////
     /**
