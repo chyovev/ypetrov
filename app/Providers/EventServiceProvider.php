@@ -17,6 +17,11 @@ class EventServiceProvider extends ServiceProvider
     /**
      * The model observers used by the application.
      *
+     * NB! Polymorphic observers are registered the first time
+     *     any of the respective main objects gets initialized.
+     *     
+     * @see \App\Models\Traits\CustomHasEvents :: registerObserverToModel()
+     *
      * @var array
      */
     protected $observers = [

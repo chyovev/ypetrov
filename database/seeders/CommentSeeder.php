@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use LogicException;
 use App\Models\Comment;
 use App\Models\Poem;
+use App\Models\Interfaces\Commentable;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
 /**
@@ -55,7 +55,7 @@ class CommentSeeder extends Seeder
      * If no poems are found, an exception will be thrown.
      * 
      * @throws LogicException – empty collection of poems
-     * @return Collection
+     * @return Collection<Commentable>
      */
     private function getPoems(): Collection {
         $poems = Poem::query()
@@ -74,11 +74,11 @@ class CommentSeeder extends Seeder
     /**
      * Create regular Comment records.
      * 
-     * @param  Model $object – main object
+     * @param  Commentable $object – main object
      * @param  int $count – how many records to create, 1 by default
      * @return Collection<Comment>
      */
-    private function createRegularComments(Model $object, int $count = 1): Collection {
+    private function createRegularComments(Commentable $object, int $count = 1): Collection {
         return $this
             ->getFactory($object)
             ->count($count)
@@ -91,11 +91,11 @@ class CommentSeeder extends Seeder
      * comments can be marked as deleted using the trashed()
      * factory method.
      * 
-     * @param  Model $object – main object
+     * @param  Commentable $object – main object
      * @param  int $count – how many records to create, 1 by default
      * @return Collection<Comment>
      */
-    private function createDeletedComments(Model $object, int $count = 1): Collection {
+    private function createDeletedComments(Commentable $object, int $count = 1): Collection {
         return $this
             ->getFactory($object)
             ->count($count)
@@ -108,10 +108,10 @@ class CommentSeeder extends Seeder
      * Get a factory instance for the Comment model
      * and associated it with a commentable object.
      * 
-     * @param  Model $object – main object
+     * @param  Commentable $object – main object
      * @return Factory
      */
-    private function getFactory(Model $object): Factory {
+    private function getFactory(Commentable $object): Factory {
         return Comment::factory()->for($object, 'commentable');
     }
 

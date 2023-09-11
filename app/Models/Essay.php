@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\Commentable;
 use App\Models\Traits\HasComments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Essay extends Model
+class Essay extends Model implements Commentable
 {
     use HasFactory;
 
     /**
      * The HasComments trait defines a polymorphic
-     * relationship to the Comment model.
+     * relationship to the Comment model and registers
+     * a delete-event observer.
      */
     use HasComments;
 
