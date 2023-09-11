@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasComments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Poem extends Model
 {
     use HasFactory;
+
+    /**
+     * The HasComments trait defines a polymorphic
+     * relationship to the Comment model.
+     */
+    use HasComments;
 
     /**
      * The attributes that are mass assignable.
@@ -36,14 +42,4 @@ class Poem extends Model
             ->withTimestamps();
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Each Poem can have multiple comments which are
-     * stored in a polymorphic table comments.
-     * 
-     * @return MorphMany
-     */
-    public function comments(): MorphMany {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
 }
