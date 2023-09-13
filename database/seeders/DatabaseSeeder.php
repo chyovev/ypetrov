@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             EssaySeeder::class,
             ContactMessageSeeder::class,
             CommentSeeder::class,
+            AttachmentSeeder::class,
         ]);
     }
 }

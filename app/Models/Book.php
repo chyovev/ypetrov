@@ -2,15 +2,24 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
+use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Book extends Model implements Commentable
+class Book extends Model implements Attachable, Commentable
 {
     use HasFactory;
+
+    /**
+     * The HasAttachments trait defines a polymorphic
+     * relationship to the Attachment model and registers
+     * a delete-event observer.
+     */
+    use HasAttachments;
 
     /**
      * The HasComments trait defines a polymorphic
