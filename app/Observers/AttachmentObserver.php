@@ -22,6 +22,17 @@ class AttachmentObserver
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * Once an Attachment record gets deleted, its server
+     * file (and possibly subfolder) should be removed, too.
+     * 
+     * @param Attachment $attachment – deleted item
+     */
+    public function deleted(Attachment $attachment): void {
+        $attachment->deleteFile();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * Unlike the original file name which allows for duplicates,
      * the server file name is the name under which the file will
      * actually be stored on the server and should therefore be

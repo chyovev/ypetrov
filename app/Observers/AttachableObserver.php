@@ -26,6 +26,16 @@ class AttachableObserver
      * Once a attachable object gets deleted, all its attachments
      * from the polymorphic relationship should be gone, too.
      * 
+     * NB! Calling delete() on the relationship method alone
+     *     will simply delete all records from the attachments
+     *     table for that object, but not the actual files.
+     *     Instead, attachments should first be loaded as a
+     *     collection (by calling the relationship method as
+     *     a property) – from then on, calling the delete()
+     *     method on each Attachment instance will fire up the
+     *     Attachment observer which takes care of the file
+     *     deletion.
+     * 
      * @param  Attachable $object – object implementing the Attachable interface
      * @return void
      */
@@ -34,7 +44,7 @@ class AttachableObserver
         // if it's being soft deleted, its $exists property
         // will remain true
         if ( ! $object->exists) {
-            $object->attachments()->delete();
+            $object->attachments->each->delete();
         }
     }
 

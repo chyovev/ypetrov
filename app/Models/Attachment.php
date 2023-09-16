@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use File;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -34,10 +35,42 @@ class Attachment extends Model
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getServerFullPath(): string {
-        $fullPath = $this->getFullPath();
+    /**
+     * Once an attachment record gets deleted, the referenced file
+     * should also be deleted from the server. If the attachable
+     * subfolder has no contents afterwards, delete it as well.
+     * 
+     * NB! This method is called automatically by the Attachment
+     *     observer.
+     * 
+     * @see \App\Observers\AttachmentObserver :: deleted()
+     */
+    public function deleteFile(): void {
+        File::delete( $this->getServerFilePath() );
 
-        return $fullPath . DIRECTORY_SEPARATOR . $this->server_file_name;
+        $this->deleteFolderIfEmpty();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Once an attachment gets deleted together with its file,
+     * if the remaining folder is empty, it should be purged, too.
+     * 
+     * @return void
+     */
+    public function deleteFolderIfEmpty(): void {
+        $subfolder   = $this->getAbsolutePath();
+        $modelFolder = File::dirname($subfolder);
+
+        // first delete the FK subfolder if empty (e.g. /attachments/PressArticle/4)
+        if (File::isEmptyDirectory($subfolder)) {
+            File::deleteDirectory($subfolder);
+        }
+
+        // then delete the model folder if empty (e.g. /attachments/PressArticle)
+        if (File::isEmptyDirectory($modelFolder)) {
+            File::deleteDirectory($modelFolder);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
