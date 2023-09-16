@@ -3,9 +3,11 @@
 namespace App\Models\Traits;
 
 use LogicException;
+use App\Helpers\FileHelper;
 use App\Models\Attachment;
 use App\Models\Interfaces\Attachable;
 use App\Observers\AttachableObserver;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -25,11 +27,13 @@ trait HasAttachments
     /**
      * Each attachable object can have multiple comments
      * and all comments are stored in a polymorphic table.
+     * When fetched, records are ordered by their 'order'
+     * column value, and not by their primary key.
      * 
      * @return MorphMany
      */
     public function attachments(): MorphMany {
-        return $this->morphMany(Attachment::class, 'attachable');
+        return $this->morphMany(Attachment::class, 'attachable')->orderBy('order');
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,6 +58,67 @@ trait HasAttachments
         $this->validateModelImplementsInterface(Attachable::class);
 
         $this->registerObserverToModel(AttachableObserver::class);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * When a file gets uploaded for an attachable object,
+     * a FileHelper has to “examine” it first in order to
+     * extract data from it and use it on the Attachment
+     * record. Once the record gets created, the file gets
+     * moved to the respective subfolder of the attachable
+     * object.
+     * 
+     * @throws FileNotFoundException – missing temp file path
+     * @param  string $filePath – temp file path
+     * @return bool
+     */
+    public function uploadAttachment(string $filePath): bool {
+        $helper = new FileHelper($filePath);
+
+        $data       = $this->prepareAttachmentData($helper);
+        $attachment = $this->attachments()->create($data);
+
+        return $helper->moveFile($filePath, $attachment->getServerFilePath());
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Prepare data in order to create an Attachment record.
+     * 
+     * NB! The attachable_type and attachable_id fields are
+     *     populated automatically by the create() method
+     *     called on the attachments() association.
+     *     Also, in order for the server file name to be
+     *     generated, an Attachment record should already be
+     *     on its way to be persisted to the database. Hence,
+     *     this part is taken care of by the AttachmentObserver.
+     *     are populated automatically by the create() method.
+     * 
+     * @param  FileHelper $helper – initiated helper for a file
+     * @return array<string,mixed>
+     */
+    private function prepareAttachmentData(FileHelper $helper): array {
+        return [
+            'original_file_name' => $helper->getBaseName(),
+            'file_size'          => $helper->getFileSize(),
+            'mime_type'          => $helper->getMimeType(),
+            'order'              => $this->determineOrderForNewAttachmentRecord(),
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Since attachments are sorted by the 'order' column,
+     * newly created attachments should have incrementing
+     * values. To determine it, see how many attachments
+     * are currently associated it with the attachable
+     * object and add +1.
+     * 
+     * @return int
+     */
+    private function determineOrderForNewAttachmentRecord(): int {
+        return $this->attachments()->count() + 1;
     }
 
 }

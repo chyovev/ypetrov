@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\ContactMessage;
+use App\Observers\AttachmentObserver;
 use App\Observers\CommentObserver;
 use App\Observers\ContactMessageObserver;
 use Illuminate\Auth\Events\Registered;
@@ -27,6 +29,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $observers = [
+        Attachment::class     => [AttachmentObserver::class],
         ContactMessage::class => [ContactMessageObserver::class],
         Comment::class        => [CommentObserver::class],
     ];

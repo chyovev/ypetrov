@@ -17,9 +17,10 @@ class AttachmentFactory extends Factory
      * @return array<string,mixed>
      */
     public function definition(): array {
+        // server_file_name will is automatically generated
+        // by the AttachmentObserver
         return [
             'original_file_name' => $this->generateFakeFileName(),
-            'server_file_name'   => fake()->unique()->word(),
             'caption'            => fake()->optional()->sentence(),
             'file_size'          => fake()->numberBetween(100, 100000),
             'mime_type'          => fake()->mimeType(),

@@ -24,6 +24,15 @@ use Illuminate\Database\Seeder;
 class AttachmentSeeder extends Seeder
 {
 
+    /**
+     * The server_file_name property of an Attachment
+     * is dynamically generated upon record creation
+     * by an AttachmentObserver.
+     * Therefore, model events should not be switched
+     * off when this seeder gets executed, hence no
+     * WithoutModelEvents trait.
+     */
+
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Run the database seeds.
