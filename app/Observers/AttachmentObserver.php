@@ -47,13 +47,13 @@ class AttachmentObserver
      * @return string
      */
     private function generateServerFileName(Attachment $attachment): string {
-        $originalName  = File::filename($attachment->original_file_name);
-        $baseName      = Str::slug($originalName);
-        $extension     = File::extension($originalName);
+        $originalName  = File::name($attachment->original_file_name); // no extension
+        $fileName      = Str::slug($originalName); // sanitized, no extension
+        $extension     = File::extension($attachment->original_file_name);
         $suffixCounter = 0;
 
         do {
-            $serverName = $this->generateFileName($baseName, $extension, $suffixCounter);
+            $serverName = $this->generateFileName($fileName, $extension, $suffixCounter);
             $suffixCounter++;
         }
         while ($this->isNameAlreadyTaken($attachment, $serverName));

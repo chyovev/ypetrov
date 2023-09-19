@@ -108,13 +108,17 @@ class Attachment extends Model
      * 
      *     attachments/PressArticle/4
      * 
+     * NB! During unit tests the common folder is called
+     *     after the testing environment (testing).
+     * 
      * @return string
      */
     public function getRelativePath(): string {
+        $commonFolder = app()->runningUnitTests() ? app()->environment() : $this->getTable();
         $sourceClass  = class_basename($this->attachable_type);
         $foreignKeyId = $this->attachable_id;
 
-        return $this->getTable()
+        return $commonFolder
             . DIRECTORY_SEPARATOR
             . $sourceClass
             . DIRECTORY_SEPARATOR

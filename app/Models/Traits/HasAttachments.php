@@ -71,15 +71,17 @@ trait HasAttachments
      * 
      * @throws FileNotFoundException – missing temp file path
      * @param  string $filePath – temp file path
-     * @return bool
+     * @return Attachment
      */
-    public function uploadAttachment(string $filePath): bool {
+    public function uploadAttachment(string $filePath): Attachment {
         $helper = new FileHelper($filePath);
 
         $data       = $this->prepareAttachmentData($helper);
         $attachment = $this->attachments()->create($data);
 
-        return $helper->moveFile($filePath, $attachment->getServerFilePath());
+        $helper->moveFile($filePath, $attachment->getServerFilePath());
+
+        return $attachment;
     }
 
     ///////////////////////////////////////////////////////////////////////////
