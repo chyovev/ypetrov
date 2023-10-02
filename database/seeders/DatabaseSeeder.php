@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ContactMessageSeeder::class,
             CommentSeeder::class,
             AttachmentSeeder::class,
+            StatsSeeder::class,
         ]);
     }
 }

@@ -24,6 +24,7 @@ class EventServiceProvider extends ServiceProvider
      *     
      * @see \App\Models\Traits\HasAttachments  :: initializeHasAttachments()
      * @see \App\Models\Traits\HasComments     :: initializeHasComments()
+     * @see \App\Models\Traits\HasStats        :: initializeHasStats()
      * @see \App\Models\Traits\CustomHasEvents :: registerObserverToModel()
      *
      * @var array

@@ -48,7 +48,7 @@ class Comment extends Model
      * to get the main object through a comment using the
      * reversed morphTo relationship.
      * 
-     * @return morphTo
+     * @return MorphTo
      */
     public function commentable(): MorphTo {
         return $this->morphTo('commentable');
