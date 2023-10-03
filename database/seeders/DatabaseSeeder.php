@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             AttachmentSeeder::class,
             StatsSeeder::class,
             LikeSeeder::class,
+            ImpressionSeeder::class,
         ]);
     }
 }

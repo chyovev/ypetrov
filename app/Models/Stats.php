@@ -47,4 +47,16 @@ class Stats extends Model
         return $this->hasMany(Like::class);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Each stats record has a total_impressions integer column,
+     * but all individual impressions can be loaded through the
+     * impressions HasMany relationship.
+     * 
+     * @return HasMany
+     */
+    public function impressions(): HasMany {
+        return $this->hasMany(Impression::class);
+    }
+
 }
