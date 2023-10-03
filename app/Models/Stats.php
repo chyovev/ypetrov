@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Stats extends Model
@@ -32,6 +33,18 @@ class Stats extends Model
      */
     public function statsable(): MorphTo {
         return $this->morphTo('statsable');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Each stats record has a total_likes integer column,
+     * but all individual likes can be loaded through the
+     * likes HasMany relationship.
+     * 
+     * @return HasMany
+     */
+    public function likes(): HasMany {
+        return $this->hasMany(Like::class);
     }
 
 }
