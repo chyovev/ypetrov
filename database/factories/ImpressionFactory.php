@@ -18,7 +18,7 @@ class ImpressionFactory extends Factory
      */
     public function definition(): array {
         return [
-            'ip_hash' => fake()->ipv6(), // class mutator takes care of hashing
+            // records consist of timestamps and foreign keys only
         ];
     }
 }

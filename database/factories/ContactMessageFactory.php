@@ -22,7 +22,6 @@ class ContactMessageFactory extends Factory
             'name'    => fake()->name(),
             'email'   => fake()->email(),
             'message' => fake()->paragraph(),
-            'ip_hash' => fake()->ipv6(), // class mutator takes care of hashing
         ];
     }
 }

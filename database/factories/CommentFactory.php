@@ -20,7 +20,6 @@ class CommentFactory extends Factory
         return [
             'name'    => fake()->name(),
             'message' => fake()->paragraph(2),
-            'ip_hash' => fake()->ipv6(), // class mutator takes care of hashing
         ];
     }
 }
