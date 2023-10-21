@@ -40,6 +40,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        
+        // the admin guard is identical to the web one,
+        // but it's being used only for the admin panel
+        // which would allow for easier separation should
+        // one day regular users be introduced to the app
+        'admin' => [
+            'driver'   => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*

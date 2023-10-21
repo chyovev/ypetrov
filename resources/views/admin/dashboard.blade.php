@@ -1,0 +1,1 @@
+<a href="{{ route('admin.logout') }}">Log out</a>
