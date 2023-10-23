@@ -21,30 +21,41 @@
 </head>
 
 <body class="fix-header fix-sidebar">
+    <!-- Preloader - style you can find in spinners.css -->
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
-        </svg>
+			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
-
+    <!-- Main wrapper  -->
     <div id="main-wrapper">
-        <div class="unix-login">
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4">
-                        <div class="login-content card">
-                            <div class="login-form">
+        <x-admin.header/>
 
-                                {{ $slot }}
-                                
-                            </div>
-                        </div>
-                    </div>
+        <x-admin.sidebar/>
+        
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-primary">{{ $title }}</h3>
+                </div>
+
+                <div class="col-md-7 align-self-center">
+                    <x-admin.breadcrumbs/>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="container-fluid">
+
+                {{ $slot }}
+
+            </div>
+            <!-- End Container fluid  -->
+        </div>
+        <!-- End Page wrapper  -->
+    </div>
     <script src="{{ asset('admin/js/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/bootstrap/js/bootstrap.min.js') }}"></script>
