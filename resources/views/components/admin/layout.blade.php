@@ -12,6 +12,7 @@
     <link href="{{ asset('admin/css/lib/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/lib/sweetalert/sweetalert.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -49,6 +50,8 @@
             <!-- Container fluid  -->
             <div class="container-fluid">
 
+                <x-admin.flash/>
+
                 {{ $slot }}
 
             </div>
@@ -56,12 +59,23 @@
         </div>
         <!-- End Page wrapper  -->
     </div>
+
+    <!-- since the destroy endpoints expect a DELETE verb, and
+         simply calling them from an <a> tag sends a GET verb,
+         the work-around is to use the endpoint as an action for
+         this hidden form and trigger a spoofed DELETE request -->
+    <form id="destroy-form" method="POST" class="hide">
+        @method('DELETE')
+        @csrf
+    </form>
+
     <script src="{{ asset('admin/js/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('admin/js/jquery.slimscroll.js') }}"></script>
     <script src="{{ asset('admin/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('admin/js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/sweetalert/sweetalert.min.js') }}"></script>
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
 </body>
 

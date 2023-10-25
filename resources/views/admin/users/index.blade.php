@@ -28,7 +28,9 @@
                                     <td>{{ $user->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.edit',    ['user' => $user]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="{{ route('admin.users.destroy', ['user' => $user]) }}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>  Delete</a>
+                                        @can('delete', $user)
+                                        <a href="{{ route('admin.users.destroy', ['user' => $user]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  Delete</a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach
