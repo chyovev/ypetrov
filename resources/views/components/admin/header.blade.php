@@ -15,9 +15,13 @@
 
             <ul class="navbar-nav my-lg-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right animated slideInRight">
+                    <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i>
+                        {{ auth()->user()->name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
                         <ul class="dropdown-user">
+                            <li><a href="{{ route('admin.users.edit', ['user' => auth()->user()]) }}"><i class="fa fa-key"></i> Change password</a></li>
                             <li><a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
                         </ul>
                     </div>

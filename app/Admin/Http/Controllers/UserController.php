@@ -2,9 +2,10 @@
 
 namespace App\Admin\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Admin\Http\Requests\Users\StoreRequest;
+use App\Admin\Http\Requests\Users\UpdateRequest;
 
 class UserController extends Controller
 {
@@ -24,15 +25,21 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      */
     public function create() {
-        //
+        return view('admin.users.form', ['user' => new User()]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        //
+    public function store(StoreRequest $request) {
+        $data = $request->validated();
+
+        $user = User::create($data);
+
+        return redirect()
+            ->route('admin.users.edit', ['user' => $user])
+            ->withSuccess('User successfully created!');
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -40,15 +47,21 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(User $user) {
-        //
+        return view('admin.users.form', ['user' => $user]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user) {
-        //
+    public function update(UpdateRequest $request, User $user) {
+        $data = $request->validated();
+
+        $user->update($data);
+
+        return redirect()
+            ->route('admin.users.edit', ['user' => $user])
+            ->withSuccess('User successfully updated!');
     }
 
     ///////////////////////////////////////////////////////////////////////////

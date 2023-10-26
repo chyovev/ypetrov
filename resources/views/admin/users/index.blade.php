@@ -16,7 +16,7 @@
                                     <th>Name</th>
                                     <th>E-mail</th>
                                     <th>Created at</th>
-                                    <th>Actions</th>
+                                    <th width="150" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
