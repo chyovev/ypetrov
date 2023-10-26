@@ -1,4 +1,9 @@
-<x-admin.layout title="{{ $user->exists ? 'Update user' : 'Create user' }}">
+@php
+$title = $user->exists ? 'Update user'      : 'Create user';
+$route = $user->exists ? 'admin.users.edit' : 'admin.users.create';
+$param = $user->exists ? $user              : null;
+@endphp
+<x-admin.layout :$title :$route :$param>
 
     <div class="row">
         <div class="col-lg-12">

@@ -1,4 +1,4 @@
-<x-admin.layout title="Users">
+<x-admin.layout title="Users" route="admin.users.index">
 
     <div class="row">
         <div class="col-12">

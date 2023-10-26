@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="col-md-7 align-self-center">
-                    <x-admin.breadcrumbs/>
+                    <x-admin.breadcrumbs :$route :param="isset($param) ? $param : null" />
                 </div>
             </div>
 
