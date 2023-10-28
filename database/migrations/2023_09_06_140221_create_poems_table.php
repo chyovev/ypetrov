@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('dedication')->nullable();
+            $table->text('text');
             $table->boolean('use_monospace_font')->default(true)->comment('monospace fonts benefit text alignment for certain poems');
             $table->timestamps();
         });

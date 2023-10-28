@@ -23,6 +23,15 @@
                         <i class="fa fa-envelope"></i> Contact Messages
                     </a>
                 </li>
+
+                <li @class(['active' => Route::is('admin.poems.*')])>
+                    <a class="has-arrow" href="javascript:;">
+                        <i class="fa fa-book hide-menu"></i> Works
+                    </a>
+                    <ul class="collapse">
+                        <li><a @class(['active' => Route::is('admin.poems.*')]) href="{{ route('admin.poems.index') }}">Poems</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

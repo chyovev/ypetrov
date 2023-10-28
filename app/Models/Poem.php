@@ -34,7 +34,7 @@ class Poem extends Model implements Commentable, Statsable
      * @var array<int,string>
      */
     public $fillable = [
-        'is_active', 'title', 'slug', 'dedication', 'use_monospace_font',
+        'is_active', 'title', 'slug', 'dedication', 'text', 'use_monospace_font',
     ];
 
     ///////////////////////////////////////////////////////////////////////////
@@ -50,6 +50,7 @@ class Poem extends Model implements Commentable, Statsable
         return $this
             ->belongsToMany(Book::class)
             ->withPivot('order')
+            ->orderBy('publish_year', 'asc')
             ->withTimestamps();
     }
 

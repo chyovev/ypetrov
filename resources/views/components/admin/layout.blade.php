@@ -13,6 +13,7 @@
     <link href="{{ asset('admin/css/helper.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/lib/sweetalert/sweetalert.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/css/lib/html5-editor/bootstrap-wysihtml5.css') }}" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -76,6 +77,8 @@
     <script src="{{ asset('admin/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('admin/js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/html5-editor/wysihtml5-0.3.0.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/html5-editor/bootstrap-wysihtml5.js') }}"></script>
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
 </body>
 

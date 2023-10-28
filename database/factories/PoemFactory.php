@@ -26,7 +26,30 @@ class PoemFactory extends Factory
             'title'              => $title,
             'slug'               => $slug,
             'dedication'         => fake()->optional()->name(),
+            'text'               => $this->fakePoem(),
             'use_monospace_font' => fake()->boolean(80),
         ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Fake a poem by having multiple sentences on new lines.
+     * 
+     * @return string
+     */
+    private function fakePoem(): string {
+        $paragraphs        = rand(3, 4);
+        $linesPerParagraph = 4;
+        $poem              = '';
+
+        for ($i = 1; $i <= $paragraphs; $i++) {
+            for ($j = 1; $j <= $linesPerParagraph; $j++) {
+                $poem .= fake()->sentence() . "\n";
+            }
+
+            $poem .= "\n";
+        }
+
+        return $poem;
     }
 }

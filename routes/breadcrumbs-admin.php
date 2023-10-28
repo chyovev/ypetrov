@@ -34,3 +34,27 @@ Breadcrumbs::for('admin.contact_messages.show', function ($trail, $message) {
     $trail->parent('admin.contact_messages.index');
     $trail->push("{$message->name} (#{$message->id})", route('admin.contact_messages.show', $message->id));
 });
+
+// Home > Works
+Breadcrumbs::for('admin.works', function ($trail) {
+    $trail->parent('admin.home');
+    $trail->push('Works', null);
+});
+
+// Home > Works > Poems
+Breadcrumbs::for('admin.poems.index', function ($trail) {
+    $trail->parent('admin.works');
+    $trail->push('Poems', route('admin.poems.index'));
+});
+
+// Home > Works > Poems > Create
+Breadcrumbs::for('admin.poems.create', function ($trail, $user) {
+    $trail->parent('admin.poems.index');
+    $trail->push('Create', route('admin.poems.create'));
+});
+
+// Home > Works > Poems > [Poem]
+Breadcrumbs::for('admin.poems.edit', function ($trail, $poem) {
+    $trail->parent('admin.poems.index');
+    $trail->push($poem->title, route('admin.poems.edit', $poem->id));
+});
