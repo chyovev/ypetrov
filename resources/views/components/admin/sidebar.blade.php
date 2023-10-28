@@ -17,6 +17,12 @@
                         <i class="fa fa-users"></i> Users
                     </a>
                 </li>
+
+                <li @class(['active' => Route::is('admin.contact_messages.*')])>
+                    <a href="{{ route('admin.contact_messages.index') }}">
+                        <i class="fa fa-envelope"></i> Contact Messages
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

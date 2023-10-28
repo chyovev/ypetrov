@@ -1,6 +1,7 @@
 <?php
 
 use App\Admin\Http\Controllers\AuthController;
+use App\Admin\Http\Controllers\ContactMessageController;
 use App\Admin\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::view('/',      'admin.dashboard')->name('admin.home');
 
     // resources are a shortcut for all CRUD routes
-    Route::name('admin')->resource('users', UserController::class)->except(['view']);
+    Route::name('admin')->resource('users',            UserController::class)->except(['view']);
+    Route::name('admin')->resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
 });

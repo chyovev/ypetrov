@@ -1,4 +1,4 @@
-<x-admin.layout title="Dashboard">
+<x-admin.layout title="Dashboard" route="admin.home">
 
     <div class="row">
         <div class="col-12">

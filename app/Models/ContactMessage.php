@@ -43,4 +43,26 @@ class ContactMessage extends Model
 
         $users->each->notify((new NewContactMessage($this))->afterCommit());
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check if a contact message is unread by reverting
+     * the is_read boolean flag.
+     * 
+     * @return bool
+     */
+    public function isUnread(): bool {
+        return ( ! $this->is_read);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Mark a contact message as read.
+     * 
+     * @return bool
+     */
+    public function markAsRead(): bool {
+        return $this->update(['is_read' => true]);
+    }
+
 }
