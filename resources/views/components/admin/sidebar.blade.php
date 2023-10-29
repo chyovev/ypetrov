@@ -24,11 +24,12 @@
                     </a>
                 </li>
 
-                <li @class(['active' => Route::is('admin.poems.*')])>
+                <li @class(['active' => Route::is('admin.books.*', 'admin.poems.*')])>
                     <a class="has-arrow" href="javascript:;">
                         <i class="fa fa-book hide-menu"></i> Works
                     </a>
                     <ul class="collapse">
+                        <li><a @class(['active' => Route::is('admin.books.*')]) href="{{ route('admin.books.index') }}">Books</a></li>
                         <li><a @class(['active' => Route::is('admin.poems.*')]) href="{{ route('admin.poems.index') }}">Poems</a></li>
                     </ul>
                 </li>

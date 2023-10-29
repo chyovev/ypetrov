@@ -48,7 +48,7 @@ Breadcrumbs::for('admin.poems.index', function ($trail) {
 });
 
 // Home > Works > Poems > Create
-Breadcrumbs::for('admin.poems.create', function ($trail, $user) {
+Breadcrumbs::for('admin.poems.create', function ($trail) {
     $trail->parent('admin.poems.index');
     $trail->push('Create', route('admin.poems.create'));
 });
@@ -57,4 +57,22 @@ Breadcrumbs::for('admin.poems.create', function ($trail, $user) {
 Breadcrumbs::for('admin.poems.edit', function ($trail, $poem) {
     $trail->parent('admin.poems.index');
     $trail->push($poem->title, route('admin.poems.edit', $poem->id));
+});
+
+// Home > Works > Books
+Breadcrumbs::for('admin.books.index', function ($trail) {
+    $trail->parent('admin.works');
+    $trail->push('Books', route('admin.books.index'));
+});
+
+// Home > Works > Books > Create
+Breadcrumbs::for('admin.books.create', function ($trail) {
+    $trail->parent('admin.books.index');
+    $trail->push('Create', route('admin.books.create'));
+});
+
+// Home > Works > Books > [Book]
+Breadcrumbs::for('admin.books.edit', function ($trail, $book) {
+    $trail->parent('admin.books.index');
+    $trail->push($book->title, route('admin.books.edit', $book->id));
 });
