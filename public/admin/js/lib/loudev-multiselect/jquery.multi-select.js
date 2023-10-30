@@ -90,9 +90,43 @@
       var selectedValues = ms.find('option:selected').map(function(){ return $(this).val(); }).get();
       that.select(selectedValues, 'init');
 
+      if (that.options.keepOrder) {
+        that.reselectOptionsInOrder(that);
+      }
+
       if (typeof that.options.afterInit === 'function') {
         that.options.afterInit.call(this, this.$container);
       }
+    },
+
+    /**
+     * When the <select> element gets generated,
+     * its options are listed in an alphabetical order,
+     * but the already selected options should appear
+     * in the order in which they were selected.
+     * To achieve this, the values should be listed
+     * in that order under the data-values-order property
+     * of the <select> element, so that they can be
+     * re-selected.
+     */
+    'reselectOptionsInOrder': function(that) {
+        var $select   = that.$element,
+            attribute = $select.attr('data-values-order'),
+            values    = attribute ? attribute.split(',') : null;
+
+        // if no values are present in the attribute, abort
+        if ( ! values) {
+            return;
+        }
+
+        // all already selected options need to be de-selected
+        that.deselect_all();
+
+        // from then on, the values in their preferred order
+        // get iterated over and selected individually
+        values.forEach(function(value) {
+            that.select(value);
+        });
     },
 
     'generateLisFromOption' : function(option, index, $container){
@@ -397,6 +431,8 @@
             var selectionLiLast = that.$selectionUl.find('.ms-selected');
             if((selectionLiLast.length > 1) && (selectionLiLast.last().get(0) != selections.get(0))) {
               selections.insertAfter(selectionLiLast.last());
+
+              that.moveSelectedOptionToBottom(options);
             }
           }
         }
@@ -407,6 +443,29 @@
           }
         }
       }
+    },
+
+    /**
+     * The keepOrder option works only visually, but the
+     * selected option remains in its position within the
+     * <select> tag which in turn does not have the desired
+     * effect on the back-end.
+     * To fix this behavior, the selected option should be
+     * removed and appended at the bottom of the <select>
+     * tag.
+     * 
+     * @param {Object} $option – selected option
+     */
+    'moveSelectedOptionToBottom' : function($option) {
+        var $select = this.$element,
+            value   = $option.val();
+
+        // remove current object
+        $option.remove();
+
+        // append element at end and mark it as selected
+        // (no need for label, the whole select remains hidden)
+        $select.append('<option value="' + value +'" selected="selected"></option>');
     },
 
     'deselect' : function(value){

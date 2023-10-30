@@ -59,6 +59,7 @@ class Book extends Model implements Attachable, Commentable, Statsable
         return $this
             ->belongsToMany(Poem::class)
             ->withPivot('order')
+            ->orderByPivot('order')
             ->withTimestamps();
     }
 

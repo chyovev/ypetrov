@@ -80,7 +80,7 @@ $param = $book->exists ? $book              : null;
                                         $selectedIds = old('poems', $book->poems->pluck('id')->toArray());
                                     @endphp
                                     
-                                    <select name="poems[]" class="multi-select" multiple>
+                                    <select name="poems[]" class="multi-select" data-values-order="{{ implode(',', $selectedIds) }}" multiple>
                                         @foreach ($poems as $poem)
                                             <option value="{{ $poem->id }}" @selected(in_array($poem->id, $selectedIds))>{{ $poem->title }}</option>
                                         @endforeach
