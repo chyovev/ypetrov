@@ -75,8 +75,12 @@
         that.$selectableUl.on(action, '.ms-elem-selectable', function(){
           that.select($(this).data('ms-value'));
         });
-        that.$selectionUl.on(action, '.ms-elem-selection', function(){
-          that.deselect($(this).data('ms-value'));
+        that.$selectionUl.on(action, '.ms-elem-selection', function(e){
+            // if the click event is taking place on the
+            // handle icon, don't trigger the deselect method
+            if ( ! $(e.target).hasClass('ms-handle')) {
+                that.deselect($(this).data('ms-value'));
+            }
         });
 
         that.activeMouse(that.$selectionUl);
@@ -92,6 +96,7 @@
 
       if (that.options.keepOrder) {
         that.reselectOptionsInOrder(that);
+        that.initSortable(that);
       }
 
       if (typeof that.options.afterInit === 'function') {
@@ -129,6 +134,46 @@
         });
     },
 
+    /**
+     * Once the multi-select library has been initiated,
+     * it's time to initiate the sortable library on the
+     * selection container in order to allow for the
+     * selected records to be reordered.
+     */
+    'initSortable': function(that) {
+        var settings = {
+            items:  'li',
+            handle: '.ms-handle',
+            axis:   'y',
+            stop:   that.reselectOptionsOnSortingStop,
+        };
+
+        that.$selectionContainer.sortable(settings);
+    },
+
+    /**
+     * Once the user drops an element during resorting,
+     * all options should be reselected so that they get
+     * moved to the bottom in the right order. 
+     */
+    'reselectOptionsOnSortingStop': function(event, ui) {
+        var $container   = $(event.target),
+            $select      = $container.parent().prev(),
+            $selectedLis = $container.find('.ms-selected');
+
+        $select.multiSelect('deselect_all');
+
+        // the selected <li>'s are listed in the order
+        // in which the <option> elements should be re-selected
+        $selectedLis.each(function(index) {
+            var value   = $(this).attr('data-val'),
+                $option = $select.find('option[value="' + value+ '"]:first');
+
+            $select.multiSelect('select', value);
+            $select.multiSelect('moveSelectedOptionToBottom', $option);
+        });
+    },
+
     'generateLisFromOption' : function(option, index, $container){
       var that = this,
           ms = that.$element,
@@ -142,7 +187,16 @@
           attributes += attr.name+'="'+attr.value+'" ';
         }
       }
-      var selectableLi = $('<li '+attributes+'><span>'+that.escapeHTML($option.text())+'</span></li>'),
+
+      // if the keepOrder setting is set to true, add a
+      // handle allowing selectable row to be reordered
+      var handle = that.options.keepOrder
+        ? '<i class="fa fa-arrows-v btn-sm ms-handle"></i>'
+        : ''
+        
+      // add also data-val attribute which will be used
+      // for the re-selecting once the sorting stops
+      var selectableLi = $('<li '+attributes+' data-val="' + $option.val() +'">' + handle + '<span>'+that.escapeHTML($option.text())+'</span></li>'),
           selectedLi = selectableLi.clone(),
           value = $option.val(),
           elementId = that.sanitize(value);
@@ -451,21 +505,12 @@
      * <select> tag which in turn does not have the desired
      * effect on the back-end.
      * To fix this behavior, the selected option should be
-     * removed and appended at the bottom of the <select>
-     * tag.
+     * moved to the bottom of the <select> tag.
      * 
      * @param {Object} $option – selected option
      */
     'moveSelectedOptionToBottom' : function($option) {
-        var $select = this.$element,
-            value   = $option.val();
-
-        // remove current object
-        $option.remove();
-
-        // append element at end and mark it as selected
-        // (no need for label, the whole select remains hidden)
-        $select.append('<option value="' + value +'" selected="selected"></option>');
+        this.$element.append($option);
     },
 
     'deselect' : function(value){

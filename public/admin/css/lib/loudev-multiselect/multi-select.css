@@ -94,3 +94,16 @@
   color: #aaa;
   cursor: text;
 }
+
+.ms-handle {
+    cursor: move;
+}
+
+/**
+ * The sortable handle should be visible only
+ * for the selected elements, but not for the
+ * selectable ones.
+ */
+.ms-selectable .ms-handle {
+    display: none;
+}
