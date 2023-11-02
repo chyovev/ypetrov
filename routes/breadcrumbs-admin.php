@@ -94,3 +94,21 @@ Breadcrumbs::for('admin.essays.edit', function ($trail, $essay) {
     $trail->parent('admin.essays.index');
     $trail->push($essay->title, route('admin.essays.edit', $essay->id));
 });
+
+// Home > Press Articles
+Breadcrumbs::for('admin.press_articles.index', function ($trail) {
+    $trail->parent('admin.home');
+    $trail->push('Press Articles', route('admin.press_articles.index'));
+});
+
+// Home > Press Articles > Create
+Breadcrumbs::for('admin.press_articles.create', function ($trail) {
+    $trail->parent('admin.press_articles.index');
+    $trail->push('Create', route('admin.press_articles.create'));
+});
+
+// Home > Press Articles > [Press Article]
+Breadcrumbs::for('admin.press_articles.edit', function ($trail, $pressArticle) {
+    $trail->parent('admin.press_articles.index');
+    $trail->push($pressArticle->title, route('admin.press_articles.edit', $pressArticle->id));
+});

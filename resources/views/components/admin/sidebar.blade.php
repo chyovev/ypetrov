@@ -39,6 +39,13 @@
                         <i class="fa fa-pencil-square-o"></i> Essays
                     </a>
                 </li>
+
+                <li @class(['active' => Route::is('admin.press_articles.*')])>
+                    <a href="{{ route('admin.press_articles.index') }}">
+                        <i class="fa fa-newspaper-o"></i> Press Articles
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </div>

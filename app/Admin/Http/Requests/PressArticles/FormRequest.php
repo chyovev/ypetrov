@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Admin\Http\Requests\Essays;
+namespace App\Admin\Http\Requests\PressArticles;
 
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 use Illuminate\Validation\Rule;
 
 /**
  * The FormRequest class is used as validation
- * on both new and existing essays.
+ * on both new and existing press_articles.
  */
 
 class FormRequest extends HttpFormRequest
@@ -70,7 +70,7 @@ class FormRequest extends HttpFormRequest
             'required',
             'regex:/^[a-z0-9\-]+$/i',
             'max:255',
-            Rule::unique('essays')->ignore($this->essay),
+            Rule::unique('press_articles')->ignore($this->press_article),
         ];
     }
 
