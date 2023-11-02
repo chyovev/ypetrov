@@ -33,6 +33,12 @@
                         <li><a @class(['active' => Route::is('admin.poems.*')]) href="{{ route('admin.poems.index') }}">Poems</a></li>
                     </ul>
                 </li>
+
+                <li @class(['active' => Route::is('admin.essays.*')])>
+                    <a href="{{ route('admin.essays.index') }}">
+                        <i class="fa fa-pencil-square-o"></i> Essays
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

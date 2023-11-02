@@ -76,3 +76,21 @@ Breadcrumbs::for('admin.books.edit', function ($trail, $book) {
     $trail->parent('admin.books.index');
     $trail->push($book->title, route('admin.books.edit', $book->id));
 });
+
+// Home > Essays
+Breadcrumbs::for('admin.essays.index', function ($trail) {
+    $trail->parent('admin.home');
+    $trail->push('Essays', route('admin.essays.index'));
+});
+
+// Home > Essays > Create
+Breadcrumbs::for('admin.essays.create', function ($trail) {
+    $trail->parent('admin.essays.index');
+    $trail->push('Create', route('admin.essays.create'));
+});
+
+// Home > Essays > [Essay]
+Breadcrumbs::for('admin.essays.edit', function ($trail, $essay) {
+    $trail->parent('admin.essays.index');
+    $trail->push($essay->title, route('admin.essays.edit', $essay->id));
+});

@@ -3,6 +3,7 @@
 use App\Admin\Http\Controllers\AuthController;
 use App\Admin\Http\Controllers\BookController;
 use App\Admin\Http\Controllers\ContactMessageController;
+use App\Admin\Http\Controllers\EssayController;
 use App\Admin\Http\Controllers\PoemController;
 use App\Admin\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,5 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::name('admin')->resource('poems',            PoemController::class)->except(['show']);
     Route::name('admin')->resource('books',            BookController::class)->except(['show']);
+    Route::name('admin')->resource('essays',           EssayController::class)->except(['show']);
 });
