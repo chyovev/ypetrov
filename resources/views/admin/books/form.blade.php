@@ -64,7 +64,7 @@ $param = $book->exists ? $book              : null;
                             <div class="form-group row @error('publish_year') has-error has-feedback @enderror">
                                 <label class="col-lg-3 col-form-label text-right" for="publish_year">Publish year</label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="publish_year" id="publish_year" class="form-control input-default" value="{{ old('publish_year', $book->publish_year) }}" />
+                                    <input type="text" name="publish_year" id="publish_year" class="form-control input-default datepicker" data-date-min-view-mode="2" data-date-max-view-mode="2" data-date-format="yyyy" value="{{ old('publish_year', $book->publish_year) }}" />
                                     @error('publish_year')
                                         <span class="invalid-feedback d-block">{{ $message }}</span>
                                     @enderror

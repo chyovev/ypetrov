@@ -7,6 +7,7 @@ use App\Admin\Http\Controllers\EssayController;
 use App\Admin\Http\Controllers\PoemController;
 use App\Admin\Http\Controllers\PressArticleController;
 use App\Admin\Http\Controllers\UserController;
+use App\Admin\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 // routes which require no user to be logged in
@@ -28,4 +29,5 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('books',            BookController::class)->except(['show']);
     Route::name('admin')->resource('essays',           EssayController::class)->except(['show']);
     Route::name('admin')->resource('press_articles',   PressArticleController::class)->except(['show']);
+    Route::name('admin')->resource('videos',           VideoController::class)->except(['show']);
 });

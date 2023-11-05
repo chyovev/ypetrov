@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Admin\Http\Requests\Books;
+namespace App\Admin\Http\Requests\Videos;
 
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 use Illuminate\Validation\Rule;
 
 /**
  * The FormRequest class is used as validation
- * on both new and existing books.
+ * on both new and existing videos.
  */
 
 class FormRequest extends HttpFormRequest
@@ -34,10 +34,8 @@ class FormRequest extends HttpFormRequest
             'is_active'    => $this->getIsActiveRules(),
             'title'        => $this->getTitleRules(),
             'slug'         => $this->getSlugRules(),
-            'publisher'    => $this->getPublisherRules(),
-            'publish_year' => $this->getPublishYearRules(),
-            'poems'        => $this->getPoemsRules(),
-            'poems.*'      => $this->getPoemsElementsRules(),
+            'publish_date' => $this->getPublishDateRules(),
+            'summary'      => $this->getSummaryRules(),
         ];
     }
 
@@ -73,41 +71,24 @@ class FormRequest extends HttpFormRequest
             'required',
             'regex:/^[a-z0-9\-]+$/i',
             'max:255',
-            Rule::unique('books')->ignore($this->book),
+            Rule::unique('videos')->ignore($this->video),
         ];
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function getPublisherRules(): array {
-        return [
-            'sometimes',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPublishYearRules(): array {
+    private function getPublishDateRules(): array {
         return [
             'sometimes',
             'nullable',
-            'date_format:Y',
+            'date_format:d.m.Y.',
         ];
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function getPoemsRules(): array {
+    private function getSummaryRules(): array {
         return [
-            'required',
-            'array',
-            'min:1',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPoemsElementsRules(): array {
-        return [
-            'distinct',
-            'exists:poems,id',
+            'sometimes',
+            'max:500',
         ];
     }
 

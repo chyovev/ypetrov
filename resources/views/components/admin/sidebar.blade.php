@@ -46,6 +46,12 @@
                     </a>
                 </li>
 
+                <li @class(['active' => Route::is('admin.videos.*')])>
+                    <a href="{{ route('admin.videos.index') }}">
+                        <i class="fa fa-video-camera"></i> Videos
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </div>

@@ -112,3 +112,21 @@ Breadcrumbs::for('admin.press_articles.edit', function ($trail, $pressArticle) {
     $trail->parent('admin.press_articles.index');
     $trail->push($pressArticle->title, route('admin.press_articles.edit', $pressArticle->id));
 });
+
+// Home > Videos
+Breadcrumbs::for('admin.videos.index', function ($trail) {
+    $trail->parent('admin.home');
+    $trail->push('Videos', route('admin.videos.index'));
+});
+
+// Home > Videos > Create
+Breadcrumbs::for('admin.videos.create', function ($trail) {
+    $trail->parent('admin.videos.index');
+    $trail->push('Create', route('admin.videos.create'));
+});
+
+// Home > Videos > [Video]
+Breadcrumbs::for('admin.videos.edit', function ($trail, $video) {
+    $trail->parent('admin.videos.index');
+    $trail->push($video->title, route('admin.videos.edit', $video->id));
+});

@@ -45,4 +45,14 @@ class Video extends Model implements Attachable, Commentable, Statsable
         'is_active', 'title', 'slug', 'publish_date', 'summary', 'order',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'is_active'    => 'boolean',
+        'publish_date' => 'datetime',
+    ];
+
 }
