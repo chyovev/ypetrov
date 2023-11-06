@@ -57,21 +57,32 @@ class FileHelper
     /**
      * @throws FileNotFoundException
      */
-    public function __construct(string $filePath) {
+    public function __construct(string $filePath, string $fileName = null) {
         if ( ! File::exists($filePath)) {
             throw new FileNotFoundException("File could not be found {$filePath}");
         }
 
-        $this->processFile($filePath);
+        // if no original file name was passed,
+        // extract the file name from the path
+        if (is_null($fileName)) {
+            $fileName = File::basename($filePath);
+        }
+
+        $this->extractDataFromFile($filePath);
+        $this->extractDataFromFileName($fileName);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function processFile(string $filePath): void {
-        $this->fileName  = File::name($filePath);
-        $this->baseName  = File::basename($filePath);
+    private function extractDataFromFile(string $filePath): void {
         $this->fileSize  = File::size($filePath);
         $this->mimeType  = File::mimeType($filePath);
-        $this->extension = File::extension($filePath);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function extractDataFromFileName(string $fileName): void {
+        $this->fileName  = File::name($fileName);
+        $this->baseName  = File::basename($fileName);
+        $this->extension = File::extension($fileName);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -57,6 +57,24 @@ class AttachableTest extends TestCase
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * When a file gets uploaded, it can be stored under a different
+     * name should such be passed as parameter. However, the target
+     * name also gets sanitized.
+     */
+    public function test_specifying_target_file_name(): void {
+        $book     = Book::factory()->create();
+        $tempFile = $this->createTempFile('some-name.txt');
+
+        $newName       = 'My CUSTOM file name.txt';
+        $sanitizedName = 'my-custom-file-name.txt';
+
+        $attachment = $book->uploadAttachment($tempFile, $newName);
+
+        $this->assertEquals($sanitizedName, $attachment->server_file_name);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * The original file name is sanitized during upload, so white
      * spaces and funny non-ascii characters are cleaned up.
      */
@@ -75,7 +93,7 @@ class AttachableTest extends TestCase
      * will append a counter suffix to all duplicates
      * while keeping the original file name in the database.
      */
-    public function test_upading_of_multiple_files_with_same_name(): void {
+    public function test_uploading_of_multiple_files_with_same_name(): void {
         $book     = Book::factory()->create();
         
         $tempFile1   = $this->createTempFile('file.txt');

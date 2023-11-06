@@ -71,10 +71,11 @@ trait HasAttachments
      * 
      * @throws FileNotFoundException – missing temp file path
      * @param  string $filePath – temp file path
+     * @param  string $fileName – original name of file
      * @return Attachment
      */
-    public function uploadAttachment(string $filePath): Attachment {
-        $helper = new FileHelper($filePath);
+    public function uploadAttachment(string $filePath, string $fileName = null): Attachment {
+        $helper = new FileHelper($filePath, $fileName);
 
         $data       = $this->prepareAttachmentData($helper);
         $attachment = $this->attachments()->create($data);

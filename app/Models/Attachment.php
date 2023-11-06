@@ -125,4 +125,14 @@ class Attachment extends Model
             . $foreignKeyId;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Generate a public URL to the attachment.
+     * 
+     * @return string
+     */
+    public function getURL(): string {
+        return url( $this->getRelativePath()) . "/{$this->server_file_name}";
+    }
+
 }

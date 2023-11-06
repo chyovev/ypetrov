@@ -13,7 +13,7 @@ $param = $video->exists ? $video              : null;
                     @php
                         $action = $video->exists ? route('admin.videos.update', ['video' => $video]) : route('admin.videos.store')
                     @endphp
-                        <form method="post" action="{{ $action }}">
+                        <form method="post" action="{{ $action }}" enctype="multipart/form-data">
                             @csrf
 
                             @if ($video->exists)
@@ -74,6 +74,8 @@ $param = $video->exists ? $video              : null;
                                     @enderror
                                 </div>
                             </div>
+
+                            <x-admin.upload :object="$video" />
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">

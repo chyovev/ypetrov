@@ -23,7 +23,42 @@ class AttachableObserver
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Once a attachable object gets deleted, all its attachments
+     * Once an attachable object gets saved (created or updated)
+     * the request should be scanned for potential uploaded attachments
+     * which should be stored locally.
+     * 
+     * @param  Attachable $object – object implementing the Attachable interface
+     * @return void
+     */
+    public function saved(Attachable $object): void {
+        $this->saveAttachmentsFromRequest($object);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Cycle through all uploaded files from the request and save each
+     * file individually as an attachment for the current attachable object.
+     * 
+     * NB! Keep in mind that at this point the attachments array should
+     *     be validated beforehand.
+     * 
+     * @param Attachable $object – object implementing the Attachable interface
+     */
+    private function saveAttachmentsFromRequest(Attachable $object): void {
+        $files       = request()->allFiles();
+        $attachments = $files['attachments'] ?? []; 
+
+        foreach ($attachments as $file) {
+            $filePath = $file->getPathname();
+            $fileName = $file->getClientOriginalName();
+
+            $object->uploadAttachment($filePath, $fileName);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Once an attachable object gets deleted, all its attachments
      * from the polymorphic relationship should be gone, too.
      * 
      * NB! Calling delete() on the relationship method alone
