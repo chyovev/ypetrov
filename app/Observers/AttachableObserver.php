@@ -36,9 +36,7 @@ class AttachableObserver
      * @throws ValidationException
      */
     public function saving(Attachable $object): void {
-        if ( ! $object->hasAttachments()) {
-            $this->validateRequestAttachments($object);
-        }
+        $this->validateRequestAttachments($object);
     }
 
     ///////////////////////////////////////////////////////////////////////////

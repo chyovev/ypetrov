@@ -43,12 +43,32 @@ interface Attachable
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Check if an attachable object already has attachments
-     * associated with it.
+     * Check minimum required attachments for an attachable model
+     * (if specified).
      * 
-     * @return bool
+     * @return int|null
      */
-    public function hasAttachments(): bool;
+    public function minAttachmentsRequired(): ?int;
 
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check maximum required attachments for an attachable model
+     * (if specified).
+     * 
+     * @return int|null
+     */
+    public function maxAttachmentsRequired(): ?int;
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A concatenated list of all allowed mime types for the attachments
+     * (if specified).
+     * 
+     * @return string|null
+     */
+    public function getAllowedMimeTypes(): ?string;
+
+    
 }

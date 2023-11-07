@@ -55,4 +55,17 @@ class Video extends Model implements Attachable, Commentable, Statsable
         'publish_date' => 'datetime',
     ];
 
+    /**
+     * Settings used by other services during validaiton.
+     * 
+     * @see \App\Observers\Helpers\AttachmentsValidator
+     */
+    private $settings = [
+        'attachments' => [
+            'min'   => 1,
+            'max'   => 1,
+            'mimes' => 'mp4,webm',
+        ],
+    ];
+
 }

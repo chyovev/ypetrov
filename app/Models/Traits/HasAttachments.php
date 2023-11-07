@@ -126,15 +126,54 @@ trait HasAttachments
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Check if an attachable object already has attachments
-     * associated with it. Used for request validation.
+     * Check minimum required attachments for an attachable model
+     * (if specified). Information used during validation.
      * 
-     * @see \App\Observers\AttachableObserver
+     * @see \App\Observers\Helpers\AttachmentsValidator
      * 
-     * @return bool
+     * @return int|null
      */
-    public function hasAttachments(): bool {
-        return $this->attachments()->exists();
+    public function minAttachmentsRequired(): ?int {
+        return $this->getAttachmentsSettings('min');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check maximum required attachments for an attachable model
+     * (if specified). Information used during validation.
+     * 
+     * @see \App\Observers\Helpers\AttachmentsValidator
+     * 
+     * @return int|null
+     */
+    public function maxAttachmentsRequired(): ?int {
+        return $this->getAttachmentsSettings('max');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A concatenated list of all allowed mime types for the
+     * attachments (if specified). Information used during validation.
+     * 
+     * @see \App\Observers\Helpers\AttachmentsValidator
+     * 
+     * @return string|null
+     */
+    public function getAllowedMimeTypes(): ?string {
+        return $this->getAttachmentsSettings('mimes');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * All attachment settings for a model should be declared
+     * in the settings property, under the 'attachments' subkey.
+     * If no settings property is specified, or the desired
+     * setting is not set, null value will be returned. 
+     * 
+     * @return mixed
+     */
+    private function getAttachmentsSettings(string $setting): mixed {
+        return $this->settings['attachments'][$setting] ?? null;
     }
 
 }
