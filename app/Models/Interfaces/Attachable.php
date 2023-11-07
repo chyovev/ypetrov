@@ -39,6 +39,16 @@ interface Attachable
      * @return Attachment
      */
     public function uploadAttachment(string $filePath, string $fileName = null): Attachment;
-    
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check if an attachable object already has attachments
+     * associated with it.
+     * 
+     * @return bool
+     */
+    public function hasAttachments(): bool;
+
 
 }

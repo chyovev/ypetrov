@@ -3,14 +3,19 @@
 namespace App\Observers;
 
 use App\Models\Interfaces\Attachable;
+use App\Observers\Helpers\AttachmentsValidator;
+use Illuminate\Validation\ValidationException;
 
 /**
  * The AttachableObserver is used on all models which
  * implement the Attachable interface.
- * Its goal is to delete all associated attachments once
- * the main object is deleted since it cannot be done
- * on polymorphic tables using cascade delete in the
- * database.
+ * It has several purposes:
+ *     - to validate requests for attachments files
+ *     - to save said files as object attachments
+ *     - to delete all associated attachments once the
+ *       main object is deleted since it cannot be done
+ *       on polymorphic tables using cascade delete in
+ *       the database
  * 
  * NB! Keep in mind the observer is registered upon object
  *     initialization, and NOT in the EventServiceProvider.
@@ -20,6 +25,30 @@ use App\Models\Interfaces\Attachable;
 
 class AttachableObserver
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * The saving event is the last chance to prevent an attachable
+     * object from being created/updated. This is where the request
+     * should be scanned for attachments and if they're missing,
+     * but are required, an exception gets thrown.
+     * 
+     * @throws ValidationException
+     */
+    public function saving(Attachable $object): void {
+        if ( ! $object->hasAttachments()) {
+            $this->validateRequestAttachments($object);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * @throws ValidationException
+     */
+    private function validateRequestAttachments(Attachable $object): void {
+        $validator = new AttachmentsValidator($object);
+        $validator->validate();
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**

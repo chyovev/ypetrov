@@ -36,10 +36,6 @@ class FormRequest extends HttpFormRequest
             'slug'         => $this->getSlugRules(),
             'publish_date' => $this->getPublishDateRules(),
             'summary'      => $this->getSummaryRules(),
-
-            // TODO: move to a neutral place for all attachable objects
-            'attachments'   => $this->getAttachmentsRules(),
-            'attachments.*' => $this->getAttachmentsElementsRules(),
         ];
     }
 
@@ -93,22 +89,6 @@ class FormRequest extends HttpFormRequest
         return [
             'sometimes',
             'max:500',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getAttachmentsRules(): array {
-        return [
-            'required',
-            'array',
-            'min:1',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getAttachmentsElementsRules(): array {
-        return [
-            'file',
         ];
     }
 

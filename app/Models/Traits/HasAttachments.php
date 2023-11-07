@@ -124,4 +124,17 @@ trait HasAttachments
         return $this->attachments()->count() + 1;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check if an attachable object already has attachments
+     * associated with it. Used for request validation.
+     * 
+     * @see \App\Observers\AttachableObserver
+     * 
+     * @return bool
+     */
+    public function hasAttachments(): bool {
+        return $this->attachments()->exists();
+    }
+
 }
