@@ -4,7 +4,9 @@ namespace App\Observers;
 
 use File;
 use App\Models\Attachment;
+use App\Models\Interfaces\Attachable;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class AttachmentObserver
 {
@@ -99,6 +101,49 @@ class AttachmentObserver
         $filePath = $attachment->getAbsolutePath() . DIRECTORY_SEPARATOR . $serverName;
 
         return File::exists($filePath);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Before an attachment is deleted, make sure it's not required
+     * by the parent model, and if it is – abort the request.
+     * 
+     * @throws ValidationException
+     * @param  Attachment $attachment – attachment record being deleted
+     * @return void
+     */
+    public function deleting(Attachment $attachment): void {
+        $this->validateAttachmentIsNotRequired($attachment);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Fetch the parent object of the attachment and check
+     * if deleting it would go against its attachments' settings.
+     * 
+     * @throws ValidationException
+     * @param  Attachment $attachment – attachment record being deleted
+     * @return void
+     */
+    private function validateAttachmentIsNotRequired(Attachment $attachment): void {
+        $object = $attachment->attachable;
+
+        // under normal circumstances there will always be a parent object,
+        // but if it's missing for some reason, simply abort the validation
+        if ( ! $object) {
+            return;
+        }
+
+        $count    = $object->attachments()->count();
+        $newCount = $count - 1; // count after deletion
+        $min      = $object->minAttachmentsRequired();
+
+        // there could be no min setting, so make sure var is not empty
+        if ($min && $newCount < $min) {
+            throw ValidationException::withMessages([
+                'attachments' => "Attachment cannot be deleted as it is required.",
+            ]);
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Http\Controllers\AttachmentController;
 use App\Admin\Http\Controllers\AuthController;
 use App\Admin\Http\Controllers\BookController;
 use App\Admin\Http\Controllers\ContactMessageController;
@@ -30,4 +31,5 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('essays',           EssayController::class)->except(['show']);
     Route::name('admin')->resource('press_articles',   PressArticleController::class)->except(['show']);
     Route::name('admin')->resource('videos',           VideoController::class)->except(['show']);
+    Route::name('admin')->resource('attachments',      AttachmentController::class)->only('destroy');
 });

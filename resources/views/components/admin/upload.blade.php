@@ -4,7 +4,7 @@
     <div class="col-lg-8">
         <x-admin.attachments-list :attachments="$object->attachments" />
 
-        <input name="attachments[]" id="attachments" type="file" multiple />
+        <input name="attachments[]" id="attachments" class="m-t-40" type="file" multiple />
 
         @error('attachments')
             <span class="invalid-feedback d-block">{{ $message }}</span>
