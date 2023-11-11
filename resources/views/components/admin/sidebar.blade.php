@@ -52,6 +52,12 @@
                     </a>
                 </li>
 
+                <li @class(['active' => Route::is('admin.gallery_images.*')])>
+                    <a href="{{ route('admin.gallery_images.index') }}">
+                        <i class="fa fa-picture-o"></i> Gallery
+                    </a>
+                </li>
+
             </ul>
         </nav>
     </div>

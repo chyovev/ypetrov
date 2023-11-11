@@ -1,4 +1,5 @@
-<div class="table-responsive">
+@if ($attachments->count())
+<div class="table-responsive m-b-30">
     <table class="display nowrap table table-condensed table-hover table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -22,3 +23,4 @@
             @endforeach
     </table>
 </div>
+@endif

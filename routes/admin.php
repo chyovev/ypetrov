@@ -4,6 +4,7 @@ use App\Admin\Http\Controllers\AttachmentController;
 use App\Admin\Http\Controllers\AuthController;
 use App\Admin\Http\Controllers\BookController;
 use App\Admin\Http\Controllers\ContactMessageController;
+use App\Admin\Http\Controllers\GalleryImageController;
 use App\Admin\Http\Controllers\EssayController;
 use App\Admin\Http\Controllers\PoemController;
 use App\Admin\Http\Controllers\PressArticleController;
@@ -31,5 +32,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('essays',           EssayController::class)->except(['show']);
     Route::name('admin')->resource('press_articles',   PressArticleController::class)->except(['show']);
     Route::name('admin')->resource('videos',           VideoController::class)->except(['show']);
+    Route::name('admin')->resource('gallery_images',   GalleryImageController::class)->except(['show']);
     Route::name('admin')->resource('attachments',      AttachmentController::class)->only('destroy');
 });

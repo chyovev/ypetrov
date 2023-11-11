@@ -130,3 +130,21 @@ Breadcrumbs::for('admin.videos.edit', function ($trail, $video) {
     $trail->parent('admin.videos.index');
     $trail->push($video->title, route('admin.videos.edit', $video->id));
 });
+
+// Home > Gallery
+Breadcrumbs::for('admin.gallery_images.index', function ($trail) {
+    $trail->parent('admin.home');
+    $trail->push('Gallery', route('admin.gallery_images.index'));
+});
+
+// Home > Gallery > Create
+Breadcrumbs::for('admin.gallery_images.create', function ($trail) {
+    $trail->parent('admin.gallery_images.index');
+    $trail->push('Create', route('admin.gallery_images.create'));
+});
+
+// Home > Gallery > [Image]
+Breadcrumbs::for('admin.gallery_images.edit', function ($trail, $image) {
+    $trail->parent('admin.gallery_images.index');
+    $trail->push($image->title, route('admin.gallery_images.edit', $image->id));
+});
