@@ -40,35 +40,5 @@ interface Attachable
      */
     public function uploadAttachment(string $filePath, string $fileName = null): Attachment;
 
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Check minimum required attachments for an attachable model
-     * (if specified).
-     * 
-     * @return int|null
-     */
-    public function minAttachmentsRequired(): ?int;
-
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Check maximum required attachments for an attachable model
-     * (if specified).
-     * 
-     * @return int|null
-     */
-    public function maxAttachmentsRequired(): ?int;
-
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * A concatenated list of all allowed mime types for the attachments
-     * (if specified).
-     * 
-     * @return string|null
-     */
-    public function getAllowedMimeTypes(): ?string;
-
     
 }

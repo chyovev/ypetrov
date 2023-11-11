@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Interfaces\Attachable;
-use App\Observers\Helpers\AttachmentsValidator;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -30,8 +29,8 @@ class AttachableObserver
     /**
      * The saving event is the last chance to prevent an attachable
      * object from being created/updated. This is where the request
-     * should be scanned for attachments and if they're missing,
-     * but are required, an exception gets thrown.
+     * should be scanned for attachments and if they're not in the
+     * right format, an exception gets thrown.
      * 
      * @throws ValidationException
      */
@@ -43,9 +42,13 @@ class AttachableObserver
     /**
      * @throws ValidationException
      */
-    private function validateRequestAttachments(Attachable $object): void {
-        $validator = new AttachmentsValidator($object);
-        $validator->validate();
+    private function validateRequestAttachments(): void {
+        $rules = [
+            'attachments'   => ['sometimes', 'array'],
+            'attachments.*' => ['file'],
+        ];
+
+        request()->validate($rules);
     }
 
     ///////////////////////////////////////////////////////////////////////////
