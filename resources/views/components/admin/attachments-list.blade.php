@@ -1,5 +1,5 @@
 @if ($attachments->count())
-<div class="table-responsive m-b-30">
+<div class="table-responsive m-b-30 m-t-10">
     <table class="display nowrap table table-condensed table-hover table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>

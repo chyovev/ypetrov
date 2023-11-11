@@ -13,7 +13,7 @@ $param = $essay->exists ? $essay              : null;
                     @php
                         $action = $essay->exists ? route('admin.essays.update', ['essay' => $essay]) : route('admin.essays.store')
                     @endphp
-                        <form method="post" action="{{ $action }}">
+                        <form method="post" action="{{ $action }}" enctype="multipart/form-data">
                             @csrf
 
                             @if ($essay->exists)
@@ -60,6 +60,8 @@ $param = $essay->exists ? $essay              : null;
                                     @enderror
                                 </div>
                             </div>
+
+                            <x-admin.upload :object="$essay" />
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">

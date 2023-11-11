@@ -63,13 +63,27 @@ class Attachment extends Model
         $modelFolder = File::dirname($subfolder);
 
         // first delete the FK subfolder if empty (e.g. /attachments/PressArticle/4)
-        if (File::isEmptyDirectory($subfolder)) {
-            File::deleteDirectory($subfolder);
+        $this->deleteIfEmpty($subfolder);
+        
+        // then delete the model folder if empty (e.g. /attachments/PressArticle)
+        $this->deleteIfEmpty($modelFolder);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Delete a folder if it's empty.
+     * 
+     * @param string $folderPath
+     */
+    private function deleteIfEmpty(string $folderPath): void {
+        // if the folder was deleted manually,
+        // it won't exist anymore – simply abort
+        if ( ! File::isDirectory($folderPath)) {
+            return;
         }
 
-        // then delete the model folder if empty (e.g. /attachments/PressArticle)
-        if (File::isEmptyDirectory($modelFolder)) {
-            File::deleteDirectory($modelFolder);
+        if (File::isEmptyDirectory($folderPath)) {
+            File::deleteDirectory($folderPath);
         }
     }
 

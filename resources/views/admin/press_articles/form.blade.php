@@ -13,7 +13,7 @@ $param = $pressArticle->exists ? $pressArticle              : null;
                     @php
                         $action = $pressArticle->exists ? route('admin.press_articles.update', ['press_article' => $pressArticle]) : route('admin.press_articles.store')
                     @endphp
-                        <form method="post" action="{{ $action }}">
+                        <form method="post" action="{{ $action }}" enctype="multipart/form-data">
                             @csrf
 
                             @if ($pressArticle->exists)
@@ -60,6 +60,8 @@ $param = $pressArticle->exists ? $pressArticle              : null;
                                     @enderror
                                 </div>
                             </div>
+
+                            <x-admin.upload :object="$pressArticle" />
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">
