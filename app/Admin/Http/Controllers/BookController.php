@@ -17,8 +17,8 @@ class BookController extends Controller
      */
     public function index() {
         $query = Book::query()
-            ->orderBy('order', 'asc')
-            ->withCount('poems');
+            ->withCount(['attachments', 'comments', 'poems'])
+            ->orderBy('order');
 
         return view('admin.books.index', [
             'books' => $query->paginate(20),

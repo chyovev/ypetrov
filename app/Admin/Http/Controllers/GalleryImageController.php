@@ -14,8 +14,12 @@ class GalleryImageController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $query = GalleryImage::query()
+            ->withCount('attachments')
+            ->orderBy('order');
+
         return view('admin.gallery_images.index', [
-            'galleryImages' => GalleryImage::orderBy('order')->paginate(20),
+            'galleryImages' => $query->paginate(20),
         ]);
     }
 

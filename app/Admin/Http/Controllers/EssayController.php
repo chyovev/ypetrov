@@ -14,8 +14,12 @@ class EssayController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $query = Essay::query()
+            ->withCount(['attachments', 'comments'])
+            ->orderBy('order');
+
         return view('admin.essays.index', [
-            'essays' => Essay::orderBy('order')->paginate(20),
+            'essays' => $query->paginate(20),
         ]);
     }
 

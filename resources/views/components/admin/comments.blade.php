@@ -7,7 +7,7 @@
 
         @forelse ($object->comments as $comment)
             <div class="form-group row">
-                <label class="col-lg-3 col-form-label text-right">
+                <label class="col-lg-3 col-form-label">
                     <x-admin.flag :countryCode="$comment->visitor->country_code" />
 
                     {{ $comment->name }}
@@ -20,7 +20,7 @@
                     </p>
                 </div>
                 
-                <div class="col-lg-1">
+                <div class="col-lg-1 text-right">
                     <a href="{{ route('admin.comments.destroy', ['comment' => $comment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> Delete</a>
                 </div>
             </div>

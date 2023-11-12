@@ -5,7 +5,6 @@ namespace App\Admin\Http\Controllers;
 use App\Admin\Http\Requests\Poems\FormRequest;
 use App\Models\Poem;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class PoemController extends Controller
 {
@@ -15,8 +14,12 @@ class PoemController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $query = Poem::query()
+            ->withCount(['comments', 'books'])
+            ->orderBy('title');
+
         return view('admin.poems.index', [
-            'poems' => Poem::withCount('books')->paginate(20),
+            'poems' => $query->paginate(20),
         ]);
     }
 

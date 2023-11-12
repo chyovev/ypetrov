@@ -10,3 +10,6 @@
 .underline-dashed {
     border-bottom: 1px dashed grey;
 }
+.help {
+    cursor: help;
+}

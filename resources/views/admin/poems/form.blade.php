@@ -8,6 +8,9 @@ $param = $poem->exists ? $poem              : null;
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary"><em class="fa fa-pencil-square-o"></em> {{ $title }}</h3>
+                </div>
                 <div class="card-body">
                     <div class="form-validation">
                     @php
@@ -89,7 +92,7 @@ $param = $poem->exists ? $poem              : null;
                                 <label class="col-lg-3 col-form-label text-right">Published in</label>
                                 <div class="col-lg-8 m-t-8">
                                     @foreach ($poem->books as $book)
-                                        <p class="form-control-static">{{ $book->title }} ({{ $book->publish_year }})</p>
+                                        <p class="form-control-static"><a href="{{ route('admin.books.edit', ['book' => $book]) }}">{{ $book->title }} ({{ $book->publish_year }})</a></p>
                                     @endforeach
                                 </div>
                             </div>
@@ -105,6 +108,8 @@ $param = $poem->exists ? $poem              : null;
                     </div>
                 </div>
             </div>
+
+            <x-admin.comments :object="$poem" />
         </div>
     </div>
 

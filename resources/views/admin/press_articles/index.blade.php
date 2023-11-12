@@ -3,10 +3,15 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary">
+                        <em class="fa fa-list"></em> Press Articles
+                        <div class="dt-buttons float-right">
+                            <a class="btn btn-success" href="{{ route('admin.press_articles.create') }}"><i class="fa fa-plus"></i> Create</a>
+                        </div>
+                    </h3>
+                </div>
                 <div class="card-body">
-                    <div class="dt-buttons">
-                        <a class="btn btn-success" href="{{ route('admin.press_articles.create') }}"><i class="fa fa-plus"></i> Create</a>
-                    </div>
 
                     <div class="table-responsive m-t-40">
                         <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
@@ -14,6 +19,7 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th width="50" class="text-center">Public</th>
+                                    <th class="text-center" width="90">Remarks</th>
                                     <th>Title</th>
                                     <th>Text</th>
                                     <th>Created at</th>
@@ -26,6 +32,9 @@
                                     <td class="text-center">{{ (($pressArticles->currentPage() - 1) * $pressArticles->perPage()) + $loop->iteration }}</td>
                                     <td class="text-center">
                                         <span @class(['fa' => true, 'fa-check text-success' => $pressArticle->is_active, 'fa-times text-danger' => !$pressArticle->is_active])></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <x-admin.remarks :object="$pressArticle" />
                                     </td>
                                     <td>{{ $pressArticle->title }}</td>
                                     <td>{{ Str::of($pressArticle->text)->stripTags()->limit(60) }}</td>

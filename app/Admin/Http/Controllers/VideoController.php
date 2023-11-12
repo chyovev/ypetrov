@@ -14,8 +14,12 @@ class VideoController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $query = Video::query()
+            ->withCount(['attachments', 'comments'])
+            ->orderBy('order');
+
         return view('admin.videos.index', [
-            'videos' => Video::orderBy('order')->paginate(20),
+            'videos' => $query->paginate(20),
         ]);
     }
 

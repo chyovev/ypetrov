@@ -3,17 +3,22 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary">
+                        <em class="fa fa-list"></em> Videos
+                        <div class="dt-buttons float-right">
+                            <a class="btn btn-success" href="{{ route('admin.videos.create') }}"><i class="fa fa-plus"></i> Create</a>
+                        </div>
+                    </h3>
+                </div>
                 <div class="card-body">
-                    <div class="dt-buttons">
-                        <a class="btn btn-success" href="{{ route('admin.videos.create') }}"><i class="fa fa-plus"></i> Create</a>
-                    </div>
-
                     <div class="table-responsive m-t-40">
                         <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th width="50" class="text-center">Public</th>
+                                    <th class="text-center" width="90">Remarks</th>
                                     <th>Title</th>
                                     <th>Summary</th>
                                     <th>Publish date</th>
@@ -27,6 +32,9 @@
                                     <td class="text-center">{{ (($videos->currentPage() - 1) * $videos->perPage()) + $loop->iteration }}</td>
                                     <td class="text-center">
                                         <span @class(['fa' => true, 'fa-check text-success' => $video->is_active, 'fa-times text-danger' => !$video->is_active])></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <x-admin.remarks :object="$video" />
                                     </td>
                                     <td>{{ $video->title }}</td>
                                     <td>{{ Str::of($video->summary)->stripTags()->limit(60) }}</td>

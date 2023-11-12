@@ -3,11 +3,15 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary">
+                        <em class="fa fa-list"></em> Users
+                        <div class="dt-buttons float-right">
+                            <a class="btn btn-success" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> Create</a>
+                        </div>
+                    </h3>
+                </div>
                 <div class="card-body">
-                    <div class="dt-buttons">
-                        <a class="btn btn-success" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> Create</a>
-                    </div>
-
                     <div class="table-responsive m-t-40">
                         <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>

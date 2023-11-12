@@ -14,8 +14,12 @@ class PressArticleController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
+        $query = PressArticle::query()
+            ->withCount(['attachments', 'comments'])
+            ->orderBy('order');
+
         return view('admin.press_articles.index', [
-            'pressArticles' => PressArticle::orderBy('order')->paginate(20),
+            'pressArticles' => $query->paginate(20),
         ]);
     }
 

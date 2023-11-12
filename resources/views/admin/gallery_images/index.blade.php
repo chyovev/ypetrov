@@ -3,16 +3,21 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary">
+                        <em class="fa fa-list"></em> Gallery
+                        <div class="dt-buttons float-right">
+                            <a class="btn btn-success" href="{{ route('admin.gallery_images.create') }}"><i class="fa fa-plus"></i> Add</a>
+                        </div>
+                    </h3>
+                </div>
                 <div class="card-body">
-                    <div class="dt-buttons">
-                        <a class="btn btn-success" href="{{ route('admin.gallery_images.create') }}"><i class="fa fa-plus"></i> Add</a>
-                    </div>
-
                     <div class="table-responsive m-t-40">
                         <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
+                                    <th class="text-center" width="90">Remarks</th>
                                     <th>Title</th>
                                     <th>Created at</th>
                                     <th width="150" class="text-center">Actions</th>
@@ -22,6 +27,9 @@
                                 @foreach ($galleryImages as $image)
                                 <tr>
                                     <td class="text-center">{{ (($galleryImages->currentPage() - 1) * $galleryImages->perPage()) + $loop->iteration }}</td>
+                                    <td class="text-center">
+                                        <x-admin.remarks :object="$image" />
+                                    </td>
                                     <td>{{ $image->title }}</td>
                                     <td>{{ $image->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>

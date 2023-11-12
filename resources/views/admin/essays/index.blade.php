@@ -3,17 +3,22 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary">
+                        <em class="fa fa-list"></em> Essays
+                        <div class="dt-buttons float-right">
+                            <a class="btn btn-success" href="{{ route('admin.essays.create') }}"><i class="fa fa-plus"></i> Create</a>
+                        </div>
+                    </h3>
+                </div>
                 <div class="card-body">
-                    <div class="dt-buttons">
-                        <a class="btn btn-success" href="{{ route('admin.essays.create') }}"><i class="fa fa-plus"></i> Create</a>
-                    </div>
-
                     <div class="table-responsive m-t-40">
                         <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th width="50" class="text-center">Public</th>
+                                    <th class="text-center" width="90">Remarks</th>
                                     <th>Title</th>
                                     <th>Text</th>
                                     <th>Created at</th>
@@ -26,6 +31,9 @@
                                     <td class="text-center">{{ (($essays->currentPage() - 1) * $essays->perPage()) + $loop->iteration }}</td>
                                     <td class="text-center">
                                         <span @class(['fa' => true, 'fa-check text-success' => $essay->is_active, 'fa-times text-danger' => !$essay->is_active])></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <x-admin.remarks :object="$essay" />
                                     </td>
                                     <td>{{ $essay->title }}</td>
                                     <td>{{ Str::of($essay->text)->stripTags()->limit(60) }}</td>

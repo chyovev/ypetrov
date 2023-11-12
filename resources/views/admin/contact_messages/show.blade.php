@@ -1,8 +1,11 @@
-<x-admin.layout title="Contact Message" route="admin.contact_messages.show" :param="$message">
+<x-admin.layout route="admin.contact_messages.show" :param="$message">
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary"><em class="fa fa-eye"></em> Contact Message</h3>
+                </div>
                 <div class="card-body">
                     <div class="form-validation">
 

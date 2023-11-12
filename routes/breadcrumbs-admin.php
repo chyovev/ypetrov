@@ -5,6 +5,12 @@ Breadcrumbs::for('admin.home', function ($trail) {
     $trail->push('Home', route('admin.home'));
 });
 
+// Home > Dashboard
+Breadcrumbs::for('admin.dashboard', function ($trail) {
+    $trail->push('Home', route('admin.home'));
+    $trail->push('Dashboard');
+});
+
 // Home > Users
 Breadcrumbs::for('admin.users.index', function ($trail) {
     $trail->parent('admin.home');
