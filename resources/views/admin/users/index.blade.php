@@ -1,13 +1,13 @@
-<x-admin.layout title="Users" route="admin.users.index">
+<x-admin.layout route="admin.users.index">
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-title">
                     <h3 class="text-primary">
-                        <em class="fa fa-list"></em> Users
+                        <em class="fa fa-list"></em> {{ __('global.users') }}
                         <div class="dt-buttons float-right">
-                            <a class="btn btn-success" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> Create</a>
+                            <a class="btn btn-success" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                         </div>
                     </h3>
                 </div>
@@ -17,10 +17,10 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th>Name</th>
-                                    <th>E-mail</th>
-                                    <th>Created at</th>
-                                    <th width="150" class="text-center">Actions</th>
+                                    <th>{{ __('global.name') }}</th>
+                                    <th>{{ __('global.email') }}</th>
+                                    <th>{{ __('global.created_at') }}</th>
+                                    <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,9 +31,9 @@
                                     <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                                     <td>{{ $user->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.users.edit',    ['user' => $user]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a href="{{ route('admin.users.edit',    ['user' => $user]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
                                         @can('delete', $user)
-                                        <a href="{{ route('admin.users.destroy', ['user' => $user]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  Delete</a>
+                                        <a href="{{ route('admin.users.destroy', ['user' => $user]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>
                                         @endcan
                                     </td>
                                 </tr>

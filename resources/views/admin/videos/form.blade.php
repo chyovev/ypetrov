@@ -1,9 +1,9 @@
 @php
-$title = $video->exists ? 'Update video'      : 'Create video';
+$title = $video->exists ? __('global.edit')   : __('global.create');
 $route = $video->exists ? 'admin.videos.edit' : 'admin.videos.create';
 $param = $video->exists ? $video              : null;
 @endphp
-<x-admin.layout :$title :$route :$param>
+<x-admin.layout :$route :$param>
 
     <div class="row">
         <div class="col-lg-12">
@@ -24,7 +24,7 @@ $param = $video->exists ? $video              : null;
                             @endif
 
                             <div class="form-group row @error('is_active') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="is_active">Public <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="is_active">{{ __('global.public') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="hidden"   name="is_active" value="0" />
                                     <input type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $video->is_active)) />
@@ -35,7 +35,7 @@ $param = $video->exists ? $video              : null;
                             </div>
 
                             <div class="form-group row @error('title') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="title">Title <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="title"> {{ __('global.title') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="title" id="title" class="form-control input-default" value="{{ old('title', $video->title) }}" />
                                     @error('title')
@@ -45,7 +45,7 @@ $param = $video->exists ? $video              : null;
                             </div>
 
                             <div class="form-group row @error('slug') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="slug">URL identificator <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="slug">{{ __('global.slug') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="slug" id="slug" class="form-control input-default" value="{{ old('slug', $video->slug) }}" />
                                     @error('slug')
@@ -55,7 +55,7 @@ $param = $video->exists ? $video              : null;
                             </div>
 
                             <div class="form-group row @error('publish_date') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="publish_date">Publish date</label>
+                                <label class="col-lg-3 col-form-label text-right" for="publish_date">{{ __('global.publish_date') }}</label>
                                 <div class="col-lg-8">
                                     @php
                                         $value   = old('publish_date', $video->publish_date);
@@ -69,7 +69,7 @@ $param = $video->exists ? $video              : null;
                             </div>
 
                             <div class="form-group row @error('summary') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="summary">Summary</label>
+                                <label class="col-lg-3 col-form-label text-right" for="summary">{{ __('global.summary') }}</label>
                                 <div class="col-lg-8">
                                     <textarea name="summary" id="summary" class="input-default form-control" rows="5">{{ old('summary', $video->summary) }}</textarea>
                                     @error('summary')
@@ -82,8 +82,8 @@ $param = $video->exists ? $video              : null;
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a href="{{ route('admin.videos.index') }}" class="btn btn-inverse">Cancel</a>
+                                    <button type="submit" class="btn btn-primary"><em class="fa fa-save"></em> {{ __('global.submit') }}</button>
+                                    <a href="{{ route('admin.videos.index') }}" class="btn btn-inverse"><em class="fa fa-reply"></em> {{ __('global.cancel') }}</a>
                                 </div>
                             </div>
                         </form>

@@ -42,7 +42,7 @@ class EssayController extends Controller
 
         return redirect()
             ->route('admin.essays.edit', ['essay' => $essay])
-            ->withSuccess('Essay successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ class EssayController extends Controller
 
         return redirect()
             ->route('admin.essays.edit', ['essay' => $essay])
-            ->withSuccess('Essay successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ class EssayController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Essay successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

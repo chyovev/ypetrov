@@ -43,7 +43,7 @@ class ContactMessageController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Contact message successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

@@ -13,3 +13,6 @@
 .help {
     cursor: help;
 }
+.pre {
+    white-space: pre;
+}

@@ -42,7 +42,7 @@ class PoemController extends Controller
 
         return redirect()
             ->route('admin.poems.edit', ['poem' => $poem])
-            ->withSuccess('Poem successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ class PoemController extends Controller
 
         return redirect()
             ->route('admin.poems.edit', ['poem' => $poem])
-            ->withSuccess('Poem successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ class PoemController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Poem successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

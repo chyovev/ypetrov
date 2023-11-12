@@ -1,7 +1,7 @@
 @if ($object->attachments_count)
-    <em class="fa fa-chain help" title="Object has {{ $object->attachments_count }} attachment(s)"></em>
+    <em class="fa fa-chain help" title="{{ __('global.object_has_attachments', ['count' => $object->attachments_count]) }}"></em>
 @endif
 
 @if ($object->comments_count)
-    <em class="fa fa-comments-o help" title="Object has {{ $object->comments_count }} comment(s)"></em>
+    <em class="fa fa-comments-o help" title="{{ __('global.object_has_comments', ['count' => $object->comments_count]) }}"></em>
 @endif

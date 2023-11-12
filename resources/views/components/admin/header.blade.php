@@ -21,8 +21,8 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <ul class="dropdown-user">
-                            <li><a href="{{ route('admin.users.edit', ['user' => auth()->user()]) }}"><i class="fa fa-key"></i> Change password</a></li>
-                            <li><a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
+                        <li><a href="{{ route('admin.users.edit', ['user' => auth()->user()]) }}" class="pre"><i class="fa fa-key"></i> {{ __('global.change_password') }}</a></li>
+                            <li><a href="{{ route('admin.logout') }}"><i class="fa fa-power-off"></i> {{ __('global.log_out') }}</a></li>
                         </ul>
                     </div>
                 </li>

@@ -42,7 +42,7 @@ class PressArticleController extends Controller
 
         return redirect()
             ->route('admin.press_articles.edit', ['press_article' => $pressArticle])
-            ->withSuccess('Press article successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ class PressArticleController extends Controller
 
         return redirect()
             ->route('admin.press_articles.edit', ['press_article' => $pressArticle])
-            ->withSuccess('Press article successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ class PressArticleController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Press article successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

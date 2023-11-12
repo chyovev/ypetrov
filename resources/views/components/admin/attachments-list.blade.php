@@ -4,9 +4,9 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th>File</th>
-                <th>Created at</th>
-                <th width="160" class="text-center">Actions</th>
+                <th>{{ __('global.file') }}</th>
+                <th>{{ __('global.created_at') }}</th>
+                <th width="190" class="text-center">{{ __('global.actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -16,8 +16,8 @@
                 <td>{{ $attachment->original_file_name }}</td>
                 <td>{{ $attachment->created_at->format('d.m.Y. @ H:i:s') }}</td>
                 <td>
-                    <a href="{{ $attachment->getURL() }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> View</a>
-                    <a href="{{ route('admin.attachments.destroy', ['attachment' => $attachment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ $attachment->getURL() }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> {{ __('global.view') }}</a>
+                    <a href="{{ route('admin.attachments.destroy', ['attachment' => $attachment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> {{ __('global.delete') }}</a>
                 </td>
             </tr>
             @endforeach

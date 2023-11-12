@@ -65,7 +65,7 @@ class BookController extends Controller
 
         return redirect()
             ->route('admin.books.edit', ['book' => $book])
-            ->withSuccess('Book successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ class BookController extends Controller
 
         return redirect()
             ->route('admin.books.edit', ['book' => $book])
-            ->withSuccess('Book successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -111,7 +111,7 @@ class BookController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Book successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

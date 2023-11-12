@@ -1,13 +1,13 @@
-<x-admin.layout title="Gallery" route="admin.gallery_images.index">
+<x-admin.layout route="admin.gallery_images.index">
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-title">
                     <h3 class="text-primary">
-                        <em class="fa fa-list"></em> Gallery
+                        <em class="fa fa-list"></em> {{ __('global.gallery') }}
                         <div class="dt-buttons float-right">
-                            <a class="btn btn-success" href="{{ route('admin.gallery_images.create') }}"><i class="fa fa-plus"></i> Add</a>
+                            <a class="btn btn-success" href="{{ route('admin.gallery_images.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                         </div>
                     </h3>
                 </div>
@@ -17,10 +17,10 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th class="text-center" width="90">Remarks</th>
-                                    <th>Title</th>
-                                    <th>Created at</th>
-                                    <th width="150" class="text-center">Actions</th>
+                                    <th class="text-center" width="90">{{ __('global.remarks') }}</th>
+                                    <th>{{ __('global.title') }}</th>
+                                    <th>{{ __('global.created_at') }}</th>
+                                    <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,8 +33,8 @@
                                     <td>{{ $image->title }}</td>
                                     <td>{{ $image->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.gallery_images.edit',    ['gallery_image' => $image]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="{{ route('admin.gallery_images.destroy', ['gallery_image' => $image]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  Delete</a>
+                                        <a href="{{ route('admin.gallery_images.edit',    ['gallery_image' => $image]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
+                                        <a href="{{ route('admin.gallery_images.destroy', ['gallery_image' => $image]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

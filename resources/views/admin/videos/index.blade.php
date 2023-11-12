@@ -1,13 +1,13 @@
-<x-admin.layout title="Videos" route="admin.videos.index">
+<x-admin.layout route="admin.videos.index">
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-title">
                     <h3 class="text-primary">
-                        <em class="fa fa-list"></em> Videos
+                        <em class="fa fa-list"></em> {{ __('global.videos') }}
                         <div class="dt-buttons float-right">
-                            <a class="btn btn-success" href="{{ route('admin.videos.create') }}"><i class="fa fa-plus"></i> Create</a>
+                            <a class="btn btn-success" href="{{ route('admin.videos.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                         </div>
                     </h3>
                 </div>
@@ -17,13 +17,13 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th width="50" class="text-center">Public</th>
-                                    <th class="text-center" width="90">Remarks</th>
-                                    <th>Title</th>
-                                    <th>Summary</th>
-                                    <th>Publish date</th>
-                                    <th>Created at</th>
-                                    <th width="150" class="text-center">Actions</th>
+                                    <th width="50" class="text-center">{{ __('global.public') }}</th>
+                                    <th class="text-center" width="90">{{ __('global.remarks') }}</th>
+                                    <th>{{ __('global.title') }}</th>
+                                    <th>{{ __('global.summary') }}</th>
+                                    <th width="170" class="text-center">{{ __('global.publish_date') }}</th>
+                                    <th width="220">{{ __('global.created_at') }}</th>
+                                    <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,16 +37,16 @@
                                         <x-admin.remarks :object="$video" />
                                     </td>
                                     <td>{{ $video->title }}</td>
-                                    <td>{{ Str::of($video->summary)->stripTags()->limit(60) }}</td>
-                                    <td>
+                                    <td>{{ Str::of($video->summary)->stripTags()->limit(50) }}</td>
+                                    <td class="text-center">
                                         @if ($video->publish_date)
                                             {{ $video->publish_date->format('d.m.Y.') }}
                                         @endif
                                     </td>
                                     <td>{{ $video->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.videos.edit',    ['video' => $video]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="{{ route('admin.videos.destroy', ['video' => $video]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  Delete</a>
+                                        <a href="{{ route('admin.videos.edit',    ['video' => $video]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
+                                        <a href="{{ route('admin.videos.destroy', ['video' => $video]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

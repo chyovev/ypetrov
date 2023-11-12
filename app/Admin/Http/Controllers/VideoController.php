@@ -42,7 +42,7 @@ class VideoController extends Controller
 
         return redirect()
             ->route('admin.videos.edit', ['video' => $video])
-            ->withSuccess('Video successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ class VideoController extends Controller
 
         return redirect()
             ->route('admin.videos.edit', ['video' => $video])
-            ->withSuccess('Video successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ class VideoController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Video successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

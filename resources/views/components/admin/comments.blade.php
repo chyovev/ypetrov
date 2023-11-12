@@ -1,7 +1,7 @@
 @if ($object->exists)
 <div class="card">
     <div class="card-title">
-        <h3 class="text-primary"><em class="fa fa-comments"></em> Comments</h3>
+        <h3 class="text-primary"><em class="fa fa-comments"></em> {{ __('global.comments') }}</h3>
     </div>
     <div class="card-body">
 
@@ -21,11 +21,11 @@
                 </div>
                 
                 <div class="col-lg-1 text-right">
-                    <a href="{{ route('admin.comments.destroy', ['comment' => $comment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="{{ route('admin.comments.destroy', ['comment' => $comment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> {{ __('global.delete') }}</a>
                 </div>
             </div>
         @empty
-            <div class="form-group-row text-center">No comments added yet.</div>
+            <div class="form-group-row text-center">{{ __('global.no_comments') }}</div>
         @endforelse
     </div>
 </div>

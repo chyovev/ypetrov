@@ -42,7 +42,7 @@ class GalleryImageController extends Controller
 
         return redirect()
             ->route('admin.gallery_images.edit', ['gallery_image' => $galleryImage])
-            ->withSuccess('GalleryImage successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ class GalleryImageController extends Controller
 
         return redirect()
             ->route('admin.gallery_images.edit', ['gallery_image' => $galleryImage])
-            ->withSuccess('Image successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ class GalleryImageController extends Controller
 
         return redirect()
             ->back()
-            ->withSuccess('Image successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
 }

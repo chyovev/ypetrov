@@ -1,11 +1,11 @@
-<x-admin.layout title="Contact Messages" route="admin.contact_messages.index">
+<x-admin.layout route="admin.contact_messages.index">
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-title">
                     <h3 class="text-primary">
-                        <em class="fa fa-list"></em> Contact Messages
+                        <em class="fa fa-list"></em> {{ __('global.contact_messages') }}
                     </h3>
                 </div>
                 <div class="card-body">
@@ -15,12 +15,12 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">ID</th>
-                                    <th>Name</th>
-                                    <th>E-mail</th>
-                                    <th>Message</th>
-                                    <th>Country</th>
-                                    <th>Created at</th>
-                                    <th width="160" class="text-center">Actions</th>
+                                    <th>{{ __('global.name') }}</th>
+                                    <th>{{ __('global.email') }}</th>
+                                    <th>{{ __('global.message') }}</th>
+                                    <th>{{ __('global.country') }}</th>
+                                    <th>{{ __('global.created_at') }}</th>
+                                    <th width="190" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,8 +35,8 @@
                                     </td>
                                     <td>{{ $message->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.contact_messages.show',    ['contact_message' => $message]) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> View</a>
-                                        <a href="{{ route('admin.contact_messages.destroy', ['contact_message' => $message]) }}" class="btn btn-danger  btn-sm confirm-delete"><i class="fa fa-trash"></i> Delete</a>
+                                        <a href="{{ route('admin.contact_messages.show',    ['contact_message' => $message]) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> {{ __('global.view') }}</a>
+                                        <a href="{{ route('admin.contact_messages.destroy', ['contact_message' => $message]) }}" class="btn btn-danger  btn-sm confirm-delete"><i class="fa fa-trash"></i> {{ __('global.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

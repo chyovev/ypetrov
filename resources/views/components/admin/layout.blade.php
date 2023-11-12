@@ -67,6 +67,8 @@
         @csrf
     </form>
 
+    <x-admin.javascript />
+    
     <script src="{{ asset('admin/js/lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/bootstrap/js/popper.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/bootstrap/js/bootstrap.min.js') }}"></script>

@@ -1,5 +1,5 @@
 @php
-$title = $user->exists ? 'Update user'      : 'Create user';
+$title = $user->exists ? __('global.edit')  : __('global.create');
 $route = $user->exists ? 'admin.users.edit' : 'admin.users.create';
 $param = $user->exists ? $user              : null;
 @endphp
@@ -24,7 +24,7 @@ $param = $user->exists ? $user              : null;
                             @endif
 
                             <div class="form-group row @error('name') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="val-name">Name <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="val-name">{{ __('global.name') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="name" class="form-control input-default" value="{{ old('name', $user->name) }}" />
                                     @error('name')
@@ -34,7 +34,7 @@ $param = $user->exists ? $user              : null;
                             </div>
 
                             <div class="form-group row @error('email') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="val-email">E-mail <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="val-email">{{ __('global.email') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="email" class="form-control input-default" value="{{ old('email', $user->email) }}" />
                                     @error('email')
@@ -44,7 +44,7 @@ $param = $user->exists ? $user              : null;
                             </div>
 
                             <div class="form-group row @error('password') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="val-password">Password <span class="text-danger @if ($user->exists) d-none @endif">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="val-password">{{ __('global.password') }} <span class="text-danger @if ($user->exists) d-none @endif">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="password" name="password" class="form-control input-default" />
                                     @error('password')
@@ -55,8 +55,8 @@ $param = $user->exists ? $user              : null;
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a href="{{ route('admin.users.index') }}" class="btn btn-inverse">Cancel</a>
+                                    <button type="submit" class="btn btn-primary"><em class="fa fa-save"></em> {{ __('global.submit') }}</button>
+                                    <a href="{{ route('admin.users.index') }}" class="btn btn-inverse"><em class="fa fa-reply"></em> {{ __('global.cancel') }}</a>
                                 </div>
                             </div>
                         </form>

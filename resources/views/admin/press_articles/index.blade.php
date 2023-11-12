@@ -1,13 +1,13 @@
-<x-admin.layout title="Press Articles" route="admin.press_articles.index">
+<x-admin.layout route="admin.press_articles.index">
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-title">
                     <h3 class="text-primary">
-                        <em class="fa fa-list"></em> Press Articles
+                        <em class="fa fa-list"></em> {{ __('global.press_articles') }}
                         <div class="dt-buttons float-right">
-                            <a class="btn btn-success" href="{{ route('admin.press_articles.create') }}"><i class="fa fa-plus"></i> Create</a>
+                            <a class="btn btn-success" href="{{ route('admin.press_articles.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                         </div>
                     </h3>
                 </div>
@@ -18,12 +18,12 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th width="50" class="text-center">Public</th>
-                                    <th class="text-center" width="90">Remarks</th>
-                                    <th>Title</th>
-                                    <th>Text</th>
-                                    <th>Created at</th>
-                                    <th width="150" class="text-center">Actions</th>
+                                    <th width="50" class="text-center">{{ __('global.public') }}</th>
+                                    <th class="text-center" width="90">{{ __('global.remarks') }}</th>
+                                    <th>{{ __('global.title') }}</th>
+                                    <th>{{ __('global.text') }}</th>
+                                    <th>{{ __('global.created_at') }}</th>
+                                    <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,8 +40,8 @@
                                     <td>{{ Str::of($pressArticle->text)->stripTags()->limit(60) }}</td>
                                     <td>{{ $pressArticle->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.press_articles.edit',    ['press_article' => $pressArticle]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="{{ route('admin.press_articles.destroy', ['press_article' => $pressArticle]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  Delete</a>
+                                        <a href="{{ route('admin.press_articles.edit',    ['press_article' => $pressArticle]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
+                                        <a href="{{ route('admin.press_articles.destroy', ['press_article' => $pressArticle]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

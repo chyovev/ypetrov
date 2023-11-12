@@ -1,5 +1,5 @@
 @php
-$title = $essay->exists ? 'Update essay'      : 'Create essay';
+$title = $essay->exists ? __('global.edit')   : __('global.create');
 $route = $essay->exists ? 'admin.essays.edit' : 'admin.essays.create';
 $param = $essay->exists ? $essay              : null;
 @endphp
@@ -24,7 +24,7 @@ $param = $essay->exists ? $essay              : null;
                             @endif
 
                             <div class="form-group row @error('is_active') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="is_active">Public <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="is_active">{{ __('global.public') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="hidden"   name="is_active" value="0" />
                                     <input type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $essay->is_active)) />
@@ -35,7 +35,7 @@ $param = $essay->exists ? $essay              : null;
                             </div>
 
                             <div class="form-group row @error('title') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="title">Title <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="title"> {{ __('global.title') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="title" id="title" class="form-control input-default" value="{{ old('title', $essay->title) }}" />
                                     @error('title')
@@ -45,7 +45,7 @@ $param = $essay->exists ? $essay              : null;
                             </div>
 
                             <div class="form-group row @error('slug') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="slug">URL identificator <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="slug">{{ __('global.slug') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="slug" id="slug" class="form-control input-default" value="{{ old('slug', $essay->slug) }}" />
                                     @error('slug')
@@ -55,7 +55,7 @@ $param = $essay->exists ? $essay              : null;
                             </div>
 
                             <div class="form-group row @error('text') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="chartdiv3">Text <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="chartdiv3">{{ __('global.text') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <textarea name="text" id="chartdiv3" class="textarea_editor form-control" rows="15">{!! old('text', $essay->text) !!}</textarea>
                                     @error('text')
@@ -68,8 +68,8 @@ $param = $essay->exists ? $essay              : null;
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a href="{{ route('admin.essays.index') }}" class="btn btn-inverse">Cancel</a>
+                                    <button type="submit" class="btn btn-primary"><em class="fa fa-save"></em> {{ __('global.submit') }}</button>
+                                    <a href="{{ route('admin.essays.index') }}" class="btn btn-inverse"><em class="fa fa-reply"></em> {{ __('global.cancel') }}</a>
                                 </div>
                             </div>
                         </form>

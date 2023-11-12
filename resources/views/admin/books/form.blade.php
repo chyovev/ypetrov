@@ -1,5 +1,5 @@
 @php
-$title = $book->exists ? 'Update book'      : 'Create book';
+$title = $book->exists ? __('global.edit')  : __('global.create');
 $route = $book->exists ? 'admin.books.edit' : 'admin.books.create';
 $param = $book->exists ? $book              : null;
 @endphp
@@ -24,7 +24,7 @@ $param = $book->exists ? $book              : null;
                             @endif
 
                             <div class="form-group row @error('is_active') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="is_active">Public <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="is_active">{{ __('global.public') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="hidden"   name="is_active" value="0" />
                                     <input type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $book->is_active)) />
@@ -35,7 +35,7 @@ $param = $book->exists ? $book              : null;
                             </div>
 
                             <div class="form-group row @error('title') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="title">Title <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="title"> {{ __('global.title') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="title" id="title" class="form-control input-default" value="{{ old('title', $book->title) }}" />
                                     @error('title')
@@ -45,7 +45,7 @@ $param = $book->exists ? $book              : null;
                             </div>
 
                             <div class="form-group row @error('slug') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="slug">URL identificator <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="slug">{{ __('global.slug') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     <input type="text" name="slug" id="slug" class="form-control input-default" value="{{ old('slug', $book->slug) }}" />
                                     @error('slug')
@@ -55,7 +55,7 @@ $param = $book->exists ? $book              : null;
                             </div>
 
                             <div class="form-group row @error('publisher') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="publisher">Publisher</label>
+                                <label class="col-lg-3 col-form-label text-right" for="publisher">{{ __('global.publisher') }}</label>
                                 <div class="col-lg-8">
                                     <input type="text" name="publisher" id="publisher" class="form-control input-default" value="{{ old('publisher', $book->publisher) }}" />
                                     @error('publisher')
@@ -65,7 +65,7 @@ $param = $book->exists ? $book              : null;
                             </div>
 
                             <div class="form-group row @error('publish_year') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="publish_year">Publish year</label>
+                                <label class="col-lg-3 col-form-label text-right" for="publish_year">{{ __('global.publish_year') }}</label>
                                 <div class="col-lg-8">
                                     <input type="text" name="publish_year" id="publish_year" class="form-control input-default datepicker" data-date-min-view-mode="2" data-date-max-view-mode="2" data-date-format="yyyy" value="{{ old('publish_year', $book->publish_year) }}" />
                                     @error('publish_year')
@@ -75,7 +75,7 @@ $param = $book->exists ? $book              : null;
                             </div>
 
                             <div class="form-group row @error('poems') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right">Poems</label>
+                                <label class="col-lg-3 col-form-label text-right">{{ __('global.poems') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     {{-- when editing a book, use the current poem set --}}
                                     {{-- if the validation has failed though, use old values --}}
@@ -98,8 +98,8 @@ $param = $book->exists ? $book              : null;
 
                             <div class="form-group row">
                                 <div class="col-lg-9 ml-auto">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a href="{{ route('admin.books.index') }}" class="btn btn-inverse">Cancel</a>
+                                    <button type="submit" class="btn btn-primary"><em class="fa fa-save"></em> {{ __('global.submit') }}</button>
+                                    <a href="{{ route('admin.books.index') }}" class="btn btn-inverse"><em class="fa fa-reply"></em> {{ __('global.cancel') }}</a>
                                 </div>
                             </div>
                         </form>

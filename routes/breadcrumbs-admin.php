@@ -2,25 +2,25 @@
 
 // Home
 Breadcrumbs::for('admin.home', function ($trail) {
-    $trail->push('Home', route('admin.home'));
+    $trail->push(__('global.home'), route('admin.home'));
 });
 
 // Home > Dashboard
 Breadcrumbs::for('admin.dashboard', function ($trail) {
-    $trail->push('Home', route('admin.home'));
-    $trail->push('Dashboard');
+    $trail->parent('admin.home');
+    $trail->push(__('global.dashboard'));
 });
 
 // Home > Users
 Breadcrumbs::for('admin.users.index', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Users', route('admin.users.index'));
+    $trail->push(__('global.users'), route('admin.users.index'));
 });
 
 // Home > Users > Create
 Breadcrumbs::for('admin.users.create', function ($trail, $user) {
     $trail->parent('admin.users.index');
-    $trail->push('Create', route('admin.users.create'));
+    $trail->push(__('global.create'), route('admin.users.create'));
 });
 
 // Home > Users > [User]
@@ -32,7 +32,7 @@ Breadcrumbs::for('admin.users.edit', function ($trail, $user) {
 // Home > Contact Messages
 Breadcrumbs::for('admin.contact_messages.index', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Contact Messages', route('admin.contact_messages.index'));
+    $trail->push(__('global.contact_messages'), route('admin.contact_messages.index'));
 });
 
 // Home > Contact Messages > [Message]
@@ -44,19 +44,19 @@ Breadcrumbs::for('admin.contact_messages.show', function ($trail, $message) {
 // Home > Works
 Breadcrumbs::for('admin.works', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Works', null);
+    $trail->push(__('global.works'), null);
 });
 
 // Home > Works > Poems
 Breadcrumbs::for('admin.poems.index', function ($trail) {
     $trail->parent('admin.works');
-    $trail->push('Poems', route('admin.poems.index'));
+    $trail->push(__('global.poems'), route('admin.poems.index'));
 });
 
 // Home > Works > Poems > Create
 Breadcrumbs::for('admin.poems.create', function ($trail) {
     $trail->parent('admin.poems.index');
-    $trail->push('Create', route('admin.poems.create'));
+    $trail->push(__('global.create'), route('admin.poems.create'));
 });
 
 // Home > Works > Poems > [Poem]
@@ -68,13 +68,13 @@ Breadcrumbs::for('admin.poems.edit', function ($trail, $poem) {
 // Home > Works > Books
 Breadcrumbs::for('admin.books.index', function ($trail) {
     $trail->parent('admin.works');
-    $trail->push('Books', route('admin.books.index'));
+    $trail->push(__('global.books'), route('admin.books.index'));
 });
 
 // Home > Works > Books > Create
 Breadcrumbs::for('admin.books.create', function ($trail) {
     $trail->parent('admin.books.index');
-    $trail->push('Create', route('admin.books.create'));
+    $trail->push(__('global.create'), route('admin.books.create'));
 });
 
 // Home > Works > Books > [Book]
@@ -86,13 +86,13 @@ Breadcrumbs::for('admin.books.edit', function ($trail, $book) {
 // Home > Essays
 Breadcrumbs::for('admin.essays.index', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Essays', route('admin.essays.index'));
+    $trail->push(__('global.essays'), route('admin.essays.index'));
 });
 
 // Home > Essays > Create
 Breadcrumbs::for('admin.essays.create', function ($trail) {
     $trail->parent('admin.essays.index');
-    $trail->push('Create', route('admin.essays.create'));
+    $trail->push(__('global.create'), route('admin.essays.create'));
 });
 
 // Home > Essays > [Essay]
@@ -104,13 +104,13 @@ Breadcrumbs::for('admin.essays.edit', function ($trail, $essay) {
 // Home > Press Articles
 Breadcrumbs::for('admin.press_articles.index', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Press Articles', route('admin.press_articles.index'));
+    $trail->push(__('global.press_articles'), route('admin.press_articles.index'));
 });
 
 // Home > Press Articles > Create
 Breadcrumbs::for('admin.press_articles.create', function ($trail) {
     $trail->parent('admin.press_articles.index');
-    $trail->push('Create', route('admin.press_articles.create'));
+    $trail->push(__('global.create'), route('admin.press_articles.create'));
 });
 
 // Home > Press Articles > [Press Article]
@@ -122,13 +122,13 @@ Breadcrumbs::for('admin.press_articles.edit', function ($trail, $pressArticle) {
 // Home > Videos
 Breadcrumbs::for('admin.videos.index', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Videos', route('admin.videos.index'));
+    $trail->push(__('global.videos'), route('admin.videos.index'));
 });
 
 // Home > Videos > Create
 Breadcrumbs::for('admin.videos.create', function ($trail) {
     $trail->parent('admin.videos.index');
-    $trail->push('Create', route('admin.videos.create'));
+    $trail->push(__('global.create'), route('admin.videos.create'));
 });
 
 // Home > Videos > [Video]
@@ -140,13 +140,13 @@ Breadcrumbs::for('admin.videos.edit', function ($trail, $video) {
 // Home > Gallery
 Breadcrumbs::for('admin.gallery_images.index', function ($trail) {
     $trail->parent('admin.home');
-    $trail->push('Gallery', route('admin.gallery_images.index'));
+    $trail->push(__('global.gallery'), route('admin.gallery_images.index'));
 });
 
 // Home > Gallery > Create
 Breadcrumbs::for('admin.gallery_images.create', function ($trail) {
     $trail->parent('admin.gallery_images.index');
-    $trail->push('Create', route('admin.gallery_images.create'));
+    $trail->push(__('global.create'), route('admin.gallery_images.create'));
 });
 
 // Home > Gallery > [Image]

@@ -1,13 +1,13 @@
-<x-admin.layout title="Books" route="admin.books.index">
+<x-admin.layout route="admin.books.index">
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-title">
                     <h3 class="text-primary">
-                        <em class="fa fa-list"></em> Books
+                        <em class="fa fa-list"></em> {{ __('global.books') }}
                         <div class="dt-buttons float-right">
-                            <a class="btn btn-success" href="{{ route('admin.books.create') }}"><i class="fa fa-plus"></i> Create</a>
+                            <a class="btn btn-success" href="{{ route('admin.books.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                         </div>
                     </h3>
                 </div>
@@ -17,14 +17,14 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th width="50" class="text-center">Public</th>
-                                    <th class="text-center" width="90">Remarks</th>
-                                    <th>Title</th>
-                                    <th>Publisher</th>
-                                    <th class="text-center">Publish year</th>
-                                    <th class="text-center">Poems</th>
-                                    <th>Created at</th>
-                                    <th width="150" class="text-center">Actions</th>
+                                    <th width="50" class="text-center">{{ __('global.public') }}</th>
+                                    <th class="text-center" width="90">{{ __('global.remarks') }}</th>
+                                    <th>{{ __('global.title') }}</th>
+                                    <th>{{ __('global.publisher') }}</th>
+                                    <th class="text-center">{{ __('global.publish_year') }}</th>
+                                    <th class="text-center">{{ __('global.poems') }}</th>
+                                    <th>{{ __('global.created_at') }}</th>
+                                    <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,8 +43,8 @@
                                     <td class="text-center">{{ $book->poems_count }}</td>
                                     <td>{{ $book->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.books.edit',    ['book' => $book]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="{{ route('admin.books.destroy', ['book' => $book]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  Delete</a>
+                                        <a href="{{ route('admin.books.edit',    ['book' => $book]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
+                                        <a href="{{ route('admin.books.destroy', ['book' => $book]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>
                                     </td>
                                 </tr>
                                 @endforeach

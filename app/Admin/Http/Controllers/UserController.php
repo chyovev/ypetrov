@@ -39,7 +39,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('admin.users.edit', ['user' => $user])
-            ->withSuccess('User successfully created!');
+            ->withSuccess(__('global.creation_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ class UserController extends Controller
 
         return redirect()
             ->route('admin.users.edit', ['user' => $user])
-            ->withSuccess('User successfully updated!');
+            ->withSuccess(__('global.edit_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -70,14 +70,14 @@ class UserController extends Controller
      */
     public function destroy(User $user) {
         if ($this->isTryingToDeleteSelf($user)) {
-            return back()->withErrors('You cannot delete yourself!');
+            return back()->withErrors(__('global.cannot_delete_self'));
         }
 
         $user->delete();
 
         return redirect()
             ->back()
-            ->withSuccess('User successfully deleted!');
+            ->withSuccess(__('global.delete_successful'));
     }
 
     ///////////////////////////////////////////////////////////////////////////
