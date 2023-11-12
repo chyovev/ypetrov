@@ -40,14 +40,8 @@
         <!-- Page wrapper  -->
         <div class="page-wrapper">
             <!-- Bread crumb -->
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-primary">{{ $title }}</h3>
-                </div>
-
-                <div class="col-md-7 align-self-center">
-                    <x-admin.breadcrumbs :$route :param="isset($param) ? $param : null" />
-                </div>
+            <div class="row page-titles p-l-30">
+                <x-admin.breadcrumbs :$route :param="isset($param) ? $param : null" />
             </div>
 
             <!-- End Bread crumb -->

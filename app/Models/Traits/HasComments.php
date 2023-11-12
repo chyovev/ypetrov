@@ -25,11 +25,15 @@ trait HasComments
     /**
      * Each commentable object can have multiple comments
      * and all comments are stored in a polymorphic table.
+     * When fetched, by default the comments are ordered
+     * from newest to oldest in a descending order.
      * 
      * @return MorphMany
      */
     public function comments(): MorphMany {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this
+            ->morphMany(Comment::class, 'commentable')
+            ->latest('id');
     }
 
     ///////////////////////////////////////////////////////////////////////////

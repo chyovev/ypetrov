@@ -8,6 +8,9 @@ $param = $video->exists ? $video              : null;
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
+                <div class="card-title">
+                    <h3 class="text-primary"><em class="fa fa-pencil-square-o"></em> {{ $title }}</h3>
+                </div>
                 <div class="card-body">
                     <div class="form-validation">
                     @php
@@ -87,6 +90,8 @@ $param = $video->exists ? $video              : null;
                     </div>
                 </div>
             </div>
+
+            <x-admin.comments :object="$video" />
         </div>
     </div>
 

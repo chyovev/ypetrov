@@ -39,7 +39,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label text-right">Message</label>
                             <div class="col-lg-8 m-t-8">
-                                <p class="form-control-static">{!! nl2br(e($message->message)) !!}}</p>
+                                <p class="form-control-static">{!! nl2br(e($message->message)) !!}</p>
                             </div>
                         </div>
 

@@ -3,6 +3,7 @@
 use App\Admin\Http\Controllers\AttachmentController;
 use App\Admin\Http\Controllers\AuthController;
 use App\Admin\Http\Controllers\BookController;
+use App\Admin\Http\Controllers\CommentController;
 use App\Admin\Http\Controllers\ContactMessageController;
 use App\Admin\Http\Controllers\GalleryImageController;
 use App\Admin\Http\Controllers\EssayController;
@@ -34,4 +35,5 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('videos',           VideoController::class)->except(['show']);
     Route::name('admin')->resource('gallery_images',   GalleryImageController::class)->except(['show']);
     Route::name('admin')->resource('attachments',      AttachmentController::class)->only('destroy');
+    Route::name('admin')->resource('comments',         CommentController::class)->only('destroy');
 });

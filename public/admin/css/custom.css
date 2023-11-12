@@ -6,3 +6,7 @@
 .table-condensed > tfoot > tr > td {
     padding: 5px;
 }
+
+.underline-dashed {
+    border-bottom: 1px dashed grey;
+}
