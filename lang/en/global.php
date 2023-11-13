@@ -38,6 +38,7 @@ return [
     'object_has_attachments' => 'Object has :count attachment(s)',
     'object_has_comments'    => 'Object has :count comment(s)',
     'password'               => 'Password',
+    'password_confirmation'  => 'Password confirmation',
     'poems'                  => 'Poems',
     'press_articles'         => 'Press Articles',
     'preview'                => 'Preview',

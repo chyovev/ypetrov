@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +46,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * When the user resets their password, their remember token
+     * should also be updated, and a password reset event should
+     * be triggered.
+     * 
+     * NB! The password is passed as a raw string, but it
+     *     gets automatically hashed as it is declared as
+     *     a hashed cast field.
+     * 
+     * @see \App\Admin\Http\Requests\Auth\ResetPasswordRequest
+     * 
+     * @param  string $password – new password
+     * @return void
+     */
+    public function resetPassword(string $password): void {
+        $this
+            ->forceFill(['password' => $password])
+            ->setRememberToken(Str::random(60));
+
+        $this->save();
+
+        event(new PasswordReset($this));
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**

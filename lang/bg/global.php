@@ -38,6 +38,7 @@ return [
     'object_has_attachments' => 'Прикачени файлове към елемента: :count',
     'object_has_comments'    => 'Коментари към елемента: :count',
     'password'               => 'Парола',
+    'password_confirmation'  => 'Потвърждение на паролата',
     'poems'                  => 'Стихотворения',
     'press_articles'         => 'Извадки от пресата',
     'preview'                => 'Преглед',

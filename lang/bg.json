@@ -1,0 +1,7 @@
+{
+    "Reset Password Notification": "Възстановяване на парола",
+    "You are receiving this email because we received a password reset request for your account.": "Този имейл Ви е изпратен, тъй като получихме заявка за възстановяване на забравена парола за този имейл адрес.",
+    "Reset Password": "Възстановяване на парола",
+    "This password reset link will expire in :count minutes.": "Линкът за възстановяване ще е валиден още :count минути.",
+    "If you did not request a password reset, no further action is required.": "Ако не сте изпращали подобно запитване, просто игнорирайте настоящия имейл."
+}

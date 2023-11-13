@@ -2,12 +2,13 @@
 
 namespace App\Admin\Http\Requests\Auth;
 
-use Exception;
+use App\Models\User;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 
-class ForgotPasswordRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
 
     ///////////////////////////////////////////////////////////////////////////
@@ -24,47 +25,48 @@ class ForgotPasswordRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      * 
-     * NB! There's no need to use the 'exists' rule since the underlying
-     *     password broker will automatically perform that check.
-     *
      * @return array<string,\Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array {
         return [
+            'token' => [
+                'required',
+            ],
             'email' => [
                 'required',
                 'email',
+            ],
+            'password' => [
+                'required',
+                PasswordRule::defaults(),
+                'confirmed',
             ],
         ];
     }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Try to send a password reset link to the user.
+     * Try to reset the user's password.
      * Under normal circumstances the response from the password broker
-     * should be RESET_LINK_SENT. In any other case (e.g. no such user,
-     * too many requests, etc.), the broker would return another string
+     * should be PASSWORD_RESET. In any other case (e.g. no such user,
+     * token has expired, etc.), the broker would return another string
      * which should be used as a validation error.
      * 
-     * NB! If an actual exception gets thrown during the sending of
-     *     the reset link (such as no connection to SMTP server),
-     *     it should be caught and reported, and the end user should
-     *     be served a generic error message.
-     * 
      * @throws ValidationException
+     * @return void
      */
-    public function sendResetLink(): void {
-        try {
-            $response = Password::sendResetLink(
-                $this->only('email')
-            );
-        }
-        catch (Exception $e) {
-            report($e);
-            $response = 'global.internal_error';
-        }
+    public function resetPassword(): void {
+        $credentials = $this->validated();
+        $callback    = function (User $user, string $password) {
+            $user->resetPassword($password);
+            
+            // automatically mark the user as logged in
+            auth('admin')->login($user);
+        };
 
-        if ($response !== Password::RESET_LINK_SENT) {
+        $response = Password::reset($credentials, $callback);
+
+        if ($response !== Password::PASSWORD_RESET) {
             throw ValidationException::withMessages(['email' => __($response)]);
         }
     }

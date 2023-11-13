@@ -20,6 +20,10 @@ Route::middleware(['guest:admin'])->group(function() {
 
     Route::view('/forgot-password', 'admin.auth.forgot_password')->name('admin.forgot_password');
     Route::post('/forgot-password', [AuthController::class, 'process_forgot_password_request']);
+
+    // route name should be compatible with the ResetPassword::resetUrl() method
+    Route::get('/reset-password',  [AuthController::class, 'show_reset_password_form'])->name('password.reset');
+    Route::post('/reset-password', [AuthController::class, 'process_reset_password_request']);
 });
 
 // routes which require a logged in user
