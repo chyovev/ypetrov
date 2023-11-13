@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 // routes which require no user to be logged in
 Route::middleware(['guest:admin'])->group(function() {
-    Route::view('/login', 'admin.login')->name('admin.login');
+    Route::view('/login', 'admin.auth.login')->name('admin.login');
     Route::post('/login',  [AuthController::class, 'process_login_request']);
+
+    Route::view('/forgot-password', 'admin.auth.forgot_password')->name('admin.forgot_password');
+    Route::post('/forgot-password', [AuthController::class, 'process_forgot_password_request']);
 });
 
 // routes which require a logged in user

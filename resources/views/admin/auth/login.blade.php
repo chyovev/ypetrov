@@ -24,7 +24,7 @@
             </label>
 
             <label class="pull-right">
-                <a href="#">{{ __('global.forgotten_password') }}</a>
+                <a href="{{ route('admin.forgot_password') }}">{{ __('global.forgotten_password') }}</a>
             </label>
         </div>
 

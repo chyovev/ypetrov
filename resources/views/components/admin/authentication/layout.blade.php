@@ -35,6 +35,11 @@
                         <div class="login-content card">
                             <div class="login-form">
 
+                                {{-- show the flash message only on success --}}
+                                @if (session()->has('success'))
+                                    <x-admin.flash/>
+                                @endif
+
                                 {{ $slot }}
                                 
                             </div>

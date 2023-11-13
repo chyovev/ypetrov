@@ -3,7 +3,8 @@
 namespace App\Admin\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
-use App\Admin\Http\Requests\LoginRequest;
+use App\Admin\Http\Requests\Auth\LoginRequest;
+use App\Admin\Http\Requests\Auth\ForgotPasswordRequest;
 
 class AuthController
 {
@@ -25,6 +26,21 @@ class AuthController
         return back()->withErrors(['email' => 'Email or password wrong'])->onlyInput('email');;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Send a reset link to the user who has forgotten their password.
+     * 
+     * @param  ForgotPasswordRequest $request – data validation
+     * @return RedirectResponse
+     */
+    public function process_forgot_password_request(ForgotPasswordRequest $request) {
+        $request->sendResetLink();
+
+        return redirect()
+            ->back()
+            ->withSuccess(__('passwords.sent'));
+    }
+    
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Endpoint to log out the currently logged in user
