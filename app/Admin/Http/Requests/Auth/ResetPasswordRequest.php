@@ -46,6 +46,20 @@ class ResetPasswordRequest extends FormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * The password reset link sent to the user contains the token
+     * as a query parameter. If the user deletes it manually (unlikely),
+     * the token's required validation rule can be a bit user-friendlier.
+     * 
+     * @return array<string,string>
+     */
+    public function messages(): array {
+        return [
+            'token.required' => __('global.missing_token'),
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * Try to reset the user's password.
      * Under normal circumstances the response from the password broker
      * should be PASSWORD_RESET. In any other case (e.g. no such user,
@@ -66,8 +80,12 @@ class ResetPasswordRequest extends FormRequest
 
         $response = Password::reset($credentials, $callback);
 
+        // if a validation error has occurred,
+        // display it under the proper field
         if ($response !== Password::PASSWORD_RESET) {
-            throw ValidationException::withMessages(['email' => __($response)]);
+            $field = ($response === Password::INVALID_USER) ? 'email' : 'token';
+
+            throw ValidationException::withMessages([$field => __($response)]);
         }
     }
 

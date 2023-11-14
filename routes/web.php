@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // temporarily redirect home page to CMS
+    return redirect()->route('admin.home');
 });

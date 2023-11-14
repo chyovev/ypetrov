@@ -16,3 +16,8 @@
 .pre {
     white-space: pre;
 }
+.absolute-top-right {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}

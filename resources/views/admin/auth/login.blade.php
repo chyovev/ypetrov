@@ -2,6 +2,11 @@
     <form method="post" action="{{ route('admin.login') }}">
         @csrf
 
+        <h3 class="text-center m-b-40">
+            <em class="fa fa-user-secret fa-5x d-block"></em>
+            {{ __('global.cms') }}
+        </h3>
+
         <div class="form-group @error('email') has-error has-feedback @enderror">
             <input type="text" name="email" class="form-control" placeholder="{{ __('global.email') }}" autofocus="true" />
 
@@ -24,7 +29,7 @@
             </label>
 
             <label class="pull-right">
-                <a href="{{ route('admin.forgot_password') }}">{{ __('global.forgotten_password') }}</a>
+                <a href="{{ route('admin.forgot_password') }}">{{ __('global.forgotten_password') }}?</a>
             </label>
         </div>
 
