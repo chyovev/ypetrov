@@ -74,21 +74,21 @@ $param = $book->exists ? $book              : null;
                                 </div>
                             </div>
 
-                            <div class="form-group row @error('poems') has-error has-feedback @enderror">
+                            <div class="form-group row @error('poem_id') has-error has-feedback @enderror">
                                 <label class="col-lg-3 col-form-label text-right">{{ __('global.poems') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
                                     {{-- when editing a book, use the current poem set --}}
                                     {{-- if the validation has failed though, use old values --}}
                                     @php
-                                        $selectedIds = old('poems', $book->poems->pluck('id')->toArray());
+                                        $selectedIds = old('poem_id', $book->poems->pluck('id')->toArray());
                                     @endphp
                                     
-                                    <select name="poems[]" class="multi-select" data-values-order="{{ implode(',', $selectedIds) }}" multiple>
+                                    <select name="poem_id[]" class="multi-select" data-values-order="{{ implode(',', $selectedIds) }}" multiple>
                                         @foreach ($poems as $poem)
                                             <option value="{{ $poem->id }}" @selected(in_array($poem->id, $selectedIds))>{{ $poem->title }}</option>
                                         @endforeach
                                     </select>
-                                    @error('poems')
+                                    @error('poem_id')
                                         <span class="invalid-feedback d-block">{{ $message }}</span>
                                     @enderror
                                 </div>

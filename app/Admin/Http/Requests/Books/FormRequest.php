@@ -36,8 +36,8 @@ class FormRequest extends HttpFormRequest
             'slug'         => $this->getSlugRules(),
             'publisher'    => $this->getPublisherRules(),
             'publish_year' => $this->getPublishYearRules(),
-            'poems'        => $this->getPoemsRules(),
-            'poems.*'      => $this->getPoemsElementsRules(),
+            'poem_id'      => $this->getPoemsRules(),
+            'poem_id.*'    => $this->getPoemsElementsRules(),
         ];
     }
 

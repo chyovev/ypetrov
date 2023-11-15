@@ -118,8 +118,8 @@
             return false;
         }
 
-        // if sweet-alert is parent, disallow
-        if ($(event.target).parents('.sweet-alert')) {
+        // if one of the ancestor is sweet-alert, disallow
+        if ($(event.target).parents('.sweet-alert').length) {
             return false;
         }
 
