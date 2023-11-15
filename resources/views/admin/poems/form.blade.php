@@ -98,12 +98,8 @@ $param = $poem->exists ? $poem              : null;
                             </div>
                             @endif
 
-                            <div class="form-group row">
-                                <div class="col-lg-9 ml-auto">
-                                    <button type="submit" class="btn btn-primary"><em class="fa fa-save"></em> {{ __('global.submit') }}</button>
-                                    <a href="{{ route('admin.poems.index') }}" class="btn btn-inverse"><em class="fa fa-reply"></em> {{ __('global.cancel') }}</a>
-                                </div>
-                            </div>
+                            <x-admin.form-submit-button />
+                            
                         </form>
                     </div>
                 </div>

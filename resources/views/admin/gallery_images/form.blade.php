@@ -35,12 +35,8 @@ $param = $galleryImage->exists ? $galleryImage              : null;
 
                             <x-admin.upload :object="$galleryImage" />
 
-                            <div class="form-group row">
-                                <div class="col-lg-9 ml-auto">
-                                    <button type="submit" class="btn btn-primary"><em class="fa fa-save"></em> {{ __('global.submit') }}</button>
-                                    <a href="{{ route('admin.gallery_images.index') }}" class="btn btn-inverse"><em class="fa fa-reply"></em> {{ __('global.cancel') }}</a>
-                                </div>
-                            </div>
+                            <x-admin.form-submit-button />
+
                         </form>
                     </div>
                 </div>

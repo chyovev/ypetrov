@@ -43,3 +43,8 @@
     clear: both;
     text-align: left; /* overwrite default sweet-alert center alignment */
 }
+
+.btn-default {
+    background-color: #99abb4;
+    color: white;
+}
