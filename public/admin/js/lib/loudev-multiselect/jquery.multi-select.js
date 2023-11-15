@@ -212,7 +212,8 @@
       }
 
       // option label
-      var label = that.escapeHTML($option.text());
+      var label = that.escapeHTML($option.text()),
+          title = that.escapeHTML($option.attr('title')) || label;
 
       // if the keepOrder setting is set to true, add a
       // handle allowing selectable row to be reordered
@@ -229,13 +230,13 @@
 
       selectableLi
         .data('ms-value', value)
-        .attr('title', label) // long labels are truncated, but should be visible via scope notes
+        .attr('title', title) // long titles are truncated, but should be visible via scope notes
         .addClass('ms-elem-selectable')
         .attr('id', elementId+'-selectable');
 
       selectedLi
         .data('ms-value', value)
-        .attr('title', label) // long labels are truncated, but should be visible via scope notes
+        .attr('title', title) // long titles are truncated, but should be visible via scope notes
         .addClass('ms-elem-selection')
         .attr('id', elementId+'-selection')
         .hide();

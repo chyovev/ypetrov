@@ -2,9 +2,9 @@
     <nav class="navbar top-navbar navbar-expand-md navbar-light">
         
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ route('admin.home') }}">
-                <b><img src="{{ asset('admin/images/logo.png') }}" alt="homepage" class="dark-logo" /></b>
-                <span><img src="{{ asset('admin/images/logo-text.png') }}" alt="homepage" class="dark-logo" /></span>
+            <a class="navbar-brand p-t-10 p-b-10 p-l-40 p-r-40" href="{{ route('admin.home') }}">
+                <strong>{{ config('app.name') }}</strong>
+                <span style="font-size: 50%; display: block">(1909 – 2004)</span>
             </a>
         </div>
 

@@ -5,7 +5,6 @@
 
     const DELETE_PROMPT = "{{ __('global.delete_prompt') }}",
           REORDER       = "{{ __('global.reorder') }}",
-          REODER_SUCCESS = "{{ __('global.reorder_successful') }}",
           YES           = "{{ __('global.yes') }}",
           SUBMIT        = "{{ __('global.submit') }}",
           SUCCESS       = "{{ __('global.success') }}",

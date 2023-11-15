@@ -42,6 +42,10 @@ class ReorderController extends Controller
             $order++;
         }
 
+        // set a flash message which will be shown
+        // as soon as the page gets reloaded
+        session()->flash('success', __('global.reorder_successful'));
+
         // return empty array as a OK response (HTTP code 200)
         return [];
     }

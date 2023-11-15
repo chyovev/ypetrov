@@ -1439,6 +1439,7 @@ textarea {
   }
   .navbar-header .navbar-brand {
     padding-top: 0;
+    line-height: initial;
   }
   .page-titles .breadcrumb {
     float: right;

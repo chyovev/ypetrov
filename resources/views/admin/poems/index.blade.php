@@ -22,7 +22,7 @@
                                     <th>{{ __('global.title') }}</th>
                                     <th>{{ __('global.text') }}</th>
                                     <th class="text-center">{{ __('global.books') }}</th>
-                                    <th>{{ __('global.created_at') }}</th>
+                                    <th width="240">{{ __('global.created_at') }}</th>
                                     <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
                             </thead>
@@ -37,7 +37,7 @@
                                         <x-admin.remarks :object="$poem" />
                                     </td>
                                     <td>{{ $poem->title }}</td>
-                                    <td>{{ Str::of($poem->text)->stripTags()->limit(60) }}</td>
+                                    <td>{{ Str::of($poem->text)->stripTags()->limit(50) }}</td>
                                     <td class="text-center">{{ $poem->books_count }}</td>
                                     <td>{{ $poem->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>

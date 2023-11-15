@@ -26,7 +26,7 @@ class AuthController
             return redirect()->route('admin.home');
         }
 
-        return back()->withErrors(['email' => 'Email or password wrong'])->onlyInput('email');;
+        return back()->withErrors(['email' => __('passwords.wrong')])->onlyInput('email');;
     }
 
     ///////////////////////////////////////////////////////////////////////////

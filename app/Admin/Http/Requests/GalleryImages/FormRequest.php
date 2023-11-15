@@ -37,7 +37,6 @@ class FormRequest extends HttpFormRequest
     ///////////////////////////////////////////////////////////////////////////
     private function getTitleRules(): array {
         return [
-            'required',
             'max:255',
         ];
     }

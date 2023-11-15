@@ -30,7 +30,7 @@ return new class extends Migration
         Schema::create('gallery_images', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_active')->default(false);
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->unsignedInteger('order')->default(0);
             $table->timestamps();
         });

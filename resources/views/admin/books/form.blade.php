@@ -85,7 +85,7 @@ $param = $book->exists ? $book              : null;
                                     
                                     <select name="poem_id[]" class="multi-select" data-values-order="{{ implode(',', $selectedIds) }}" multiple>
                                         @foreach ($poems as $poem)
-                                            <option value="{{ $poem->id }}" @selected(in_array($poem->id, $selectedIds))>{{ $poem->title }}</option>
+                                            <option value="{{ $poem->id }}" title="{{  Str::of($poem->text)->stripTags()->squish()->limit(100)->trim() }}" @selected(in_array($poem->id, $selectedIds))>{{ $poem->title }}</option>
                                         @endforeach
                                     </select>
                                     @error('poem_id')

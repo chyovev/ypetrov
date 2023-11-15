@@ -31,7 +31,7 @@
                                     <td class="text-center">
                                         <x-admin.remarks :object="$image" />
                                     </td>
-                                    <td>{{ $image->title }}</td>
+                                    <td>{{ Str::of($image->title)->stripTags()->limit(70) }}</td>
                                     <td>{{ $image->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.gallery_images.edit',    ['gallery_image' => $image]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
