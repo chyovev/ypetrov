@@ -43,4 +43,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('gallery_images',   GalleryImageController::class)->except(['show']);
     Route::name('admin')->resource('attachments',      AttachmentController::class)->only('destroy');
     Route::name('admin')->resource('comments',         CommentController::class)->only('destroy');
+
+    // the following tables can be reordered
+    Route::reorder(['books', 'essays', 'press_articles', 'videos', 'gallery_images']);
 });

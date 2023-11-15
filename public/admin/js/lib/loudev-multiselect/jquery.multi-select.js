@@ -76,9 +76,7 @@
           that.select($(this).data('ms-value'));
         });
         that.$selectionUl.on(action, '.ms-elem-selection', function(e){
-            // if the click event is taking place on the
-            // handle icon, don't trigger the deselect method
-            if ( ! $(e.target).hasClass('ms-handle')) {
+            if (that.canElementBeDeselected(e)) {
                 that.deselect($(this).data('ms-value'));
             }
         });
@@ -102,6 +100,31 @@
       if (typeof that.options.afterInit === 'function') {
         that.options.afterInit.call(this, this.$container);
       }
+    },
+
+    /**
+     * Normally all selected elements can be deselected
+     * unless the click event is on the handle (which
+     * is used for reordering) OR if the multi-select
+     * is within the confines of a sweet-alert pop-up
+     * in which case it is being used solely for
+     * reordering, so no deselecting is allowed.
+     * 
+     * @param {Event} event 
+     */
+    'canElementBeDeselected': function(event) {
+        // if click on handle, disallow
+        if ($(event.target).hasClass('ms-handle')) {
+            return false;
+        }
+
+        // if sweet-alert is parent, disallow
+        if ($(event.target).parents('.sweet-alert')) {
+            return false;
+        }
+
+        // in all other cases, deselect is allowed
+        return true;
     },
 
     /**
@@ -188,6 +211,9 @@
         }
       }
 
+      // option label
+      var label = that.escapeHTML($option.text());
+
       // if the keepOrder setting is set to true, add a
       // handle allowing selectable row to be reordered
       var handle = that.options.keepOrder
@@ -196,18 +222,20 @@
         
       // add also data-val attribute which will be used
       // for the re-selecting once the sorting stops
-      var selectableLi = $('<li '+attributes+' data-val="' + $option.val() +'">' + handle + '<span>'+that.escapeHTML($option.text())+'</span></li>'),
+      var selectableLi = $('<li '+attributes+' data-val="' + $option.val() +'">' + handle + '<span>'+label+'</span></li>'),
           selectedLi = selectableLi.clone(),
           value = $option.val(),
           elementId = that.sanitize(value);
 
       selectableLi
         .data('ms-value', value)
+        .attr('title', label) // long labels are truncated, but should be visible via scope notes
         .addClass('ms-elem-selectable')
         .attr('id', elementId+'-selectable');
 
       selectedLi
         .data('ms-value', value)
+        .attr('title', label) // long labels are truncated, but should be visible via scope notes
         .addClass('ms-elem-selection')
         .attr('id', elementId+'-selection')
         .hide();

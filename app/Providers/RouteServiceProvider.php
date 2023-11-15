@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Admin\Http\Controllers\ReorderController;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -31,6 +32,24 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->prefix('admin')
                 ->group(base_path('routes/admin.php'));
+        });
+
+        $this->addReorderMacro();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Add a route macro allowing for a list of tables to have
+     * their records reordered (using their 'order' columns).
+     * The tables list must be passed as an array. Only tables
+     * passed to the macro will be processed (where condition).
+     */
+    private function addReorderMacro(): void {
+        Route::macro('reorder', function ($tables) {
+            $regex = implode('|', $tables);
+
+            Route::get('{table}/reorder',  [ReorderController::class, 'get_all_records'])->where('table', $regex)->name('admin.reorder');
+            Route::post('{table}/reorder', [ReorderController::class, 'save_reordered_records'])->where('table', $regex);
         });
     }
 }

@@ -51,6 +51,8 @@ return [
     'publish_year'           => 'Publish year',
     'remarks'                => 'Remarks',
     'remember_me'            => 'Remember me',
+    'reorder'                => 'Reorder elements',
+    'reorder_successful'     => 'Reordered elements successfully saved!',
     'reset_password'         => 'Reset password',
     'reset_password_info'    => 'Enter a new password to regain access to the administrative panel',
     'slug'                   => 'Slug',

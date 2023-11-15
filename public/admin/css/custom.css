@@ -21,3 +21,25 @@
     top: 0px;
     right: 0px;
 }
+
+/**
+ * The multi-select in the sweet-alert pop-up
+ * is used to reorder all elements of a type,
+ * so by default they're all marked as selected
+ * and cannot be deselected. Hence, the selectable
+ * part should remain hidden, and the selected one
+ * should cover the whole pop-up's width.
+ */
+.sweet-alert .ms-container {
+    width: 80%;
+    margin: 0px auto; /* center in pop-up */
+    background: none; /* hide arrow */
+}
+.sweet-alert .ms-selectable {
+    display: none;
+}
+.sweet-alert .ms-selection {
+    width: 100%;
+    clear: both;
+    text-align: left; /* overwrite default sweet-alert center alignment */
+}

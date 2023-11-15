@@ -8,6 +8,7 @@
                         <em class="fa fa-list"></em> {{ __('global.gallery') }}
                         <div class="dt-buttons float-right">
                             <a class="btn btn-success" href="{{ route('admin.gallery_images.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
+                            <a class="btn btn-warning reorder" href="{{ route('admin.reorder', ['table' => 'gallery_images'])}}"><i class="fa fa-align-left"></i> {{ __('global.reorder') }}</a>
                         </div>
                     </h3>
                 </div>
