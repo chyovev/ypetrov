@@ -78,7 +78,7 @@ $param = $poem->exists ? $poem              : null;
                             <div class="form-group row @error('text') has-error has-feedback @enderror">
                                 <label class="col-lg-3 col-form-label text-right" for="chartdiv3">{{ __('global.text') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
-                                    <textarea name="text" id="chartdiv3" class="textarea_editor form-control" rows="15">{!! old('text', $poem->text) !!}</textarea>
+                                    <textarea name="text" class="form-control" rows="15">{!! old('text', $poem->text) !!}</textarea>
                                     @error('text')
                                         <span class="invalid-feedback d-block">{{ $message }}</span>
                                     @enderror
