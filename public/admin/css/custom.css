@@ -48,3 +48,9 @@
     background-color: #99abb4;
     color: white;
 }
+label .info {
+    font-size: 0.8em; 
+}
+.monospace {
+    font-family: monospace;
+}

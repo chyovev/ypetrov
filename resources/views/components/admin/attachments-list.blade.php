@@ -5,6 +5,7 @@
             <tr>
                 <th class="text-center">#</th>
                 <th>{{ __('global.file') }}</th>
+                <th>{{ __('global.mime_type') }}</th>
                 <th>{{ __('global.created_at') }}</th>
                 <th width="190" class="text-center">{{ __('global.actions') }}</th>
             </tr>
@@ -14,6 +15,7 @@
             <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{ $attachment->original_file_name }}</td>
+                <td>{{ $attachment->mime_type }}</td>
                 <td>{{ $attachment->created_at->format('d.m.Y. @ H:i:s') }}</td>
                 <td>
                     <a href="{{ $attachment->getURL() }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> {{ __('global.view') }}</a>

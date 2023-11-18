@@ -65,7 +65,10 @@ $param = $poem->exists ? $poem              : null;
                             </div>
 
                             <div class="form-group row @error('use_monospace_font') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="use_monospace_font">{{ __('global.monospace') }} <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="use_monospace_font">
+                                    {{ __('global.monospace') }}
+                                    <div class="info m-t-10"><em>{{ __('global.monospace_info') }}</em></div>
+                                </label>
                                 <div class="col-lg-8">
                                     <input type="hidden"   name="use_monospace_font" value="0" />
                                     <input type="checkbox" name="use_monospace_font" value="1" id="use_monospace_font" @checked(old('use_monospace_font', $poem->use_monospace_font)) />
@@ -76,9 +79,9 @@ $param = $poem->exists ? $poem              : null;
                             </div>
 
                             <div class="form-group row @error('text') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="chartdiv3">{{ __('global.text') }} <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="text">{{ __('global.text') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">
-                                    <textarea name="text" class="form-control" rows="15">{!! old('text', $poem->text) !!}</textarea>
+                                    <textarea id="text" name="text" @class(['form-control' => true, 'monospace' => old('use_monospace_font', $poem->use_monospace_font)]) rows="15">{!! old('text', $poem->text) !!}</textarea>
                                     @error('text')
                                         <span class="invalid-feedback d-block">{{ $message }}</span>
                                     @enderror
