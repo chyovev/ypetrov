@@ -3,6 +3,7 @@
 namespace App\Models\Interfaces;
 
 use App\Models\Attachment;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -34,11 +35,10 @@ interface Attachable
      * Each attachable object should have an uploadAttachment()
      * method which results in an Attachment record.
      * 
-     * @param  string $filePath – path to file
-     * @param  string $fileName – original file name (optional)
+     * @param  UploadedFile $file – attachment being uploaded
      * @return Attachment
      */
-    public function uploadAttachment(string $filePath, string $fileName = null): Attachment;
+    public function uploadAttachment(UploadedFile $file): Attachment;
 
     
 }

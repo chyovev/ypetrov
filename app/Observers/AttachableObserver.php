@@ -79,10 +79,7 @@ class AttachableObserver
         $attachments = $files['attachments'] ?? []; 
 
         foreach ($attachments as $file) {
-            $filePath = $file->getPathname();
-            $fileName = $file->getClientOriginalName();
-
-            $object->uploadAttachment($filePath, $fileName);
+            $object->uploadAttachment($file);
         }
     }
 

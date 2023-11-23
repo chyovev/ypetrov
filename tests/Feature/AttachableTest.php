@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use File;
 use Tests\TestCase;
 use App\Models\Book;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AttachableTest extends TestCase
@@ -53,24 +54,6 @@ class AttachableTest extends TestCase
 
         $this->assertEquals(1, $book->attachments()->count());
         $this->assertFileExists($attachment->getServerFilePath());
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * When a file gets uploaded, it can be stored under a different
-     * name should such be passed as parameter. However, the target
-     * name also gets sanitized.
-     */
-    public function test_specifying_target_file_name(): void {
-        $book     = Book::factory()->create();
-        $tempFile = $this->createTempFile('some-name.txt');
-
-        $newName       = 'My CUSTOM file name.txt';
-        $sanitizedName = 'my-custom-file-name.txt';
-
-        $attachment = $book->uploadAttachment($tempFile, $newName);
-
-        $this->assertEquals($sanitizedName, $attachment->server_file_name);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -159,22 +142,21 @@ class AttachableTest extends TestCase
     /**
      * Create a temp file using faker and return its path.
      * 
-     * NB! Faker uses uuid for the file name, but this can
-     *     be worked around using the $fileName parameter.
-     * 
      * @param  string $fileName
-     * @return string
+     * @return UploadedFile
      */
-    private function createTempFile(string $fileName): string {
+    private function createTempFile(string $fileName): UploadedFile {
         $sourceFolder = $this->getAssetsPath();
         $targetFolder = $this->getTestingPath();
         File::ensureDirectoryExists($targetFolder);
 
-        $sourcePath   = fake()->file($sourceFolder, $targetFolder);
-        $newFilePath  = File::dirname($sourcePath) . DIRECTORY_SEPARATOR . $fileName;
+        // when fake-creating an uploaded file, test mode should
+        // be switched on, and there should be no upload error code
+        $newFilePath  = fake()->file($sourceFolder, $targetFolder);
+        $mimeType     = File::mimeType($newFilePath);
+        $errorCode    = UPLOAD_ERR_OK;
+        $testMode     = true;
 
-        File::move($sourcePath, $newFilePath);
-
-        return $newFilePath;
+        return new UploadedFile($newFilePath, $fileName, $mimeType, $errorCode, $testMode);
     }
 }

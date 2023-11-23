@@ -2,11 +2,12 @@
 
 namespace App\Models\Traits;
 
+use File;
 use LogicException;
-use App\Helpers\FileHelper;
 use App\Models\Attachment;
 use App\Models\Interfaces\Attachable;
 use App\Observers\AttachableObserver;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -62,25 +63,27 @@ trait HasAttachments
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * When a file gets uploaded for an attachable object,
-     * a FileHelper has to “examine” it first in order to
-     * extract data from it and use it on the Attachment
-     * record. Once the record gets created, the file gets
-     * moved to the respective subfolder of the attachable
-     * object.
+     * When an attachment gets uploaded, a database record
+     * should be initially created in order to allocate a
+     * unique file name on the server.
+     * Only then can the file be moved to the respective
+     * subfolder of the attachable object.
      * 
      * @throws FileNotFoundException – missing temp file path
-     * @param  string $filePath – temp file path
-     * @param  string $fileName – original name of file
+     * @param  UploadedFile $file    – file being uploaded
      * @return Attachment
      */
-    public function uploadAttachment(string $filePath, string $fileName = null): Attachment {
-        $helper = new FileHelper($filePath, $fileName);
-
-        $data       = $this->prepareAttachmentData($helper);
+    public function uploadAttachment(UploadedFile $file): Attachment {
+        $data       = $this->prepareAttachmentData($file);
         $attachment = $this->attachments()->create($data);
 
-        $helper->moveFile($filePath, $attachment->getServerFilePath());
+        // separate the directory from the name
+        // and create it if it does not exist
+        $targetName = $attachment->server_file_name;
+        $targetDir  = $attachment->getAbsolutePath();
+        File::ensureDirectoryExists($targetDir);
+
+        $file->move($targetDir, $targetName);
 
         return $attachment;
     }
@@ -98,14 +101,14 @@ trait HasAttachments
      *     this part is taken care of by the AttachmentObserver.
      *     are populated automatically by the create() method.
      * 
-     * @param  FileHelper $helper – initiated helper for a file
+     * @param  UploadedFile $file
      * @return array<string,mixed>
      */
-    private function prepareAttachmentData(FileHelper $helper): array {
+    private function prepareAttachmentData(UploadedFile $file): array {
         return [
-            'original_file_name' => $helper->getBaseName(),
-            'file_size'          => $helper->getFileSize(),
-            'mime_type'          => $helper->getMimeType(),
+            'original_file_name' => $file->getClientOriginalName(),
+            'file_size'          => $file->getSize(),
+            'mime_type'          => $file->getClientMimeType(),
             'order'              => $this->determineOrderForNewAttachmentRecord(),
         ];
     }
