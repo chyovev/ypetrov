@@ -1,0 +1,106 @@
+@import "sizes.less";
+@import "dimensions.less";
+
+html, body {
+    margin: 0px;
+    @media @mobile {
+        height: 100%;
+    }
+    @media @notmobile {
+        min-height: 100vh;
+    }
+}
+body {
+    font-family: sans-serif;
+    background: linear-gradient(#f7f7f7, #f0f0f0); /* yellowish #f9f2d2 */
+    padding-top: @body-padding-top;
+    @media @mobile {
+        padding-top: @nav-height-sticky + @nav-border-height;
+    }
+}
+
+main {
+    max-width: @desktop-max-width;
+    margin: 0px auto;
+    font-size: 16px;
+    line-height: 1.8em;
+    background-color: white;
+    border: 1px solid #d9d9d9;
+    @media @notmobile {
+        border-radius: 0px 0px 10px 10px;
+        &.sidebar {
+            display: table;
+            height: 100%;
+        }
+    }
+    @media @mobile {
+        min-height: calc(~"100%" - (@header-img-height-mob + @footer-height-mob));
+    }
+}
+
+.content-wrapper {
+    img {
+        cursor: zoom-in;
+        cursor: -webkit-zoom-in;
+        cursor: -moz-zoom-in;
+    }
+}
+
+#scroll-top {
+    background: url(../../images/arrow-up.png) no-repeat 50% 50% fade(black, 20%);
+    border: 1px solid fade(black, 30%);
+    position: fixed;
+    opacity: 0.5;
+    cursor: pointer;
+    animation-name: arrow-up;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+    transition: background-color 0.3s;
+    &:hover {
+        background-color: fade(black, 15%);
+    }
+    @media @notmobile {
+        width: 46px;
+        height: 46px;
+        border-radius: 7px;
+        background-size: 30px;
+        bottom: 60px;
+        right: 45px;
+    }
+    @media @mobile {
+        .android-highlight-fix;
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        background-size: 20px;
+        bottom: 30px;
+        right: 15px;
+        transition: bottom 0.5s;
+    }
+    &.overlap-footer {
+        @media @mobile {
+            bottom: 85px;
+        }
+    }
+}
+@keyframes arrow-up {
+    0%   {background-position-y: 50%;}
+    6%   {background-position-y: 35%;}
+    12%  {background-position-y: 50%;}
+    100% {background-position-y: 50%;}
+}
+
+// Magnifier-Popup customization
+img.mfp-img {
+    cursor: zoom-out;
+    cursor: -webkit-zoom-out;
+    cursor: -moz-zoom-out;
+}
+.mfp-bottom-bar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.mfp-content.has-caption {
+    vertical-align: top;
+}

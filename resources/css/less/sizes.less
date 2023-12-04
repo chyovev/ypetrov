@@ -1,0 +1,15 @@
+@laptop:     ~"(max-width: 1200px)";
+@mobile:     ~"(max-width: 720px)";
+@extrasmall: ~"(max-width: 340px)";
+@notmobile:  ~"(min-width: 721px)";
+
+.mobile-only {
+    @media @notmobile {
+        display: none;
+    }
+}
+.desktop-only {
+    @media @mobile {
+        display: none;
+    }
+}

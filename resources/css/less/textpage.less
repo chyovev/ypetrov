@@ -1,0 +1,88 @@
+@import "sizes.less";
+@import "colors.less";
+
+.textpage {
+    hr {
+        border: 1px dotted mix(black, white, 20%);
+    }
+    .subtitle {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        line-height: 1.4em;
+    }
+    text-align: justify;
+    img {
+        margin: 10px auto 1cm auto;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px fade(black, 25%);
+        &.right {
+            margin-left: 1cm;
+            float: right;
+        }
+        &.left {
+            float: left;
+            margin-right: 1cm;
+        }
+    }
+    .poem {
+        font-family: 'roboto', 'Droid Sans Mono Regular', monospace;
+        margin: 1.5cm auto;
+        border-left: 1px dotted grey;
+        @media @notmobile {
+            margin-left: 15%;
+            padding-left: 20px;
+        }
+        @media @mobile {
+            padding-left: 10px;
+        }
+        h5 {
+            background-color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .content {
+            white-space: pre-line;
+        }
+    }
+    @media @mobile {
+        text-align: left;
+        img {
+            &:not('.desktop-only') {
+                display: block;
+            }
+            float: none;
+            margin: 1cm 0px;
+            &:not(.captcha) {
+                max-width: 100% !important;
+            }
+            + .poem {
+                margin-top: 0px;
+            }
+        }
+    }
+}
+
+.text {
+    @media @notmobile {
+        padding: 60px;
+    }
+    @media @mobile {
+        padding: 30px;
+    }
+    a {
+        color: @theme-color;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    blockquote {
+        text-align: left;
+        margin: 1cm auto 1cm 5em;
+        border-left: 6px solid #CECECE;
+        padding-left: 1em;
+        @media @mobile {
+            margin-left: 0px;
+        }
+    }
+}

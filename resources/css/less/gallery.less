@@ -1,0 +1,75 @@
+@import "sizes.less";
+
+@media @notmobile {
+    .gallery-wrapper-outer {
+        display: table;
+        margin: 0px auto;
+    }
+    .gallery-wrapper-inner {
+        display: table-cell;
+    }
+}
+.swipe-nav {
+    @media @notmobile {
+        display: table-cell;
+        width: 45px;
+        cursor: pointer;
+        transition: background-position-x 0.3s;
+    }
+    @media @mobile {
+        display: none;
+    }
+    &.next {
+        background: url(../../images/next.png) no-repeat 50% 30%;
+        &:hover {
+            background-position-x: calc(~"50% + 5px");
+        }
+    }
+    &.prev {
+        background: url(../../images/prev.png) no-repeat 50% 30%;
+        &:hover {
+            background-position-x: calc(~"50% - 5px");
+        }
+    }
+}
+#swipe-gallery {
+    display: block;
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+    text-align: center;
+    @media @notmobile {
+        margin: 1cm auto;
+        width: 700px;
+    }
+    @media @mobile {
+        margin: 0.5cm auto
+    }
+    .swipe-wrap {
+        overflow: hidden;
+        position: relative;
+        > div {
+            float: left;
+            width: 100%;
+            position: relative;
+            span {
+                display: block;
+                margin-top: 0.5cm;
+                line-height: 1.4em;
+            }
+            img {
+                border-radius: 5px;
+                @media @notmobile {
+                    box-shadow: 4px 4px 10px fade(black, 15%);
+                    max-width: 600px;
+                    max-height: 500px;
+                }
+                @media @mobile {
+                    box-shadow: 1px 2px 5px fade(black, 15%);
+                    max-width: 95%;
+                    margin: 0px auto;
+                }
+            }
+        }
+    }
+}

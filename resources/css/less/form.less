@@ -1,0 +1,100 @@
+@import "sizes.less";
+@import "colors.less";
+
+input[type="text"], input[type="password"], textarea {
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    padding: 7px;
+    line-height: 20px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    text-align: left;
+    background-clip: padding-box; /* remove ios shadow */
+    &:focus {
+        border-color: darkblue;
+        outline: none;
+    }
+    &.error-field {
+        border-color: red;
+    }
+}
+input[type="submit"] {
+    text-transform: uppercase;
+    background-color: white;
+    padding: 8px 50px;
+    border: 2px solid #cecece;
+    color: @theme-color;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+    -webkit-appearance: none; /* override ios default button style */
+    &:hover, &:focus {
+        border-color: @theme-color;
+    }
+}
+textarea {
+    resize: vertical;
+    min-height: 10em;
+    max-height: 20em;
+}
+.error-message {
+    color: red;
+    display: block;
+    line-height: 1em;
+}
+form .column:last-child {
+    width: 100%;
+    padding-left: 20px;
+}
+
+/* code */
+.captcha {
+    box-shadow: none !important;
+    cursor: pointer !important;
+    margin: 0px auto 20px auto !important;
+}
+
+/* input field */
+#captcha {
+    margin: 10px auto !important;
+}
+
+.error {
+    text-align: center;
+    .title {
+        padding-top: 1cm;
+        font-weight: bold;
+        color: @theme-color;
+        @media @notmobile {
+            font-size: 35px;
+        }
+        @media @mobile {
+            font-size: 25px;
+            text-transform: uppercase;
+        }
+    }
+    p {
+        line-height: 1em;
+        padding-bottom: 1em;
+    }
+}
+
+.contact-form {
+    width: 100%;
+    max-width: 500px;
+    @media @notmobile {
+        margin: 2cm auto 1cm auto;
+    }
+    @media @mobile {
+        margin: 1cm auto;
+    }
+    input, textarea {
+        display: block;
+        margin: 20px auto;
+    }
+    input[type="text"], textarea {
+        width: 100%;
+    }
+}

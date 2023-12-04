@@ -1,0 +1,16 @@
+@import "sizes.less";
+
+.video {
+    text-align: center;
+    video {
+        object-fit: cover;
+        border-radius: 4px;
+        margin: 1cm auto;
+        @media @mobile {
+            max-width: 100%;
+        }
+        @media @notmobile {
+            max-width: 600px;
+        }
+    }
+}

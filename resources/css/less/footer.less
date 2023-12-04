@@ -1,0 +1,27 @@
+@import "sizes.less";
+@import "dimensions.less";
+
+footer {
+    max-width: @desktop-max-width;
+    text-align: center;
+    margin: 0px auto;
+    @media @notmobile {
+        padding: 20px 10px;
+        br {
+            display: none;
+        }
+    }
+    @media @mobile {
+        display: table;
+        height: @footer-height-mob;
+        width: 100%;
+        .footer-text {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    }
+    @media @extrasmall {
+        font-size: 15px;
+        padding: 15px;
+    }
+}

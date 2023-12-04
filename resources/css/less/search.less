@@ -1,0 +1,107 @@
+@import "sizes.less";
+@import "colors.less";
+
+.search-form-fullpage {
+    form {
+        margin: 1cm 0px 0.5cm 0px;
+        @media @mobile {
+            input[type="submit"] {
+                margin: 10px auto;
+            }
+        }
+    }
+}
+.results {
+    a {
+        color: @theme-color;
+        transition: color 0.3s;
+        &:hover {
+            color: red;
+        }
+    }
+    .info {
+        background-color: white;
+        line-height: 1.4em;
+        padding-top: 10px;
+        @media @mobile {
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        @media @notmobile {
+            margin-bottom: 1cm;
+        }
+    }
+    .book-result-wrapper {
+        border-top: 1px dashed #CECECE;
+        padding-top: 10px;
+        width: 100%;
+        @media @notmobile {
+            padding-bottom: 50px;
+        }
+        @media @mobile {
+            padding-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .book-title {
+        outline: none;
+        font-size: 24px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        text-decoration: none;
+        background-color: white;
+        @media @mobile {
+            text-align: center;
+            order: 1;
+        }
+    }
+    .poem-result-wrapper {
+        @media @notmobile {
+            display: table-cell;
+            vertical-align: top;
+        }
+        @media @mobile {
+            order: 3;
+        }
+    }
+    .poem-result {
+        @media @notmobile {
+            padding: 0px 1cm;
+            margin-bottom: 20px;
+        }
+        @media @mobile {
+            margin-bottom: 30px;
+        }
+        .sample {
+            display: block;
+        }
+    }
+    .cover-wrapper {
+        @media @notmobile {
+            display: table-cell;
+            vertical-align: top;
+            width: 200px;
+        }
+        @media @mobile {
+            margin: 0px auto 20px auto;
+            order: 2;
+        }
+    }
+    .img-wrapper {
+        padding-top: 5px;
+        img {
+            width: 100%;
+            max-width: 250px;
+            @media @notmobile {
+                margin: 10px 0px 0px 0px;
+            }
+            @media @mobile {
+                margin: 0px;
+            }
+        }
+    }
+}

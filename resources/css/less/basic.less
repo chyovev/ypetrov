@@ -1,0 +1,42 @@
+* {
+    box-sizing: border-box;
+}
+
+.center {
+    text-align: center;
+}
+.italic {
+    font-style: italic;
+}
+.none {
+    display: none;
+}
+
+.green {
+    color: green;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0px;
+}
+
+.table {
+    width: 100%;
+    display: table;
+    .column {
+        display: table-cell;
+        vertical-align: top;
+    }
+}
+
+/* fix android highlight color */
+.android-highlight-fix {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; 
+    outline: none !important;
+}
+
+/* start out with images hidden and show them on window load */
+.op-0-fadein {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
