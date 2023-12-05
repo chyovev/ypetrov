@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // temporarily redirect home page to CMS
-    return redirect()->route('admin.home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
