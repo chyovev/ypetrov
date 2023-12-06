@@ -1,4 +1,6 @@
-<x-layout>
+@extends('public.layout.default')
+
+@section('content')
 
     <section class="text textpage" id="container">
         <div class="content-wrapper">
@@ -6,4 +8,4 @@
         </div>
     </section>
 
-</x-layout>
+@stop

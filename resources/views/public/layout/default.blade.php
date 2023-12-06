@@ -16,15 +16,15 @@
 </head>
 <body>
 
-    <x-header/>
+    @include('public.layout.header')
 
     <main>
     
-        {{ $slot }}
+        @yield('content')
         
     </main>
     
-    <x-footer/>
+    @include('public.layout.footer')
     
 </body>
 </html>
