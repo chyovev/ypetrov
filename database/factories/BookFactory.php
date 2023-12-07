@@ -30,4 +30,28 @@ class BookFactory extends Factory
             'order'        => fake()->randomNumber(1),
         ];
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Indicate that the book should be marked as active.
+     */
+    public function active(): Factory {
+        return $this->state(function () {
+            return [
+                'is_active' => true,
+            ];
+        });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Indicate that the book should be marked as inactive.
+     */
+    public function inactive(): Factory {
+        return $this->state(function () {
+            return [
+                'is_active' => false,
+            ];
+        });
+    }
 }

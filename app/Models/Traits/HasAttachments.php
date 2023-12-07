@@ -9,6 +9,7 @@ use App\Models\Interfaces\Attachable;
 use App\Observers\AttachableObserver;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -125,6 +126,19 @@ trait HasAttachments
      */
     private function determineOrderForNewAttachmentRecord(): int {
         return $this->attachments()->count() + 1;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Filter all attachments by a specific MIME type.
+     * 
+     * @param  string $mimeType – regex supported
+     * @return Collection<Attachment>
+     */
+    private function getAttachmentsByType(string $mimeType): Collection {
+        return $this->attachments->filter(function (Attachment $attachment) use ($mimeType) {
+            return $attachment->hasType($mimeType);
+        });
     }
 
 }

@@ -149,4 +149,16 @@ class Attachment extends Model
         return url( $this->getRelativePath()) . "/{$this->server_file_name}";
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check if an attachment has a specific MIME type.
+     * 
+     * @param string $mimeType – regex supported
+     */
+    public function hasType(string $mimeType) {
+        $regex = '/' . preg_quote($mimeType, '/') . '/';
+        
+        return (bool) preg_match($regex, $this->mime_type);
+    }
+
 }

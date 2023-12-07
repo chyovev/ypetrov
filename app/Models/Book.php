@@ -86,4 +86,15 @@ class Book extends Model implements Attachable, Commentable, Statsable
 
         return $this->poems()->sync($data);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Take the first image from the book's attachments
+     * and use it as a cover (if uploaded).
+     * 
+     * @return Attachment|null
+     */
+    public function getCoverImage() {
+        return $this->getAttachmentsByType('image')->first();
+    }
 }

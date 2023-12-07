@@ -8,7 +8,7 @@
             <a href="javascript: void(0);">Творчество</a>
             <ul>
                 @foreach ($books as $book)
-                    <li><a href="#">{{ $book->title }} ({{ $book->publish_year }})</a></li>
+                    <li><a href="{{ route('book', ['bookSlug' => $book->slug]) }}">{{ $book->title }} ({{ $book->publish_year }})</a></li>
                 @endforeach
             </ul>
         </li>

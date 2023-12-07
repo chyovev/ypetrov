@@ -18,11 +18,9 @@
 
     @include('public.layout.header')
 
-    <main>
     
-        @yield('content')
+    @yield('content')
         
-    </main>
     
     @include('public.layout.footer')
     

@@ -1,4 +1,6 @@
-<x-layout>
+@extends('public.layout.default')
+
+@section('content')
 
     <main>
         <section class="text error">
@@ -7,4 +9,4 @@
         </section>
     </main>
 
-</x-layout>
+@stop
