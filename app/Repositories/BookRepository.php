@@ -17,7 +17,7 @@ class BookRepository
      */
     public static function getAllActive(): Collection {
         return Book::query()
-            ->where('is_active', true)
+            ->active()
             ->orderBy('order')
             ->get();
     }
@@ -33,8 +33,8 @@ class BookRepository
      */
     public static function getBySlugWithPoems(string $slug): Book {
         return Book::query()
+            ->active()
             ->where('slug', $slug)
-            ->where('is_active', true)
             ->with([
                 'poems' => function($q) {
                     $q->where('is_active', true);

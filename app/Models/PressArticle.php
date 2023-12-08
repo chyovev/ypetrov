@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
+use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
@@ -14,6 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 class PressArticle extends Model implements Attachable, Commentable, Statsable
 {
     use HasFactory;
+
+    /**
+     * Add shortcut query builder method
+     * to filter out inactive elements.
+     */
+    use HasActiveState;
 
     /**
      * The HasAttachments trait defines a polymorphic

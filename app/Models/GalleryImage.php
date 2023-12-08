@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Interfaces\Attachable;
+use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,12 @@ use Illuminate\Database\Eloquent\Model;
 class GalleryImage extends Model implements Attachable
 {
     use HasFactory;
+
+    /**
+     * Add shortcut query builder method
+     * to filter out inactive elements.
+     */
+    use HasActiveState;
 
     /**
      * The HasAttachments trait defines a polymorphic
