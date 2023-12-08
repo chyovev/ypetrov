@@ -18,3 +18,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/tvorchestvo/{bookSlug}',            [WorkController::class, 'get_book'])->name('book');
+Route::get('/tvorchestvo/{bookSlug}/{poemSlug}', [WorkController::class, 'get_poem'])->name('poem');

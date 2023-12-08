@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Repositories\BookRepository;
+use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class WorkController extends Controller
@@ -34,6 +36,37 @@ class WorkController extends Controller
         ];
 
         return view('public.works.book', $data);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Poems are fetched via the books they're associated with,
+     * i.e. both the book's and poem's slug should be present.
+     * Since the book with all its poems should be fetched anyway
+     * in order to populate the sidebar navigation, the target poem
+     * can easily be extracted from the book's poem collection,
+     * thus avoiding a redundant SQL query.
+     * 
+     * @param string $bookSlug
+     * @param string $poemSlug
+     */
+    public function get_poem(string $bookSlug, string $poemSlug) {
+        /** @var Book <-- intelephense is confused */
+        $book = $this->bookRepository->getBySlugWithPoems($bookSlug);
+        $poem = $book->getPoemBySlug($poemSlug);
+
+        // if the poem is not associated with the book
+        // or is marked as inactive, return a 404 result
+        if ( ! $poem) {
+            abort(Response::HTTP_NOT_FOUND);
+        }
+        
+        $data = [
+            'book' => $book,
+            'poem' => $poem,
+        ];
+
+        return view('public.works.poem', $data);
     }
 
 }

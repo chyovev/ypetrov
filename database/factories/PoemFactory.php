@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
+use Database\Factories\Traits\HasActiveState;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PoemFactory extends Factory
 {
+
+    /**
+     * Add active() and inactive() state
+     * methods to factory.
+     */
+    use HasActiveState;
 
     ///////////////////////////////////////////////////////////////////////////
     /**

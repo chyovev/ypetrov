@@ -72,6 +72,20 @@ class Book extends Model implements Attachable, Commentable, Statsable
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * Using a poem's slug, try to find it in the collection
+     * of associated poems.
+     * 
+     * @param  string $slug
+     * @return Poem|null
+     */
+    public function getPoemBySlug(string $slug): ?Poem {
+        return $this->poems->filter(function(Poem $poem) use($slug) {
+            return ($poem->slug === $slug) ;
+        })->first();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * When poems are being synced with a book, they need to be
      * persisted in the order in which their IDs are being passed
      * to the method using the relationship's pivot column 'order'.

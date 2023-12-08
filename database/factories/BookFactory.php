@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
+use Database\Factories\Traits\HasActiveState;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class BookFactory extends Factory
 {
+
+    /**
+     * Add active() and inactive() state
+     * methods to factory.
+     */
+    use HasActiveState;
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -31,27 +38,4 @@ class BookFactory extends Factory
         ];
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Indicate that the book should be marked as active.
-     */
-    public function active(): Factory {
-        return $this->state(function () {
-            return [
-                'is_active' => true,
-            ];
-        });
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Indicate that the book should be marked as inactive.
-     */
-    public function inactive(): Factory {
-        return $this->state(function () {
-            return [
-                'is_active' => false,
-            ];
-        });
-    }
 }
