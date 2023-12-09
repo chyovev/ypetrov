@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EssayController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PressController;
+use App\Http\Controllers\VideoController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +24,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/za-yosif-petrov/{slug}',            [EssayController::class, 'view'])->name('essay');
 Route::get('/galeriya',                          [GalleryController::class, 'index'])->name('gallery');
 Route::get('/presa/{slug}',                      [PressController::class, 'view'])->name('press');
+Route::get('/video/{slug}',                      [VideoController::class, 'view'])->name('video');
 Route::get('/tvorchestvo/{bookSlug}',            [WorkController::class, 'get_book'])->name('book');
 Route::get('/tvorchestvo/{bookSlug}/{poemSlug}', [WorkController::class, 'get_poem'])->name('poem');

@@ -9,6 +9,7 @@ use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -61,5 +62,33 @@ class Video extends Model implements Attachable, Commentable, Statsable
         'is_active'    => 'boolean',
         'publish_date' => 'datetime',
     ];
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Normally each video should have a static image which
+     * will be used as a video cover.
+     * 
+     * @return string|null
+     */
+    public function getCoverImage(): ?string {
+        return $this->getFirstImage()?->getURL();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * From all the attachments of a video filter the ones
+     * which are actually of video MIME type.
+     * 
+     * @return Collection
+     */
+    public function getVideos(): Collection {
+        $videos = $this->getAttachmentsByType('video');
+
+        // if there is an mp4 attachment, move it to the top
+        // as it offers greater compatibility and video quality
+        return $videos->sort(function(Attachment $attachment) {
+            return ( ! $attachment->hasType('mp4'));
+        });
+    }
 
 }

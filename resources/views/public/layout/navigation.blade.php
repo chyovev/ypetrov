@@ -16,6 +16,17 @@
 
         <li @class(['active' => request()->route()->named('gallery')])><a href="{{ route('gallery') }}">Галерия</a></li>
 
+        @if ($videos->count())
+        <li @class(['has-items' => true, 'active open' => request()->route()->named('video')])>
+            <a href="javascript: void(0);">Видео</a>
+            <ul>
+                @foreach ($videos as $navVideo)
+                    <li><a href="{{ route('video', ['slug' => $navVideo->slug]) }}" @class(['active' => (request()->route()->named('video') && $video->slug === $navVideo->slug)])>{{ $navVideo->title }}</a></li>
+                @endforeach
+            </ul>
+        </li>
+        @endif
+
         @if ($press->count())
         <li @class(['has-items' => true, 'active open' => request()->route()->named('press')])>
             <a href="javascript: void(0);">Преса</a>

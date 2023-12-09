@@ -27,7 +27,7 @@
             <div class="aside-toggler mobile-only"><span>Галерия</span></div>
         </div>
 
-        <section class="text{if !$images} error{/if}" id="container">
+        <section @class(['text' => true, 'error' => !$images->count()]) id="container">
             <div class="content-wrapper">
                 @if ($images->count())
                 <h1 class="center" id="title">Снимки на Йосиф Петров</h1>

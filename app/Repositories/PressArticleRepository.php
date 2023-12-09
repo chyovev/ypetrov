@@ -27,7 +27,7 @@ class PressArticleRepository
      * Get a single active press article by its slug.
      * 
      * @throws ModelNotFoundException
-     * @return Collection<PressArticle>
+     * @return PressArticle
      */
     public static function getBySlug(string $slug): PressArticle {
         return PressArticle::query()

@@ -5,6 +5,7 @@ namespace App\View\Composers;
 use App\Repositories\BookRepository;
 use App\Repositories\EssayRepository;
 use App\Repositories\PressArticleRepository;
+use App\Repositories\VideoRepository;
 use Illuminate\View\View;
  
 class NavigationComposer
@@ -19,6 +20,7 @@ class NavigationComposer
         private BookRepository  $bookRepository,
         private EssayRepository $essayRepository,
         private PressArticleRepository $pressRepository,
+        private VideoRepository $videoRepository,
     ) {
         //
     }
@@ -32,6 +34,7 @@ class NavigationComposer
             'books'  => $this->getBooks(),
             'essays' => $this->getEssays(),
             'press'  => $this->getPressArticles(),
+            'videos' => $this->getVideos(),
         ]);
     }
 
@@ -48,5 +51,10 @@ class NavigationComposer
     ///////////////////////////////////////////////////////////////////////////
     private function getPressArticles() {
         return $this->pressRepository->getAllActive();
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    private function getVideos() {
+        return $this->videoRepository->getAllActive();
     }
 }
