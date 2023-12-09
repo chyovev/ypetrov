@@ -54,6 +54,30 @@ $param = $pressArticle->exists ? $pressArticle              : null;
                                 </div>
                             </div>
 
+                            <div class="form-group row @error('press') has-error has-feedback @enderror">
+                                <label class="col-lg-3 col-form-label text-right" for="press">{{ __('global.press') }} <span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="press" id="press" class="form-control input-default" value="{{ old('press', $pressArticle->press) }}" />
+                                    @error('press')
+                                        <span class="invalid-feedback d-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row @error('publish_date') has-error has-feedback @enderror">
+                                <label class="col-lg-3 col-form-label text-right" for="publish_date">{{ __('global.publish_date') }}</label>
+                                <div class="col-lg-8">
+                                    @php
+                                        $value   = old('publish_date', $pressArticle->publish_date);
+                                        $preview = ($value instanceof \Carbon\Carbon) ? $value->format('d.m.Y.') : $value;
+                                    @endphp
+                                    <input type="text" name="publish_date" id="publish_date" class="form-control datepicker" value="{{ $preview }}" />
+                                    @error('publish_date')
+                                        <span class="invalid-feedback d-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="form-group row @error('text') has-error has-feedback @enderror">
                                 <label class="col-lg-3 col-form-label text-right" for="chartdiv3">{{ __('global.text') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">

@@ -4,6 +4,7 @@ namespace App\View\Composers;
 
 use App\Repositories\BookRepository;
 use App\Repositories\EssayRepository;
+use App\Repositories\PressArticleRepository;
 use Illuminate\View\View;
  
 class NavigationComposer
@@ -17,6 +18,7 @@ class NavigationComposer
     public function __construct(
         private BookRepository  $bookRepository,
         private EssayRepository $essayRepository,
+        private PressArticleRepository $pressRepository,
     ) {
         //
     }
@@ -29,6 +31,7 @@ class NavigationComposer
         $view->with([
             'books'  => $this->getBooks(),
             'essays' => $this->getEssays(),
+            'press'  => $this->getPressArticles(),
         ]);
     }
 
@@ -40,5 +43,10 @@ class NavigationComposer
     ///////////////////////////////////////////////////////////////////////////
     private function getEssays() {
         return $this->essayRepository->getAllActive();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getPressArticles() {
+        return $this->pressRepository->getAllActive();
     }
 }

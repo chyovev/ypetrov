@@ -31,10 +31,12 @@ class FormRequest extends HttpFormRequest
      */
     public function rules(): array {
         return [
-            'is_active' => $this->getIsActiveRules(),
-            'title'     => $this->getTitleRules(),
-            'slug'      => $this->getSlugRules(),
-            'text'      => $this->getTextRules(),
+            'is_active'    => $this->getIsActiveRules(),
+            'title'        => $this->getTitleRules(),
+            'slug'         => $this->getSlugRules(),
+            'press'        => $this->getPressRules(),
+            'publish_date' => $this->getPublishDateRules(),
+            'text'         => $this->getTextRules(),
         ];
     }
 
@@ -71,6 +73,23 @@ class FormRequest extends HttpFormRequest
             'regex:/^[a-z0-9\-]+$/i',
             'max:255',
             Rule::unique('press_articles')->ignore($this->press_article),
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getPressRules(): array {
+        return [
+            'required',
+            'max:255',
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getPublishDateRules(): array {
+        return [
+            'sometimes',
+            'nullable',
+            'date_format:d.m.Y.',
         ];
     }
 

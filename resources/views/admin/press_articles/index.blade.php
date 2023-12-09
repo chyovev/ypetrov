@@ -23,6 +23,8 @@
                                     <th class="text-center" width="90">{{ __('global.remarks') }}</th>
                                     <th>{{ __('global.title') }}</th>
                                     <th>{{ __('global.text') }}</th>
+                                    <th>{{ __('global.press') }}</th>
+                                    <th width="170" class="text-center">{{ __('global.publish_date') }}</th>
                                     <th>{{ __('global.created_at') }}</th>
                                     <th width="200" class="text-center">{{ __('global.actions') }}</th>
                                 </tr>
@@ -37,8 +39,10 @@
                                     <td class="text-center">
                                         <x-admin.remarks :object="$pressArticle" />
                                     </td>
-                                    <td>{{ $pressArticle->title }}</td>
-                                    <td>{{ Str::of($pressArticle->text)->stripTags()->limit(60) }}</td>
+                                    <td>{{ Str::of($pressArticle->title)->limit(40) }}</td>
+                                    <td>{{ Str::of($pressArticle->text)->stripTags()->limit(50) }}</td>
+                                    <td>{{ $pressArticle->press }}</td>
+                                    <td class="text-center">{{ $pressArticle->publish_date?->format('d.m.Y.') }}</td>
                                     <td>{{ $pressArticle->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.press_articles.edit',    ['press_article' => $pressArticle]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>

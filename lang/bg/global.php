@@ -45,6 +45,7 @@ return [
     'password'               => 'Парола',
     'password_confirmation'  => 'Потвърждение на паролата',
     'poems'                  => 'Стихотворения',
+    'press'                  => 'Медия',
     'press_articles'         => 'Извадки от пресата',
     'preview'                => 'Преглед',
     'public'                 => 'Видимо',

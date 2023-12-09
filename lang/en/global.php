@@ -45,6 +45,7 @@ return [
     'password'               => 'Password',
     'password_confirmation'  => 'Password confirmation',
     'poems'                  => 'Poems',
+    'press'                  => 'Press',
     'press_articles'         => 'Press Articles',
     'preview'                => 'Preview',
     'public'                 => 'Public',
