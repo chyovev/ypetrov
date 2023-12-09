@@ -23,6 +23,17 @@ $param = $galleryImage->exists ? $galleryImage              : null;
                                 @method('PUT')
                             @endif
 
+                            <div class="form-group row @error('is_active') has-error has-feedback @enderror">
+                                <label class="col-lg-3 col-form-label text-right" for="is_active">{{ __('global.public') }} <span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <input type="hidden"   name="is_active" value="0" />
+                                    <input type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $galleryImage->is_active)) />
+                                    @error('is_active')
+                                        <span class="invalid-feedback d-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="form-group row @error('title') has-error has-feedback @enderror">
                                 <label class="col-lg-3 col-form-label text-right" for="title"> {{ __('global.title') }} <span class="text-danger">*</span></label>
                                 <div class="col-lg-8">

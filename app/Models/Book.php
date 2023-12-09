@@ -116,6 +116,6 @@ class Book extends Model implements Attachable, Commentable, Statsable
      * @return Attachment|null
      */
     public function getCoverImage() {
-        return $this->getAttachmentsByType('image')->first();
+        return $this->getFirstImage();
     }
 }

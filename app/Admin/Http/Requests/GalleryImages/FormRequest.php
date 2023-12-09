@@ -30,7 +30,16 @@ class FormRequest extends HttpFormRequest
      */
     public function rules(): array {
         return [
-            'title' => $this->getTitleRules(),
+            'is_active' => $this->getIsActiveRules(),
+            'title'     => $this->getTitleRules(),
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getIsActiveRules(): array {
+        return [
+            'required',
+            'boolean',
         ];
     }
 

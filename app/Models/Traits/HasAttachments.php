@@ -130,6 +130,17 @@ trait HasAttachments
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * Get the first image attachment record, but keep in mind
+     * that there might be no such record.
+     * 
+     * @return Attachment|null
+     */
+    private function getFirstImage(): ?Attachment {
+        return $this->getAttachmentsByType('image')->first();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * Filter all attachments by a specific MIME type.
      * 
      * @param  string $mimeType – regex supported

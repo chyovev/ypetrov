@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use File;
+use LogicException;
+use Nette\Utils\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -37,8 +39,9 @@ class Attachment extends Model
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Once an attachment record gets deleted, the referenced file
-     * should also be deleted from the server. If the attachable
-     * subfolder has no contents afterwards, delete it as well.
+     * and its thumbnail should also be deleted from the server.
+     * If the attachable subfolder has no contents afterwards,
+     * delete it as well.
      * 
      * NB! This method is called automatically by the Attachment
      *     observer.
@@ -47,6 +50,7 @@ class Attachment extends Model
      */
     public function deleteFile(): void {
         File::delete( $this->getServerFilePath() );
+        File::delete( $this->getThumbFilePath() );
 
         $this->deleteFolderIfEmpty();
     }
@@ -151,14 +155,98 @@ class Attachment extends Model
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * Check if the attachment is an image.
+     * Thumbnails are automatically created for image attachments
+     * upon attachment upload.
+     * 
+     * @return bool
+     */
+    public function isImage(): bool {
+        return $this->hasType('image');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * Check if an attachment has a specific MIME type.
      * 
      * @param string $mimeType – regex supported
+     * @return bool
      */
-    public function hasType(string $mimeType) {
+    public function hasType(string $mimeType): bool {
         $regex = '/' . preg_quote($mimeType, '/') . '/';
         
         return (bool) preg_match($regex, $this->mime_type);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Generate a thumbnail for an image.
+     * 
+     * @throws LogicException – attachment not an image
+     */
+    public function generateThumbnail(): void {
+        $sourcePath = $this->getServerFilePath();
+        $targetPath = $this->getThumbFilePath();
+
+        // resize & crop to 60x60 px
+        $image = Image::fromFile($sourcePath);
+        $image
+            ->resize(60, 60, Image::OrBigger)
+            ->crop(0, 0, 60, 60)
+            ->sharpen()
+            ->save($targetPath);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * @throws LogicException – attachment not an image
+     */
+    public function getThumbFilePath(): string {
+        $dirName   = $this->getAbsolutePath();
+        $thumbName = $this->getThumbFileName();
+
+        return $dirName . DIRECTORY_SEPARATOR . $thumbName;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * @throws LogicException – attachment not an image
+     */
+    public function getThumbURL(): ?string {
+        $dirName   = $this->getRelativePath();
+        $thumbName = $this->getThumbFileName();
+
+        return url("{$dirName}/{$thumbName}");
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * The thumb file name consists of the original file's server name
+     * followed by a '-thumb' suffix before its extension (if any).
+     * 
+     * NB! Keep in mind that this applies only to images, in all
+     *     other cases an exception will be thrown.
+     * 
+     * @throws LogicException – attachment not an image
+     * @return string
+     */
+    private function getThumbFileName(): string {
+        if ( ! $this->isImage()) {
+            throw new LogicException("Attachment #{$this->id} is not an image");
+        }
+
+        $originalFileName      = File::name($this->server_file_name);
+        $originalFileExtension = File::extension($this->server_file_name);
+
+        $thumbName = "{$originalFileName}-thumb";
+
+        // if the original file has an extension,
+        // use it for the thumb, too
+        if ($originalFileExtension) {
+            $thumbName .= ".{$originalFileExtension}";
+        }
+
+        return $thumbName;
     }
 
 }

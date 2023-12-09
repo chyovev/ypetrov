@@ -18,6 +18,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
+                                    <th width="50" class="text-center">{{ __('global.public') }}</th>
                                     <th class="text-center" width="90">{{ __('global.remarks') }}</th>
                                     <th>{{ __('global.title') }}</th>
                                     <th>{{ __('global.created_at') }}</th>
@@ -29,9 +30,17 @@
                                 <tr>
                                     <td class="text-center">{{ (($galleryImages->currentPage() - 1) * $galleryImages->perPage()) + $loop->iteration }}</td>
                                     <td class="text-center">
+                                        <span @class(['fa' => true, 'fa-check text-success' => $image->is_active, 'fa-times text-danger' => !$image->is_active])></span>
+                                    </td>
+                                    <td class="text-center">
                                         <x-admin.remarks :object="$image" />
                                     </td>
-                                    <td>{{ Str::of($image->title)->stripTags()->limit(70) }}</td>
+                                    <td>
+                                        @if ($image->getImageURL())
+                                            <a href="{{ $image->getImageURL() }}" target="_blank"><img src="{{ $image->getImageThumbURL() }}" width="20" class="img-rounded" /></a>
+                                        @endif
+                                        {{ Str::of($image->title)->stripTags()->limit(70) }}
+                                    </td>
                                     <td>{{ $image->created_at->format('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.gallery_images.edit',    ['gallery_image' => $image]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>

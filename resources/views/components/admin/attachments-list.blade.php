@@ -14,7 +14,12 @@
             @foreach ($attachments as $attachment)
             <tr>
                 <td class="text-center">{{ $loop->iteration }}</td>
-                <td>{{ $attachment->original_file_name }}</td>
+                <td>
+                    @if ($attachment->isImage())
+                        <a href="{{ $attachment->getURL() }}" target="_blank"><img src="{{ $attachment->getThumbURL() }}" width="20" class="img-rounded" /></a>
+                    @endif
+                    {{ $attachment->original_file_name }}
+                </td>
                 <td>{{ $attachment->mime_type }}</td>
                 <td>{{ $attachment->created_at->format('d.m.Y. @ H:i:s') }}</td>
                 <td>

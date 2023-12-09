@@ -79,7 +79,12 @@ class AttachableObserver
         $attachments = $files['attachments'] ?? []; 
 
         foreach ($attachments as $file) {
-            $object->uploadAttachment($file);
+            $attachment = $object->uploadAttachment($file);
+
+            // image attachments should have thumbnails
+            if ($attachment->isImage()) {
+                $attachment->generateThumbnail();
+            }
         }
     }
 

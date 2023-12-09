@@ -34,4 +34,27 @@ class GalleryImage extends Model implements Attachable
         'is_active', 'title', 'order',
     ];
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Use the URL of the first attachment of image type as a gallery
+     * image URL. Keep in mind that there might be no such item, so
+     * the URL will end up being null.
+     * 
+     * @return string|null
+     */
+    public function getImageURL(): ?string {
+        return $this->getFirstImage()?->getURL();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the first image attachment and use its thumb's URL
+     * as a gallery image's URL.
+     * 
+     * @return string|null
+     */
+    public function getImageThumbURL(): ?string {
+        return $this->getFirstImage()?->getThumbURL();
+    }
+
 }
