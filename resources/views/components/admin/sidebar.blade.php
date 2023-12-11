@@ -12,6 +12,12 @@
                     </a>
                 </li>
 
+                <li @class(['active' => Route::is('admin.static_pages')])>
+                    <a href="{{ route('admin.static_pages.edit', ['static_page' => \App\Models\StaticPage::BIOGRAPHY_ID]) }}">
+                        <i class="fa fa-home"></i> {{ __('global.biography') }}
+                    </a>
+                </li>
+
                 <li @class(['active' => Route::is('admin.users.*')])>
                     <a href="{{ route('admin.users.index') }}">
                         <i class="fa fa-users"></i> {{ __('global.users') }}

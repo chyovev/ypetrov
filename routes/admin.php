@@ -9,6 +9,7 @@ use App\Admin\Http\Controllers\GalleryImageController;
 use App\Admin\Http\Controllers\EssayController;
 use App\Admin\Http\Controllers\PoemController;
 use App\Admin\Http\Controllers\PressArticleController;
+use App\Admin\Http\Controllers\StaticPageController;
 use App\Admin\Http\Controllers\UserController;
 use App\Admin\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::name('admin')->resource('gallery_images',   GalleryImageController::class)->except(['show']);
     Route::name('admin')->resource('attachments',      AttachmentController::class)->only('destroy');
     Route::name('admin')->resource('comments',         CommentController::class)->only('destroy');
+    Route::name('admin')->resource('static_pages',     StaticPageController::class)->only('edit', 'update');
 
     // the following tables can be reordered
     Route::reorder(['books', 'essays', 'press_articles', 'videos', 'gallery_images']);

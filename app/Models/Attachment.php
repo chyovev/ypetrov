@@ -50,7 +50,10 @@ class Attachment extends Model
      */
     public function deleteFile(): void {
         File::delete( $this->getServerFilePath() );
-        File::delete( $this->getThumbFilePath() );
+
+        if ($this->isImage()) {
+            File::delete( $this->getThumbFilePath() );
+        }
 
         $this->deleteFolderIfEmpty();
     }

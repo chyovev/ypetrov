@@ -11,6 +11,12 @@ Breadcrumbs::for('admin.dashboard', function ($trail) {
     $trail->push(__('global.dashboard'));
 });
 
+// Home > [Static Page]
+Breadcrumbs::for('admin.static_pages.edit', function ($trail, $staticPage) {
+    $trail->parent('admin.home');
+    $trail->push($staticPage->title);
+});
+
 // Home > Users
 Breadcrumbs::for('admin.users.index', function ($trail) {
     $trail->parent('admin.home');

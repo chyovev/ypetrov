@@ -2,10 +2,16 @@
 
 @section('content')
 
-    <section class="text textpage" id="container">
-        <div class="content-wrapper">
-            <div class="center">Hello world!</div>
-        </div>
-    </section>
+    <main>
+
+        <section class="text textpage" id="container">
+            <div class="content-wrapper">
+                <h1>{{ $page->title }}</h1>
+
+                {!! $page->text !!}
+            </div>
+        </section>
+        
+    </main>
 
 @stop

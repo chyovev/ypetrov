@@ -4,6 +4,7 @@ return [
     'actions'                => 'Действия',
     'attachments'            => 'Прикачени файлове',
     'back'                   => 'Назад',
+    'biography'              => 'Биография',
     'books'                  => 'Стихосбирки',
     'cancel'                 => 'Отказ',
     'cannot_delete_self'     => 'Не можете да се самоизтриете!',

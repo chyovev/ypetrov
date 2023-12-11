@@ -4,6 +4,7 @@ return [
     'actions'                => 'Actions',
     'attachments'            => 'Attachments',
     'back'                   => 'Back',
+    'biography'              => 'Biography',
     'books'                  => 'Books',
     'cancel'                 => 'Cancel',
     'cannot_delete_self'     => 'You cannot delete yourself!',

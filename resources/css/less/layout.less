@@ -40,9 +40,17 @@ main {
 
 .content-wrapper {
     img {
+        max-width: 100%;
         cursor: zoom-in;
         cursor: -webkit-zoom-in;
         cursor: -moz-zoom-in;
+    }
+
+    // Bootstrap's WYSIWYG editor uses <div> as default tad
+    // instead of <p>, so margin needs to be added manually
+    > div {
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 }
 
