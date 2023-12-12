@@ -12,6 +12,7 @@ return [
     'comments'               => 'Коментари',
     'contact_messages'       => 'Контактни съобщения',
     'change_password'        => 'Смяна на паролата',
+    'chrestomathy'           => 'Христоматия',
     'country'                => 'Държава',
     'create'                 => 'Добавяне на запис',
     'creation_successful'    => 'Запис успешно добавен!',

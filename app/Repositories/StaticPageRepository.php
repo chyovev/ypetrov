@@ -18,6 +18,16 @@ class StaticPageRepository
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the chrestomathy static page.
+     * 
+     * @return StaticPage
+     */
+    public static function getChrestomathy(): StaticPage {
+        return self::getPageById(StaticPage::CHRESTOMATHY_ID);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     private static function getPageById(int $id): StaticPage {
         return StaticPage::find($id);
     }

@@ -12,21 +12,15 @@
                     </a>
                 </li>
 
-                <li @class(['active' => Route::is('admin.static_pages')])>
-                    <a href="{{ route('admin.static_pages.edit', ['static_page' => \App\Models\StaticPage::BIOGRAPHY_ID]) }}">
-                        <i class="fa fa-home"></i> {{ __('global.biography') }}
-                    </a>
-                </li>
-
                 <li @class(['active' => Route::is('admin.users.*')])>
                     <a href="{{ route('admin.users.index') }}">
                         <i class="fa fa-users"></i> {{ __('global.users') }}
                     </a>
                 </li>
 
-                <li @class(['active' => Route::is('admin.contact_messages.*')])>
-                    <a href="{{ route('admin.contact_messages.index') }}">
-                        <i class="fa fa-envelope"></i> {{ __('global.contact_messages') }}
+                <li @class(['active' => Route::is('admin.static_pages')])>
+                    <a href="{{ route('admin.static_pages.edit', ['static_page' => \App\Models\StaticPage::BIOGRAPHY_ID]) }}">
+                        <i class="fa fa-home"></i> {{ __('global.biography') }}
                     </a>
                 </li>
 
@@ -40,15 +34,9 @@
                     </ul>
                 </li>
 
-                <li @class(['active' => Route::is('admin.essays.*')])>
-                    <a href="{{ route('admin.essays.index') }}">
-                        <i class="fa fa-pencil-square-o"></i> {{ __('global.essays') }}
-                    </a>
-                </li>
-
-                <li @class(['active' => Route::is('admin.press_articles.*')])>
-                    <a href="{{ route('admin.press_articles.index') }}">
-                        <i class="fa fa-newspaper-o"></i> {{ __('global.press_articles') }}
+                <li @class(['active' => Route::is('admin.gallery_images.*')])>
+                    <a href="{{ route('admin.gallery_images.index') }}">
+                        <i class="fa fa-picture-o"></i> {{ __('global.gallery') }}
                     </a>
                 </li>
 
@@ -58,9 +46,27 @@
                     </a>
                 </li>
 
-                <li @class(['active' => Route::is('admin.gallery_images.*')])>
-                    <a href="{{ route('admin.gallery_images.index') }}">
-                        <i class="fa fa-picture-o"></i> {{ __('global.gallery') }}
+                <li @class(['active' => Route::is('admin.press_articles.*')])>
+                    <a href="{{ route('admin.press_articles.index') }}">
+                        <i class="fa fa-newspaper-o"></i> {{ __('global.press_articles') }}
+                    </a>
+                </li>
+
+                <li @class(['active' => Route::is('admin.essays.*')])>
+                    <a href="{{ route('admin.essays.index') }}">
+                        <i class="fa fa-pencil-square-o"></i> {{ __('global.essays') }}
+                    </a>
+                </li>
+
+                <li @class(['active' => Route::is('admin.static_pages')])>
+                    <a href="{{ route('admin.static_pages.edit', ['static_page' => \App\Models\StaticPage::CHRESTOMATHY_ID]) }}">
+                        <i class="fa fa-star"></i> {{ __('global.chrestomathy') }}
+                    </a>
+                </li>
+
+                <li @class(['active' => Route::is('admin.contact_messages.*')])>
+                    <a href="{{ route('admin.contact_messages.index') }}">
+                        <i class="fa fa-envelope"></i> {{ __('global.contact_messages') }}
                     </a>
                 </li>
 

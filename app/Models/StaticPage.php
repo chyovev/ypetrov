@@ -16,7 +16,8 @@ class StaticPage extends Model implements Attachable, Statsable
     /**
      * All static pages with their respective IDs.
      */
-    const BIOGRAPHY_ID = 1;
+    const BIOGRAPHY_ID    = 1,
+          CHRESTOMATHY_ID = 2;
           
 
     use HasFactory;

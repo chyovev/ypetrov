@@ -49,5 +49,8 @@
         </li>
         @endif
 
+        <li @class(['active' => request()->route()->named('chrestomathy')])><a href="{{ route('chrestomathy') }}">Христоматия</a></li>
+
+
     </ul>
 </nav>

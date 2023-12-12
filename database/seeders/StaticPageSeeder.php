@@ -48,6 +48,7 @@ class StaticPageSeeder extends Seeder
     private function getStaticPagesIds(): array {
         return [
             StaticPage::BIOGRAPHY_ID,
+            StaticPage::CHRESTOMATHY_ID,
         ];
     }
 

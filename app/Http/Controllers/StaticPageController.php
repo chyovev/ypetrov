@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\StaticPageRepository;
 
-class HomeController extends Controller
+class StaticPageController extends Controller
 {
 
     ///////////////////////////////////////////////////////////////////////////
@@ -18,12 +18,21 @@ class HomeController extends Controller
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function index() {
+    public function home() {
         $data = [
             'page' => $this->repository->getBiography(),
         ];
 
-        return view('public.home', $data);
+        return view('public.static_pages.view', $data);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function chrestomathy() {
+        $data = [
+            'page' => $this->repository->getChrestomathy(),
+        ];
+
+        return view('public.static_pages.view', $data);
     }
 
 }

@@ -12,6 +12,7 @@ return [
     'comments'               => 'Comments',
     'contact_messages'       => 'Contact Messages',
     'change_password'        => 'Change password',
+    'chrestomathy'           => 'Chrestomathy',
     'country'                => 'Country',
     'create'                 => 'Create',
     'creation_successful'    => 'Object successfully created!',
