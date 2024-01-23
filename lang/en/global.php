@@ -11,6 +11,7 @@ return [
     'cms'                    => 'Content Management System',
     'comments'               => 'Comments',
     'contact_messages'       => 'Contact Messages',
+    'contact_message_sent'   => 'Your contact message has been successfully saved!',
     'change_password'        => 'Change password',
     'chrestomathy'           => 'Chrestomathy',
     'country'                => 'Country',

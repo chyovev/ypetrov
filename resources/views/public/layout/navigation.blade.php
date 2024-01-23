@@ -51,6 +51,7 @@
 
         <li @class(['active' => request()->route()->named('chrestomathy')])><a href="{{ route('chrestomathy') }}">Христоматия</a></li>
 
+        <li @class(['active' => request()->route()->named('contact')])><a href="{{ route('contact') }}">Контакт</a></li>
 
     </ul>
 </nav>

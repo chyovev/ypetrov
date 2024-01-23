@@ -31,7 +31,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_read')->default(false);
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->text('message');
             $table->string('ip_hash', 64); // the IP is hashed using the sha256 altorithm which is exactly 64 characters long
             $table->timestamps();

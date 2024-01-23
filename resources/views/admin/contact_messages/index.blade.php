@@ -28,7 +28,13 @@
                                 <tr @class(['font-weight-bold' => $message->isUnread()])>
                                     <td class="text-center">{{ $message->id }}</td>
                                     <td>{{ Str::of($message->name)->limit(30) }}</td>
-                                    <td><a href="mailto:{{ $message->email }}">{{ Str::of($message->email)->limit(30) }}</a></td>
+                                    <td>
+                                        @if ($message->email)
+                                            <a href="mailto:{{ $message->email }}">{{ Str::of($message->email)->limit(30) }}</a>
+                                        @else
+                                            &ndash;
+                                        @endif
+                                    </td>
                                     <td>{{ Str::of($message->message)->stripTags()->limit(40) }}</td>
                                     <td class="text-center">
                                         <x-admin.flag :countryCode="$message->visitor->country_code" />

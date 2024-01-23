@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -27,4 +30,70 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Overwrite the parent render method for ValidationException
+     */
+    public function render($request, Throwable $e) {
+        if ($this->shouldServeJson($request)) {
+            return $this->serveJsonError($e);
+        }
+        
+        return parent::render($request, $e);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Exceptions which occur on API routes should be transformed
+     * to a JSON response.
+     * 
+     * @param  $request – request which lead to the exception
+     * @return bool
+     */
+    private function shouldServeJson($request): bool {
+        return $request->is('api/*');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Extract all errors from the exception and pass them to the
+     * macro 'error' function defined in the response service provider.
+     * 
+     * @param  Throwable $e
+     * @return Response
+     */
+    private function serveJsonError(Throwable $e) {
+        // form request validation
+        if ($e instanceof ValidationException) {
+            $errors = $e->errors();
+            $code   = Response::HTTP_BAD_REQUEST;
+        }
+
+        // throttle requests or general abort() 
+        elseif ($e instanceof HttpException) {
+            $errors = $this->getErrorMessage($e);
+            $code   = $e->getStatusCode();
+        }
+        
+        // all other cases
+        else {
+            $errors = $this->getErrorMessage($e);
+            $code   = Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        return response()->error($errors, $code);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Extract the error message from an exception and
+     * return it as an array using the 'generic' key.
+     * 
+     * @return string[]
+     */
+    private function getErrorMessage(Throwable $e): array {
+        return ['generic' => $e->getMessage()];
+    }
+
 }

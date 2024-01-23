@@ -11,6 +11,7 @@ return [
     'cms'                    => 'Административен панел',
     'comments'               => 'Коментари',
     'contact_messages'       => 'Контактни съобщения',
+    'contact_message_sent'   => 'Съобщението ви е изпратено успешно!',
     'change_password'        => 'Смяна на паролата',
     'chrestomathy'           => 'Христоматия',
     'country'                => 'Държава',

@@ -5,7 +5,6 @@ var App = {
     animateScrollInProgress: false,
     swiperObject: null,
     isAjaxInProgress: false,
-    genericErrorMessage: 'Възникна грешка. Моля, опитайте по-късно.',
     
     ///////////////////////////////////////////////////////
     init: function() {
@@ -445,8 +444,8 @@ var App = {
 
         // reset all previous errors on submit
         $('.error-field').removeClass('error-field');
-        $('.success-message').slideUp('fast');
-        $('.error-message').fadeOut('fast');
+        $('.success-message').hide();
+        $('.error-message').hide();
 
         return $.ajax({
             url:      url,
@@ -455,66 +454,38 @@ var App = {
             dataType: 'JSON',
 
             success: function(response) {
-
-                // if the status is false, there were errors – show them
-                if ( ! response.status) {
-
-                    // if no errors are shown, use the generic one
-                    if ( ! response.errors) {
-                        $('.error-message').html(App.genericErrorMessage).addClass('center').fadeIn();
-                    }
-
-                    // if there's a general error, it has higher priority; don't show other errors
-                    else if ('general' in response.errors) {
-                        $('.error-message').html(response.errors.general[0]).addClass('center').fadeIn();
-                    }
-
-                    // otherwise mark respective fields as erroneous
-                    // and show all errors above the submit button
-                    else {
-                        // all error messages are stored in an array which then gets joined
-                        var errorMsgs = [];
-                        $.each(response.errors, function(field, errors) {
-                            $('#' + field).addClass('error-field');
-                            errorMsgs.push(errors);
-                        });
-
-                        // show all error messages on new lines
-                        $('.error-message').html(errorMsgs.join('<br />')).removeClass('center').fadeIn();
-                    }
-                }
-
-                // if the status was true, the request was successful
-                else {
-                    // show success message
-                    $('.error-message').hide();
-                    $('.success-message').html(response.success_msg).fadeIn();
-
-                    // if the request was for new comment,
-                    // reset form and display new comment
-                    if (response.type === 'comment') {
-                        App.resetFormFields($('.comment-form'));
-                        App.showNewlyGeneratedComment(response.html);
-                    }
-
-                    // if the request was for new contact message,
-                    // keep the form and reset all its fields
-                    else if (response.type === 'contact_message') {
-                        App.resetFormFields($('.contact-form'));
-                    }
-
-                    // reset captcha
-                    $('.captcha').trigger('click');
-                }
+                App.processSuccessResponse(response);
             },
 
-            // on server error show a generic message (the error was logged)
-            error: function() {
-                $('.error-message').html(App.genericErrorMessage).addClass('center').fadeIn();
+            error: function(response) {
+                App.processErrorResponse(response.responseJSON);
             }
         }).always(function() {
             App.isAjaxInProgress = false;
         });
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    processSuccessResponse: function(response) {
+        $('.success-message').html(response.message).fadeIn();
+
+        App.resetFormFields();
+
+        // reset captcha
+        $('.captcha').trigger('click');
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    processErrorResponse: function(response) {
+        var errorMsgs = [];
+
+        $.each(response.errors, function(field, errors) {
+            $('#' + field).addClass('error-field');
+            errorMsgs.push(errors);
+        });
+
+        // show all error messages on new lines
+        $('.error-message').html(errorMsgs.join('<br />')).removeClass('center').fadeIn();
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -540,8 +511,8 @@ var App = {
     },
 
     ///////////////////////////////////////////////////////////////////////////
-    resetFormFields: function($form) {
-        $form.find('input[type="text"], textarea').each(function() {
+    resetFormFields: function() {
+        $('form:not(#search)').find('input[type="text"], textarea').each(function() {
             $(this).val('');
         });
     },

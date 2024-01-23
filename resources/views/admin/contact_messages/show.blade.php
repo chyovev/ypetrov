@@ -35,7 +35,13 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label text-right">{{ __('global.email') }}</label>
                             <div class="col-lg-8 m-t-8">
-                                <p class="form-control-static"><a href="mailto:{{ $message->email }}">{{ $message->email }}</a></p>
+                                <p class="form-control-static">
+                                    @if ($message->email)
+                                        <a href="mailto:{{ $message->email }}">{{ $message->email }}</a>
+                                    @else
+                                        &ndash;
+                                    @endif
+                                </p>
                             </div>
                         </div>
 
