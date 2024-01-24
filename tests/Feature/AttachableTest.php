@@ -5,21 +5,24 @@ namespace Tests\Feature;
 use File;
 use Tests\TestCase;
 use App\Models\Book;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AttachableTest extends TestCase
 {
 
     /**
-     * Refresh the database before executing all
-     * the tests to make sure no records are present.
+     * Wrap each test in a transaction so that
+     * data is not persisted to the database.
      */
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     ///////////////////////////////////////////////////////////////////////////
     public function tearDown(): void {
         $this->deleteTestingFolder();
+
+        // call the parent tearDown to close any hanging transactions
+        parent::tearDown();
     }
 
     ///////////////////////////////////////////////////////////////////////////

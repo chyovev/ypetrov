@@ -8,7 +8,7 @@
             <a href="javascript: void(0);">Творчество</a>
             <ul>
                 @foreach ($books as $navBook)
-                    <li><a href="{{ route('book', ['bookSlug' => $navBook->slug]) }}" @class(['active' => (request()->route()->named('book', 'poem') && $book->slug === $navBook->slug)])>{{ $navBook->title }} ({{ $navBook->publish_year }})</a></li>
+                    <li><a href="{{ route('book', ['bookSlug' => $navBook->slug]) }}" @class(['active' => (request()->route()->named('book', 'poem') && isset($book) && $book->slug === $navBook->slug)])>{{ $navBook->title }} ({{ $navBook->publish_year }})</a></li>
                 @endforeach
             </ul>
         </li>
@@ -21,7 +21,7 @@
             <a href="javascript: void(0);">Видео</a>
             <ul>
                 @foreach ($videos as $navVideo)
-                    <li><a href="{{ route('video', ['slug' => $navVideo->slug]) }}" @class(['active' => (request()->route()->named('video') && $video->slug === $navVideo->slug)])>{{ $navVideo->title }}</a></li>
+                    <li><a href="{{ route('video', ['slug' => $navVideo->slug]) }}" @class(['active' => (request()->route()->named('video') && isset($video) && $video->slug === $navVideo->slug)])>{{ $navVideo->title }}</a></li>
                 @endforeach
             </ul>
         </li>
@@ -32,7 +32,7 @@
             <a href="javascript: void(0);">Преса</a>
             <ul>
                 @foreach ($press as $navArticle)
-                    <li><a href="{{ route('press', ['slug' => $navArticle->slug]) }}" @class(['active' => (request()->route()->named('press') && $article->slug === $navArticle->slug)])>{{ $navArticle->title }}</a></li>
+                    <li><a href="{{ route('press', ['slug' => $navArticle->slug]) }}" @class(['active' => (request()->route()->named('press') && isset($article) && $article->slug === $navArticle->slug)])>{{ $navArticle->title }}</a></li>
                 @endforeach
             </ul>
         </li>
@@ -43,7 +43,7 @@
             <a href="javascript: void(0);">За Йосиф Петров</a>
             <ul>
                 @foreach ($essays as $navEssay)
-                    <li><a href="{{ route('essay', ['slug' => $navEssay->slug]) }}" @class(['active' => (request()->route()->named('essay') && $essay->slug === $navEssay->slug)])>{{ $navEssay->title }}</a></li>
+                    <li><a href="{{ route('essay', ['slug' => $navEssay->slug]) }}" @class(['active' => (request()->route()->named('essay') && isset($essay) && $essay->slug === $navEssay->slug)])>{{ $navEssay->title }}</a></li>
                 @endforeach
             </ul>
         </li>

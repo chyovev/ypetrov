@@ -19,8 +19,8 @@ class ContactMessageFactory extends Factory
     public function definition(): array {
         return [
             'is_read' => fake()->boolean(10),
-            'name'    => fake()->optional()->name(),
-            'email'   => fake()->email(),
+            'name'    => fake()->name(),
+            'email'   => fake()->optional()->email(),
             'message' => fake()->paragraph(),
         ];
     }

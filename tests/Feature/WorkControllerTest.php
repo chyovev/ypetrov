@@ -4,11 +4,19 @@ namespace Tests\Feature;
 
 use App\Models\Book;
 use App\Models\Poem;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 class WorkControllerTest extends TestCase
 {
+
+    /**
+     * Wrap each test in a transaction so that
+     * data is not persisted to the database.
+     */
+    use DatabaseTransactions;
+
 
     ///////////////////////////////////////////////////////////////////////////
     /**
