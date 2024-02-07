@@ -59,6 +59,12 @@ class RegisterVisitor
     private function fetchVisitor(string $ip): Visitor {
         $visitor = Visitor::hasIp($ip)->firstOrFail();
         
+        // if the visitor has no country code (initial registration
+        // attepmt was unsuccessful), try to detect it now
+        if (is_null($visitor->country_code)) {
+            $visitor->updateQuietly(['country_code' => $this->getVisitorCountryCode($ip)]);
+        }
+        
         $visitor->updateLastVisitDate();
         
         return $visitor;
@@ -93,6 +99,12 @@ class RegisterVisitor
      * @return string|null – two-letter country code
      */
     private function getVisitorCountryCode(string $ip): ?string {
+        // avoid API calls while in a unit test
+        // and simply use a placeholder value
+        if (app()->runningUnitTests()) {
+            return '--';
+        }
+
         try {
             $locator = new IPLocator($ip);
 

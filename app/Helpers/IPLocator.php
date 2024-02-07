@@ -119,9 +119,9 @@ class IPLocator
      * relevant properties from the response.
      * For this to work, the user should use undefined getter
      * methods starting with the word "get", followed by the
-     * of the property, e.g. getCountryCode(). 
+     * name of the property, e.g. getCountryCode(). 
      * If the method does not start with "get" or is trying
-     * to retrieve a property wihch has not even been fetched
+     * to retrieve a property which has not even been fetched
      * from the API, an exception will be thrown.
      * 
      * @throws BadMethodCallException – incorrect method name
