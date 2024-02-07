@@ -22,6 +22,8 @@ trait HasStats
 
     use CustomHasEvents;
 
+    use IsInteractive;
+
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Each statsable object can have a single stats record

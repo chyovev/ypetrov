@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @see \App\Observers\StatsableObserver
  */
 
-interface Statsable
+interface Statsable extends Interactive
 {
 
     ///////////////////////////////////////////////////////////////////////////

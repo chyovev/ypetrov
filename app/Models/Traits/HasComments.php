@@ -21,6 +21,8 @@ trait HasComments
 
     use CustomHasEvents;
 
+    use IsInteractive;
+
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Each commentable object can have multiple comments

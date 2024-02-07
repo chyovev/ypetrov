@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @see \App\Observers\CommentableObserver
  */
 
-interface Commentable
+interface Commentable extends Interactive
 {
 
     ///////////////////////////////////////////////////////////////////////////
