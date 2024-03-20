@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response;
 use Throwable;
+use Log;
 
 class Handler extends ExceptionHandler
 {
@@ -36,11 +39,33 @@ class Handler extends ExceptionHandler
      * Overwrite the parent render method for ValidationException
      */
     public function render($request, Throwable $e) {
+        $this->rephraseException($e);
+
         if ($this->shouldServeJson($request)) {
             return $this->serveJsonError($e);
         }
         
         return parent::render($request, $e);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Some exceptions need to be 'rephrased', i.e. rethrown as another
+     * exception class in order to be handled correctly down the line.
+     * 
+     * @throws HttpException
+     * @param  Throwable $e
+     */
+    private function rephraseException(Throwable $e): void {
+        if ($e instanceof ModelNotFoundException || $e instanceof IdentifierException) {
+            // if an interactive object's identifier could not be
+            // decoded for some reason, log the exception it its entirety
+            if ($e instanceof IdentifierException) {
+                Log::info($e);
+            }
+
+            abort(HttpResponse::HTTP_NOT_FOUND, 'Resource not found');
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

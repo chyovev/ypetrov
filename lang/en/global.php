@@ -10,6 +10,7 @@ return [
     'cannot_delete_self'     => 'You cannot delete yourself!',
     'cms'                    => 'Content Management System',
     'comments'               => 'Comments',
+    'comment_added'          => 'Your comment has been successfully submitted!',
     'contact_messages'       => 'Contact Messages',
     'contact_message_sent'   => 'Your contact message has been successfully saved!',
     'change_password'        => 'Change password',

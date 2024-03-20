@@ -2,6 +2,8 @@
 
 namespace App\Models\Interfaces;
 
+use App\Models\Comment;
+use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -26,4 +28,10 @@ interface Commentable extends Interactive
      * @return MorphMany
      */
     public function comments(): MorphMany;
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function addComment(Visitor $visitor, string $name, string $message): Comment;
+
+
 }

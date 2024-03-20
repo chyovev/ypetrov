@@ -1,5 +1,6 @@
 <?php
 
+use App\API\Http\Controllers\CommentController;
 use App\API\Http\Controllers\ContactController;
 
 /*
@@ -14,3 +15,4 @@ use App\API\Http\Controllers\ContactController;
 */
 
 Route::post('/contact', [ContactController::class, 'create_contact_message'])->name('api.contact');
+Route::post('/comments/{id}', [CommentController::class, 'create'])->name('api.comment');

@@ -1,0 +1,108 @@
+<?php
+
+namespace App\API\Http\Requests;
+
+use App\Models\Comment;
+use App\Models\Visitor;
+use App\Exceptions\IdentifierException;
+use App\Models\Interfaces\Commentable;
+use App\Models\Interfaces\Interactive;
+use App\API\Http\Requests\Traits\IsInteractive;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class CommentRequest extends FormRequest
+{
+
+    /**
+     * Trait to fetch the interactive object
+     * from the request.
+     */
+    use IsInteractive;
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Always allow the store request to go through.
+     * 
+     * @return bool
+     */
+    public function authorize(): bool {
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     */
+    public function rules(): array {
+        return [
+            'name'    => $this->getNameRules(),
+            'message' => $this->getMessageRules(),
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getNameRules(): array {
+        return [
+            'required',
+            'max:255',
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function getMessageRules(): array {
+        return [
+            'required',
+            'max:65535',
+        ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Create a comment using the currently registered visitor as its author.
+     * 
+     * @param  Visitor $visitor
+     * @return Comment
+     */
+    public function createComment(Visitor $visitor): Comment {
+        $object  = $this->getCommentableObject();
+        $name    = $this->validated('name');
+        $message = $this->validated('message');
+
+        return $object->addComment($visitor, $name, $message);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Try to match the encoded request identifier to a commentable
+     * object and make sure said object can be commented on.
+     * 
+     * @throws IdentifierException
+     * @throws ModelNotFoundException
+     * @return Commentable
+     */
+    private function getCommentableObject(): Commentable {
+        $object = $this->getInteractiveObject();
+
+        $this->validateObjectCommentable($object);
+
+        return $object;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * @param  Interactive $object
+     * @throws IdentifierException
+     */
+    private function validateObjectCommentable(Interactive $object): void {
+        $class = class_basename($object);
+
+        if ( ! ($object instanceof Commentable)) {
+            throw new IdentifierException("Interactive object '{$class}' is not commentable");
+        }
+    }
+
+}
