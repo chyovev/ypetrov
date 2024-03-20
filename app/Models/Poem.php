@@ -44,6 +44,16 @@ class Poem extends Model implements Commentable, Statsable
         'is_active', 'title', 'slug', 'dedication', 'text', 'use_monospace_font',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'is_active'          => 'boolean',
+        'use_monospace_font' => 'datetime',
+    ];
+
     ///////////////////////////////////////////////////////////////////////////
     /**
      * A book usually consists of multiple poems, and a single poem
@@ -59,6 +69,18 @@ class Poem extends Model implements Commentable, Statsable
             ->withPivot('order')
             ->orderBy('publish_year', 'asc')
             ->withTimestamps();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A poem can be commented on if it's marked as active
+     * AND if at least one of the books it belongs to is
+     * also marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeCommentedOn(): bool {
+        return $this->isActive() && $this->books()->active()->exists();
     }
 
 }

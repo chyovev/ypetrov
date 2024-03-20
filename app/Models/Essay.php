@@ -51,5 +51,24 @@ class Essay extends Model implements Attachable, Commentable, Statsable
     public $fillable = [
         'is_active', 'title', 'slug', 'text', 'order',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * An essay can be commented on if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeCommentedOn(): bool {
+        return $this->isActive();
+    }
     
 }

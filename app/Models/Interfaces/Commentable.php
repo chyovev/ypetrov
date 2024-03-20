@@ -31,7 +31,25 @@ interface Commentable extends Interactive
 
 
     ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Create a new comment for the commentable object.
+     * 
+     * @param  Visitor $visitor – registered visitor (author)
+     * @param  string  $name    – author of comment
+     * @param  string  $message – body of comment
+     * @return Comment
+     */
     public function addComment(Visitor $visitor, string $name, string $message): Comment;
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check if a commentable object can actually be commented on.
+     * (Usually the activeness state of the object is verified).
+     * 
+     * @return bool
+     */
+    public function canBeCommentedOn(): bool;
 
 
 }

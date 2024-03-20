@@ -37,7 +37,7 @@ class BookRepository
             ->where('slug', $slug)
             ->with([
                 'poems' => function($q) {
-                    $q->where('is_active', true);
+                    $q->active();
                 },
             ])
             ->firstOrFail();

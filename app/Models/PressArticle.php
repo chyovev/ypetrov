@@ -62,4 +62,14 @@ class PressArticle extends Model implements Attachable, Commentable, Statsable
         'publish_date' => 'datetime',
     ];
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A press article can be commented on if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeCommentedOn(): bool {
+        return $this->isActive();
+    }
+
 }

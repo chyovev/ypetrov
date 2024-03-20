@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Testing\TestResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class CommentControllerTest extends TestCase
@@ -30,12 +31,17 @@ class CommentControllerTest extends TestCase
 
         $response = $this->testCommentURL($identifier, $data);
 
-        $response->assertStatus(201);
+        $response->assertStatus(Response::HTTP_CREATED);
     }
 
     ///////////////////////////////////////////////////////////////////////////
     private function createActiveBook(): Book {
         return Book::factory()->active()->create();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    private function createInactiveBook(): Book {
+        return Book::factory()->inactive()->create();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -65,7 +71,7 @@ class CommentControllerTest extends TestCase
 
         $response = $this->testCommentURL($identifier, $data);
 
-        $response->assertStatus(400);
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -80,7 +86,7 @@ class CommentControllerTest extends TestCase
         $data       = $this->getCorrectSampleData();
 
         $response   = $this->testCommentURL($identifier, $data);
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -96,7 +102,7 @@ class CommentControllerTest extends TestCase
 
         $response = $this->testCommentURL($identifier, $data);
 
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -114,6 +120,24 @@ class CommentControllerTest extends TestCase
 
         $response = $this->testCommentURL($identifier, $data);
 
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * If the main object that is being commented on cannot
+     * in fact be commented on (i.e. it's marked as inactive),
+     * a not-found response should be served – the end user
+     * should not know that the resource actually exists but
+     * is marked as inactive.
+     */
+    public function test_commenting_on_inactive_object(): void {
+        $book       = $this->createInactiveBook();
+        $identifier = $book->getInteractionId();
+        $data       = $this->getCorrectSampleData();
+
+        $response = $this->testCommentURL($identifier, $data);
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 }

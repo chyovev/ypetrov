@@ -65,6 +65,16 @@ class Video extends Model implements Attachable, Commentable, Statsable
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * A video can be commented on if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeCommentedOn(): bool {
+        return $this->isActive();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * Normally each video should have a static image which
      * will be used as a video cover.
      * 

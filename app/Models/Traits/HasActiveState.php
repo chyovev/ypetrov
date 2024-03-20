@@ -23,4 +23,15 @@ trait HasActiveState
         $query->where('is_active', true);
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A property wrapper method to check if the current
+     * object is marked as active.
+     * 
+     * @return bool
+     */
+    public function isActive(): bool {
+        return $this->is_active;
+    }
+
 }

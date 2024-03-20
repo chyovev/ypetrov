@@ -94,6 +94,9 @@ class CommentRequest extends FormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * An object is commentable if it implements the Commentable
+     * interface, but also if commenting is allowed on it.
+     * 
      * @param  Interactive $object
      * @throws IdentifierException
      */
@@ -102,6 +105,10 @@ class CommentRequest extends FormRequest
 
         if ( ! ($object instanceof Commentable)) {
             throw new IdentifierException("Interactive object '{$class}' is not commentable");
+        }
+
+        if ( ! $object->canBeCommentedOn()) {
+            throw new IdentifierException("Object '{$class}' (#{$object->id}) cannot be commented on");
         }
     }
 
