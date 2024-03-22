@@ -9,6 +9,7 @@ use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -85,13 +86,14 @@ class Book extends Model implements Attachable, Commentable, Statsable
      * Using a poem's slug, try to find it in the collection
      * of associated poems.
      * 
+     * @throws ItemNotFoundException
      * @param  string $slug
-     * @return Poem|null
+     * @return Poem
      */
-    public function getPoemBySlug(string $slug): ?Poem {
+    public function getPoemBySlug(string $slug): Poem {
         return $this->poems->filter(function(Poem $poem) use($slug) {
             return ($poem->slug === $slug) ;
-        })->first();
+        })->firstOrFail();
     }
 
     ///////////////////////////////////////////////////////////////////////////

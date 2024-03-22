@@ -30,8 +30,11 @@ class VideoController extends Controller
      * @param string $slug
      */
     public function view(string $slug) {
+        $video = $this->repository->getBySlug($slug);
+        $video->addImpression();
+        
         $data = [
-            'video' => $this->repository->getBySlug($slug),
+            'video' => $video,
         ];
 
         return view('public.videos.view', $data);

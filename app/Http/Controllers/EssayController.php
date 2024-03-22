@@ -19,8 +19,11 @@ class EssayController extends Controller
     
     ///////////////////////////////////////////////////////////////////////////
     public function view(string $slug) {
+        $essay = $this->repository->getBySlug($slug);
+        $essay->addImpression();
+
         $data = [
-            'essay' => $this->repository->getBySlug($slug),
+            'essay' => $essay,
         ];
 
         return view('public.essays.view', $data);

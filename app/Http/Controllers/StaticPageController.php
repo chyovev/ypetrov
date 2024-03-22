@@ -19,8 +19,11 @@ class StaticPageController extends Controller
 
     ///////////////////////////////////////////////////////////////////////////
     public function home() {
+        $page = $this->repository->getBiography();
+        $page->addImpression();
+
         $data = [
-            'page' => $this->repository->getBiography(),
+            'page' => $page,
         ];
 
         return view('public.static_pages.view', $data);
@@ -28,8 +31,11 @@ class StaticPageController extends Controller
 
     ///////////////////////////////////////////////////////////////////////////
     public function chrestomathy() {
+        $page = $this->repository->getChrestomathy();
+        $page->addImpression();
+        
         $data = [
-            'page' => $this->repository->getChrestomathy(),
+            'page' => $page,
         ];
 
         return view('public.static_pages.view', $data);

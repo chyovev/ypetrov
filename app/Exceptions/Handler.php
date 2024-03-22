@@ -8,8 +8,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response;
+use Illuminate\Support\ItemNotFoundException;
 use Throwable;
-use Log;
 
 class Handler extends ExceptionHandler
 {
@@ -22,6 +22,15 @@ class Handler extends ExceptionHandler
         'current_password',
         'password',
         'password_confirmation',
+    ];
+
+    /**
+     * A list of the exception types that are not reported.
+     *
+     * @var array<int, class-string<\Throwable>>
+     */
+    protected $dontReport = [
+        ItemNotFoundException::class,
     ];
 
     /**
@@ -57,9 +66,22 @@ class Handler extends ExceptionHandler
      * @param  Throwable $e
      */
     private function rephraseException(Throwable $e): void {
-        if ($e instanceof ModelNotFoundException || $e instanceof IdentifierException) {
+        if ($this->shouldRephraseAsNotFound($e)) {
             abort(HttpResponse::HTTP_NOT_FOUND, 'Resource not found');
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * The following exceptions should be rethrown as a not-found
+     * exception.
+     */
+    private function shouldRephraseAsNotFound(Throwable $e): bool {
+        return (
+               $e instanceof ModelNotFoundException // missing record in database
+            || $e instanceof ItemNotFoundException  // missing record in collection (Book → Poem) 
+            || $e instanceof IdentifierException    // incorrect interaction ID
+        );
     }
 
     ///////////////////////////////////////////////////////////////////////////

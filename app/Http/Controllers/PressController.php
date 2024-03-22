@@ -19,8 +19,11 @@ class PressController extends Controller
     
     ///////////////////////////////////////////////////////////////////////////
     public function view(string $slug) {
+        $article = $this->repository->getBySlug($slug);
+        $article->addImpression();
+
         $data = [
-            'article' => $this->repository->getBySlug($slug),
+            'article' => $article,
         ];
 
         return view('public.press.view', $data);
