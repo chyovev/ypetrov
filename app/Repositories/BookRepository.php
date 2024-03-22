@@ -29,7 +29,7 @@ class BookRepository
      * 
      * @throws ModelNotFoundException – no such (active) book
      * @param  string $slug
-     * @return self
+     * @return Book
      */
     public static function getBySlugWithPoems(string $slug): Book {
         return Book::query()

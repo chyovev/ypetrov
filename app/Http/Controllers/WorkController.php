@@ -31,8 +31,11 @@ class WorkController extends Controller
      * @param  string $bookSlug
      */
     public function get_book(string $bookSlug) {
+        $book = $this->bookRepository->getBySlugWithPoems($bookSlug);
+        $book->addImpression();
+
         $data = [
-            'book' => $this->bookRepository->getBySlugWithPoems($bookSlug),
+            'book' => $book,
         ];
 
         return view('public.works.book', $data);

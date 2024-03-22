@@ -5,6 +5,7 @@ namespace App\Models\Traits;
 use LogicException;
 use App\Models\Interfaces\Statsable;
 use App\Models\Stats;
+use App\Models\Visitor;
 use App\Observers\StatsableObserver;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
@@ -57,6 +58,42 @@ trait HasStats
         $this->validateModelImplementsInterface(Statsable::class);
 
         $this->registerObserverToModel(StatsableObserver::class);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Adding an impression to a statsable object consists of three actions:
+     * 
+     *     1. Find (or create) the morph record for the object
+     *     2. Increase its total_impressions counter
+     *     3. Actually create an impression record for the visitor
+     *        doing the request (which is registered as an instance)
+     * 
+     * @return void
+     */
+    public function addImpression(): void {
+        $stats = $this->stats()->firstOrCreate();
+        $stats->increment('total_impressions');
+
+        $visitor    = app(Visitor::class);
+        $impression = $stats->impressions()->make();
+        $impression->visitor()->associate($visitor);
+        $impression->save();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check how many total impressions a statsable object has.
+     * 
+     * NB! If the stats association is loaded as a property,
+     *     it would be stored in memory for the main object,
+     *     resulting in inaccurate total_impressions value
+     *     in case data gets altered inbetween.
+     * 
+     * @return int
+     */
+    public function getTotalImpressions(): int {
+        return $this->stats()->first()->total_impressions ?? 0;
     }
 
 }

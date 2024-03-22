@@ -58,12 +58,6 @@ class Handler extends ExceptionHandler
      */
     private function rephraseException(Throwable $e): void {
         if ($e instanceof ModelNotFoundException || $e instanceof IdentifierException) {
-            // if an interactive object's identifier could not be
-            // decoded for some reason, log the exception it its entirety
-            if ($e instanceof IdentifierException) {
-                Log::info($e);
-            }
-
             abort(HttpResponse::HTTP_NOT_FOUND, 'Resource not found');
         }
     }
