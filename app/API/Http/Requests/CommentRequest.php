@@ -10,6 +10,7 @@ use App\Models\Interfaces\Interactive;
 use App\API\Http\Requests\Traits\IsInteractive;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CommentRequest extends FormRequest
 {
@@ -64,11 +65,21 @@ class CommentRequest extends FormRequest
     /**
      * Create a comment using the currently registered visitor as its author.
      * 
+     * @throws IdentifierException    – invalid commentable object
+     * @throws ModelNotFoundException – missing/inactive commentable object
+     * @throws HttpException          – too many consecutive requests
      * @param  Visitor $visitor
      * @return Comment
      */
     public function createComment(Visitor $visitor): Comment {
         $object  = $this->getCommentableObject();
+
+        // as a spam protection, consecutive *successful* requests
+        // should be discarded for a certain period of time;
+        // there's no limit on the unsuccessful requests, they would
+        // never reach this part of the code
+        $this->discardConsecutiveRequests("add-comment", __('global.comment_limit'), 1);
+
         $name    = $this->validated('name');
         $message = $this->validated('message');
 

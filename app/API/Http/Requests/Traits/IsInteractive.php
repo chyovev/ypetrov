@@ -2,10 +2,13 @@
 
 namespace App\API\Http\Requests\Traits;
 
+use RateLimiter;
 use App\Exceptions\IdentifierException;
 use App\Models\Interfaces\Interactive;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * This trait should be used by the form requests which
@@ -82,6 +85,29 @@ trait IsInteractive
         }
         catch (DecryptException $e) {
             throw new IdentifierException("Identifier '{$this->id}' could not be decrypted");
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Consecutive successful requests to the same interactive endpoint
+     * should be discarded in case the limit is reached as a protection
+     * against spam.
+     * 
+     * @param string $key             – endpoint identifier
+     * @param string $throttleMessage – response message in case of throttle 
+     * @param int    $limit           – limit of successful requests
+     * @param int    $decaySeconds    – how long to keep further requests blocked
+     * @return void
+     */
+    protected function discardConsecutiveRequests(
+        string $key,
+        string $throttleMessage,
+        int $limit,
+        int $decaySeconds = 60
+    ): void {
+        if ( ! RateLimiter::attempt($key, $limit, function() {}, $decaySeconds)) {
+            abort(Response::HTTP_TOO_MANY_REQUESTS, $throttleMessage);
         }
     }
 }
