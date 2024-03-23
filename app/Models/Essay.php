@@ -70,5 +70,15 @@ class Essay extends Model implements Attachable, Commentable, Statsable
     public function canBeCommentedOn(): bool {
         return $this->isActive();
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * An essay can be liked if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeLiked(): bool {
+        return $this->isActive();
+    }
     
 }

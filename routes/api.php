@@ -2,6 +2,7 @@
 
 use App\API\Http\Controllers\CommentController;
 use App\API\Http\Controllers\ContactController;
+use App\API\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,7 @@ use App\API\Http\Controllers\ContactController;
 |
 */
 
-Route::post('/contact', [ContactController::class, 'create_contact_message'])->name('api.contact');
+Route::post('/contact',       [ContactController::class, 'create_contact_message'])->name('api.contact');
 Route::post('/comments/{id}', [CommentController::class, 'create'])->name('api.comment');
+Route::post('/likes/{id}',    [LikeController::class, 'like'])->name('api.like');
+Route::delete('/likes/{id}',  [LikeController::class, 'revoke_like'])->name('api.revoke_like');

@@ -73,13 +73,33 @@ class Poem extends Model implements Commentable, Statsable
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * A poem can be commented on if it's marked as active
-     * AND if at least one of the books it belongs to is
-     * also marked as active.
+     * A poem can be commented on if it's marked as fully active.
      * 
      * @return bool
      */
     public function canBeCommentedOn(): bool {
+        return $this->isFullyActive();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A poem can be liked if it's marked as fully active.
+     * 
+     * @return bool
+     */
+    public function canBeLiked(): bool {
+        return $this->isFullyActive();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A poem is considered 'fully active' if it's marked as active,
+     * but if also at least one of the books it belongs to is also
+     * marked as active.
+     * 
+     * @return bool
+     */
+    public function isFullyActive(): bool {
         return $this->isActive() && $this->books()->active()->exists();
     }
 

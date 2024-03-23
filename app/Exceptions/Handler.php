@@ -31,6 +31,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         ItemNotFoundException::class,
+        LikeException::class,
     ];
 
     /**
@@ -68,6 +69,10 @@ class Handler extends ExceptionHandler
     private function rephraseException(Throwable $e): void {
         if ($this->shouldRephraseAsNotFound($e)) {
             abort(HttpResponse::HTTP_NOT_FOUND, 'Resource not found');
+        }
+
+        if ($e instanceof LikeException) {
+            abort(HttpResponse::HTTP_CONFLICT, $e->getMessage());
         }
     }
 

@@ -17,6 +17,7 @@ class ResponseServiceProvider extends ServiceProvider
     ///////////////////////////////////////////////////////////////////////////
     public function boot(): void {
         $this->registerOkResponse();
+        $this->registerEmptyResponse();
         $this->registerErrorResponse();
     }
 
@@ -33,6 +34,16 @@ class ResponseServiceProvider extends ServiceProvider
             $response = array_merge($response, $properties);
 
             return Response::make($response)->setStatusCode($code);
+        });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Used when deleting an object through the API.
+     */
+    private function registerEmptyResponse(): void {
+        Response::macro('empty', function () {
+            return Response::make()->setStatusCode(HttpResponse::HTTP_NO_CONTENT);
         });
     }
 

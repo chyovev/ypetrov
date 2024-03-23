@@ -2,6 +2,7 @@
 
 return [
     'actions'                => 'Actions',
+    'already_liked'          => 'You have already liked this resource',
     'attachments'            => 'Attachments',
     'back'                   => 'Back',
     'biography'              => 'Biography',
@@ -35,6 +36,7 @@ return [
     'gallery'                => 'Gallery',
     'home'                   => 'Home',
     'internal_error'         => 'An unforeseen error has occurred. Please, contact support.',
+    'like_registered'        => 'You have successfully liked this resource!',
     'log_in'                 => 'Log in',
     'log_out'                => 'Log out',
     'message'                => 'Message',
@@ -44,6 +46,7 @@ return [
     'monospace_info'         => 'Poems which use white spaces for text alignment should be monospaced',
     'name'                   => 'Name',
     'no_comments'            => 'No comments added yet.',
+    'not_liked'              => 'The resource you are trying to unlike is not liked by you',
     'object_has_attachments' => 'Object has :count attachment(s)',
     'object_has_comments'    => 'Object has :count comment(s)',
     'password'               => 'Password',

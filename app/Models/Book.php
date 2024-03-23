@@ -83,6 +83,16 @@ class Book extends Model implements Attachable, Commentable, Statsable
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * A book can be liked if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeLiked(): bool {
+        return $this->isActive();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * Using a poem's slug, try to find it in the collection
      * of associated poems.
      * 

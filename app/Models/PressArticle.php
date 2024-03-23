@@ -72,4 +72,14 @@ class PressArticle extends Model implements Attachable, Commentable, Statsable
         return $this->isActive();
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A press article can be liked if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeLiked(): bool {
+        return $this->isActive();
+    }
+
 }

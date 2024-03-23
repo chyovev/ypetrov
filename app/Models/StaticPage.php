@@ -50,5 +50,15 @@ class StaticPage extends Model implements Attachable, Statsable
     public $fillable = [
         'title', 'text',
     ];
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A pages cannot be liked for now.
+     * 
+     * @return bool
+     */
+    public function canBeLiked(): bool {
+        return false;
+    }
     
 }

@@ -4,10 +4,13 @@ namespace App\Models\Traits;
 
 use LogicException;
 use App\Models\Interfaces\Statsable;
+use App\Models\Like;
 use App\Models\Stats;
 use App\Models\Visitor;
+use App\Exceptions\LikeException;
 use App\Observers\StatsableObserver;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 /**
  * Most models' records can be accessed through the application
@@ -34,6 +37,25 @@ trait HasStats
      */
     public function stats(): MorphOne {
         return $this->morphOne(Stats::class, 'statsable');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Each statsable object has a single stats record which
+     * in turn can have multiple like records.
+     * An easy way to cut out the middle object and get the likes
+     * directly is to use the HasManyThrough relation. Even though
+     * it's designed to work with  non-polymorphic relations, it's
+     * fairly easy to set it up for such relationships by specifying
+     * the foreign-key column and adding a where clause for the main
+     * object's class name.
+     * 
+     * @return HasManyThrough
+     */
+    public function likes(): HasManyThrough {
+        return $this
+            ->hasManyThrough(Like::class, Stats::class, 'statsable_id')
+            ->where('statsable_type', static::class);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -94,6 +116,79 @@ trait HasStats
      */
     public function getTotalImpressions(): int {
         return $this->stats()->first()->total_impressions ?? 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check whether a statsable object has a like
+     * registered for a certain visitor.
+     * 
+     * @param  Visitor $visitor
+     * @return bool
+     */
+    public function isLikedByVisitor(Visitor $visitor): bool {
+        return $this->likes()->where('visitor_id', $visitor->id)->exists();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Register a like by a visitor.
+     * 
+     * @throws LikeException – object already liked by visitor
+     * @param  Visitor $visitor
+     * @return Like
+     */
+    public function like(Visitor $visitor): Like {
+        if ($this->isLikedByVisitor($visitor)) {
+            throw new LikeException(__('global.already_liked'));
+        }
+        
+        // increase the total likes count
+        $stats = $this->stats()->firstOrCreate();
+        $stats->increment('total_likes');
+
+        // actually register a visitor-like record
+        $like = $stats->likes()->make();
+        $like->visitor()->associate($visitor);
+        $like->save();
+
+        return $like;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Revoke an already given like by a visitor.
+     * 
+     * @throws LikeException – object not liked by visitor
+     * @param  Visitor $visitor
+     * @return void
+     */
+    public function revokeLike(Visitor $visitor): void {
+        if ( ! $this->isLikedByVisitor($visitor)) {
+            throw new LikeException(__('global.not_liked'));
+        }
+
+        // decrease the total likes count
+        $stats = $this->stats()->firstOrCreate();
+        $stats->decrement('total_likes');
+
+        // actually delete the visitor-like record
+        $this->likes()->where('visitor_id', $visitor->id)->delete();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check how many total likes a statsable object has.
+     * 
+     * NB! If the stats association is loaded as a property,
+     *     it would be stored in memory for the main object,
+     *     resulting in inaccurate total_likes value in case
+     *     data gets altered inbetween.
+     * 
+     * @return int
+     */
+    public function getTotalLikes(): int {
+        return $this->stats()->first()->total_likes ?? 0;
     }
 
 }
