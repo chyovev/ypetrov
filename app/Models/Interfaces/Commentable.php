@@ -52,4 +52,14 @@ interface Commentable extends Interactive
     public function canBeCommentedOn(): bool;
 
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Generate a unique API URL which can be used to add
+     * comments to the current commentable object.
+     * 
+     * @return string 
+     */
+    public function getCommentsUrl(): string;
+
+
 }

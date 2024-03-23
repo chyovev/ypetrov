@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
 
-        @forelse ($object->comments as $comment)
+        @forelse ($object->comments->reverse() as $comment)
             <div class="form-group row">
                 <label class="col-lg-3 col-form-label">
                     <x-admin.flag :countryCode="$comment->visitor->country_code" />

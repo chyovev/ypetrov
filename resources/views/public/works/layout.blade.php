@@ -11,8 +11,8 @@
                         <a href="{{ route('book', ['bookSlug' => $book->slug]) }}" @class(['active' => !isset($poem)])>«{{ $book->title }}»</a>
                         <div class="filter">
                             <div class="filter-inner-wrapper">
-                                <input type="text" id="filter-field" placeholder="Филтър" />
                                 <button type="button" class="show" title="Покажи/скрий филтър">Филтър</button>
+                                <input type="text" id="filter-field" placeholder="Филтър" />
                             </div>
                             <button type="button" class="clear none" title="Изтрий">Изтрий</button>
                         </div>
@@ -29,11 +29,9 @@
 
         <section id="container" @class(['text' => true, 'monospace' => (isset($poem) && $poem->use_monospace_font)])>
             <div class="content-wrapper">
-                <div class="poem-wrapper">
 
-                    @yield('work-content')
+                @yield('work-content')
 
-                </div>
             </div>
         </section>
 

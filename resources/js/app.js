@@ -34,8 +34,9 @@ var App = {
         $(window).on('popstate', App.loadPoemDynamicallyOnPopstate);
         $('.thumb').on('click', App.jumpToImage);
         $('.swipe-nav').on('click', App.navigateGallery);
+        $(document).on('submit', '.contact-form', App.addContactMessageAjax);
+        $(document).on('submit', '#comment-form', App.addCommentAjax);
         $(document).on('submit', '.ajax-form', App.submitFormAjax); // using document because of ajax loaded poems
-        $(document).on('click', '.captcha', App.generateNewCaptcha);
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -426,18 +427,39 @@ var App = {
     },
 
     ///////////////////////////////////////////////////////////////////////////
-    submitFormAjax: function(e) {
+    addContactMessageAjax: function(e) {
         e.preventDefault();
 
+        App.submitFormAjax($(this), function(response) {
+            $('.success-message').html(response.message).fadeIn();
+
+            App.resetFormFields();
+        });
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    addCommentAjax: function(e) {
+        e.preventDefault();
+
+        App.submitFormAjax($(this), function(response) {
+            $('.success-message').html(response.message).fadeIn();
+
+            App.resetFormFields();
+
+            App.showNewlyGeneratedComment(response.html);
+        });
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    submitFormAjax: function($form, successCallback) {
         // don't send new requests before finishing already started requests
         if (App.isAjaxInProgress) {
             return false;
         }
 
-        var $form = $(this),
-            url   = $form.attr('action'),
-            type  = $form.attr('method'),
-            data  = $form.serialize();
+        var url  = $form.attr('action'),
+            type = $form.attr('method'),
+            data = $form.serialize();
 
         // mark current request as «in progress»
         App.isAjaxInProgress = true;
@@ -454,7 +476,7 @@ var App = {
             dataType: 'JSON',
 
             success: function(response) {
-                App.processSuccessResponse(response);
+                successCallback(response);
             },
 
             error: function(response) {
@@ -463,16 +485,6 @@ var App = {
         }).always(function() {
             App.isAjaxInProgress = false;
         });
-    },
-
-    ///////////////////////////////////////////////////////////////////////////
-    processSuccessResponse: function(response) {
-        $('.success-message').html(response.message).fadeIn();
-
-        App.resetFormFields();
-
-        // reset captcha
-        $('.captcha').trigger('click');
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -507,7 +519,7 @@ var App = {
         $commentSection.append($comment)
 
         // fade in the new comment or the whole section based on section visibility
-        isSectionVisible ? $comment.slideDown(2000) : $commentSection.slideDown(2000);
+        isSectionVisible ? $comment.slideDown(500) : $commentSection.slideDown(500);
     },
 
     ///////////////////////////////////////////////////////////////////////////
@@ -550,20 +562,6 @@ var App = {
                         $wrapper.removeClass('has-caption');
                     }
                 }
-            }
-        });
-    },
-
-    ///////////////////////////////////////////////////////
-    generateNewCaptcha: function(e) {
-        e.preventDefault();
-        var $img = $(this);
-
-        return $.ajax({
-            url:      root + 'captcha',
-            dataType: 'JSON',
-            success: function(response) {
-                $img.attr('src', response.image);
             }
         });
     },

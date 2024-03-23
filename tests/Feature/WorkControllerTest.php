@@ -7,6 +7,7 @@ use App\Models\Poem;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class WorkControllerTest extends TestCase
 {
@@ -27,7 +28,7 @@ class WorkControllerTest extends TestCase
 
         $response = $this->testBookPublicURL($book->slug);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -44,7 +45,7 @@ class WorkControllerTest extends TestCase
 
         $response = $this->testBookPublicURL($book->slug);
 
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -71,7 +72,7 @@ class WorkControllerTest extends TestCase
 
         $response = $this->testPoemPublicURL($book->slug, $poem->slug);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -89,7 +90,7 @@ class WorkControllerTest extends TestCase
 
         $response = $this->testPoemPublicURL($book->slug, $poem->slug);
 
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -107,7 +108,7 @@ class WorkControllerTest extends TestCase
 
         $response = $this->testPoemPublicURL($book->slug, $poem->slug);
 
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -122,7 +123,7 @@ class WorkControllerTest extends TestCase
 
         $response = $this->testPoemPublicURL($book2->slug, $poem->slug);
 
-        $response->assertStatus(404);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -51,7 +51,7 @@ class Poem extends Model implements Commentable, Statsable
      */
     protected $casts = [
         'is_active'          => 'boolean',
-        'use_monospace_font' => 'datetime',
+        'use_monospace_font' => 'boolean',
     ];
 
     ///////////////////////////////////////////////////////////////////////////

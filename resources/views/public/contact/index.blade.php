@@ -11,7 +11,7 @@
                 <p>За всякакви предложения или коментари относно сайта, моля, попълнете контактната формата.<br />
                 Ако желаете да получите отговор, попълнете полето «E-mail». Ще се свържем с вас във възможно най-кратък срок.</p>
 
-                <form class="contact-form ajax-form" action="{{ route('api.contact') }}" method="POST">
+                <form class="contact-form" action="{{ route('api.contact') }}" method="POST">
                     <h3>Контактна форма</h3>
                     <input type="text" name="name" id="name" placeholder="*Име" />
                     <input type="text" name="email" id="email" placeholder="E-mail" />

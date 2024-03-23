@@ -16,6 +16,8 @@
 
                 {!! $article->text !!}
 
+                <x-public.comments :object="$article" />
+
             </div>
         </section>
 

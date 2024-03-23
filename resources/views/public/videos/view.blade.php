@@ -47,6 +47,9 @@
                         </div>
                     </video>
                 </div>
+
+                <x-public.comments :object="$video" />
+
             </div>
         </section>
     </main>

@@ -70,4 +70,17 @@ class Comment extends Model
         return $this->commentable->title;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Convert a comment to a public HTML string as
+     * shown in the public part of the application.
+     * 
+     * @return string
+     */
+    public function asHtml(): string {
+        $data = ['comment' => $this];
+
+        return view('components.public.single-comment', $data)->render();
+    }
+
 }

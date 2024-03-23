@@ -12,6 +12,7 @@
 
                 {!! $essay->text !!}
 
+                <x-public.comments :object="$essay" />
             </div>
         </section>
 

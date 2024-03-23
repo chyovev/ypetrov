@@ -36,7 +36,7 @@ trait HasComments
     public function comments(): MorphMany {
         return $this
             ->morphMany(Comment::class, 'commentable')
-            ->latest('id');
+            ->oldest('id');
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -82,6 +82,17 @@ trait HasComments
         $comment->save();
 
         return $comment;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Generate a unique API URL which can be used to add
+     * comments to the current commentable object.
+     * 
+     * @return string 
+     */
+    public function getCommentsUrl(): string {
+        return route('api.comment', ['id' => $this->getInteractionId()]);
     }
 
 }

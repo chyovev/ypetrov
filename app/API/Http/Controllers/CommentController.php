@@ -21,9 +21,14 @@ class CommentController extends Controller
      * @return Response
      */
     public function create(CommentRequest $request, Visitor $visitor) {
-        $request->createComment($visitor);
+        $comment = $request->createComment($visitor);
+
+        $response = [
+            'message' => __('global.comment_added'),
+            'html'    => $comment->asHtml(),
+        ];
         
-        return response()->ok(['message' => __('global.comment_added')], Response::HTTP_CREATED);
+        return response()->ok($response, Response::HTTP_CREATED);
     }
     
 }
