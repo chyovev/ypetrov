@@ -99,9 +99,9 @@ class RegisterVisitor
      * @return string|null – two-letter country code
      */
     private function getVisitorCountryCode(string $ip): ?string {
-        // avoid API calls while in a unit test
-        // and simply use a placeholder value
-        if (app()->runningUnitTests()) {
+        // on all environments but production (testing, local)
+        // API calls are disabled, a placeholder value is used
+        if ( ! app()->isProduction()) {
             return '--';
         }
 

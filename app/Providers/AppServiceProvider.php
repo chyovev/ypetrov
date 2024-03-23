@@ -43,13 +43,12 @@ class AppServiceProvider extends ServiceProvider
     /**
      * The public navigation gets generated dynamically
      * using data from the database which should be fetched
-     * by a view composer right before the respective public
-     * page gets loaded.
+     * by a view composer right before the respective
+     * navigation view is loaded.
      */
     private function registerNavigationViewComposer(): void {
         $views = [
-            'public.*',  // all public templates
-            'errors::*', // all error templates
+            'public.layout.navigation',
         ];
 
         View::composer($views, NavigationComposer::class);

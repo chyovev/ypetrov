@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Video;
 use App\Repositories\VideoRepository;
+use Illuminate\Support\ItemNotFoundException;
+use Illuminate\Database\Eloquent\Collection;
 
 class VideoController extends Controller
 {
@@ -19,25 +22,41 @@ class VideoController extends Controller
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Get a single active video by its slug.
      * The view video page should list all videos in the sidebar
-     * navigation, but there's no need to fetch them here since
-     * they will be fetched by the navigation composer right before
-     * the view gets rendered.
-     * 
-     * @see \App\View\Composers\NavigationComposer
+     * navigation, as well as the main video. To avoid an additional
+     * SQL request, it's better to fetch all videos as a collection
+     * and try to find the matching main video in it.
      * 
      * @param string $slug
      */
     public function view(string $slug) {
-        $video = $this->repository->getBySlug($slug);
+        $videos = $this->repository->getAllActive();
+
+        $video = $this->getVideoBySlug($videos, $slug);
         $video->addImpression();
         
         $data = [
-            'video' => $video,
+            'videos' => $videos,
+            'video'  => $video,
         ];
 
         return view('public.videos.view', $data);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Cycle through all videos and try to find an element
+     * which matches the slug passed as parameter.
+     * 
+     * @throws ItemNotFoundException
+     * @param  Collection<Video> $videos
+     * @param  string $slug
+     * @return Video
+     */
+    private function getVideoBySlug(Collection $videos, string $slug): Video {
+        return $videos->filter(function(Video $video) use($slug) {
+            return ($video->slug === $slug) ;
+        })->firstOrFail();
     }
     
 }

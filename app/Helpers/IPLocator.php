@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Log;
 use BadMethodCallException;
 use Illuminate\Support\Str;
 use Illuminate\Http\Client\RequestException;
@@ -66,6 +67,8 @@ class IPLocator
      */
     private function fetchDataForIPFromAPI(): Response {
         $url = $this->getURL();
+
+        Log::info("Initiate request to {$url} to locate an IP address");
 
         return Http::get($url)->throw();
     }
