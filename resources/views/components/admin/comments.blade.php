@@ -13,7 +13,7 @@
                     {{ $comment->name }}
                 </label>
                 <div class="col-lg-7 p-t-5">
-                    <span class="underline-dashed">{{ $comment->created_at->format('d.m.Y. @ H:i:s') }}</span>
+                    <span class="underline-dashed">{{ $comment->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</span>
 
                     <p class="form-control-static m-t-20">
                         {!! nl2br(e($comment->message)) !!}

@@ -28,7 +28,7 @@
                 <h1 class="center" id="title">{{ $video->title }}</h1>
                 @if ($video->publish_date)
                     <div class="subtitle">
-                        {{ $video->publish_date->format('d.m.Y г.') }}
+                        {{ $video->publish_date->translatedFormat('d.m.Y г.') }}
                     </div>
                 @endif
 

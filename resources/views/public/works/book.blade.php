@@ -24,4 +24,6 @@
         </div>
     </div>
 
+    <x-public.comments :object="$book" />
+
 @stop

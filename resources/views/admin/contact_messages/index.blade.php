@@ -39,7 +39,7 @@
                                     <td class="text-center">
                                         <x-admin.flag :countryCode="$message->visitor->country_code" />
                                     </td>
-                                    <td>{{ $message->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                                    <td>{{ $message->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.contact_messages.show',    ['contact_message' => $message]) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> {{ __('global.view') }}</a>
                                         <a href="{{ route('admin.contact_messages.destroy', ['contact_message' => $message]) }}" class="btn btn-danger  btn-sm confirm-delete"><i class="fa fa-trash"></i> {{ __('global.delete') }}</a>

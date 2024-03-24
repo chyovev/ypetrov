@@ -39,8 +39,8 @@
                                     </td>
                                     <td>{{ $video->title }}</td>
                                     <td>{{ Str::of($video->summary)->stripTags()->limit(50) }}</td>
-                                    <td class="text-center">{{ $video->publish_date?->format('d.m.Y.') }}</td>
-                                    <td>{{ $video->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                                    <td class="text-center">{{ $video->publish_date?->translatedFormat('d.m.Y.') }}</td>
+                                    <td>{{ $video->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.videos.edit',    ['video' => $video]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
                                         <a href="{{ route('admin.videos.destroy', ['video' => $video]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>

@@ -41,7 +41,7 @@
                                         @endif
                                         {{ Str::of($image->title)->stripTags()->limit(70) }}
                                     </td>
-                                    <td>{{ $image->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                                    <td>{{ $image->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.gallery_images.edit',    ['gallery_image' => $image]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
                                         <a href="{{ route('admin.gallery_images.destroy', ['gallery_image' => $image]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>

@@ -42,7 +42,7 @@
                                     <td>{{ $book->publisher }}</td>
                                     <td class="text-center">{{ $book->publish_year }}</td>
                                     <td class="text-center">{{ $book->poems_count }}</td>
-                                    <td>{{ $book->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                                    <td>{{ $book->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.books.edit',    ['book' => $book]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
                                         <a href="{{ route('admin.books.destroy', ['book' => $book]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>

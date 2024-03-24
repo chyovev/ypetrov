@@ -12,7 +12,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label text-right">{{ __('global.created_at') }}</label>
                             <div class="col-lg-8 m-t-8">
-                                <p class="form-control-static">{{ $message->created_at->format('d.m.Y. @ H:i:s') }}</p>
+                                <p class="form-control-static">{{ $message->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</p>
                             </div>
                         </div>
 

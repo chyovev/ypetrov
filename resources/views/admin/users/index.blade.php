@@ -29,7 +29,7 @@
                                     <td class="text-center">{{ (($users->currentPage() - 1) * $users->perPage()) + $loop->iteration }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
-                                    <td>{{ $user->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                                    <td>{{ $user->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.edit',    ['user' => $user]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
                                         @can('delete', $user)

@@ -39,7 +39,7 @@
                                     <td>{{ $poem->title }}</td>
                                     <td>{{ Str::of($poem->text)->stripTags()->limit(50) }}</td>
                                     <td class="text-center">{{ $poem->books_count }}</td>
-                                    <td>{{ $poem->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                                    <td>{{ $poem->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                                     <td>
                                         <a href="{{ route('admin.poems.edit',    ['poem' => $poem]) }}" class="btn btn-info   btn-sm"><i class="fa fa-pencil"></i> {{ __('global.edit') }}</a>
                                         <a href="{{ route('admin.poems.destroy', ['poem' => $poem]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i>  {{ __('global.delete') }}</a>

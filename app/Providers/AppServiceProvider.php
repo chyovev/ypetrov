@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use View;
+use Carbon\Carbon;
 use App\View\Composers\NavigationComposer;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -23,8 +24,21 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void {
+        $this->setCarbonLocale();
         $this->setAdminPaginationTheme();
         $this->registerNavigationViewComposer();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Carbon uses the default system locale when displaying dates.
+     * It's best to strictly instruct it to use the application's
+     * locale which is Bulgarian.
+     * 
+     * @return void
+     */
+    private function setCarbonLocale(): void {
+        Carbon::setLocale(config('app.locale'));
     }
 
     ///////////////////////////////////////////////////////////////////////////

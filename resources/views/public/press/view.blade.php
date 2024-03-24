@@ -9,7 +9,7 @@
                 <h1>{{ $article->title }}</h1>
 
                 <div class="subtitle">
-                    {{ $article->press }}@if ($article->publish_date), {{ $article->publish_date?->format('d.m.Y г.')}}@endif
+                    {{ $article->press }}@if ($article->publish_date), {{ $article->publish_date?->translatedFormat('d.m.Y г.')}}@endif
                 </div>
 
                 <hr />

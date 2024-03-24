@@ -21,7 +21,7 @@
                     {{ $attachment->original_file_name }}
                 </td>
                 <td>{{ $attachment->mime_type }}</td>
-                <td>{{ $attachment->created_at->format('d.m.Y. @ H:i:s') }}</td>
+                <td>{{ $attachment->created_at->translatedFormat('d.m.Y. @ H:i:s') }}</td>
                 <td>
                     <a href="{{ $attachment->getURL() }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> {{ __('global.view') }}</a>
                     <a href="{{ route('admin.attachments.destroy', ['attachment' => $attachment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> {{ __('global.delete') }}</a>

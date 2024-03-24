@@ -59,7 +59,7 @@ $param = $video->exists ? $video              : null;
                                 <div class="col-lg-8">
                                     @php
                                         $value   = old('publish_date', $video->publish_date);
-                                        $preview = ($value instanceof \Carbon\Carbon) ? $value->format('d.m.Y.') : $value;
+                                        $preview = ($value instanceof \Carbon\Carbon) ? $value->translatedFormat('d.m.Y.') : $value;
                                     @endphp
                                     <input type="text" name="publish_date" id="publish_date" class="form-control datepicker" value="{{ $preview }}" />
                                     @error('publish_date')
