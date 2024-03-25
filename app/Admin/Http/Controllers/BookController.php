@@ -21,7 +21,7 @@ class BookController extends Controller
             ->withCount(['attachments', 'comments', 'poems'])
             ->orderBy('order');
 
-        $request->addOptionalFilterToQuery($query, ['title']);
+        $request->addOptionalFilterToQuery($query, ['title', 'publisher', 'publish_year']);
 
         return view('admin.books.index', [
             'books' => $query->paginate(20),

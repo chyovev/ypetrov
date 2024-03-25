@@ -52,7 +52,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="m-t-30">{{ $galleryImages->links() }}</div>
+                        <x-admin.pagination :data="$galleryImages" />
                     </div>
                 </div>
             </div>

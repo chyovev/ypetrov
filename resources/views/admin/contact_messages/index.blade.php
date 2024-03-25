@@ -50,7 +50,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="m-t-30">{{ $messages->links() }}</div>
+                        <x-admin.pagination :data="$messages" />
                     </div>
                 </div>
             </div>
