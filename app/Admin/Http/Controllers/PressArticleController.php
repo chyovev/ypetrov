@@ -3,6 +3,7 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\PressArticle;
+use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\PressArticles\FormRequest;
 use App\Http\Controllers\Controller;
 
@@ -13,10 +14,12 @@ class PressArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(FilterRequest $request) {
         $query = PressArticle::query()
             ->withCount(['attachments', 'comments'])
             ->orderBy('order');
+
+        $request->addOptionalFilterToQuery($query, ['title', 'press', 'text']);
 
         return view('admin.press_articles.index', [
             'pressArticles' => $query->paginate(20),

@@ -6,9 +6,11 @@
                 <div class="card-title">
                     <h3 class="text-primary">
                         <em class="fa fa-list"></em> {{ __('global.users') }}
-                        <div class="dt-buttons float-right">
+                        <x-admin.total-results :items="$users" />
+                        <div class="dt-buttons float-right ml-2">
                             <a class="btn btn-success" href="{{ route('admin.users.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                         </div>
+                        <x-admin.search />
                     </h3>
                 </div>
                 <div class="card-body">

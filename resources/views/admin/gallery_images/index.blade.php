@@ -6,10 +6,12 @@
                 <div class="card-title">
                     <h3 class="text-primary">
                         <em class="fa fa-list"></em> {{ __('global.gallery') }}
-                        <div class="dt-buttons float-right">
+                        <x-admin.total-results :items="$galleryImages" />
+                        <div class="dt-buttons float-right ml-2">
                             <a class="btn btn-success" href="{{ route('admin.gallery_images.create') }}"><i class="fa fa-plus"></i> {{ __('global.create') }}</a>
                             <a class="btn btn-warning reorder" href="{{ route('admin.reorder', ['table' => 'gallery_images'])}}"><i class="fa fa-align-left"></i> {{ __('global.reorder') }}</a>
                         </div>
+                        <x-admin.search />
                     </h3>
                 </div>
                 <div class="card-body">

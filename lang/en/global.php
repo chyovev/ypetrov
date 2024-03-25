@@ -66,6 +66,7 @@ return [
     'reorder_successful'     => 'Reordered elements successfully saved!',
     'reset_password'         => 'Reset password',
     'reset_password_info'    => 'Enter a new password to regain access to the administrative panel',
+    'search'                 => 'Search',
     'slug'                   => 'Slug',
     'summary'                => 'Summary',
     'submit'                 => 'Submit',

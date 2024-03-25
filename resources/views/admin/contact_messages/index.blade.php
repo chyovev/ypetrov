@@ -6,6 +6,8 @@
                 <div class="card-title">
                     <h3 class="text-primary">
                         <em class="fa fa-list"></em> {{ __('global.contact_messages') }}
+                        <x-admin.total-results :items="$messages" />
+                        <x-admin.search />
                     </h3>
                 </div>
                 <div class="card-body">

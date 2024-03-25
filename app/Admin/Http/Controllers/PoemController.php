@@ -2,6 +2,7 @@
 
 namespace App\Admin\Http\Controllers;
 
+use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Poems\FormRequest;
 use App\Models\Poem;
 use App\Http\Controllers\Controller;
@@ -13,10 +14,12 @@ class PoemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(FilterRequest $request) {
         $query = Poem::query()
             ->withCount(['comments', 'books'])
             ->orderBy('title');
+
+        $request->addOptionalFilterToQuery($query, ['title', 'text']);
 
         return view('admin.poems.index', [
             'poems' => $query->paginate(20),

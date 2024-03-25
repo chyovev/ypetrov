@@ -4,6 +4,7 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Users\StoreRequest;
 use App\Admin\Http\Requests\Users\UpdateRequest;
 
@@ -14,9 +15,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(FilterRequest $request) {
+        $query = User::query();
+
+        $request->addOptionalFilterToQuery($query, ['name', 'email']);
+
         return view('admin.users.index', [
-            'users' => User::paginate(20),
+            'users' => $query->paginate(20),
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\Essay;
+use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Essays\FormRequest;
 use App\Http\Controllers\Controller;
 
@@ -13,10 +14,12 @@ class EssayController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index(FilterRequest $request) {
         $query = Essay::query()
             ->withCount(['attachments', 'comments'])
             ->orderBy('order');
+
+        $request->addOptionalFilterToQuery($query, ['title', 'text']);
 
         return view('admin.essays.index', [
             'essays' => $query->paginate(20),
