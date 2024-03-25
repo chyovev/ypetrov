@@ -37,6 +37,7 @@ var App = {
         $(document).on('submit', '.contact-form', App.addContactMessageAjax);
         $(document).on('submit', '#comment-form', App.addCommentAjax);
         $(document).on('submit', '.ajax-form', App.submitFormAjax); // using document because of ajax loaded poems
+        $(document).on('click', '.like', App.toggleLike)
     },
     
     ///////////////////////////////////////////////////////////////////////////
@@ -461,6 +462,8 @@ var App = {
             type = $form.attr('method'),
             data = $form.serialize();
 
+        App.sendAjaxRequest(url, type, data);
+
         // mark current request as «in progress»
         App.isAjaxInProgress = true;
 
@@ -562,6 +565,40 @@ var App = {
                         $wrapper.removeClass('has-caption');
                     }
                 }
+            }
+        });
+    },
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Both giving and revoking a like rely on the same URL,
+     * but the HTTP method is different (POST vs DELETE).
+     * Depending on whether the object is currently marked
+     * as liked use one or the other.
+     */
+    toggleLike: function(e) {
+        e.preventDefault();
+
+        let $this   = $(this),
+            url     = $this.attr('data-url'),
+            isLiked = $this.hasClass('liked'),
+            method  = isLiked ? 'DELETE' : 'POST';
+
+        return $.ajax({
+            url:      url,
+            type:     method,
+            dataType: 'JSON',
+
+            success: function() {
+                isLiked
+                    ? $this.removeClass('liked')
+                    : $this.addClass('liked');
+            },
+
+            error: function(response) {
+                let json = response.responseJSON;
+
+                alert(json.errors.generic);
             }
         });
     },

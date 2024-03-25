@@ -48,6 +48,8 @@
                     </video>
                 </div>
 
+                <x-public.like-button :object="$video" />
+
                 <x-public.comments :object="$video" />
 
             </div>

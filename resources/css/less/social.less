@@ -1,0 +1,54 @@
+@import "colors.less";
+@import "sizes.less";
+
+@size: 20px;
+@normal: #dbdada;
+@liked: @theme-color;
+
+.social-wrapper {
+    width: 100%;
+}
+
+.social {
+    display: flex;
+    justify-content: right;
+    &:not(.wide) {
+        max-width: 600px;
+        @media @notmobile {
+            margin: auto 3cm;
+        }
+    }
+    
+    @media @mobile {
+        margin: auto 0.5cm;
+    }
+
+    .like {
+        cursor: pointer;
+
+        .title {
+            font-size: 90%;
+        }
+        
+        .heart {
+            display: inline-block;
+            width: @size;
+            height: @size;
+            position: relative;
+            top: 5px;
+            left: 2px;
+            background-color: @normal;
+            transition: 0.3s background-color;
+            mask:
+                radial-gradient(at 70% 31%,#000 29%,#0000 30%),
+                radial-gradient(at 30% 31%,#000 29%,#0000 30%),
+                linear-gradient(#000 0 0) bottom/100% 50% no-repeat;
+            clip-path: polygon(-41% 0,50% 91%, 141% 0);
+        }
+
+        &.liked .heart {
+            background-color: @theme-color;
+        }
+    }
+    
+}

@@ -191,4 +191,15 @@ trait HasStats
         return $this->stats()->first()->total_likes ?? 0;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Generate a unique API URL which can be used to like
+     * or revoke like from the current statsable object.
+     * 
+     * @return string 
+     */
+    public function getLikeUrl(): string {
+        return route('api.like', ['id' => $this->getInteractionId()]);
+    }
+
 }

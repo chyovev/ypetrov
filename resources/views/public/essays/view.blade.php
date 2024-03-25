@@ -12,6 +12,8 @@
 
                 {!! $essay->text !!}
 
+                <x-public.like-button :object="$essay" :wide="true" />
+
                 <x-public.comments :object="$essay" />
             </div>
         </section>

@@ -128,6 +128,9 @@ class RegisterVisitor
      */
     private function bindVisitor(Visitor $visitor): void {
         app()->instance(Visitor::class, $visitor);
+
+        // share the visitor also as a template variable
+        view()->share('visitor', $visitor);
     }
 
 }

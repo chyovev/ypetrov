@@ -16,6 +16,8 @@
 
                 {!! $article->text !!}
 
+                <x-public.like-button :object="$article" :wide="true" />
+
                 <x-public.comments :object="$article" />
 
             </div>

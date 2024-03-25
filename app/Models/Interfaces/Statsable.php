@@ -78,4 +78,14 @@ interface Statsable extends Interactive
     public function revokeLike(Visitor $visitor): void;
 
     
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Generate a unique API URL which can be used to like
+     * or revoke like from the current statsable object.
+     * 
+     * @return string 
+     */
+    public function getLikeUrl(): string;
+
+    
 }

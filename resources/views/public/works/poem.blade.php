@@ -8,6 +8,8 @@
         <div id="body">{{ $poem->text }}</div>
     </div>
 
+    <x-public.like-button :object="$poem" />
+
     <x-public.comments :object="$poem" />
 
 @stop

@@ -24,6 +24,8 @@
         </div>
     </div>
 
+    <x-public.like-button :object="$book" />
+
     <x-public.comments :object="$book" />
 
 @stop
