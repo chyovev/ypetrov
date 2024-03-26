@@ -62,4 +62,14 @@ interface Commentable extends Interactive
     public function getCommentsUrl(): string;
 
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the URL to the resource in the Content management system (CMS).
+     * Used in the notification email sent on new comments.
+     * 
+     * @return string
+     */
+    public function getCMSUrl(): string;
+
+
 }

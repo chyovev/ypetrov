@@ -9,6 +9,10 @@
                 <h1>{{ $page->title }}</h1>
 
                 {!! $page->text !!}
+
+                <x-public.like-button :object="$page" :wide="true" />
+
+                <x-public.comments :object="$page" />
             </div>
         </section>
         

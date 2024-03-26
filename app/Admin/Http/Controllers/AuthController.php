@@ -16,14 +16,15 @@ class AuthController
     /**
      * Endpoint to try process a login request and authenticate a user.
      * If the authentication is successful, the user should be redirected
-     * to the homepage, otherwise they should be given a vague error feedback.
+     * to the initial page they tried accessing before login (or to the
+     * home page), otherwise they should be given a vague error feedback.
      * 
      * @param  LoginRequest $request – data validation & authentication declared there
      * @return RedirectResponse
      */
     public function process_login_request(LoginRequest $request): RedirectResponse {
         if ($request->authenticate()) {
-            return redirect()->route('admin.home');
+            return redirect()->intended('admin.home');
         }
 
         return back()->withErrors(['email' => __('passwords.wrong')])->onlyInput('email');;

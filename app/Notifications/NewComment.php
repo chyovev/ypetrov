@@ -52,6 +52,7 @@ class NewComment extends Notification implements ShouldQueue
             ->subject("Нов коментар към {$this->comment->getCommentableTitle()}")
             ->greeting("Нов коментар към {$this->comment->getCommentableTitle()}")
             ->line("Получено на: {$this->comment->created_at}")
+            ->line("Линк към CMS: {$this->comment->commentable->getCMSUrl()}")
             ->line("От: {$this->comment->name}")
             ->line("Съобщение: ")
             ->line($this->comment->message);

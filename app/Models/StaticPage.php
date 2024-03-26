@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use App\Models\Interfaces\Attachable;
+use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
+use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StaticPage extends Model implements Attachable, Statsable
+class StaticPage extends Model implements Attachable, Commentable, Statsable
 {
 
     /**
@@ -36,6 +38,13 @@ class StaticPage extends Model implements Attachable, Statsable
     use HasAttachments;
 
     /**
+     * The HasComments trait defines a polymorphic
+     * relationship to the Comment model and registers
+     * a delete-event observer.
+     */
+    use HasComments;
+
+    /**
      * The HasStats trait defines a polymorphic
      * relationship to the Stats model and registers
      * a delete-event observer.
@@ -53,12 +62,24 @@ class StaticPage extends Model implements Attachable, Statsable
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * A pages cannot be liked for now.
+     * Static pages don't have an active state
+     * so they can always be liked.
+     * 
+     * @return bool
+     */
+    public function canBeCommentedOn(): bool {
+        return true;    
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Static pages don't have an active state
+     * so they can always be liked.
      * 
      * @return bool
      */
     public function canBeLiked(): bool {
-        return false;
+        return true;
     }
     
 }

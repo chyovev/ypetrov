@@ -140,4 +140,42 @@ class CommentControllerTest extends TestCase
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * There is no limit in how many unsuccessful requests a user
+     * can send – if they have not provided valid input data, they
+     * should be able to fix the issue and resend the request
+     * right away.
+     */
+    public function test_consecutive_unsuccessful_requests(): void {
+        $book       = $this->createActiveBook();
+        $identifier = $book->getInteractionId();
+        $data       = []; // missing data
+
+        $response = $this->testCommentURL($identifier, $data);
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+
+        $response = $this->testCommentURL($identifier, $data);
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * As a simple spam protection, there's a rate limiter
+     * to successful requests – only one can be sent per
+     * minute; consecutive requests will result in a
+     * too-many-requests response (429).
+     */
+    public function test_consecutive_successful_requests(): void {
+        $book       = $this->createActiveBook();
+        $identifier = $book->getInteractionId();
+        $data       = $this->getCorrectSampleData();
+
+        $response = $this->testCommentURL($identifier, $data);
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $response = $this->testCommentURL($identifier, $data);
+        $response->assertStatus(Response::HTTP_TOO_MANY_REQUESTS);
+    }
 }

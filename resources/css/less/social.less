@@ -28,6 +28,8 @@
 
         .title {
             font-size: 90%;
+            color: @delimiter-color;
+            transition: 0.3s all;
         }
         
         .heart {
@@ -46,8 +48,13 @@
             clip-path: polygon(-41% 0,50% 91%, 141% 0);
         }
 
-        &.liked .heart {
-            background-color: @theme-color;
+        &.liked {
+            .title {
+                color: black;
+            }
+            .heart {
+                background-color: @theme-color;
+            }
         }
     }
     

@@ -462,8 +462,6 @@ var App = {
             type = $form.attr('method'),
             data = $form.serialize();
 
-        App.sendAjaxRequest(url, type, data);
-
         // mark current request as «in progress»
         App.isAjaxInProgress = true;
 
