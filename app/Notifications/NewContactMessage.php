@@ -50,12 +50,7 @@ class NewContactMessage extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage {
         return (new MailMessage)
             ->subject('Ново контактно съобщение')
-            ->greeting("Ново контактно съобщение")
-            ->line("Получено на: {$this->contactMessage->created_at}")
-            ->line("От: {$this->contactMessage->name}")
-            ->line("E-mail: {$this->contactMessage->email}")
-            ->line("Съобщение: ")
-            ->line($this->contactMessage->message);
+            ->markdown('mail.contact_message.new', ['contactMessage' => $this->contactMessage]);
     }
 
 }
