@@ -579,6 +579,7 @@ var App = {
 
         let $this   = $(this),
             url     = $this.attr('data-url'),
+            csrf    = $this.attr('data-csrf'),
             isLiked = $this.hasClass('liked'),
             method  = isLiked ? 'DELETE' : 'POST';
 
@@ -586,6 +587,9 @@ var App = {
             url:      url,
             type:     method,
             dataType: 'JSON',
+            headers: {
+                'X-CSRF-Token': csrf 
+            },
 
             success: function() {
                 isLiked

@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Response;
+use Illuminate\Session\TokenMismatchException;
 use Illuminate\Support\ItemNotFoundException;
 use Throwable;
 
@@ -73,6 +74,10 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof LikeException) {
             abort(HttpResponse::HTTP_CONFLICT, $e->getMessage());
+        }
+
+        if ($e instanceof TokenMismatchException) {
+            abort(HttpResponse::HTTP_UNAUTHORIZED, $e->getMessage());
         }
     }
 

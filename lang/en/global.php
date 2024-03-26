@@ -13,6 +13,7 @@ return [
     'comments'               => 'Comments',
     'comment_added'          => 'Your comment has been successfully submitted!',
     'comment_limit'          => 'You cannot add multiple comments in such a short period of time. Please, try again later.',
+    'contact_limit'          => 'You cannot send multiple messages in such a short period of time. Please, try again later.',
     'contact_messages'       => 'Contact Messages',
     'contact_message_sent'   => 'Your contact message has been successfully saved!',
     'change_password'        => 'Change password',

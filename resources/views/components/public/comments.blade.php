@@ -9,6 +9,7 @@
     <div class="comment-form">
         <div class="section-title">Добавяне на коментар</div>
         <form method="POST" id="comment-form" action="{{ $object->getCommentsUrl() }}">
+            {{ csrf_field() }}
             <input type="text" id="name" name="name" placeholder="*Име" />
             <textarea name="message" id="message" placeholder="*Коментар"></textarea>
             <div class="error-message none"></div>
