@@ -3,11 +3,10 @@
 namespace App\API\Http\Controllers;
 
 use App\API\Http\Requests\CommentRequest;
-use App\Http\Controllers\Controller;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
 
-class CommentController extends Controller
+class CommentController extends AbstractController
 {
 
     ///////////////////////////////////////////////////////////////////////////

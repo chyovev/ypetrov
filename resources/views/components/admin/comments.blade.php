@@ -1,5 +1,5 @@
 @if ($object->exists)
-<div class="card">
+<div class="card" id="comments">
     <div class="card-title">
         <h3 class="text-primary"><em class="fa fa-comments"></em> {{ __('global.comments') }}</h3>
     </div>

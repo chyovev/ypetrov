@@ -1,6 +1,12 @@
 <div class="comments-wrapper">
     <div @class(['comments' => true, 'none' => $object->comments->count() === 0])>
-        <div class="section-title">Коментари</div>
+        <div class="section-title">
+            @if (auth('admin')->user())
+                <a href="{{ $object->getCMSUrl() }}#comments">Коментари</a>
+            @else
+                Коментари
+            @endif
+        </div>
         @foreach ($object->comments as $comment)
             <x-public.single-comment :$comment :counter="$loop->iteration" />
         @endforeach

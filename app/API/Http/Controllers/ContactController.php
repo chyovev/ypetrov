@@ -3,11 +3,10 @@
 namespace App\API\Http\Controllers;
 
 use App\API\Http\Requests\ContactRequest;
-use App\Http\Controllers\Controller;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
 
-class ContactController extends Controller
+class ContactController extends AbstractController
 {
 
     ///////////////////////////////////////////////////////////////////////////

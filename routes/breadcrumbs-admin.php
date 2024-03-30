@@ -68,7 +68,7 @@ Breadcrumbs::for('admin.poems.create', function ($trail) {
 // Home > Works > Poems > [Poem]
 Breadcrumbs::for('admin.poems.edit', function ($trail, $poem) {
     $trail->parent('admin.poems.index');
-    $trail->push($poem->title, route('admin.poems.edit', $poem->id));
+    $trail->push(strip_tags($poem->title), route('admin.poems.edit', $poem->id));
 });
 
 // Home > Works > Books

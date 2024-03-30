@@ -3,11 +3,10 @@
 namespace App\API\Http\Controllers;
 
 use App\API\Http\Requests\LikeRequest;
-use App\Http\Controllers\Controller;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
 
-class LikeController extends Controller
+class LikeController extends AbstractController
 {
 
     ///////////////////////////////////////////////////////////////////////////
