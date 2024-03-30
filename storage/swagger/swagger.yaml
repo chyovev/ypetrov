@@ -10,3 +10,294 @@ info:
     name: Christo Yovev
     url: https://github.com/chyovev/ypetrov
     email: yovev@xroads-bg.com
+tags:
+  - API
+
+paths:
+  /api/contact:
+    post:
+      summary: Send a contact message
+      operationId: send_contact_message
+      tags:
+        - API
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ContactMessage'
+      responses:
+        201:
+          $ref: '#/components/responses/Created'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        429:
+          $ref: '#/components/responses/TooManyRequests'
+
+  /api/comments/{id}:
+    post:
+      summary: Add a comment to a resource
+      operationId: comment_resource
+      tags:
+        - API
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Comment'
+      parameters:
+        - $ref: '#/components/parameters/path/id'
+      responses:
+        201:
+          $ref: '#/components/responses/CreatedWithHtml'
+        404:
+          $ref: '#/components/responses/NotFound'
+        429:
+          $ref: '#/components/responses/TooManyRequests'
+
+  /api/likes/{id}:
+    post:
+      summary: Like a likable resource
+      operationId: like_resource
+      tags:
+        - API
+      parameters:
+        - $ref: '#/components/parameters/path/id'
+      responses:
+        201:
+          $ref: '#/components/responses/Created'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          allOf:
+            - $ref: '#/components/responses/Conflict'
+            - description: Resource already liked
+        429:
+          $ref: '#/components/responses/TooManyRequests'
+    delete:
+      summary: Revoke a like from a likable resource
+      operationId: revoke_like_from_resource
+      tags:
+        - API
+      parameters:
+        - $ref: '#/components/parameters/path/id'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+        404:
+          $ref: '#/components/responses/NotFound'
+        409:
+          allOf:
+            - $ref: '#/components/responses/Conflict'
+            - description: Resource should be liked first
+        429:
+          $ref: '#/components/responses/TooManyRequests'
+
+components:
+  parameters:
+    path:
+      id:
+        in: path
+        name: id
+        description: Resource id
+        required: true
+
+  schemas:
+    ContactMessage:
+      type: object
+      required:
+        - name
+        - message
+      properties:
+        name:
+          type: string
+          maximum: 255
+        email:
+          type: string
+          format: email
+          maxmium: 255
+        message:
+          type: string
+          maximum: 65535
+
+    Comment:
+      type: object
+      required:
+        - name
+        - message
+      properties:
+        name:
+          type: string
+          maximum: 255
+        message:
+          type: string
+          maximum: 65535
+
+    APIResponse:
+      type: object
+      required:
+        - success
+        - code
+        - message
+      properties:
+        success:
+          type: boolean
+          description: Result of the request
+          example: false
+        code:
+          type: integer
+          description: HTTP status code of the response
+          example: 400
+        message:
+          type: string
+          description: >
+            User-friendly message describing the result of the request.
+            Defaults to the HTTP status name of the response
+          example: Bad Request # status name of code 400
+
+  responses:
+    # Resource created (201)
+    Created:
+      description: Resource created
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: true
+                  code:
+                    default: 201
+                  message:
+                    default: Resource successfully created!
+                  errors:
+                    default: []
+
+    # Resource created and returned as HTML in response (201)
+    CreatedWithHtml:
+      description: Resource created and returned as HTML in response
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: true
+                  code:
+                    default: 201
+                  message:
+                    default: Resource successfully created!
+                  errors:
+                    default: []
+                  html:
+                    type: string
+                    example: <div>Newly created resource HTML</div>
+
+    # Response contains no content
+    NoContent:
+      description: Response contains no content
+
+    # Bad request (input validation failed) (400)
+    BadRequest:
+      description: Bad Request – input validation failed
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: false
+                  code:
+                    default: 400
+                  message:
+                    default: Bad Request
+                  errors:
+                    type: object
+                    properties:
+                      input_field:
+                        type: array
+                        items:
+                          type: string
+                          example: An example of an error related to the input_field 
+
+    # Not Found (404)
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: false
+                  code:
+                    default: 404
+                  message:
+                    default: Not Found
+                  errors:
+                    type: object
+                    properties:
+                      generic:
+                        type: array
+                        items:
+                          type: string
+                          example: Resource not found
+
+    # Conflict (409)
+    Conflict:
+      description: Request is correct, but it cannot be finished due to a conflict
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: false
+                  code:
+                    default: 409
+                  message:
+                    default: Conflict
+                  errors:
+                    type: object
+                    properties:
+                      generic:
+                        type: array
+                        items:
+                          type: string
+                          example: Although correct, your request cannot be processed
+
+    # Too Many Requests (429)
+    TooManyRequests:
+      description: Too Many Requests in a short period of time
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: false
+                  code:
+                    default: 429
+                  message:
+                    default: Too Many Requests
+                  errors:
+                    type: object
+                    properties:
+                      generic:
+                        type: array
+                        items:
+                          type: string
+                          example: You are sending too many requests in too short a period of time

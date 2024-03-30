@@ -24,10 +24,11 @@ class ResponseServiceProvider extends ServiceProvider
     ///////////////////////////////////////////////////////////////////////////
     private function registerOkResponse(): void {
         Response::macro('ok', function(array $properties = [], int $code = HttpResponse::HTTP_OK) {
+            $message  = HttpResponse::$statusTexts[$code];
             $response = [
                 'success' => true,
                 'code'    => $code,
-                'message' => null,
+                'message' => $message,
                 'errors'  => [],
             ];
 
