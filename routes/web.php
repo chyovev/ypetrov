@@ -7,6 +7,7 @@ use App\Http\Controllers\PressController;
 use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\WorkController;
+use App\API\Http\Controllers\SwaggerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,9 @@ Route::get('/video/{slug}',                      [VideoController::class, 'view'
 Route::get('/kontakt',                           [ContactController::class, 'index'])->name('contact');
 Route::get('/tvorchestvo/{bookSlug}',            [WorkController::class, 'get_book'])->name('book');
 Route::get('/tvorchestvo/{bookSlug}/{poemSlug}', [WorkController::class, 'get_poem'])->name('poem');
+
+// make API swagger be accessible only for users logged in the CMS
+Route::group(['middleware' => 'auth:admin'], function() {
+    Route::get('/swagger',              [SwaggerController::class, 'swagger_interface']);
+    Route::get('/swagger/openapi.yaml', [SwaggerController::class, 'swagger_docs'])->name('swagger_docs');
+});

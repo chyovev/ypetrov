@@ -1,0 +1,12 @@
+openapi: "3.1.0"
+info:
+  version: 1.0.0
+  title: Yosif Petrov website API
+  summary: >
+    Contains all API endpoints used by the actual application
+    to allow users to interact with it
+  termsOfService: http://swagger.io/terms/
+  contact:
+    name: Christo Yovev
+    url: https://github.com/chyovev/ypetrov
+    email: yovev@xroads-bg.com
