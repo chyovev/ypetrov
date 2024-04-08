@@ -1,0 +1,69 @@
+@import "colors.less";
+
+@hover: mix(@theme-color, white, 10%);
+
+.pagination {
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+     ul {
+        padding: 0;
+        display: inline-block;
+        margin-left: 0;
+        margin-bottom: 0;
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        zoom: 1;
+    }
+    li {
+        display: inline;
+        border-radius: 3px;
+    }
+    a {
+        float: left;
+        padding: 0 12px;
+        line-height: 30px;
+        text-decoration: none;
+        border-radius: 3px;
+        transition: 0.3s background-color;
+    }
+    .active a,
+    li:not(:first-child):not(:last-child) a:hover {
+        background-color: @hover;
+        color: #94999E;
+    }
+    .active a {
+        color: #94999E;
+        cursor: default;
+    }
+    .disabled a,
+    .disabled a:hover,
+    .disabled span {
+        color: #94999E;
+        background-color: transparent;
+        cursor: default;
+    }
+    .prev.disabled span {
+        float: left;
+        padding: 0 12px;
+        line-height: 30px;
+        text-decoration: none;
+    }
+    .next.disabled span {
+        float: left;
+        padding: 0 12px;
+        line-height: 30px;
+        text-decoration: none;
+    }
+    li.active,
+    li.disabled {
+        float: left;
+        padding: 0 12px;
+        line-height: 30px;
+        text-decoration: none;
+    }
+    li.active {
+        background: @theme-color;
+        color: #fff;
+    }
+}

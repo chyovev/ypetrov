@@ -54,4 +54,11 @@
         <li @class(['active' => isRoute('contact')])><a href="{{ route('contact') }}">Контакт</a></li>
 
     </ul>
+
+    <div class="search-form">
+        <form action="{{ route('search') }}" method="GET">
+            <input type="text" @class(["search-field" => true, "open" => isset($search) && $search != '']) name="s" placeholder="Търси..." value="{{ $search ?? null }}" />
+            <button type="submit" class="search-submit" title="Търсене"></button>
+        </form>
+    </div>
 </nav>

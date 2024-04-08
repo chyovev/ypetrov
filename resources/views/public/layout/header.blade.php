@@ -4,7 +4,7 @@
 
             <div class="logo-wrapper">
                 <a href="{{ route('home') }}" class="logo">Йосиф Петров</a>
-                <span>(1909 – 2004)</span>
+                <span @class(["none" => isset($search) && $search !== ''])>(1909 – 2004)</span>
             </div>
 
             @include('public.layout.navigation')

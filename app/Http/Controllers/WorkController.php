@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\BookRepository;
-use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class WorkController extends Controller

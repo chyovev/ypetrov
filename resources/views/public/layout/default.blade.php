@@ -12,7 +12,9 @@
     <link type="text/css" rel="stylesheet" href="{{ url('css/style.css') }}" />
     <meta name="msapplication-TileColor" content="#F6F6F6" />
     <meta name="theme-color" content="#F6F6F6" />
-
+    @if (isset($noindex))
+        <meta name="robots" content="noindex" />
+    @endif
 </head>
 <body>
 

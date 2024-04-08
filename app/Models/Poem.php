@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Helpers\Contexter;
 use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -100,7 +102,56 @@ class Poem extends Model implements Commentable, Statsable
      * @return bool
      */
     public function isFullyActive(): bool {
-        return $this->isActive() && $this->books()->active()->exists();
+        return $this->isActive() && $this->hasActiveBook();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Check if there's a book associated with the poem which is marked as active.
+     * 
+     * @return bool
+     */
+    public function hasActiveBook(): bool {
+        return $this->books()->active()->exists();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Local scope query to filter poems which have at least one active book.
+     * 
+     * @param  Builder $query – the query being prepared
+     * @return Builder $query – query with appended book condition
+     */
+    public function scopeHasActiveBook(Builder $query): Builder {
+        return $query->whereHas('books', function($query) {
+            $query->active();
+        });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Local scope query to filter fully active poems.
+     * 
+     * @param  Builder $query – the query being prepared
+     * @return Builder $query – query with appended condition
+     */
+    public function scopeFullyActive(Builder $query): Builder {
+        return $query->active()->hasActiveBook();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * When the user searches for a keyword of a poem, it would
+     * make more sense for them to see the relevant context, i.e.
+     * that part of the poem which contains said word.
+     * 
+     * @param  string $search – keyword
+     * @return string
+     */
+    public function showSearchContext(string $search): string {
+        $helper = new Contexter($this->text, $search);
+
+        return $helper->extract();
     }
 
 }
