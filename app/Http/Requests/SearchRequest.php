@@ -20,9 +20,13 @@ class SearchRequest extends FormRequest
     private $results;
 
     ///////////////////////////////////////////////////////////////////////////
+    /**
+     * The search parameter is optional – if not passed, the user is
+     * simply shown the search form (hence the 'sometimes' rule).
+     */
     public function rules() {
         return [
-            's' => 'sometimes|string',
+            's' => 'sometimes',
         ];
     }
 
@@ -34,13 +38,11 @@ class SearchRequest extends FormRequest
      * @return void
      */
     public function process(): void {
-        $this->results = Poem::query()
-            ->fullyActive()
-            ->with(['books' => function($query) {
-                $query->active();
-            }])
-            ->whereFullText(['title', 'dedication', 'text'], $this->getSearchString())
-            ->paginate();
+        $search = $this->getSearchString();
+
+        $this->results = empty($search)
+            ? $this->mockEmptyResponse()
+            : $this->fetchDataFromDatabase($search);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -50,7 +52,40 @@ class SearchRequest extends FormRequest
      * @return string|null
      */
     public function getSearchString(): ?string {
-        return $this->validated('s');
+        return $this->query('s');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * If no search parameter is passed to the request, fake an
+     * empty response instead of executing a redundant SQL query.
+     * 
+     * @return LengthAwarePaginator
+     */
+    private function mockEmptyResponse(): LengthAwarePaginator {
+        $items   = [];
+        $total   = 0;
+        $perPage = 1;
+
+        return new LengthAwarePaginator($items, $total, $perPage);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Fetch all fully active poems from the database which match
+     * the searched string.
+     * 
+     * @param  string $search
+     * @return LengthAwarePaginator
+     */
+    private function fetchDataFromDatabase(string $search): LengthAwarePaginator {
+        return Poem::query()
+            ->fullyActive()
+            ->with(['books' => function($query) {
+                $query->active();
+            }])
+            ->whereFullText(['title', 'dedication', 'text'], $search)
+            ->paginate();
     }
 
     ///////////////////////////////////////////////////////////////////////////
