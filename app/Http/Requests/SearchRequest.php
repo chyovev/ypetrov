@@ -4,9 +4,11 @@ namespace App\Http\Requests;
 
 use App\Models\Book;
 use App\Models\Poem;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\ViewErrorBag;
 
 class SearchRequest extends FormRequest
 {
@@ -19,30 +21,81 @@ class SearchRequest extends FormRequest
      */
     private $results;
 
+    /**
+     * Whether the validation has failed.
+     * Gets toggled in the failedValidation() method.
+     * 
+     * @var bool
+     */
+    private bool $failedValidation = false;
+
+
     ///////////////////////////////////////////////////////////////////////////
     /**
      * The search parameter is optional – if not passed, the user is
      * simply shown the search form (hence the 'sometimes' rule).
+     * If it is passed, but it's empty, the ConvertEmptyStringsToNull
+     * middleware will nullify it (hence the 'nullable' rule).
+     * Finally, the search string should be at least 3 characters long:
+     * the full text search does not work with shorter strings.
      */
     public function rules() {
         return [
-            's' => 'sometimes',
+            's' => 'sometimes|nullable|min:3',
         ];
     }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Find all poems which match the searched string and
-     * save them under the resuls property.
+     * Failed validation on a form request usually triggers an exception
+     * to be thrown which is then caught by the exception handler.
+     * In most this would result in a redirect containing error bags.
+     * The search request however is a simple GET request – any errors
+     * should be passed on to the view without the need of a redirect.
+     * 
+     * @param Validator $validator
+     */
+    protected function failedValidation(Validator $validator) {
+        $validatorBag = $validator->getMessageBag();
+
+        $errorBag = new ViewErrorBag();
+        $errorBag->put('default', $validatorBag);
+
+        view()->share('errors', $errorBag);
+
+        $this->failedValidation = true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Set result either by fetching data from the database
+     * or by mocking an empty response.
      * 
      * @return void
      */
     public function process(): void {
-        $search = $this->getSearchString();
+        $this->results = $this->shouldProcessSearch()
+            ? $this->fetchDataFromDatabase()
+            : $this->mockEmptyResponse();
+    }
 
-        $this->results = empty($search)
-            ? $this->mockEmptyResponse()
-            : $this->fetchDataFromDatabase($search);
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A search request should actually be processed if the
+     * validation has passed and the search string is not empty.
+     * 
+     * @return bool
+     */
+    private function shouldProcessSearch(): bool {
+        if ($this->failedValidation) {
+            return false;
+        }
+
+        if (empty($this->getSearchString())) {
+            return false;
+        }
+
+        return true;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -75,16 +128,15 @@ class SearchRequest extends FormRequest
      * Fetch all fully active poems from the database which match
      * the searched string.
      * 
-     * @param  string $search
      * @return LengthAwarePaginator
      */
-    private function fetchDataFromDatabase(string $search): LengthAwarePaginator {
+    private function fetchDataFromDatabase(): LengthAwarePaginator {
         return Poem::query()
             ->fullyActive()
             ->with(['books' => function($query) {
                 $query->active();
             }])
-            ->whereFullText(['title', 'dedication', 'text'], $search)
+            ->whereFullText(['title', 'dedication', 'text'], $this->getSearchString())
             ->paginate();
     }
 

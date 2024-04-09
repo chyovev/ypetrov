@@ -13,6 +13,10 @@
                         <input type="text" name="s" value="{{ $search }}" placeholder="Въведете ключова дума" />
                         <input type="submit" value="Търси" />
                     </form>
+
+                    @error('s')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="results">
