@@ -136,7 +136,17 @@ trait HasAttachments
      * @return Attachment|null
      */
     private function getFirstImage(): ?Attachment {
-        return $this->getAttachmentsByType('image')->first();
+        return $this->getImages()->first();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get all image attachments.
+     * 
+     * @return Collection<Attachment>
+     */
+    public function getImages(): Collection {
+        return $this->getAttachmentsByType('image');
     }
 
     ///////////////////////////////////////////////////////////////////////////

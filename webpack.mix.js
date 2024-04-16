@@ -8,6 +8,7 @@ mix
 // are automatically copied to the respective public folders
 mix
     .less('resources/css/less/style.less', 'public/css/style.css')
+    .copyDirectory('resources/images', 'public/images')
     .minify([
         'node_modules/jquery/dist/jquery.min.js',
         'node_modules/swipejs/build/swipe.min.js',

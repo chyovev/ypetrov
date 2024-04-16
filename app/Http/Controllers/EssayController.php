@@ -23,8 +23,9 @@ class EssayController extends Controller
         $essay->addImpression();
 
         $data = [
-            'essay' => $essay,
-            'seo'   => $essay,
+            'essay'  => $essay,
+            'seo'    => $essay,
+            'images' => $essay->getImages(),
         ];
 
         return view('public.essays.view', $data);

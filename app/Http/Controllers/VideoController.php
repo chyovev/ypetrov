@@ -39,6 +39,7 @@ class VideoController extends Controller
             'videos' => $videos,
             'video'  => $video,
             'seo'    => $video,
+            'images' => $video->getImages(),
         ];
 
         return view('public.videos.view', $data);

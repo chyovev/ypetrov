@@ -35,8 +35,9 @@ class StaticPageController extends Controller
         $page->addImpression();
         
         $data = [
-            'page' => $page,
-            'seo'  => $page,
+            'page'   => $page,
+            'seo'    => $page,
+            'images' => $page->getImages(),
         ];
 
         return view('public.static_pages.view', $data);

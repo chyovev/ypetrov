@@ -33,8 +33,9 @@ class WorkController extends Controller
         $book->addImpression();
 
         $data = [
-            'book' => $book,
-            'seo' => $book,
+            'book'   => $book,
+            'seo'    => $book,
+            'images' => $book->getImages(),
         ];
 
         return view('public.works.book', $data);
@@ -60,9 +61,10 @@ class WorkController extends Controller
         $poem->addImpression();
 
         $data = [
-            'book' => $book,
-            'poem' => $poem,
-            'seo'  => $poem,
+            'book'   => $book,
+            'poem'   => $poem,
+            'seo'    => $poem,
+            'images' => $book->getImages(),
         ];
 
         return view('public.works.poem', $data);

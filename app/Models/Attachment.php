@@ -252,4 +252,30 @@ class Attachment extends Model
         return $thumbName;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the width of an image attachment.
+     * If the attachment is not an image, null will be returned.
+     * 
+     * @return int|null
+     */
+    public function getWidth(): ?int {
+        list($width, $height) = getimagesize( $this->getServerFilePath() );
+
+        return $width;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get the height of an image attachment.
+     * If the attachment is not an image, null will be returned.
+     * 
+     * @return int|null
+     */
+    public function getHeight(): ?int {
+        list($width, $height) = getimagesize( $this->getServerFilePath() );
+
+        return $height;
+    }
+
 }
