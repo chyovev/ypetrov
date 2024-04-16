@@ -36,6 +36,7 @@ class StaticPageController extends Controller
         
         $data = [
             'page' => $page,
+            'seo'  => $page,
         ];
 
         return view('public.static_pages.view', $data);

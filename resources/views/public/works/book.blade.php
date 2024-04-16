@@ -8,8 +8,8 @@
         <div id="body">
             <div class="book">
 
-                @if ($book->getCoverImage())
-                    <div class="cover"><img src="{{ $book->getCoverImage()->getURL() }}" alt="{{ $book->title }}" /></div>
+                @if ($cover = $book->getCoverImage())
+                    <div class="cover"><img src="{{ $cover }}" alt="{{ $book->title }}" /></div>
                 @endif
                 
                 <div class="info">

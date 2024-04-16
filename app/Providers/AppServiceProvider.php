@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use View;
+use Blade;
 use Carbon\Carbon;
 use App\View\Composers\NavigationComposer;
 use Illuminate\Pagination\Paginator;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->setCarbonLocale();
         $this->setAdminPaginationTheme();
         $this->registerNavigationViewComposer();
+        $this->registerMetaBladeDirectives();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -66,5 +68,41 @@ class AppServiceProvider extends ServiceProvider
         ];
 
         View::composer($views, NavigationComposer::class);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * The meta directives expect an object implementing
+     * the SEO interface to have been passed to the view
+     * under the $seo name. If no such object is passed,
+     * a default value is be used.
+     */
+    private function registerMetaBladeDirectives(): void {
+        Blade::directive('metaTitle', function () {
+            return '<?php
+                if (isset($seo)) {
+                    $title = cleanString($seo->getMetaTitle());
+            
+                    echo "{$title} | Йосиф Петров (1909 – 2004)";
+                }
+                else {
+                    echo "Официален сайт в памет на поета Йосиф Петров (1909 – 2004)";
+                }
+            ?>';
+        });
+        
+        Blade::directive('metaDescription', function () {
+            return '<?php
+                if (isset($seo)) {
+                    $description = cleanString($seo->getMetaDescription());
+                }
+
+                if ( ! isset($description)) {
+                    $description = "Йосиф Петров е български поет, общественик и политик";
+                }
+
+                echo str($description)->words(50);
+            ?>';
+        });
     }
 }

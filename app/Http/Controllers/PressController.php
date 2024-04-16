@@ -24,6 +24,7 @@ class PressController extends Controller
 
         $data = [
             'article' => $article,
+            'seo'     => $article,
         ];
 
         return view('public.press.view', $data);

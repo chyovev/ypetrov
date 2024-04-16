@@ -184,4 +184,13 @@ class SearchRequest extends FormRequest
 
         return collect($books);
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaTitle(): string {
+        $string = $this->getSearchString();
+
+        return $string
+            ? "Търсене за '{$string}'"
+            : "Търсене";
+    }
 }

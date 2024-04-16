@@ -24,6 +24,7 @@ class EssayController extends Controller
 
         $data = [
             'essay' => $essay,
+            'seo'   => $essay,
         ];
 
         return view('public.essays.view', $data);

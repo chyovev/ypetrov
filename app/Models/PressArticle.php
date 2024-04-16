@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
+use App\Models\Interfaces\SEO;
 use App\Models\Interfaces\Statsable;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
@@ -12,7 +13,7 @@ use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PressArticle extends Model implements Attachable, Commentable, Statsable
+class PressArticle extends Model implements Attachable, Commentable, Statsable, SEO
 {
     use HasFactory;
 
@@ -80,6 +81,16 @@ class PressArticle extends Model implements Attachable, Commentable, Statsable
      */
     public function canBeLiked(): bool {
         return $this->isActive();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaTitle(): ?string {
+        return $this->title;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaDescription(): ?string {
+        return $this->text;
     }
 
 }

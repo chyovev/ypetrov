@@ -22,6 +22,7 @@ class SearchController extends Controller
             'grouped' => $request->getResultsGroupedByBooks(),
             'search'  => $request->getSearchString(),
             'noindex' => true,
+            'seo'     => seo($request->getMetaTitle()),
         ];
 
         return view('public.search.index', $data);

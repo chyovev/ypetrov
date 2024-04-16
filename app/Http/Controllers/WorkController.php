@@ -34,6 +34,7 @@ class WorkController extends Controller
 
         $data = [
             'book' => $book,
+            'seo' => $book,
         ];
 
         return view('public.works.book', $data);
@@ -61,6 +62,7 @@ class WorkController extends Controller
         $data = [
             'book' => $book,
             'poem' => $poem,
+            'seo'  => $poem,
         ];
 
         return view('public.works.poem', $data);

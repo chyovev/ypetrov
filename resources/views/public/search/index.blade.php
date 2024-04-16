@@ -51,9 +51,9 @@
 
                             </div>
 
-                            @if ($book->getCoverImage())
+                            @if ($cover = $book->getCoverImage())
                             <div class="cover-wrapper">
-                                <div class="img-wrapper desktop-stickable"><img src="{{ $book->getCoverImage() }}" alt="{{ $book->title }}" /></div>
+                                <div class="img-wrapper desktop-stickable"><img src="{{ $cover }}" alt="{{ $book->title }}" /></div>
                             </div>
                             @endif
                             

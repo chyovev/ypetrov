@@ -7,7 +7,11 @@ class ContactController extends Controller
 
     ///////////////////////////////////////////////////////////////////////////
     public function index() {
-        return view ('public.contact.index');
+        $data = [
+            'seo' => seo('Контакт'),
+        ];
+
+        return view ('public.contact.index', $data);
     }
     
 }

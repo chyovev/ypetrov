@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
+use App\Models\Interfaces\SEO;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Book extends Model implements Attachable, Commentable, Statsable
+class Book extends Model implements Attachable, Commentable, Statsable, SEO
 {
     use HasFactory;
 
@@ -139,5 +140,27 @@ class Book extends Model implements Attachable, Commentable, Statsable
      */
     public function getCoverImage() {
         return $this->getFirstImage()?->getURL();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaTitle(): ?string {
+        $title = $this->title;
+
+        if ($this->publish_year) {
+            $title .= " ({$this->publish_year})";
+        }
+
+        return $title;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaDescription():? string {
+        $description = $this->getMetaTitle();
+
+        if ($this->publisher) {
+            $description .= ", издателство {$this->publisher}";
+        }
+
+        return $description;
     }
 }

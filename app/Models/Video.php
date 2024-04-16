@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
+use App\Models\Interfaces\SEO;
 use App\Models\Interfaces\Statsable;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model implements Attachable, Commentable, Statsable
+class Video extends Model implements Attachable, Commentable, Statsable, SEO
 {
     use HasFactory;
 
@@ -109,6 +110,16 @@ class Video extends Model implements Attachable, Commentable, Statsable
         return $videos->sort(function(Attachment $attachment) {
             return ( ! $attachment->hasType('mp4'));
         });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaTitle(): ?string {
+        return $this->title;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getMetaDescription(): ?string {
+        return $this->summary;
     }
 
 }
