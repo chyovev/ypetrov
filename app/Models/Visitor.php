@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -100,6 +101,34 @@ class Visitor extends Model
      */
     public function updateLastVisitDate(): bool {
         return $this->touchQuietly();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Local query scope to filter only the visitors with registered country.
+     * 
+     * @param Builder $query – query being prepared
+     */
+    public function scopeHasCountryCode(Builder $query): void {
+        $query
+            ->whereNotNull('country_code')
+            ->where('country_code', '!=', '--'); // default value in non-production env
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Local query scope to filter only the visitors which have visited
+     * recently, i.e. their last visit was registered in the past 6 months.
+     * 
+     * @param Builder $query – query being prepared
+     */
+    public function scopeRecentlyVisited(Builder $query): void {
+        // since the column is of date-time type,
+        // make sure to be precise about hours
+        $to   = Carbon::now();
+        $from = $to->copy()->subMonths(6)->startOfDay();
+
+        $query->whereBetween(self::UPDATED_AT, [$from, $to]);
     }
 
 }

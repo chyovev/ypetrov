@@ -20,8 +20,8 @@ class GalleryController extends Controller
     ///////////////////////////////////////////////////////////////////////////
     public function index() {
         $data = [
-            'images' => $this->repository->getAllActive(),
-            'seo'    => seo('Галерия'),
+            'gallery' => $this->repository->getAllActive(),
+            'seo'     => seo('Галерия'),
         ];
 
         return view('public.gallery.index', $data);

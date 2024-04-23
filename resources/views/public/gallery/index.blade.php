@@ -10,7 +10,7 @@
                     <div class="title">Галерия</div>
                 </div>
                 <ol class="images op-0-fadein">
-                    @foreach ($images as $item)
+                    @foreach ($gallery as $item)
                     <li>
                         <a href="javascript: void(0);" @class(['thumb' => true, 'active' => $loop->first]) id="thumb-{{ $loop->index }}">
                             <img src="{{ $item->getImageThumbURL() }}" alt="Изображение #{{ $loop->iteration }}" />
@@ -19,17 +19,17 @@
                     @endforeach
                 </ol>
 
-                @if ($images->count() > 1)
-                    <div class="center op-0-fadein"><span id="current-image">1</span>/{{ $images->count() }}</div>
+                @if ($gallery->count() > 1)
+                    <div class="center op-0-fadein"><span id="current-image">1</span>/{{ $gallery->count() }}</div>
                 @endif
 
             </aside>
             <div class="aside-toggler mobile-only"><span>Галерия</span></div>
         </div>
 
-        <section @class(['text' => true, 'error' => !$images->count()]) id="container">
+        <section @class(['text' => true, 'error' => !$gallery->count()]) id="container">
             <div class="content-wrapper">
-                @if ($images->count())
+                @if ($gallery->count())
                 <h1 class="center" id="title">Снимки на Йосиф Петров</h1>
 
                 <div class="gallery-wrapper-outer">
@@ -39,7 +39,7 @@
                     <div class="gallery-wrapper-inner">
                         <div id="swipe-gallery">
                             <div class="swipe-wrap op-0-fadein">
-                                @foreach ($images as $item)
+                                @foreach ($gallery as $item)
                                     @php
                                         $src = 'src="' . $item->getImageURL() .'"';
                                         if (!$loop->first) {

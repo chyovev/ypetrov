@@ -81,6 +81,8 @@
     <script src="{{ asset('admin/js/lib/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/loudev-multiselect/jquery.multi-select.js') }}"></script>
     <script src="{{ asset('admin/js/lib/datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/morris-chart/raphael-min.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/morris-chart/morris.js') }}"></script>
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
 </body>
 

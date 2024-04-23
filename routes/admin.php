@@ -7,6 +7,7 @@ use App\Admin\Http\Controllers\CommentController;
 use App\Admin\Http\Controllers\ContactMessageController;
 use App\Admin\Http\Controllers\GalleryImageController;
 use App\Admin\Http\Controllers\EssayController;
+use App\Admin\Http\Controllers\DashboardController;
 use App\Admin\Http\Controllers\PoemController;
 use App\Admin\Http\Controllers\PressArticleController;
 use App\Admin\Http\Controllers\StaticPageController;
@@ -31,7 +32,7 @@ Route::middleware(['guest:admin'])->group(function() {
 Route::middleware(['auth:admin'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-    Route::view('/',      'admin.dashboard')->name('admin.home');
+    Route::get('/',       [DashboardController::class, 'index'])->name('admin.home');
 
     // resources are a shortcut for all CRUD routes
     Route::name('admin')->resource('users',            UserController::class)->except(['show']);
