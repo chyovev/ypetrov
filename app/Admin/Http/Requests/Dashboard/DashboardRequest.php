@@ -58,11 +58,28 @@ class DashboardRequest extends HttpFormRequest
             ->orderByRaw('visitors DESC');
 
         if ($recent) {
-            $query->recentlyVisited();
+            $query->recentlyVisited(6);
         }
 
         return $query
             ->limit(5)
+            ->get()
+            ->toArray();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get recent visitors grouped by month and year.
+     * 
+     * @return array
+     */
+    public function getMonthlyVisitors(): array {
+        return Visitor::query()
+            ->selectRaw('DATE_FORMAT(last_visit_date, "%Y-%m") AS month, COUNT(id) AS visitors')
+            ->groupByRaw('month', [])
+            ->orderByRaw('month ASC')
+            ->recentlyVisited(12)
+            ->limit(12)
             ->get()
             ->toArray();
     }

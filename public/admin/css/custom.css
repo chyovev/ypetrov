@@ -54,3 +54,6 @@ label .info {
 .monospace {
     font-family: monospace;
 }
+.chart {
+    height: 350px;
+}

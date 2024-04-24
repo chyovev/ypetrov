@@ -12,8 +12,11 @@ class DashboardController extends Controller
     public function index(DashboardRequest $request) {
         $data = [
             'visitors' => [
-                'total'  => $request->getTotalVisitorsByCountry(),
-                'recent' => $request->getRecentVisitorsByCountry(),
+                'by_country' => [
+                    'total'  => $request->getTotalVisitorsByCountry(),
+                    'recent' => $request->getRecentVisitorsByCountry(),
+                ],
+                'monthly' => $request->getMonthlyVisitors(),
             ],
         ];
 

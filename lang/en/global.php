@@ -79,6 +79,7 @@ return [
     'users'                  => 'Users',
     'videos'                 => 'Video',
     'view'                   => 'View',
+    'visitors'               => 'Visitors',
     'visitors_by_country'    => 'Visitors by country',
     'works'                  => 'Works',
     'yes'                    => 'Yes',

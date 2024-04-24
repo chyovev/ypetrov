@@ -118,15 +118,16 @@ class Visitor extends Model
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Local query scope to filter only the visitors which have visited
-     * recently, i.e. their last visit was registered in the past 6 months.
+     * recently, i.e. their last visit was registered in the past X months.
      * 
-     * @param Builder $query – query being prepared
+     * @param Builder $query  – query being prepared
+     * @param int     $months – how many months to go back
      */
-    public function scopeRecentlyVisited(Builder $query): void {
+    public function scopeRecentlyVisited(Builder $query, int $months): void {
         // since the column is of date-time type,
         // make sure to be precise about hours
         $to   = Carbon::now();
-        $from = $to->copy()->subMonths(6)->startOfDay();
+        $from = $to->copy()->subMonths($months)->startOfDay();
 
         $query->whereBetween(self::UPDATED_AT, [$from, $to]);
     }
