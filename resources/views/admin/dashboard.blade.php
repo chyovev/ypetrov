@@ -14,9 +14,31 @@
         <div class="col-6">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">{{ __('global.visitors_by_country') }}</h4>
+                    <h4 class="card-title">{{ __('global.visitors_by_country') }} ({{ __('global.total') }})</h4>
+
+                    <div id="total-visitors-by-country" class="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ __('global.top_x_read_poems', ['x' => 10]) }}</h4>
                     
-                    <div id="visitors-by-country" class="chart"></div>
+                    <div id="poems-reads" class="chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ __('global.top_x_liked_poems', ['x' => 10]) }}</h4>
+                    
+                    <div id="poems-likes" class="chart"></div>
                 </div>
             </div>
         </div>
@@ -40,27 +62,58 @@
                 xkey: 'month',
                 ykeys: [ 'visitors' ],
                 labels: [ '{{ __('global.visitors') }}' ],
-                lineColors: [ '#4680ff' ],
+                lineColors: [ '#425795' ],
                 lineWidth: 1,
                 hideHover: 'auto'
             } );
 
-            // visitors by country
-            Morris.Bar( {
-                element: 'visitors-by-country',
+            // total visitors (grouped by country)
+            Morris.Donut({
+                element: 'total-visitors-by-country',
                 data: [
-                    @foreach($visitors['by_country']['total'] as $key => $item)
+                    @foreach($visitors['by_country'] as $key => $item)
                     {
-                        y: '{{ \Carbon\Language::regions()[ $item['country_code'] ] ?? $item['country_code'] }}',
-                        a: {{ $item['visitors'] }},
-                        b: {{ $visitors['by_country']['recent'][$key]['visitors'] ?? 0 }},
+                        label: '{{ \Carbon\Language::regions()[ $item['country_code'] ] ?? $item['country_code'] }}',
+                        value: {{ $item['visitors'] }},
+                    },
+                    @endforeach
+                ],
+                colors: [ 'green', 'red', 'blue', 'purple', 'orange' ]
+            });
+
+            // poems reads
+            Morris.Bar( {
+                element: 'poems-reads',
+                data: [
+                    @foreach($poems['reads'] as $stats)
+                    {
+                        y: '{{ $stats->statsable->title }}',
+                        a: {{ $stats->total_impressions }},
                     },
                     @endforeach
                 ],
                 xkey: 'y',
-                ykeys: [ 'a', 'b', ],
-                labels: [ '{{ __('global.total') }}', '{{ __('global.last_x_months', ['x' => 6]) }}', ],
-                barColors: [ '#1976d2', '#95b8ee', ],
+                ykeys: [ 'a', ],
+                labels: [ '{{ __('global.reads') }}', ],
+                barColors: [ '#425795' ],
+                hideHover: 'auto',
+            } );
+
+            // poems likes
+            Morris.Bar( {
+                element: 'poems-likes',
+                data: [
+                    @foreach($poems['likes'] as $stats)
+                    {
+                        y: '{{ $stats->statsable->title }}',
+                        a: {{ $stats->total_likes }},
+                    },
+                    @endforeach
+                ],
+                xkey: 'y',
+                ykeys: [ 'a', ],
+                labels: [ '{{ __('global.likes') }}', ],
+                barColors: [ 'purple' ],
                 hideHover: 'auto',
             } );
         };

@@ -2,7 +2,9 @@
 
 namespace App\Admin\Http\Requests\Dashboard;
 
+use App\Models\Stats;
 use App\Models\Visitor;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class DashboardRequest extends HttpFormRequest
@@ -25,43 +27,11 @@ class DashboardRequest extends HttpFormRequest
      * @return array
      */
     public function getTotalVisitorsByCountry(): array {
-        $recent = false;
-
-        return $this->getVisitorsByCountry($recent);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Fetch recent visitors grouped by country.
-     * 
-     * @return array
-     */
-    public function getRecentVisitorsByCountry(): array {
-        $recent = true;
-
-        return $this->getVisitorsByCountry($recent);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Fetch visitors grouped by country, either total or recent
-     * which is determined by the boolean parameter.
-     * 
-     * @param  bool $recent
-     * @return array
-     */
-    private function getVisitorsByCountry(bool $recent): array {
-        $query = Visitor::query()
+        return Visitor::query()
             ->hasCountryCode()
             ->selectRaw('country_code, COUNT(id) AS visitors')
             ->groupByRaw('country_code', [])
-            ->orderByRaw('visitors DESC');
-
-        if ($recent) {
-            $query->recentlyVisited(6);
-        }
-
-        return $query
+            ->orderByRaw('visitors DESC')
             ->limit(5)
             ->get()
             ->toArray();
@@ -82,6 +52,43 @@ class DashboardRequest extends HttpFormRequest
             ->limit(12)
             ->get()
             ->toArray();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get top 10 most liked poems.
+     * 
+     * @return Collection<Stats>
+     */
+    public function getTopLikedPoems(): Collection {
+        return $this->getTopPoems('total_likes');
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get top 10 most read poems.
+     * 
+     * @return Collection<Stats>
+     */
+    public function getTopReadPoems(): Collection {
+        return $this->getTopPoems('total_impressions');
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get top 10 most liked/read poems.
+     * 
+     * @param  string $field – total_likes / total_impressions
+     * @return Collection<Stats>
+     */
+    private function getTopPoems(string $field): Collection {
+        return Stats::query()
+            ->with('statsable')
+            ->forPoems()
+            ->where($field, '>', 0)
+            ->orderByDesc($field)
+            ->limit(10)
+            ->get();
     }
 
 }
