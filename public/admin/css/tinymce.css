@@ -1,0 +1,109 @@
+body {
+    font-size: 16px;
+    line-height: 1.8em;
+    text-align: justify;
+    padding: 20px;
+}
+
+.desktop-only, .mobile-only {
+    display: none;
+}
+
+hr {
+    border: 1px dotted #cccccc;
+}
+
+.subtitle {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 1.4em;
+}
+
+img {
+    margin: 10px auto 1cm auto;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+    max-width: 100%;
+}
+
+img.right {
+    margin-left: 1cm;
+    float: right;
+}
+
+img.left {
+    float: left;
+    margin-right: 1cm;
+}
+
+.poem {
+    font-family: 'roboto', 'Droid Sans Mono Regular', monospace;
+    margin: 1.5cm auto;
+    border-left: 1px dotted grey;
+}
+
+@media (min-width: 721px) {
+    .poem {
+        margin-left: 15%;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 720px) {
+    .poem {
+        padding-left: 10px;
+    }
+}
+
+h5 {
+    background-color: white;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 720px) {
+    body {
+        text-align: left;
+    }
+
+    img {
+        float: none;
+        margin: 1cm 0px;
+    }
+
+    img.mobile-only {
+        display: block;
+    }
+
+    img+.poem {
+        margin-top: 0px;
+    }
+}
+
+@media (min-width: 721px) {
+    img.desktop-only {
+        display: block;
+    }
+}
+
+a {
+    color: #425795;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+blockquote {
+    text-align: left;
+    margin: 1cm auto 1cm 5em;
+    border-left: 6px solid #CECECE;
+    padding-left: 1em;
+}
+
+@media (max-width: 720px) {
+    blockquote {
+        margin-left: 0px;
+    }
+}

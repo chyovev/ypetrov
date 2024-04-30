@@ -76,8 +76,7 @@
     <script src="{{ asset('admin/js/sidebarmenu.js') }}"></script>
     <script src="{{ asset('admin/js/lib/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/sweetalert/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('admin/js/lib/html5-editor/wysihtml5-0.3.0.js') }}"></script>
-    <script src="{{ asset('admin/js/lib/html5-editor/bootstrap-wysihtml5.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/loudev-multiselect/jquery.multi-select.js') }}"></script>
     <script src="{{ asset('admin/js/lib/datepicker/bootstrap-datepicker.min.js') }}"></script>
