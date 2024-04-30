@@ -77,6 +77,7 @@ return [
     'success'                => 'Success!',
     'title'                  => 'Title',
     'text'                   => 'Text',
+    'top_x_commented_poems'  => 'Top :x most commented poems',
     'top_x_liked_poems'      => 'Top :x most liked poems',
     'top_x_read_poems'       => 'Top :x most read poems',
     'total'                  => 'Total',

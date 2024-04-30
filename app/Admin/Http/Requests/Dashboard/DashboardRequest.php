@@ -2,6 +2,7 @@
 
 namespace App\Admin\Http\Requests\Dashboard;
 
+use App\Models\Poem;
 use App\Models\Stats;
 use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Collection;
@@ -61,7 +62,7 @@ class DashboardRequest extends HttpFormRequest
      * @return Collection<Stats>
      */
     public function getTopLikedPoems(): Collection {
-        return $this->getTopPoems('total_likes');
+        return $this->getTopPoemsStats('total_likes');
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -71,7 +72,7 @@ class DashboardRequest extends HttpFormRequest
      * @return Collection<Stats>
      */
     public function getTopReadPoems(): Collection {
-        return $this->getTopPoems('total_impressions');
+        return $this->getTopPoemsStats('total_impressions');
     }
     
     ///////////////////////////////////////////////////////////////////////////
@@ -81,12 +82,27 @@ class DashboardRequest extends HttpFormRequest
      * @param  string $field – total_likes / total_impressions
      * @return Collection<Stats>
      */
-    private function getTopPoems(string $field): Collection {
+    private function getTopPoemsStats(string $field): Collection {
         return Stats::query()
             ->with('statsable')
             ->forPoems()
             ->where($field, '>', 0)
             ->orderByDesc($field)
+            ->limit(10)
+            ->get();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Get top 10 most commented poems.
+     * 
+     * @return Collection<Poem>
+     */
+    public function getTopCommentedPoems(): Collection {
+        return Poem::query()
+            ->whereHas('comments', function() {})
+            ->withCount('comments')
+            ->orderByDesc('comments_count')
             ->limit(10)
             ->get();
     }

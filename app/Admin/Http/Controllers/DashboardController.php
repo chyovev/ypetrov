@@ -16,8 +16,9 @@ class DashboardController extends Controller
                 'monthly'    => $request->getMonthlyVisitors(),
             ],
             'poems' => [
-                'likes' => $request->getTopLikedPoems(),
-                'reads' => $request->getTopReadPoems(),
+                'likes'    => $request->getTopLikedPoems(),
+                'reads'    => $request->getTopReadPoems(),
+                'comments' => $request->getTopCommentedPoems(),
             ],
         ];
 

@@ -42,6 +42,16 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ __('global.top_x_commented_poems', ['x' => 10]) }}</h4>
+                    
+                    <div id="poems-comments" class="chart"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -114,6 +124,24 @@
                 ykeys: [ 'a', ],
                 labels: [ '{{ __('global.likes') }}', ],
                 barColors: [ 'purple' ],
+                hideHover: 'auto',
+            } );
+
+            // poems comments
+            Morris.Bar( {
+                element: 'poems-comments',
+                data: [
+                    @foreach($poems['comments'] as $poem)
+                    {
+                        y: '{{ strip_tags($poem->title) }}',
+                        a: {{ $poem->comments_count }},
+                    },
+                    @endforeach
+                ],
+                xkey: 'y',
+                ykeys: [ 'a', ],
+                labels: [ '{{ __('global.comments') }}', ],
+                barColors: [ 'orange' ],
                 hideHover: 'auto',
             } );
         };
