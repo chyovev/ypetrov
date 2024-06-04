@@ -79,6 +79,10 @@ class Handler extends ExceptionHandler
         if ($e instanceof TokenMismatchException) {
             abort(HttpResponse::HTTP_UNAUTHORIZED, $e->getMessage());
         }
+
+        if ($e instanceof VisitorBannedException) {
+            abort(HttpResponse::HTTP_FORBIDDEN, $e->getMessage());
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

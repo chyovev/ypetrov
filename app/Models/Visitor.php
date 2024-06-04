@@ -28,7 +28,16 @@ class Visitor extends Model
      * @var array<int,string>
      */
     protected $fillable = [
-        'ip', 'country_code',
+        'ip', 'country_code', 'is_banned',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string,string>
+     */
+    protected $casts = [
+        'is_banned' => 'boolean',
     ];
 
     ///////////////////////////////////////////////////////////////////////////
@@ -89,6 +98,16 @@ class Visitor extends Model
      */
     public function scopeHasIp(Builder $query, string $ip): void {
         $query->where('ip_hash', $this->hashIp($ip));
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * Some malicious visitors can be marked as banned.
+     * 
+     * @return bool
+     */
+    public function isBanned(): bool {
+        return $this->is_banned;
     }
 
     ///////////////////////////////////////////////////////////////////////////

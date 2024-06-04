@@ -31,6 +31,8 @@ paths:
           $ref: '#/components/responses/Created'
         400:
           $ref: '#/components/responses/BadRequest'
+        403:
+          $ref: '#/components/responses/Forbidden'
         429:
           $ref: '#/components/responses/TooManyRequests'
 
@@ -51,6 +53,8 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/CreatedWithHtml'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
           $ref: '#/components/responses/NotFound'
         429:
@@ -67,6 +71,8 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/Created'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
           $ref: '#/components/responses/NotFound'
         409:
@@ -85,6 +91,8 @@ paths:
       responses:
         204:
           $ref: '#/components/responses/NoContent'
+        403:
+          $ref: '#/components/responses/Forbidden'
         404:
           $ref: '#/components/responses/NotFound'
         409:
@@ -226,6 +234,31 @@ components:
                         items:
                           type: string
                           example: An example of an error related to the input_field 
+
+    # Forbidden (403)
+    Forbidden:
+      description: Visitor is banned
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/APIResponse'
+              - type: object
+                properties:
+                  success:
+                    default: false
+                  code:
+                    default: 403
+                  message:
+                    default: Forbidden
+                  errors:
+                    type: object
+                    properties:
+                      generic:
+                        type: array
+                        items:
+                          type: string
+                          example: You have been banned
 
     # Not Found (404)
     NotFound:

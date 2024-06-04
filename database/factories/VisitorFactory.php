@@ -24,6 +24,7 @@ class VisitorFactory extends Factory
         return [
             'ip'           => fake()->unique()->ipv6(),
             'country_code' => fake()->optional()->countryCode(),
+            'is_banned'    => fake()->boolean(99),
         ];
     }
 
