@@ -158,5 +158,5 @@ Breadcrumbs::for('admin.gallery_images.create', function ($trail) {
 // Home > Gallery > [Image]
 Breadcrumbs::for('admin.gallery_images.edit', function ($trail, $image) {
     $trail->parent('admin.gallery_images.index');
-    $trail->push($image->title, route('admin.gallery_images.edit', $image->id));
+    $trail->push($image->title ?? "#{$image->id}", route('admin.gallery_images.edit', $image->id));
 });

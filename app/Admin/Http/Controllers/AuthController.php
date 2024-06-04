@@ -24,7 +24,7 @@ class AuthController
      */
     public function process_login_request(LoginRequest $request): RedirectResponse {
         if ($request->authenticate()) {
-            return redirect()->intended('admin.home');
+            return redirect()->intended(route('admin.home'));
         }
 
         return back()->withErrors(['email' => __('passwords.wrong')])->onlyInput('email');;

@@ -35,7 +35,7 @@ $param = $galleryImage->exists ? $galleryImage              : null;
                             </div>
 
                             <div class="form-group row @error('title') has-error has-feedback @enderror">
-                                <label class="col-lg-3 col-form-label text-right" for="title"> {{ __('global.title') }} <span class="text-danger">*</span></label>
+                                <label class="col-lg-3 col-form-label text-right" for="title"> {{ __('global.title') }}</label>
                                 <div class="col-lg-8">
                                     <input type="text" name="title" id="title" class="form-control input-default" value="{{ old('title', $galleryImage->title) }}" />
                                     @error('title')
