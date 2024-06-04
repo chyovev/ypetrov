@@ -52,6 +52,8 @@ $param = $staticPage;
                 </div>
             </div>
 
+            <x-admin.stats :object="$staticPage" />
+
             <x-admin.comments :object="$staticPage" />
         </div>
     </div>

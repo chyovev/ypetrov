@@ -108,6 +108,8 @@ $param = $poem->exists ? $poem              : null;
                 </div>
             </div>
 
+            <x-admin.stats :object="$poem" />
+
             <x-admin.comments :object="$poem" />
         </div>
     </div>

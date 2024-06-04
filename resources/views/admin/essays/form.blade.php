@@ -73,6 +73,8 @@ $param = $essay->exists ? $essay              : null;
                 </div>
             </div>
 
+            <x-admin.stats :object="$essay" />
+
             <x-admin.comments :object="$essay" />
         </div>
     </div>

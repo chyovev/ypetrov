@@ -97,6 +97,8 @@ $param = $pressArticle->exists ? $pressArticle              : null;
                 </div>
             </div>
 
+            <x-admin.stats :object="$pressArticle" />
+
             <x-admin.comments :object="$pressArticle" />
         </div>
     </div>

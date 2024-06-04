@@ -87,6 +87,8 @@ $param = $video->exists ? $video              : null;
                 </div>
             </div>
 
+            <x-admin.stats :object="$video" />
+
             <x-admin.comments :object="$video" />
         </div>
     </div>

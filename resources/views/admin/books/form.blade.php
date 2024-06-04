@@ -103,6 +103,8 @@ $param = $book->exists ? $book              : null;
                 </div>
             </div>
 
+            <x-admin.stats :object="$book" />
+
             <x-admin.comments :object="$book" />
         </div>
     </div>

@@ -75,6 +75,7 @@ return [
     'summary'                => 'Summary',
     'submit'                 => 'Submit',
     'success'                => 'Success!',
+    'stats'                  => 'Stats',
     'title'                  => 'Title',
     'text'                   => 'Text',
     'top_x_commented_poems'  => 'Top :x most commented poems',
