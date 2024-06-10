@@ -14,6 +14,7 @@
                 <form class="contact-form" action="{{ route('api.contact') }}" method="POST">
                     <h3>Контактна форма</h3>
                     {{ csrf_field() }}
+                    <x-honeypot />
                     <input type="text" name="name" id="name" placeholder="*Име" />
                     <input type="text" name="email" id="email" placeholder="E-mail" />
                     <textarea name="message" id="message" placeholder="*Съобщение"></textarea>

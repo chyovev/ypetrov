@@ -22,7 +22,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('web', 'api', 'banned')
+            Route::middleware('web', 'api', 'anti.spam', 'banned')
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 

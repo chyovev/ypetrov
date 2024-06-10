@@ -112,6 +112,16 @@ class Visitor extends Model
 
     ///////////////////////////////////////////////////////////////////////////
     /**
+     * Mark a visitor as banned.
+     * 
+     * @return bool
+     */
+    public function markAsBanned(): bool {
+        return $this->update(['is_banned' => true]);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
      * To update the last visit date of a visitor, simply call
      * the touchQuietly method of the parent class (quietly,
      * as to prevent it from firing potential future events).
