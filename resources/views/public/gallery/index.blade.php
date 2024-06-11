@@ -46,7 +46,13 @@
                                             $src = "data-{$src}";
                                         }
                                     @endphp
-                                    <div><img {!! $src !!} alt="Изображение #{{ $loop->iteration }}" title="{{ $item->title }}" /><span>{!! $item->title !!}</span></div>
+                                    <div>
+                                        <img {!! $src !!} alt="Изображение #{{ $loop->iteration }}" title="{{ $item->title }}" /><span>{!! $item->title !!}</span>
+                                        
+                                        <br />
+                                        
+                                        <x-public.like-button :object="$item" />
+                                    </div>
                                 @endforeach
                                 ?>
                             </div>

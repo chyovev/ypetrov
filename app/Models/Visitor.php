@@ -107,7 +107,7 @@ class Visitor extends Model
      * @return bool
      */
     public function isBanned(): bool {
-        return $this->is_banned;
+        return (bool) $this->is_banned;
     }
 
     ///////////////////////////////////////////////////////////////////////////

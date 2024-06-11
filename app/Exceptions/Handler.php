@@ -33,6 +33,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         ItemNotFoundException::class,
         LikeException::class,
+        VisitorBannedException::class,
     ];
 
     /**

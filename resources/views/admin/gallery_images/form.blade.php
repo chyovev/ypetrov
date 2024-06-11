@@ -55,4 +55,6 @@ $param = $galleryImage->exists ? $galleryImage              : null;
         </div>
     </div>
 
+    <x-admin.stats :object="$galleryImage" />
+
 </x-admin.layout>

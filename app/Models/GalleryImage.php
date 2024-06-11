@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Models\Interfaces\Attachable;
+use App\Models\Interfaces\Statsable;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
+use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GalleryImage extends Model implements Attachable
+class GalleryImage extends Model implements Attachable, Statsable
 {
     use HasFactory;
 
@@ -24,6 +26,17 @@ class GalleryImage extends Model implements Attachable
      * a delete-event observer.
      */
     use HasAttachments;
+
+    /**
+     * The HasStats trait defines a polymorphic
+     * relationship to the Stats model and registers
+     * a delete-event observer.
+     * 
+     * NB! The impression counter has not been activated
+     *     on gallery images since all records are loaded
+     *     at once.
+     */
+    use HasStats;
 
     /**
      * The attributes that are mass assignable.
@@ -56,5 +69,16 @@ class GalleryImage extends Model implements Attachable
     public function getImageThumbURL(): ?string {
         return $this->getFirstImage()?->getThumbURL();
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * A gallery image can be liked if it's marked as active.
+     * 
+     * @return bool
+     */
+    public function canBeLiked(): bool {
+        return $this->isActive();
+    }
+
 
 }

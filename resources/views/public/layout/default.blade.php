@@ -9,7 +9,7 @@
     <meta property="og:description" content="@metaDescription" />
     <meta name="keywods" content="Йосиф Петров, поезия, поет, общественик, депутат, стихосбирки, стихотворения, VII Велико Народно събрание, Персин" />
     <script type="text/javascript" src="{{ url('js/script.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="{{ url('css/style.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ url('css/style.css?v=20240605') }}" />
     <meta name="msapplication-TileColor" content="#F6F6F6" />
     <meta name="theme-color" content="#F6F6F6" />
     @if (isset($images))
