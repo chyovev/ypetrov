@@ -136,9 +136,9 @@ class Book extends Model implements Attachable, Commentable, Statsable, SEO
      * Take the first image from the book's attachments
      * and use it as a cover (if uploaded).
      * 
-     * @return Attachment|null
+     * @return string|null
      */
-    public function getCoverImage() {
+    public function getCoverImage(): ?string {
         return $this->getFirstImage()?->getURL();
     }
 

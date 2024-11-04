@@ -5,6 +5,7 @@ namespace App\Admin\Http\Controllers;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Admin\Http\Requests\FilterRequest;
+use App\Admin\Http\Requests\Users\DeleteRequest;
 use App\Admin\Http\Requests\Users\StoreRequest;
 use App\Admin\Http\Requests\Users\UpdateRequest;
 
@@ -73,35 +74,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user) {
-        if ($this->isTryingToDeleteSelf($user)) {
-            return back()->withErrors(__('global.cannot_delete_self'));
-        }
-
-        $user->delete();
+    public function destroy(DeleteRequest $request, User $user) {
+        $request->process();
 
         return redirect()
             ->back()
             ->withSuccess(__('global.delete_successful'));
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Check if the currently logged in user is trying to delete themselves,
-     * i.e. if the UserPolicy allows them to carry out a delete action.
-     * 
-     * NB! Usually policy checks are done using the authorize() method
-     *     inside the controllers, but this would throw a 403 (Forbidden)
-     *     exception, and we actually want to redirect the user back to
-     *     the previous page with an error flash message.
-     * 
-     * @see \App\Policies\UserPolicy 
-     * 
-     * @param  User $user
-     * @return bool
-     */
-    private function isTryingToDeleteSelf(User $user): bool {
-        return ( ! auth()->user()->can('delete', $user));
     }
 
 }
