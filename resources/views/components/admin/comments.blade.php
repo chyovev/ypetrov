@@ -21,7 +21,17 @@
                 </div>
                 
                 <div class="col-lg-1 text-right">
-                    <a href="{{ route('admin.comments.destroy', ['comment' => $comment]) }}" class="btn btn-danger btn-sm confirm-delete"><i class="fa fa-trash"></i> {{ __('global.delete') }}</a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-trash"></i>
+                            {{ __('global.delete') }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <li><a class="confirm-delete" href="{{ route('admin.comments.destroy', ['comment' => $comment]) }}">{{ __('global.delete') }}</a></li>
+                            <li><a class="confirm-delete" href="{{ route('admin.comments.destroy', ['comment' => $comment, 'ban' => 'true']) }}">{{ __('global.delete_and_ban') }}</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         @empty

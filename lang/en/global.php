@@ -25,6 +25,7 @@ return [
     'dashboard'              => 'Dashboard',
     'dedication'             => 'Dedication',
     'delete'                 => 'Delete',
+    'delete_and_ban'         => 'Delete + ban',
     'delete_prompt'          => 'Are you sure you want to delete this item?',
     'delete_successful'      => 'Object successfully deleted!',
     'edit'                   => 'Edit',
