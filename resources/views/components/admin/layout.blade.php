@@ -82,7 +82,8 @@
     <script src="{{ asset('admin/js/lib/datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/morris-chart/raphael-min.js') }}"></script>
     <script src="{{ asset('admin/js/lib/morris-chart/morris.js') }}"></script>
-    <script src="{{ asset('admin/js/custom.min.js') }}"></script>
+    <script src="{{ asset('admin/js/lib/quicksearch/jquery.quicksearch.min.js') }}"></script>
+    <script src="{{ asset('admin/js/custom.min.js?v=20250711') }}"></script>
 </body>
 
 </html>
