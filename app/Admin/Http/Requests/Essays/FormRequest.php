@@ -24,17 +24,12 @@ class FormRequest extends HttpFormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'is_active' => $this->getIsActiveRules(),
-            'title'     => $this->getTitleRules(),
-            'slug'      => $this->getSlugRules(),
-            'text'      => $this->getTextRules(),
+            'is_active' => ['required', 'boolean'],
+            'title'     => ['required', 'max:255'],
+            'slug'      => ['required', 'max:255', 'regex:/^[a-z0-9\-]+$/i', Rule::unique('essays')->ignore($this->essay)],
+            'text'      => ['required', 'max:65535'],
         ];
     }
 
@@ -46,40 +41,6 @@ class FormRequest extends HttpFormRequest
         return [
             'slug.regex' => 'The :attribute field must only contain letters, numbers and hyphens.',
         ]; 
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getIsActiveRules(): array {
-        return [
-            'required',
-            'boolean',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTitleRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getSlugRules(): array {
-        return [
-            'required',
-            'regex:/^[a-z0-9\-]+$/i',
-            'max:255',
-            Rule::unique('essays')->ignore($this->essay),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTextRules(): array {
-        return [
-            'required',
-            'max:65535',
-        ];
     }
 
 }

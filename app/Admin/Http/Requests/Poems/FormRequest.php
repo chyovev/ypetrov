@@ -24,19 +24,14 @@ class FormRequest extends HttpFormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'is_active'          => $this->getIsActiveRules(),
-            'title'              => $this->getTitleRules(),
-            'slug'               => $this->getSlugRules(),
-            'dedication'         => $this->getDedicationRules(),
-            'text'               => $this->getTextRules(),
-            'use_monospace_font' => $this->getUseMonospaceFontRules(),
+            'is_active'          => ['required', 'boolean'],
+            'title'              => ['required', 'max:255'],
+            'slug'               => ['required', 'max:255', 'regex:/^[a-z0-9\-]+$/i', Rule::unique('poems')->ignore($this->poem)],
+            'dedication'         => ['sometimes', 'max:255'],
+            'text'               => ['required', 'max:65535'],
+            'use_monospace_font' => ['required', 'boolean'],
         ];
     }
 
@@ -50,53 +45,4 @@ class FormRequest extends HttpFormRequest
         ]; 
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    private function getIsActiveRules(): array {
-        return [
-            'required',
-            'boolean',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTitleRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getSlugRules(): array {
-        return [
-            'required',
-            'regex:/^[a-z0-9\-]+$/i',
-            'max:255',
-            Rule::unique('poems')->ignore($this->poem),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getDedicationRules(): array {
-        return [
-            'sometimes',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTextRules(): array {
-        return [
-            'required',
-            'max:65535',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getUseMonospaceFontRules(): array {
-        return [
-            'required',
-            'boolean',
-        ];
-    }
 }

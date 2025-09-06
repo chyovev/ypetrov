@@ -23,31 +23,10 @@ class FormRequest extends HttpFormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'title' => $this->getTitleRules(),
-            'text'  => $this->getTextRules(),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTitleRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTextRules(): array {
-        return [
-            'required',
-            'max:65535',
+            'title' => ['required', 'max:255'],
+            'text'  => ['required', 'max:65535'],
         ];
     }
 

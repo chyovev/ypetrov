@@ -28,42 +28,11 @@ class ContactRequest extends FormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'name'    => $this->getNameRules(),
-            'email'   => $this->getEmailRules(),
-            'message' => $this->getMessageRules(),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getNameRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getEmailRules(): array {
-        return [
-            'sometimes',
-            'nullable',
-            'email',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getMessageRules(): array {
-        return [
-            'required',
-            'max:65535',
+            'name'    => ['required', 'max:255'],
+            'email'   => ['sometimes', 'max:255', 'nullable', 'email'],
+            'message' => ['required', 'max:65535'],
         ];
     }
 

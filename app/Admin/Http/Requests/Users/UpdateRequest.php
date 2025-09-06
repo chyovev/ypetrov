@@ -20,32 +20,11 @@ class UpdateRequest extends FormRequest
     }
     
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string,\Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
     public function rules(): array {
         return [
-            'name' => [
-                'required',
-                'max:255',
-            ],
-
-            'email' => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($this->user),
-            ],
-
-            // when editing a user, leaving the password empty
-            // should not update that field, therefore: sometimes
-            'password' => [
-                'sometimes',
-                'nullable',
-                Password::defaults(),
-            ],
+            'name'     => ['required', 'max:255'],
+            'email'    => ['required', 'max:255', 'email', Rule::unique('users')->ignore($this->user)],
+            'password' => ['sometimes', 'nullable', Password::defaults()],
         ];
     }
 

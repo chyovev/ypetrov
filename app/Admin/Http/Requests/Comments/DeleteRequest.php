@@ -16,7 +16,7 @@ class DeleteRequest extends FormRequest
     ///////////////////////////////////////////////////////////////////////////
     public function rules(): array {
         return [
-            'ban' => 'sometimes|required|accepted'
+            'ban' => ['sometimes', 'required', 'accepted'],
         ];
     }
 

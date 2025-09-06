@@ -18,42 +18,10 @@ class ReorderRequest extends FormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'id'   => $this->getIdRules(),
-            'id.*' => $this->getIdElementsRules(),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * The id property is a required array.
-     * 
-     * @return array<int,string>
-     */
-    private function getIdRules(): array {
-        return [
-            'required',
-            'array',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Each of the ID's passed in the request must be distinct and
-     * correspond with an existing record from the respective table.
-     * 
-     * @return array<int,string>
-     */
-    private function getIdElementsRules(): array {
-        return [
-            'distinct:strict',
-            "exists:{$this->table},id",
+            'id'   => ['required', 'array'],
+            'id.*' => ['distinct:strict', "exists:{$this->table},id"],
         ];
     }
 

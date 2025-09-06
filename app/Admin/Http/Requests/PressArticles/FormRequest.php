@@ -24,19 +24,14 @@ class FormRequest extends HttpFormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'is_active'    => $this->getIsActiveRules(),
-            'title'        => $this->getTitleRules(),
-            'slug'         => $this->getSlugRules(),
-            'press'        => $this->getPressRules(),
-            'publish_date' => $this->getPublishDateRules(),
-            'text'         => $this->getTextRules(),
+            'is_active'    => ['required', 'boolean'],
+            'title'        => ['required', 'max:255'],
+            'slug'         => ['required', 'max:255', 'regex:/^[a-z0-9\-]+$/i', Rule::unique('press_articles')->ignore($this->press_article)],
+            'press'        => ['required', 'max:255'],
+            'publish_date' => ['sometimes', 'nullable', 'date_format:d.m.Y.'],
+            'text'         => ['required', 'max:65535'],
         ];
     }
 
@@ -48,57 +43,6 @@ class FormRequest extends HttpFormRequest
         return [
             'slug.regex' => 'The :attribute field must only contain letters, numbers and hyphens.',
         ]; 
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getIsActiveRules(): array {
-        return [
-            'required',
-            'boolean',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTitleRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getSlugRules(): array {
-        return [
-            'required',
-            'regex:/^[a-z0-9\-]+$/i',
-            'max:255',
-            Rule::unique('press_articles')->ignore($this->press_article),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPressRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPublishDateRules(): array {
-        return [
-            'sometimes',
-            'nullable',
-            'date_format:d.m.Y.',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTextRules(): array {
-        return [
-            'required',
-            'max:65535',
-        ];
     }
 
 }

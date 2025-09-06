@@ -24,20 +24,15 @@ class FormRequest extends HttpFormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'is_active'    => $this->getIsActiveRules(),
-            'title'        => $this->getTitleRules(),
-            'slug'         => $this->getSlugRules(),
-            'publisher'    => $this->getPublisherRules(),
-            'publish_year' => $this->getPublishYearRules(),
-            'poem_id'      => $this->getPoemsRules(),
-            'poem_id.*'    => $this->getPoemsElementsRules(),
+            'is_active'    => ['required', 'boolean'],
+            'title'        => ['required', 'max:255'],
+            'slug'         => ['required', 'max:255', 'regex:/^[a-z0-9\-]+$/i', Rule::unique('books')->ignore($this->book)],
+            'publisher'    => ['sometimes', 'max:255'],
+            'publish_year' => ['sometimes', 'nullable', 'date_format:Y'],
+            'poem_id'      => ['required', 'array', 'min:1'],
+            'poem_id.*'    => ['distinct', 'exists:poems,id'],
         ];
     }
 
@@ -48,66 +43,6 @@ class FormRequest extends HttpFormRequest
     public function messages(): array {
         return [
             'slug.regex' => 'The :attribute field must only contain letters, numbers and hyphens.',
-        ]; 
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getIsActiveRules(): array {
-        return [
-            'required',
-            'boolean',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getTitleRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getSlugRules(): array {
-        return [
-            'required',
-            'regex:/^[a-z0-9\-]+$/i',
-            'max:255',
-            Rule::unique('books')->ignore($this->book),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPublisherRules(): array {
-        return [
-            'sometimes',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPublishYearRules(): array {
-        return [
-            'sometimes',
-            'nullable',
-            'date_format:Y',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPoemsRules(): array {
-        return [
-            'required',
-            'array',
-            'min:1',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPoemsElementsRules(): array {
-        return [
-            'distinct',
-            'exists:poems,id',
         ];
     }
 

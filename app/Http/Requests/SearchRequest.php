@@ -41,7 +41,7 @@ class SearchRequest extends FormRequest
      */
     public function rules() {
         return [
-            's' => 'sometimes|nullable|min:3',
+            's' => ['sometimes', 'nullable', 'string', 'min:3'],
         ];
     }
 

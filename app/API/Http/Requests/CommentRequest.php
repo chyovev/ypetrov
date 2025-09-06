@@ -33,31 +33,10 @@ class CommentRequest extends FormRequest
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
     public function rules(): array {
         return [
-            'name'    => $this->getNameRules(),
-            'message' => $this->getMessageRules(),
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getNameRules(): array {
-        return [
-            'required',
-            'max:255',
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getMessageRules(): array {
-        return [
-            'required',
-            'max:65535',
+            'name'    => ['required', 'max:255'],
+            'message' => ['required', 'max:65535'],
         ];
     }
 

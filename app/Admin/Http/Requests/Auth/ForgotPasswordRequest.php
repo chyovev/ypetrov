@@ -22,19 +22,12 @@ class ForgotPasswordRequest extends FormRequest
     
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Get the validation rules that apply to the request.
-     * 
      * NB! There's no need to use the 'exists' rule since the underlying
      *     password broker will automatically perform that check.
-     *
-     * @return array<string,\Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array {
         return [
-            'email' => [
-                'required',
-                'email',
-            ],
+            'email' => ['required', 'email'],
         ];
     }
 
