@@ -2,6 +2,7 @@
 
 namespace App\Admin\Http\Requests\Poems;
 
+use App\Rules\Slug;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,20 +29,10 @@ class FormRequest extends HttpFormRequest
         return [
             'is_active'          => ['required', 'boolean'],
             'title'              => ['required', 'max:255'],
-            'slug'               => ['required', 'max:255', 'regex:/^[a-z0-9\-]+$/i', Rule::unique('poems')->ignore($this->poem)],
+            'slug'               => ['required', 'max:255', new Slug, Rule::unique('poems')->ignore($this->poem)],
             'dedication'         => ['sometimes', 'max:255'],
             'text'               => ['required', 'max:65535'],
             'use_monospace_font' => ['required', 'boolean'],
-        ];
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Provide a meaningful error message for the slug regex validation.
-     */
-    public function messages(): array {
-        return [
-            'slug.regex' => 'The :attribute field must only contain letters, numbers and hyphens.',
         ]; 
     }
 
