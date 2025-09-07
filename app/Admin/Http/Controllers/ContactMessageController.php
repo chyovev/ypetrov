@@ -4,7 +4,7 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\ContactMessage;
 use App\Http\Controllers\Controller;
-use App\Admin\Http\Requests\FilterRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ContactMessageController extends Controller
 {
@@ -13,13 +13,15 @@ class ContactMessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request) {
+    public function index(FormRequest $request) {
         // fetch contacts together with visitors
         // in order to display the visitor's country
         $query = ContactMessage::latest('id')->with('visitor');
 
-        $request->addOptionalFilterToQuery($query, ['name', 'email', 'message']);
-        
+        if ( ! is_null($request->query('search'))) {
+            $query->filterBy($request->query('search'));
+        }
+
         return view('admin.contact_messages.index', [
             'messages' => $query->paginate(20),
         ]);

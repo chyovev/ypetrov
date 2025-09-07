@@ -3,9 +3,9 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\Essay;
-use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Essays\FormRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class EssayController extends Controller
 {
@@ -14,12 +14,14 @@ class EssayController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request) {
+    public function index(HttpFormRequest $request) {
         $query = Essay::query()
             ->withCount(['attachments', 'comments'])
             ->orderBy('order');
 
-        $request->addOptionalFilterToQuery($query, ['title', 'text']);
+        if ( ! is_null($request->query('search'))) {
+            $query->filterBy($request->query('search'));
+        }
 
         return view('admin.essays.index', [
             'essays' => $query->paginate(20),

@@ -4,10 +4,10 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Users\DeleteRequest;
 use App\Admin\Http\Requests\Users\StoreRequest;
 use App\Admin\Http\Requests\Users\UpdateRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UserController extends Controller
 {
@@ -16,10 +16,12 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request) {
+    public function index(FormRequest $request) {
         $query = User::query();
 
-        $request->addOptionalFilterToQuery($query, ['name', 'email']);
+        if ( ! is_null($request->query('search'))) {
+            $query->filterBy($request->query('search'));
+        }
 
         return view('admin.users.index', [
             'users' => $query->paginate(20),

@@ -12,6 +12,7 @@ use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class PressArticle extends Model implements Attachable, Commentable, Statsable, SEO
 {
@@ -91,6 +92,15 @@ class PressArticle extends Model implements Attachable, Commentable, Statsable, 
     ///////////////////////////////////////////////////////////////////////////
     public function getMetaDescription(): ?string {
         return $this->text;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('title', 'LIKE', $search)
+            ->orWhere('press', 'LIKE', $search)
+            ->orWhere('text',  'LIKE', $search);
     }
 
 }

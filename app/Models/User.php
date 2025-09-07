@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -85,4 +86,13 @@ class User extends Authenticatable
     public static function getAllAdministrators(): Collection {
         return self::all();
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('name',  'LIKE', $search)
+            ->orWhere('email', 'LIKE', $search);
+    }
+
 }

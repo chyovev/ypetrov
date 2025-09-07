@@ -9,6 +9,7 @@ use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class GalleryImage extends Model implements Attachable, Statsable
 {
@@ -80,5 +81,11 @@ class GalleryImage extends Model implements Attachable, Statsable
         return $this->isActive();
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('title', 'LIKE', $search);
+    }
 
 }

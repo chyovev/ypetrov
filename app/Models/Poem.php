@@ -165,4 +165,12 @@ class Poem extends Model implements Commentable, Statsable, SEO
         return $this->text;
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('title', 'LIKE', $search)
+            ->orWhere('text',  'LIKE', $search);
+    }
+
 }

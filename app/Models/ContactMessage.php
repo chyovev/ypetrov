@@ -6,6 +6,7 @@ use App\Models\Traits\HasVisitor;
 use App\Notifications\NewContactMessage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class ContactMessage extends Model
 {
@@ -63,6 +64,15 @@ class ContactMessage extends Model
      */
     public function markAsRead(): bool {
         return $this->update(['is_read' => true]);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('name',    'LIKE', $search)
+            ->orWhere('email',   'LIKE', $search)
+            ->orWhere('message', 'LIKE', $search);
     }
 
 }

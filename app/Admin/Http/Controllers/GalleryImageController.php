@@ -3,9 +3,9 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\GalleryImage;
-use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\GalleryImages\FormRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class GalleryImageController extends Controller
 {
@@ -14,12 +14,14 @@ class GalleryImageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request) {
+    public function index(HttpFormRequest $request) {
         $query = GalleryImage::query()
             ->withCount('attachments')
             ->orderBy('order');
 
-        $request->addOptionalFilterToQuery($query, ['title']);
+        if ( ! is_null($request->query('search'))) {
+            $query->filterBy($request->query('search'));
+        }
 
         return view('admin.gallery_images.index', [
             'galleryImages' => $query->paginate(20),

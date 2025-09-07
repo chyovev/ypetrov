@@ -13,6 +13,7 @@ use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Video extends Model implements Attachable, Commentable, Statsable, SEO
 {
@@ -120,6 +121,14 @@ class Video extends Model implements Attachable, Commentable, Statsable, SEO
     ///////////////////////////////////////////////////////////////////////////
     public function getMetaDescription(): ?string {
         return $this->summary;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('title',   'LIKE', $search)
+            ->orWhere('summary', 'LIKE', $search);
     }
 
 }

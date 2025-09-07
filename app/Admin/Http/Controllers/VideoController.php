@@ -3,9 +3,9 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\Video;
-use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Videos\FormRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class VideoController extends Controller
 {
@@ -14,12 +14,14 @@ class VideoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request) {
+    public function index(HttpFormRequest $request) {
         $query = Video::query()
             ->withCount(['attachments', 'comments'])
             ->orderBy('order');
 
-        $request->addOptionalFilterToQuery($query, ['title', 'summary']);
+        if ( ! is_null($request->query('search'))) {
+            $query->filterBy($request->query('search'));
+        }
 
         return view('admin.videos.index', [
             'videos' => $query->paginate(20),

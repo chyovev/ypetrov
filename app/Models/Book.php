@@ -13,6 +13,7 @@ use App\Models\Traits\HasStats;
 use Illuminate\Support\ItemNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Book extends Model implements Attachable, Commentable, Statsable, SEO
@@ -139,4 +140,14 @@ class Book extends Model implements Attachable, Commentable, Statsable, SEO
 
         return $description;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function scopeFilterBy(Builder $query, string $search): void {
+        $search = "%{$search}%";
+
+        $query->where('title',        'LIKE', $search)
+            ->orWhere('publisher',    'LIKE', $search)
+            ->orWhere('publish_year', 'LIKE', $search);
+    }
+
 }

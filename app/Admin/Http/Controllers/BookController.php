@@ -5,9 +5,9 @@ namespace App\Admin\Http\Controllers;
 use App\Models\Book;
 use App\Models\Poem;
 use App\Http\Controllers\Controller;
-use App\Admin\Http\Requests\FilterRequest;
 use App\Admin\Http\Requests\Books\FormRequest;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class BookController extends Controller
 {
@@ -16,12 +16,14 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(FilterRequest $request) {
+    public function index(HttpFormRequest $request) {
         $query = Book::query()
             ->withCount(['attachments', 'comments', 'poems'])
             ->orderBy('order');
 
-        $request->addOptionalFilterToQuery($query, ['title', 'publisher', 'publish_year']);
+        if ( ! is_null($request->query('search'))) {
+            $query->filterBy($request->query('search'));
+        }
 
         return view('admin.books.index', [
             'books' => $query->paginate(20),
