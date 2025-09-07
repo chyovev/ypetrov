@@ -56,15 +56,8 @@ class BookController extends Controller
     }
     
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Store a newly created resource in storage.
-     * 
-     * NB! An observer takes care of saving the associated poems.
-     */
     public function store(FormRequest $request) {
-        $data = $request->validated();
-
-        $book = Book::create($data);
+        $book = $request->process();
 
         return redirect()
             ->route('admin.books.edit', ['book' => $book])
@@ -85,15 +78,8 @@ class BookController extends Controller
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Update the specified resource in storage.
-     * 
-     * NB! An observer takes care of saving the associated poems.
-     */
     public function update(FormRequest $request, Book $book) {
-        $data = $request->validated();
-
-        $book->update($data);
+        $book = $request->process();
 
         return redirect()
             ->route('admin.books.edit', ['book' => $book])

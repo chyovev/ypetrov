@@ -109,30 +109,6 @@ class Book extends Model implements Attachable, Commentable, Statsable, SEO
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * When poems are being synced with a book, they need to be
-     * persisted in the order in which their IDs are being passed
-     * to the method using the relationship's pivot column 'order'.
-     * 
-     * @param  int[] $ids – poem IDs
-     * @return array
-     */
-    public function syncPoemsInOrder($ids): array {
-        $data  = [];
-        $order = 1;
-
-        foreach ($ids as $id) {
-            $data[$id] = [
-                'order' => $order,
-            ];
-
-            $order++;
-        }
-
-        return $this->poems()->sync($data);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * Take the first image from the book's attachments
      * and use it as a cover (if uploaded).
      * 
