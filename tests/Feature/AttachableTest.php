@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use File;
 use Tests\TestCase;
 use App\Models\Book;
+use App\Models\Attachment;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 
@@ -51,12 +52,27 @@ class AttachableTest extends TestCase
      */
     public function test_successful_file_upload(): void {
         $book     = Book::factory()->create();
-        $tempFile = $this->createTempFile('Hello world.txt');
+        $tempFile = UploadedFile::fake()->create('Hello world.txt', 'Test');
+        $md5      = md5_file($tempFile->path());
+
+        $this->assertEquals(0, $book->attachments()->count());
+        $this->assertFileExists($tempFile->path());
 
         $attachment = $book->uploadAttachment($tempFile);
 
         $this->assertEquals(1, $book->attachments()->count());
+        $this->assertFileDoesNotExist($tempFile->path());
+
+        $this->assertInstanceOf(Attachment::class, $attachment);
+        $this->assertTrue($attachment->wasRecentlyCreated);
+        $this->assertSame($attachment->id, $book->attachments()->first()->id);
+        $this->assertSame('Hello world.txt', $attachment->original_file_name);
+        $this->assertSame('hello-world.txt', $attachment->server_file_name);
         $this->assertFileExists($attachment->getServerFilePath());
+        $this->assertIsReadable($attachment->getServerFilePath());
+        $this->assertSame($md5, md5_file($attachment->getServerFilePath()));
+        $this->assertStringContainsString("/testing/Book/{$book->id}", $attachment->getServerFilePath());
+        $this->assertSame("http://ypetrov.localhost/testing/Book/{$book->id}/hello-world.txt", $attachment->getURL());
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -66,7 +82,7 @@ class AttachableTest extends TestCase
      */
     public function test_file_name_sanitization(): void {
         $book     = Book::factory()->create();
-        $tempFile = $this->createTempFile('Hello кирилица wor%ld.txt');
+        $tempFile = UploadedFile::fake()->create('Hello кирилица wor%ld.txt');
 
         $attachment = $book->uploadAttachment($tempFile);
 
@@ -80,20 +96,23 @@ class AttachableTest extends TestCase
      * while keeping the original file name in the database.
      */
     public function test_uploading_of_multiple_files_with_same_name(): void {
-        $book     = Book::factory()->create();
+        $book = Book::factory()->create();
         
-        $tempFile1   = $this->createTempFile('file.txt');
+        $tempFile1   = UploadedFile::fake()->create('file.txt');
         $attachment1 = $book->uploadAttachment($tempFile1);
+        $this->assertFileExists($attachment1->getServerFilePath());
         $this->assertEquals('file.txt',   $attachment1->original_file_name);
         $this->assertEquals('file.txt',   $attachment1->server_file_name);
 
-        $tempFile2   = $this->createTempFile('file.txt');
+        $tempFile2   = UploadedFile::fake()->create('file.txt');
         $attachment2 = $book->uploadAttachment($tempFile2);
+        $this->assertFileExists($attachment2->getServerFilePath());
         $this->assertEquals('file.txt',   $attachment1->original_file_name);
         $this->assertEquals('file_1.txt', $attachment2->server_file_name);
         
-        $tempFile3   = $this->createTempFile('file.txt');
+        $tempFile3   = UploadedFile::fake()->create('file.txt');
         $attachment3 = $book->uploadAttachment($tempFile3);
+        $this->assertFileExists($attachment3->getServerFilePath());
         $this->assertEquals('file.txt',   $attachment1->original_file_name);
         $this->assertEquals('file_2.txt', $attachment3->server_file_name);
 
@@ -104,18 +123,33 @@ class AttachableTest extends TestCase
     /**
      * Once an Attachment record gets deleted, its file
      * gets deleted from the server, too.
+     * 
+     * NB! If an attachment is already loaded in memory either by itself
+     *     or as a part of a collection, deleting it won't automatically
+     *     purge it from the memory (which is not a bug, just something
+     *     to keep in mind)
      */
     public function test_attachment_delete_observer(): void {
         $book     = Book::factory()->create();
-        $tempFile = $this->createTempFile('file.txt');
+        $tempFile = UploadedFile::fake()->create('file.txt');
 
         $attachment = $book->uploadAttachment($tempFile);
-        $filePath   = $attachment->getServerFilePath();
 
-        $this->assertFileExists($filePath);
+        $this->assertSame(1, $book->attachments()->count());
+        $this->assertFileExists($attachment->getServerFilePath());
+
+        $this->assertCount(1, $book->attachments);
+        $this->assertNotNull($attachment);
+        $this->assertTrue($attachment->exists);
 
         $attachment->delete();
-        $this->assertFileDoesNotExist($filePath);
+
+        $this->assertSame(0, $book->attachments()->count());
+        $this->assertFileDoesNotExist($attachment->getServerFilePath());
+
+        $this->assertCount(1, $book->attachments);
+        $this->assertNotNull($attachment);
+        $this->assertFalse($attachment->exists);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -130,36 +164,17 @@ class AttachableTest extends TestCase
      */
     public function test_attachable_delete_observer(): void {
         $book       = Book::factory()->create();
-        $tempFile   = $this->createTempFile('file.txt');
+        $tempFile   = UploadedFile::fake()->create('file.txt');
         $attachment = $book->uploadAttachment($tempFile);
         $filePath   = $attachment->getServerFilePath();
 
+        $this->assertSame(1, $book->attachments()->count());
         $this->assertFileExists($filePath);
 
         $book->delete();
 
+        $this->assertSame(0, $book->attachments()->count());
         $this->assertFileDoesNotExist($filePath);
     }
     
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Create a temp file using faker and return its path.
-     * 
-     * @param  string $fileName
-     * @return UploadedFile
-     */
-    private function createTempFile(string $fileName): UploadedFile {
-        $sourceFolder = $this->getAssetsPath();
-        $targetFolder = $this->getTestingPath();
-        File::ensureDirectoryExists($targetFolder);
-
-        // when fake-creating an uploaded file, test mode should
-        // be switched on, and there should be no upload error code
-        $newFilePath  = fake()->file($sourceFolder, $targetFolder);
-        $mimeType     = File::mimeType($newFilePath);
-        $errorCode    = UPLOAD_ERR_OK;
-        $testMode     = true;
-
-        return new UploadedFile($newFilePath, $fileName, $mimeType, $errorCode, $testMode);
-    }
 }
