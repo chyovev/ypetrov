@@ -2,20 +2,12 @@
 
 namespace App\Observers;
 
+use App\Models\Helpers\UploadHelper;
 use App\Models\Interfaces\Attachable;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
 
 /**
- * The AttachableObserver is used on all models which
- * implement the Attachable interface.
- * It has several purposes:
- *     - to validate requests for attachments files
- *     - to save said files as object attachments
- *     - to delete all associated attachments once the
- *       main object is deleted since it cannot be done
- *       on polymorphic tables using cascade delete in
- *       the database
- * 
  * NB! Keep in mind the observer is registered upon object
  *     initialization, and NOT in the EventServiceProvider.
  * 
@@ -34,8 +26,8 @@ class AttachableObserver
      * 
      * @throws ValidationException
      */
-    public function saving(Attachable $object): void {
-        $this->validateRequestAttachments($object);
+    public function saving(): void {
+        $this->validateRequestAttachments();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -66,26 +58,23 @@ class AttachableObserver
     
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Cycle through all uploaded files from the request and save each
-     * file individually as an attachment for the current attachable object.
-     * 
      * NB! Keep in mind that at this point the attachments array should
      *     be validated beforehand.
-     * 
-     * @param Attachable $object – object implementing the Attachable interface
      */
     private function saveAttachmentsFromRequest(Attachable $object): void {
-        $files       = request()->allFiles();
-        $attachments = $files['attachments'] ?? []; 
+        $allFiles = request()->allFiles();
+        $files    = collect($allFiles['attachments'] ?? []);
 
-        foreach ($attachments as $file) {
-            $attachment = $object->uploadAttachment($file);
+        $helper = new UploadHelper($object);
+
+        $files->each(function(UploadedFile $file) use ($helper) {
+            $attachment = $helper->upload($file);
 
             // image attachments should have thumbnails
             if ($attachment->isImage()) {
                 $attachment->generateThumbnail();
             }
-        }
+        });
     }
 
     ///////////////////////////////////////////////////////////////////////////

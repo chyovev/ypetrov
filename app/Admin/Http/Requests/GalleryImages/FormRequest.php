@@ -26,7 +26,7 @@ class FormRequest extends HttpFormRequest
     public function rules(): array {
         return [
             'is_active' => ['required', 'boolean'],
-            'title'     => ['soemtimes', 'max:255'],
+            'title'     => ['sometimes', 'max:255'],
         ];
     }
 
