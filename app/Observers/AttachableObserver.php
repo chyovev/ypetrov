@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Models\Helpers\UploadHelper;
 use App\Models\Interfaces\Attachable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
@@ -65,10 +64,8 @@ class AttachableObserver
         $allFiles = request()->allFiles();
         $files    = collect($allFiles['attachments'] ?? []);
 
-        $helper = new UploadHelper($object);
-
-        $files->each(function(UploadedFile $file) use ($helper) {
-            $attachment = $helper->upload($file);
+        $files->each(function(UploadedFile $file) use ($object) {
+            $attachment = $object->uploadAttachment($file);
 
             // image attachments should have thumbnails
             if ($attachment->isImage()) {

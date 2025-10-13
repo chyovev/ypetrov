@@ -4,8 +4,11 @@ namespace App\Models\Traits;
 
 use LogicException;
 use App\Models\Attachment;
+use App\Models\Helpers\UploadHelper;
 use App\Models\Interfaces\Attachable;
 use App\Observers\AttachableObserver;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -57,6 +60,14 @@ trait HasAttachments
         $this->validateModelImplementsInterface(Attachable::class);
 
         $this->registerObserverToModel(AttachableObserver::class);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /**
+     * @throws FileNotFoundException – missing temp file path
+     */
+    public function uploadAttachment(UploadedFile $file): Attachment {
+        return (new UploadHelper($this))->upload($file);
     }
 
     ///////////////////////////////////////////////////////////////////////////
