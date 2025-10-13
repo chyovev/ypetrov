@@ -28,7 +28,7 @@ class AttachmentObserver
      * @param Attachment $attachment – deleted item
      */
     public function deleted(Attachment $attachment): void {
-        $attachment->deleteFile();
+        $attachment->getFileHelper()->delete();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ class AttachmentObserver
      * @return bool
      */
     private function isNameAlreadyTaken(Attachment $attachment, string $serverName): bool {
-        $filePath = $attachment->getAbsolutePath() . DIRECTORY_SEPARATOR . $serverName;
+        $filePath = $attachment->getFileHelper()->getFilePath() . DIRECTORY_SEPARATOR . $serverName;
 
         return File::exists($filePath);
     }

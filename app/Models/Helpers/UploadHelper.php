@@ -18,7 +18,7 @@ class UploadHelper
     public function upload(UploadedFile $file): Attachment {
         $attachment = $this->createRecord($file);
 
-        $this->saveFile($attachment, $file);
+        $attachment->getFileHelper()->save($file);
 
         return $attachment;
     }
@@ -34,14 +34,6 @@ class UploadHelper
 
         // action has observer
         return $this->attachable->attachments()->save($attachment);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function saveFile(Attachment $attachment, UploadedFile $file): void {
-        $targetName = $attachment->server_file_name;
-        $targetPath = $attachment->getAbsolutePath();
-
-        $file->move($targetPath, $targetName);
     }
 
 }

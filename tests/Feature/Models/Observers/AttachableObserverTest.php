@@ -73,7 +73,7 @@ class AttachableObserverTest extends TestCase
         ]);
 
         $file = UploadedFile::fake()->create('test');
-        $file->move($attachment->getAbsolutePath(), $attachment->server_file_name);
+        $file->move($attachment->getFileHelper()->getFilePath(), $attachment->server_file_name);
 
         return $attachment;
     }
