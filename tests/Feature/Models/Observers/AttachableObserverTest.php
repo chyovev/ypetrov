@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models\Observers;
 
+use File;
 use Tests\TestCase;
 use App\Models\Book;
 use App\Models\Attachment;
@@ -31,7 +32,7 @@ class AttachableObserverTest extends TestCase
     public function test_attachable_observer_delete(): void {
         $book       = Book::factory()->create();
         $attachment = $this->addAttachment($book);
-        $filePath   = $attachment->getServerFilePath();
+        $filePath   = $attachment->getFileHelper()->getFilePath();
 
         $this->assertSame(1, $book->attachments()->count());
         $this->assertFileExists($filePath);
@@ -53,7 +54,7 @@ class AttachableObserverTest extends TestCase
     public function test_attachable_observer_delete_quietly(): void {
         $book       = Book::factory()->create();
         $attachment = $this->addAttachment($book);
-        $filePath   = $attachment->getServerFilePath();
+        $filePath   = $attachment->getFileHelper()->getFilePath();
 
         $this->assertSame(1, $book->attachments()->count());
         $this->assertFileExists($filePath);
@@ -73,7 +74,7 @@ class AttachableObserverTest extends TestCase
         ]);
 
         $file = UploadedFile::fake()->create('test');
-        $file->move($attachment->getFileHelper()->getFilePath(), $attachment->server_file_name);
+        $file->move(File::dirname($attachment->getFileHelper()->getFilePath()), $attachment->server_file_name);
 
         return $attachment;
     }

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use LogicException;
-use Nette\Utils\Image;
 use App\Models\Helpers\Attachment\FileHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,25 +77,6 @@ class Attachment extends Model
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Generate a thumbnail for an image.
-     * 
-     * @throws LogicException – attachment not an image
-     */
-    public function generateThumbnail(): void {
-        $sourcePath = $this->getServerFilePath();
-        $targetPath = $this->getFileHelper()->getThumbFilePath();
-
-        // resize & crop to 60x60 px
-        $image = Image::fromFile($sourcePath);
-        $image
-            ->resize(60, 60, Image::OrBigger)
-            ->crop(0, 0, 60, 60)
-            ->sharpen()
-            ->save($targetPath);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * @throws LogicException – attachment not an image
      */
     public function getThumbURL(): ?string {
@@ -107,26 +87,18 @@ class Attachment extends Model
     /**
      * Get the width of an image attachment.
      * If the attachment is not an image, null will be returned.
-     * 
-     * @return int|null
      */
     public function getWidth(): ?int {
-        list($width, $height) = getimagesize( $this->getServerFilePath() );
-
-        return $width;
+        return $this->getFileHelper()->getWidth();
     }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Get the height of an image attachment.
      * If the attachment is not an image, null will be returned.
-     * 
-     * @return int|null
      */
     public function getHeight(): ?int {
-        list($width, $height) = getimagesize( $this->getServerFilePath() );
-
-        return $height;
+        return $this->getFileHelper()->getHeight();
     }
 
 }

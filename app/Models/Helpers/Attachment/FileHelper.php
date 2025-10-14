@@ -4,6 +4,7 @@ namespace App\Models\Helpers\Attachment;
 
 use File;
 use App\Models\Attachment;
+use App\Helpers\ThumbGenerator;
 use Illuminate\Http\UploadedFile;
 
 class FileHelper
@@ -20,6 +21,13 @@ class FileHelper
         $targetPath = $this->getBasePath();
 
         $file->move($targetPath, $targetName);
+
+        if ($this->attachment->isImage()) {
+            ThumbGenerator::generate(
+                $this->getFilePath(),
+                $this->getThumbFilePath()
+            );
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -130,6 +138,28 @@ class FileHelper
         if (File::isEmptyDirectory($parentClassFolder)) {
             File::deleteDirectory($parentClassFolder);
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getWidth(): ?int {
+        if ( ! $this->attachment->isImage()) {
+            return null;
+        }
+
+        list($width, $height) = getimagesize( $this->getFilePath() );
+
+        return $width;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getHeight(): ?int {
+        if ( ! $this->attachment->isImage()) {
+            return null;
+        }
+
+        list($width, $height) = getimagesize( $this->getFilePath() );
+
+        return $height;
     }
 
 }
