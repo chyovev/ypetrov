@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits;
 
-use LogicException;
 use App\Models\Interfaces\Statsable;
 use App\Models\Like;
 use App\Models\Stats;
@@ -23,8 +22,6 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 trait HasStats
 {
-
-    use CustomHasEvents;
 
     use IsInteractive;
 
@@ -62,24 +59,15 @@ trait HasStats
     /**
      * Since there's no way to register an observer on all models
      * implementing a certain interface in the event service provider,
-     * a work-around is to register it upon trait initialization.
+     * a work-around is to register it upon trait boot which is taken
+     * care of by the Eloquent constructor.
      * 
-     * NB! Traits are initialized automatically in the models'
-     *     constructors.
-     * 
-     * NB! Both validation and registration methods are declared
-     *     in the CustomHasEvents trait.
-     * 
-     * @see \Illuminate\Database\Eloquent\Model :: initializeTraits()
-     * @see \App\Models\Traits\CustomHasEvents
-     * 
-     * @throws LogicException – class not implementing required interface
-     * @return void
+     * @see \Illuminate\Database\Eloquent\Model :: bootTraits()
      */
-    public function initializeHasStats(): void {
-        $this->validateModelImplementsInterface(Statsable::class);
-
-        $this->registerObserverToModel(StatsableObserver::class);
+    public static function bootHasStats(): void {
+        if (is_a(static::class, Statsable::class, true)) {
+            static::observe(StatsableObserver::class);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

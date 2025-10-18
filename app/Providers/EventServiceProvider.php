@@ -21,10 +21,9 @@ class EventServiceProvider extends ServiceProvider
      * NB! Polymorphic observers are registered the first time
      *     any of the respective main objects gets initialized.
      *     
-     * @see \App\Models\Traits\HasAttachments  :: initializeHasAttachments()
-     * @see \App\Models\Traits\HasComments     :: initializeHasComments()
-     * @see \App\Models\Traits\HasStats        :: initializeHasStats()
-     * @see \App\Models\Traits\CustomHasEvents :: registerObserverToModel()
+     * @see \App\Models\Traits\HasAttachments  :: bootHasAttachments()
+     * @see \App\Models\Traits\HasComments     :: bootHasComments()
+     * @see \App\Models\Traits\HasStats        :: bootHasStats()
      *
      * @var array
      */

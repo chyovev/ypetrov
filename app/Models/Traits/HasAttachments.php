@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits;
 
-use LogicException;
 use App\Models\Attachment;
 use App\Models\Helpers\UploadHelper;
 use App\Models\Interfaces\Attachable;
@@ -23,8 +22,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 trait HasAttachments
 {
 
-    use CustomHasEvents;
-
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Each attachable object can have multiple comments
@@ -42,24 +39,15 @@ trait HasAttachments
     /**
      * Since there's no way to register an observer on all models
      * implementing a certain interface in the event service provider,
-     * a work-around is to register it upon trait initialization.
+     * a work-around is to register it upon trait boot which is taken
+     * care of by the Eloquent constructor.
      * 
-     * NB! Traits are initialized automatically in the models'
-     *     constructors.
-     * 
-     * NB! Both validation and registration methods are declared
-     *     in the CustomHasEvents trait.
-     * 
-     * @see \Illuminate\Database\Eloquent\Model :: initializeTraits()
-     * @see \App\Models\Traits\CustomHasEvents
-     * 
-     * @throws LogicException – class not implementing required interface
-     * @return void
+     * @see \Illuminate\Database\Eloquent\Model :: bootTraits()
      */
-    public function initializeHasAttachments(): void {
-        $this->validateModelImplementsInterface(Attachable::class);
-
-        $this->registerObserverToModel(AttachableObserver::class);
+    public static function bootHasAttachments(): void {
+        if (is_a(static::class, Attachable::class, true)) {
+            static::observe(AttachableObserver::class);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

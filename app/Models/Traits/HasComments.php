@@ -2,7 +2,6 @@
 
 namespace App\Models\Traits;
 
-use LogicException;
 use App\Models\Comment;
 use App\Models\Visitor;
 use App\Models\Interfaces\Commentable;
@@ -20,8 +19,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasComments
 {
-
-    use CustomHasEvents;
 
     use IsInteractive;
 
@@ -44,24 +41,15 @@ trait HasComments
     /**
      * Since there's no way to register an observer on all models
      * implementing a certain interface in the event service provider,
-     * a work-around is to register it upon trait initialization.
+     * a work-around is to register it upon trait boot which is taken
+     * care of by the Eloquent constructor.
      * 
-     * NB! Traits are initialized automatically in the models'
-     *     constructors.
-     * 
-     * NB! Both validation and registration methods are declared
-     *     in the CustomHasEvents trait.
-     * 
-     * @see \Illuminate\Database\Eloquent\Model :: initializeTraits()
-     * @see \App\Models\Traits\CustomHasEvents
-     * 
-     * @throws LogicException – class not implementing required interface
-     * @return void
+     * @see \Illuminate\Database\Eloquent\Model :: bootTraits()
      */
-    public function initializeHasComments(): void {
-        $this->validateModelImplementsInterface(Commentable::class);
-
-        $this->registerObserverToModel(CommentableObserver::class);
+    public static function bootHasComments(): void {
+        if (is_a(static::class, Commentable::class, true)) {
+            static::observe(CommentableObserver::class);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
