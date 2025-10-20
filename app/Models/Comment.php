@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Traits\HasVisitor;
-use App\Notifications\NewComment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -34,29 +33,6 @@ class Comment extends Model
      */
     public function commentable(): MorphTo {
         return $this->morphTo('commentable');
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Once a Comment record gets created, an observer
-     * listening for this event calls this method in order to
-     * send the contact message as a notification to all
-     * administrators.
-     * 
-     * NB! Keep in mind that the notification class implements
-     *     the ShouldQueue interface, so instead of the email
-     *     being sent straight away, it will be added to a queue
-     *     which should be processed by a queue worker.
-     * 
-     * @see \App\Observers\CommentObserver
-     * @see \App\Notifications\NewComment
-     * 
-     * @return void
-     */
-    public function sendAsNotification(): void {
-        $users = User::getAllAdministrators();
-
-        $users->each->notify((new NewComment($this))->afterCommit());
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -2,28 +2,17 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use App\Models\Comment;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
 
-class NewComment extends Notification implements ShouldQueue
+class CommentNotification extends Notification
 {
-    use Queueable;
-
-    /**
-     * The Comment object whose properties
-     * will be used in the notification email.
-     * Gets set in constructor.
-     * 
-     * @var Comment
-     */
-    private Comment $comment;
 
     ///////////////////////////////////////////////////////////////////////////
-    public function __construct(Comment $comment) {
-        $this->comment = $comment;
+    public function __construct(private Comment $comment) {
+        //
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -44,13 +33,12 @@ class NewComment extends Notification implements ShouldQueue
      * NB! Keep in mind that the MailMessage object will be
      *     converted automatically to an HTML body. 
      * 
-     * @param  object $notifiable – an instance of a User
-     * @return MailMessage
+     * @param User $user – user receiving the notification
      */
-    public function toMail(object $notifiable): MailMessage {
+    public function toMail(User $user): MailMessage {
         return (new MailMessage)
             ->subject("Нов коментар към {$this->comment->getCommentableTitle()}")
-            ->markdown('mail.comment.new', ['comment' => $this->comment]);
+            ->markdown('mail.comment', ['comment' => $this->comment]);
     }
 
 }

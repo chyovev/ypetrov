@@ -7,7 +7,6 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -71,20 +70,6 @@ class User extends Authenticatable
         $this->save();
 
         event(new PasswordReset($this));
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get a list of collection of all administrators.
-     * 
-     * NB! Keep in mind that the application does not support regular
-     *     users' registrations, so for all purposes a regular user
-     *     is considered an administrator.
-     * 
-     * @return Collection<User>
-     */
-    public static function getAllAdministrators(): Collection {
-        return self::all();
     }
 
     ///////////////////////////////////////////////////////////////////////////

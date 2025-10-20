@@ -3,13 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Attachment;
-use App\Models\Comment;
 use App\Models\ContactMessage;
+use App\Events\CommentCreated;
+use App\Listeners\SendCommentNotification;
 use App\Observers\AttachmentObserver;
-use App\Observers\CommentObserver;
 use App\Observers\ContactMessageObserver;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -30,7 +28,6 @@ class EventServiceProvider extends ServiceProvider
     protected $observers = [
         Attachment::class     => [AttachmentObserver::class],
         ContactMessage::class => [ContactMessageObserver::class],
-        Comment::class        => [CommentObserver::class],
     ];
 
     /**
@@ -39,8 +36,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        CommentCreated::class => [
+            SendCommentNotification::class,
         ],
     ];
 

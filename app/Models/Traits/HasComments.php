@@ -2,10 +2,12 @@
 
 namespace App\Models\Traits;
 
+use DB;
 use App\Models\Comment;
 use App\Models\Visitor;
 use App\Models\Interfaces\Commentable;
 use App\Observers\CommentableObserver;
+use App\Events\CommentCreated;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -53,24 +55,19 @@ trait HasComments
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Create a new comment for the commentable object.
-     * 
-     * @param  Visitor $visitor – registered visitor (author)
-     * @param  string  $name    – author of comment
-     * @param  string  $message – body of comment
-     * @return Comment
-     */
     public function addComment(Visitor $visitor, string $name, string $message): Comment {
-        $comment = $this->comments()->make([
-            'name'    => $name,
-            'message' => $message,
-        ]);
+        return DB::transaction(function() use($visitor, $name, $message): Comment {
+            $comment = $this->comments()->make([
+                'name'    => $name,
+                'message' => $message,
+            ]);
+            $comment->visitor()->associate($visitor);
+            $comment->save();
 
-        $comment->visitor()->associate($visitor);
-        $comment->save();
+            CommentCreated::dispatch($comment);
 
-        return $comment;
+            return $comment;
+        });
     }
 
     ///////////////////////////////////////////////////////////////////////////
