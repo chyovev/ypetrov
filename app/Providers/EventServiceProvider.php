@@ -5,9 +5,10 @@ namespace App\Providers;
 use App\Models\Attachment;
 use App\Models\ContactMessage;
 use App\Events\CommentCreated;
+use App\Events\ContactMessageCreated;
 use App\Listeners\SendCommentNotification;
+use App\Listeners\SendContactMessageNotification;
 use App\Observers\AttachmentObserver;
-use App\Observers\ContactMessageObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -26,8 +27,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $observers = [
-        Attachment::class     => [AttachmentObserver::class],
-        ContactMessage::class => [ContactMessageObserver::class],
+        Attachment::class => [AttachmentObserver::class],
     ];
 
     /**
@@ -38,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         CommentCreated::class => [
             SendCommentNotification::class,
+        ],
+        ContactMessageCreated::class => [
+            SendContactMessageNotification::class,
         ],
     ];
 

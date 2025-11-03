@@ -2,8 +2,10 @@
 
 namespace App\API\Http\Requests;
 
-use App\Models\ContactMessage;
+use DB;
 use App\Models\Visitor;
+use App\Models\ContactMessage;
+use App\Events\ContactMessageCreated;
 use App\API\Http\Requests\Traits\IsInteractive;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -40,9 +42,6 @@ class ContactRequest extends FormRequest
     /**
      * Create a contact message using the currently registered
      * visitor as its author.
-     * 
-     * @param  Visitor $visitor
-     * @return void
      */
     public function createContactMessage(Visitor $visitor): void {
         // as a spam protection, consecutive *successful* requests
@@ -51,12 +50,14 @@ class ContactRequest extends FormRequest
         // never reach this part of the code
         $this->discardConsecutiveRequests("add-contact-message", __('global.contact_limit'), 1);
 
-        $data    = $this->validated();
-        $message = ContactMessage::make($data);
+        DB::transaction(function() use ($visitor): void {
+            $data    = $this->validated();
+            $message = new ContactMessage($data);
+            $message->visitor()->associate($visitor);
+            $message->save();
 
-        $message->visitor()->associate($visitor);
-
-        $message->save();
+            ContactMessageCreated::dispatch($message);
+        });
     }
 
 }

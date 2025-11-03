@@ -2,28 +2,17 @@
 
 namespace App\Notifications;
 
+use App\Models\User;
 use App\Models\ContactMessage;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\MailMessage;
 
-class NewContactMessage extends Notification implements ShouldQueue
+class ContactMessageNotification extends Notification
 {
-    use Queueable;
-
-    /**
-     * The ContactMessage object whose properties
-     * will be used in the notification email.
-     * Gets set in constructor.
-     * 
-     * @var ContactMessage
-     */
-    private ContactMessage $contactMessage;
 
     ///////////////////////////////////////////////////////////////////////////
-    public function __construct(ContactMessage $contactMessage) {
-        $this->contactMessage = $contactMessage;
+    public function __construct(private ContactMessage $message) {
+        //
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -44,13 +33,12 @@ class NewContactMessage extends Notification implements ShouldQueue
      * NB! Keep in mind that the MailMessage object will be
      *     converted automatically to an HTML body. 
      * 
-     * @param  object $notifiable – an instance of a User
-     * @return MailMessage
+     * @param User $user – user receiving the notification
      */
-    public function toMail(object $notifiable): MailMessage {
+    public function toMail(User $user): MailMessage {
         return (new MailMessage)
             ->subject('Ново контактно съобщение')
-            ->markdown('mail.contact_message.new', ['contactMessage' => $this->contactMessage]);
+            ->markdown('mail.contact_message', ['message' => $this->message]);
     }
 
 }

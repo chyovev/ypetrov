@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use LogicException;
 use App\Models\ContactMessage;
 use App\Models\Visitor;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 
@@ -16,15 +15,6 @@ use Illuminate\Database\Seeder;
 
 class ContactMessageSeeder extends Seeder
 {
-
-    /**
-     * There is an observer listening for create event
-     * on the ContactMessage model, but it should not
-     * be fired during the seeding of contact messages.
-     * 
-     * @see \App\Observers\ContactMessageObserver
-     */
-    use WithoutModelEvents;
 
     ///////////////////////////////////////////////////////////////////////////
     /**
