@@ -96,6 +96,16 @@ $param = $book->exists ? $book              : null;
 
                             <x-admin.upload :object="$book" />
 
+                            <div class="form-group row @error('text') has-error has-feedback @enderror">
+                                <label class="col-lg-3 col-form-label text-right" for="chartdiv3">{{ __('global.text') }} <span class="text-danger">*</span></label>
+                                <div class="col-lg-8">
+                                    <textarea name="text" id="chartdiv3" class="textarea_editor form-control" rows="15">{!! old('text', $book->text) !!}</textarea>
+                                    @error('text')
+                                        <span class="invalid-feedback d-block">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <x-admin.form-submit-button />
 
                         </form>

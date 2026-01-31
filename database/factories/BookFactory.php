@@ -32,6 +32,7 @@ class BookFactory extends Factory
             'is_active'    => fake()->boolean(90),
             'title'        => $title,
             'slug'         => $slug,
+            'text'         => fake()->optional()->paragraphs(3, true),
             'publisher'    => fake()->company(),
             'publish_year' => fake()->year(),
             'order'        => fake()->randomNumber(1),

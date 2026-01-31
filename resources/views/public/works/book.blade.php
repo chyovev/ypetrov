@@ -19,6 +19,9 @@
                     @endif
                     <div><strong>Година на издаване:</strong> {{ $book->publish_year }}</div>
                     <div><strong>Стихотворения:</strong> {{ $book->poems->count() }}</div>
+                    @if ($book->text)
+                        <div>{!! $book->text !!}</div>
+                    @endif
                 </div>
             </div>
         </div>

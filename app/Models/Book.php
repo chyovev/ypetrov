@@ -53,7 +53,7 @@ class Book extends Model implements Attachable, Commentable, Statsable, SEO
      * @var array<int,string>
      */
     public $fillable = [
-        'is_active', 'title', 'slug', 'publisher', 'publish_year', 'order',
+        'is_active', 'title', 'slug', 'text', 'publisher', 'publish_year', 'order',
     ];
 
     ///////////////////////////////////////////////////////////////////////////
@@ -132,6 +132,10 @@ class Book extends Model implements Attachable, Commentable, Statsable, SEO
 
     ///////////////////////////////////////////////////////////////////////////
     public function getMetaDescription():? string {
+        if ($this->text) {
+            return $this->text;
+        }
+
         $description = $this->getMetaTitle();
 
         if ($this->publisher) {
