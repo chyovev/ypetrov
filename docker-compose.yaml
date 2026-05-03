@@ -1,0 +1,64 @@
+services:
+  # the actual PHP application
+  ypetrov-app:
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+    image: ypetrov
+    container_name: ypetrov-app
+    mem_limit: ${DOCKER_RAM_LIMIT_APP}
+    depends_on:
+      - ypetrov-mysql
+    restart: unless-stopped
+    working_dir: /var/www/ypetrov
+    volumes:
+      - ./:/var/www/ypetrov
+    environment:
+      - PHP_MEMORY_LIMIT=${DOCKER_PHP_MEMORY_LIMIT}
+    networks:
+      - ypetrov-network
+
+  # application database where data is stored
+  ypetrov-mysql:
+    image: mysql:8.0-debian
+    container_name: ypetrov-mysql
+    mem_limit: ${DOCKER_RAM_LIMIT_MYSQL}
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_PORT_MYSQL}:3306
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - mysql-data:/var/lib/mysql/
+    networks:
+      - ypetrov-network
+
+  # the web server processing incoming
+  # requests to the application
+  ypetrov-nginx:
+    image: nginx:1.17-alpine
+    container_name: ypetrov-nginx
+    mem_limit: ${DOCKER_RAM_LIMIT_NGINX}
+    depends_on:
+      - ypetrov-app
+    restart: unless-stopped
+    ports:
+      - ${DOCKER_PORT_NGINX}:80
+    volumes:
+      - ./:/var/www/ypetrov
+      - ./docker/nginx/server.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - ypetrov-network
+
+networks:
+  ypetrov-network:
+    driver: bridge
+    name: ypetrov-network
+
+volumes:
+  mysql-data:
+    driver: local
+    name: ypetrov-mysql-data
