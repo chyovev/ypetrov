@@ -2,10 +2,10 @@
  
 namespace App\View\Composers;
 
-use App\Repositories\BookRepository;
-use App\Repositories\EssayRepository;
-use App\Repositories\PressArticleRepository;
-use App\Repositories\VideoRepository;
+use App\Models\Book;
+use App\Models\Essay;
+use App\Models\PressArticle;
+use App\Models\Video;
 use Illuminate\View\View;
  
 class NavigationComposer
@@ -13,48 +13,14 @@ class NavigationComposer
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Marking constructor parameters as private makes
-     * them available as object properties.
-     */
-    public function __construct(
-        private BookRepository  $bookRepository,
-        private EssayRepository $essayRepository,
-        private PressArticleRepository $pressRepository,
-        private VideoRepository $videoRepository,
-    ) {
-        //
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * Pass variables to all views associated with current view composer.
      */
     public function compose(View $view): void {
         $view->with([
-            'books'  => $this->getBooks(),
-            'essays' => $this->getEssays(),
-            'press'  => $this->getPressArticles(),
-            'videos' => $this->getVideos(),
+            'books'  => Book::orderBy('order')->get(),
+            'essays' => Essay::orderBy('order')->get(),
+            'press'  => PressArticle::orderBy('order')->get(),
+            'videos' => Video::orderBy('order')->get(),
         ]);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getBooks() {
-        return $this->bookRepository->getAllActive();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getEssays() {
-        return $this->essayRepository->getAllActive();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    private function getPressArticles() {
-        return $this->pressRepository->getAllActive();
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    private function getVideos() {
-        return $this->videoRepository->getAllActive();
     }
 }

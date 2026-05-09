@@ -4,13 +4,16 @@ namespace App\Models;
 
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Statsable;
+use App\Models\Scopes\ActiveScope;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasStats;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+#[ScopedBy([ActiveScope::class])]
 class GalleryImage extends Model implements Attachable, Statsable
 {
     use HasFactory;

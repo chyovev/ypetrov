@@ -2,25 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\GalleryImageRepository;
+use App\Models\GalleryImage;
 
 class GalleryController extends Controller
 {
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Dependency-inject all repositories needed by the controller.
-     * Marking the parameters as private makes them available as
-     * object properties.
-     */
-    public function __construct(private GalleryImageRepository $repository) {
-        //
-    }
     
     ///////////////////////////////////////////////////////////////////////////
     public function index() {
         $data = [
-            'gallery' => $this->repository->getAllActive(),
+            'gallery' => GalleryImage::orderBy('order')->with('attachments')->get(),
             'seo'     => seo('Галерия'),
         ];
 

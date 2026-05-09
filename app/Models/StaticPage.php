@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Builders\StaticPageBuilder;
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\SEO;
@@ -10,9 +11,11 @@ use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use Illuminate\Database\Eloquent\Attributes\UseEloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseEloquentBuilder(StaticPageBuilder::class)]
 class StaticPage extends Model implements Attachable, Commentable, Statsable, SEO
 {
 
