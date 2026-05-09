@@ -41,7 +41,7 @@
 
                             @foreach ($poems as $poem)
                                 <div class="poem-result">
-                                    <a href="{{ route('poem', ['bookSlug' => $book->slug, 'poemSlug' => $poem->slug]) }}">{!! highlightSubstring(strip_tags($poem->title), $search) !!}</a>
+                                    <a href="{{ route('poem', ['book' => $book, 'poem' => $poem]) }}">{!! highlightSubstring(strip_tags($poem->title), $search) !!}</a>
                                     @if ($poem->dedication)
                                         <em>{!! highlightSubstring($poem->dedication, $search) !!}</em>
                                     @endif

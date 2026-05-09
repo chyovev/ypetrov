@@ -6,14 +6,17 @@ use App\Helpers\Contexter;
 use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
 use App\Models\Interfaces\SEO;
+use App\Models\Scopes\ActiveScope;
 use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+#[ScopedBy([ActiveScope::class])]
 class Poem extends Model implements Commentable, Statsable, SEO
 {
     use HasFactory;

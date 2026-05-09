@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Book;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class BookRepository
 {
@@ -22,24 +21,4 @@ class BookRepository
             ->get();
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Fetch a single active book by its slug
-     * together with its active poems.
-     * 
-     * @throws ModelNotFoundException – no such (active) book
-     * @param  string $slug
-     * @return Book
-     */
-    public static function getBySlugWithPoems(string $slug): Book {
-        return Book::query()
-            ->active()
-            ->where('slug', $slug)
-            ->with([
-                'poems' => function($q) {
-                    $q->active();
-                },
-            ])
-            ->firstOrFail();
-    }
 }

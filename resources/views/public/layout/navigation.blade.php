@@ -8,7 +8,7 @@
             <a href="javascript: void(0);">Творчество</a>
             <ul>
                 @foreach ($books as $navBook)
-                    <li><a href="{{ route('book', ['bookSlug' => $navBook->slug]) }}" @class(['active' => (isRoute('book', 'poem') && isset($book) && $book->slug === $navBook->slug)])>{{ $navBook->title }} ({{ $navBook->publish_year }})</a></li>
+                    <li><a href="{{ route('book', ['book' => $navBook]) }}" @class(['active' => (isRoute('book', 'poem') && isset($book) && $book->slug === $navBook->slug)])>{{ $navBook->title }} ({{ $navBook->publish_year }})</a></li>
                 @endforeach
             </ul>
         </li>

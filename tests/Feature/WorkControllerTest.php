@@ -26,7 +26,7 @@ class WorkControllerTest extends TestCase
     public function test_fetching_of_active_book(): void {
         $book = $this->createActiveBook();
 
-        $response = $this->testBookPublicURL($book->slug);
+        $response = $this->testBookPublicURL($book);
 
         $response->assertStatus(Response::HTTP_OK);
     }
@@ -43,7 +43,7 @@ class WorkControllerTest extends TestCase
     public function test_fetching_of_inactive_book(): void {
         $book = $this->createInactiveBook();
 
-        $response = $this->testBookPublicURL($book->slug);
+        $response = $this->testBookPublicURL($book);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -54,8 +54,8 @@ class WorkControllerTest extends TestCase
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function testBookPublicURL(string $slug): TestResponse {
-        $url = route('book', ['bookSlug' => $slug], false);
+    private function testBookPublicURL(Book $book): TestResponse {
+        $url = route('book', ['book' => $book], false);
 
         return $this->get($url);
     }
@@ -70,7 +70,7 @@ class WorkControllerTest extends TestCase
         $book = $this->createActiveBook();
         $poem = $this->createActivePoem($book);
 
-        $response = $this->testPoemPublicURL($book->slug, $poem->slug);
+        $response = $this->testPoemPublicURL($book, $poem);
 
         $response->assertStatus(Response::HTTP_OK);
     }
@@ -88,7 +88,7 @@ class WorkControllerTest extends TestCase
         $book = $this->createActiveBook();
         $poem = $this->createInactivePoem($book);
 
-        $response = $this->testPoemPublicURL($book->slug, $poem->slug);
+        $response = $this->testPoemPublicURL($book, $poem);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -106,7 +106,7 @@ class WorkControllerTest extends TestCase
         $book = $this->createInactiveBook();
         $poem = $this->createActivePoem($book);
 
-        $response = $this->testPoemPublicURL($book->slug, $poem->slug);
+        $response = $this->testPoemPublicURL($book, $poem);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -121,16 +121,16 @@ class WorkControllerTest extends TestCase
         $book2 = $this->createActiveBook();
         $poem  = $this->createActivePoem($book1);
 
-        $response = $this->testPoemPublicURL($book2->slug, $poem->slug);
+        $response = $this->testPoemPublicURL($book2, $poem);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function testPoemPublicURL(string $bookSlug, string $poemSlug): TestResponse {
+    private function testPoemPublicURL(Book $book, Poem $poem): TestResponse {
         $params = [
-            'bookSlug' => $bookSlug,
-            'poemSlug' => $poemSlug,
+            'book' => $book,
+            'poem' => $poem,
         ];
         $url = route('poem', $params, false);
 

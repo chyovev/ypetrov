@@ -25,7 +25,7 @@ class ImpressionsTest extends TestCase
      */
     public function test_successful_impression_registration(): void {
         $book     = Book::factory()->active()->create();
-        $endpoint = route('book', ['bookSlug' => $book->slug]);
+        $endpoint = route('book', ['book' => $book]);
         
         $this->assertEquals(0, $book->getTotalImpressions());
 

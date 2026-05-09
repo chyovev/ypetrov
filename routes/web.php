@@ -29,8 +29,8 @@ Route::get('/galeriya',                          [GalleryController::class, 'ind
 Route::get('/presa/{slug}',                      [PressController::class, 'view'])->name('press');
 Route::get('/video/{slug}',                      [VideoController::class, 'view'])->name('video');
 Route::get('/kontakt',                           [ContactController::class, 'index'])->name('contact');
-Route::get('/tvorchestvo/{bookSlug}',            [WorkController::class, 'get_book'])->name('book');
-Route::get('/tvorchestvo/{bookSlug}/{poemSlug}', [WorkController::class, 'get_poem'])->name('poem');
+Route::get('/tvorchestvo/{book:slug}',           [WorkController::class, 'get_book'])->name('book');
+Route::get('/tvorchestvo/{book:slug}/{poem:slug}', [WorkController::class, 'get_poem'])->name('poem');
 Route::get('/tarsene',                           [SearchController::class, 'index'])->name('search');
 
 // make API swagger be accessible only for users logged in the CMS
