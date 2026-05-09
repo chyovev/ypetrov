@@ -12,7 +12,7 @@
                 <ol class="videos">
                     @foreach ($videos as $item)
                     <li>
-                        <a href="{{ route('video', ['slug' => $item->slug]) }}" @class(['active' => ($item->slug === $video->slug)])>
+                        <a href="{{ route('video', ['video' => $item]) }}" @class(['active' => ($item->slug === $video->slug)])>
                             <span>{{ $item->title }}</span>
                             <img src="{{ $item->getCoverImage() }}" alt="{{ $item->title }}" />
                         </a>

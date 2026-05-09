@@ -2,24 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\PressArticleRepository;
+use App\Models\PressArticle;
+use Illuminate\View\View;
 
 class PressController extends Controller
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Dependency-inject all repositories needed by the controller.
-     * Marking the parameters as private makes them available as
-     * object properties.
-     */
-    public function __construct(private PressArticleRepository $repository) {
-        //
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    public function view(string $slug) {
-        $article = $this->repository->getBySlug($slug);
+    public function view(PressArticle $article): View {
         $article->addImpression();
 
         $data = [

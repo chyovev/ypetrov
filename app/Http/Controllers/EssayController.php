@@ -2,24 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\EssayRepository;
+use App\Models\Essay;
+use Illuminate\View\View;
 
 class EssayController extends Controller
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Dependency-inject all repositories needed by the controller.
-     * Marking the parameters as private makes them available as
-     * object properties.
-     */
-    public function __construct(private EssayRepository $repository) {
-        //
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    public function view(string $slug) {
-        $essay = $this->repository->getBySlug($slug);
+    public function view(Essay $essay): View {
         $essay->addImpression();
 
         $data = [

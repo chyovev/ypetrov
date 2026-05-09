@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Essay;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EssayRepository
 {
@@ -20,20 +19,6 @@ class EssayRepository
             ->active()
             ->orderBy('order')
             ->get();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Get a single active essay by its slug.
-     * 
-     * @throws ModelNotFoundException
-     * @return Essay
-     */
-    public static function getBySlug(string $slug): Essay {
-        return Essay::query()
-            ->active()
-            ->where('slug', $slug)
-            ->firstOrFail();
     }
 
 }

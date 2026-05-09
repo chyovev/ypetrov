@@ -24,10 +24,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',                                  [StaticPageController::class, 'home'])->name('home');
 Route::get('/hristomatiya',                      [StaticPageController::class, 'chrestomathy'])->name('chrestomathy');
-Route::get('/za-yosif-petrov/{slug}',            [EssayController::class, 'view'])->name('essay');
+Route::get('/za-yosif-petrov/{essay:slug}',      [EssayController::class, 'view'])->name('essay');
 Route::get('/galeriya',                          [GalleryController::class, 'index'])->name('gallery');
-Route::get('/presa/{slug}',                      [PressController::class, 'view'])->name('press');
-Route::get('/video/{slug}',                      [VideoController::class, 'view'])->name('video');
+Route::get('/presa/{article:slug}',              [PressController::class, 'view'])->name('press');
+Route::get('/video/{video:slug}',                [VideoController::class, 'view'])->name('video');
 Route::get('/kontakt',                           [ContactController::class, 'index'])->name('contact');
 Route::get('/tvorchestvo/{book:slug}',           [WorkController::class, 'get_book'])->name('book');
 Route::get('/tvorchestvo/{book:slug}/{poem:slug}', [WorkController::class, 'get_poem'])->name('poem');
