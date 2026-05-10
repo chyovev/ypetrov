@@ -7,7 +7,6 @@ use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
 use App\Models\Interfaces\SEO;
 use App\Models\Scopes\ActiveScope;
-use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -20,12 +19,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Poem extends Model implements Commentable, Statsable, SEO
 {
     use HasFactory;
-
-    /**
-     * Add shortcut query builder method
-     * to filter out inactive elements.
-     */
-    use HasActiveState;
 
     /**
      * The HasComments trait defines a polymorphic
@@ -99,48 +92,11 @@ class Poem extends Model implements Commentable, Statsable, SEO
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * A poem is considered 'fully active' if it's marked as active,
-     * but if also at least one of the books it belongs to is also
-     * marked as active.
-     * 
-     * @return bool
+     * A poem is considered 'fully active' if it's marked as active
+     * and has at least one book association (also active, global scope).
      */
     public function isFullyActive(): bool {
-        return $this->isActive() && $this->hasActiveBook();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Check if there's a book associated with the poem which is marked as active.
-     * 
-     * @return bool
-     */
-    public function hasActiveBook(): bool {
-        return $this->books()->active()->exists();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Local scope query to filter poems which have at least one active book.
-     * 
-     * @param  Builder $query – the query being prepared
-     * @return Builder $query – query with appended book condition
-     */
-    public function scopeHasActiveBook(Builder $query): Builder {
-        return $query->whereHas('books', function($query) {
-            $query->active();
-        });
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Local scope query to filter fully active poems.
-     * 
-     * @param  Builder $query – the query being prepared
-     * @return Builder $query – query with appended condition
-     */
-    public function scopeFullyActive(Builder $query): Builder {
-        return $query->active()->hasActiveBook();
+        return $this->is_active && $this->books()->exists();
     }
 
     ///////////////////////////////////////////////////////////////////////////

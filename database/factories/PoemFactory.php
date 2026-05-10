@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
-use Database\Factories\Traits\HasActiveState;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,12 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PoemFactory extends Factory
 {
-
-    /**
-     * Add active() and inactive() state
-     * methods to factory.
-     */
-    use HasActiveState;
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -59,4 +52,23 @@ class PoemFactory extends Factory
 
         return $poem;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function active(): static {
+        return $this->state(function (): array {
+            return [
+                'is_active' => true,
+            ];
+        });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function inactive(): static {
+        return $this->state(function (): array {
+            return [
+                'is_active' => false,
+            ];
+        });
+    }
+    
 }

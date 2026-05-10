@@ -125,17 +125,16 @@ class SearchRequest extends FormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Fetch all fully active poems from the database which match
-     * the searched string.
+     * Fetch all poems which match the searched string.
+     * Make sure to include only poems which are associated with at
+     * least one book, excluding orphan poems.
      * 
      * @return LengthAwarePaginator
      */
     private function fetchDataFromDatabase(): LengthAwarePaginator {
         return Poem::query()
-            ->fullyActive()
-            ->with(['books' => function($query) {
-                $query->active();
-            }])
+            ->has('books')
+            ->with('books')
             ->whereFullText(['title', 'dedication', 'text'], $this->getSearchString())
             ->paginate();
     }

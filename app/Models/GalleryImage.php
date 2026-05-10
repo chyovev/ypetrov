@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Statsable;
 use App\Models\Scopes\ActiveScope;
-use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasStats;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
@@ -17,12 +16,6 @@ use Illuminate\Database\Eloquent\Builder;
 class GalleryImage extends Model implements Attachable, Statsable
 {
     use HasFactory;
-
-    /**
-     * Add shortcut query builder method
-     * to filter out inactive elements.
-     */
-    use HasActiveState;
 
     /**
      * The HasAttachments trait defines a polymorphic
@@ -75,13 +68,8 @@ class GalleryImage extends Model implements Attachable, Statsable
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * A gallery image can be liked if it's marked as active.
-     * 
-     * @return bool
-     */
     public function canBeLiked(): bool {
-        return $this->isActive();
+        return $this->is_active;
     }
 
     ///////////////////////////////////////////////////////////////////////////

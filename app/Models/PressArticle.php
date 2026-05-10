@@ -7,7 +7,6 @@ use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\SEO;
 use App\Models\Interfaces\Statsable;
 use App\Models\Scopes\ActiveScope;
-use App\Models\Traits\HasActiveState;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
@@ -20,12 +19,6 @@ use Illuminate\Database\Eloquent\Builder;
 class PressArticle extends Model implements Attachable, Commentable, Statsable, SEO
 {
     use HasFactory;
-
-    /**
-     * Add shortcut query builder method
-     * to filter out inactive elements.
-     */
-    use HasActiveState;
 
     /**
      * The HasAttachments trait defines a polymorphic
@@ -68,23 +61,13 @@ class PressArticle extends Model implements Attachable, Commentable, Statsable, 
     ];
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * A press article can be commented on if it's marked as active.
-     * 
-     * @return bool
-     */
     public function canBeCommentedOn(): bool {
-        return $this->isActive();
+        return $this->is_active;
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * A press article can be liked if it's marked as active.
-     * 
-     * @return bool
-     */
     public function canBeLiked(): bool {
-        return $this->isActive();
+        return $this->is_active;
     }
 
     ///////////////////////////////////////////////////////////////////////////

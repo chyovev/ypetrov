@@ -23,7 +23,7 @@ class ActiveScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void {
         if ( ! request()?->routeIs('admin.*')) {
-            $builder->active();
+            $builder->where('is_active', true);
         }
     }
 

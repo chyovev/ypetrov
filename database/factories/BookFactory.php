@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
-use Database\Factories\Traits\HasActiveState;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,12 +10,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class BookFactory extends Factory
 {
-
-    /**
-     * Add active() and inactive() state
-     * methods to factory.
-     */
-    use HasActiveState;
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -37,6 +30,24 @@ class BookFactory extends Factory
             'publish_year' => fake()->year(),
             'order'        => fake()->randomNumber(1),
         ];
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function active(): static {
+        return $this->state(function (): array {
+            return [
+                'is_active' => true,
+            ];
+        });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function inactive(): static {
+        return $this->state(function (): array {
+            return [
+                'is_active' => false,
+            ];
+        });
     }
 
 }
