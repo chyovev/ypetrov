@@ -2,13 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use Log;
 use Closure;
 use Exception;
 use App\Helpers\IPLocator;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,6 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterVisitor
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private IPLocator $ipLocator) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     public function handle(Request $request, Closure $next): Response {
@@ -53,8 +58,6 @@ class RegisterVisitor
      * If no visitor is found, an exception will be thrown.
      * 
      * @throws ModelNotFoundException – no visitor record found
-     * @param  string $ip – raw IP address of visitor
-     * @return Visitor
      */
     private function fetchVisitor(string $ip): Visitor {
         $visitor = Visitor::hasIp($ip)->firstOrFail();
@@ -71,12 +74,6 @@ class RegisterVisitor
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Create a visitor record and return it.
-     * 
-     * @param  string $ip – raw IP address of visitor
-     * @return Visitor
-     */
     private function createVisitor(string $ip): Visitor {
         return Visitor::create([
             'ip'           => $ip,
@@ -94,21 +91,10 @@ class RegisterVisitor
      *     minute) which will result into an exception
      *     being thrown. If that happens, catch it, log it
      *     and move on without a country code.
-     * 
-     * @param  string $ip  – raw IP address of visitor
-     * @return string|null – two-letter country code
      */
     private function getVisitorCountryCode(string $ip): ?string {
-        // on all environments but production (testing, local)
-        // API calls are disabled, a placeholder value is used
-        if ( ! app()->isProduction()) {
-            return '--';
-        }
-
         try {
-            $locator = new IPLocator($ip);
-
-            return $locator->getCountryCode();
+            return $this->ipLocator->locate($ip);
         }
         catch (Exception $e) {
             Log::error($e);
@@ -122,9 +108,6 @@ class RegisterVisitor
      * Register the Visitor instance as shared into the container.
      * This way, the object can easily be used across controllers
      * by dependency-injecting it inside the constructor.
-     * 
-     * @param  Visitor $visitor – instance to be bound
-     * @return void
      */
     private function bindVisitor(Visitor $visitor): void {
         app()->instance(Visitor::class, $visitor);
