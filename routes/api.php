@@ -3,6 +3,8 @@
 use App\API\Http\Controllers\CommentController;
 use App\API\Http\Controllers\ContactController;
 use App\API\Http\Controllers\LikeController;
+use App\Http\Middleware\LogRequest;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,9 @@ use App\API\Http\Controllers\LikeController;
 |
 */
 
-Route::post('/contact',       [ContactController::class, 'create_contact_message'])->name('api.contact');
-Route::post('/comments/{id}', [CommentController::class, 'create'])->name('api.comment');
-Route::post('/likes/{id}',    [LikeController::class, 'like'])->name('api.like');
-Route::delete('/likes/{id}',  [LikeController::class, 'revoke_like'])->name('api.revoke_like');
+Route::middleware(LogRequest::class)->group(function(): void {
+    Route::post('/contact',       [ContactController::class, 'create_contact_message'])->name('api.contact');
+    Route::post('/comments/{id}', [CommentController::class, 'create'])->name('api.comment');
+    Route::post('/likes/{id}',    [LikeController::class, 'like'])->name('api.like');
+    Route::delete('/likes/{id}',  [LikeController::class, 'revoke_like'])->name('api.revoke_like');
+});
