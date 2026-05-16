@@ -6,7 +6,7 @@ use App\Models\Book;
 use App\Models\Poem;
 use Illuminate\View\View;
 
-class WorkController extends Controller
+class WorkController
 {
 
     ///////////////////////////////////////////////////////////////////////////

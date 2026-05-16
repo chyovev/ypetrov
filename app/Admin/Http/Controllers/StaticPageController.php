@@ -4,9 +4,8 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\StaticPage;
 use App\Admin\Http\Requests\StaticPages\FormRequest;
-use App\Http\Controllers\Controller;
 
-class StaticPageController extends Controller
+class StaticPageController
 {
 
     ///////////////////////////////////////////////////////////////////////////

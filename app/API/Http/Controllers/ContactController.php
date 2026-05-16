@@ -6,7 +6,7 @@ use App\API\Http\Requests\ContactRequest;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
 
-class ContactController extends AbstractController
+class ContactController
 {
 
     ///////////////////////////////////////////////////////////////////////////

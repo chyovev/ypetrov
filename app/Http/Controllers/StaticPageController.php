@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StaticPage;
 use Illuminate\View\View;
 
-class StaticPageController extends Controller
+class StaticPageController
 {
 
     ///////////////////////////////////////////////////////////////////////////

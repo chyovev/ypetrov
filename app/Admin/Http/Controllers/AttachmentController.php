@@ -3,9 +3,8 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\Attachment;
-use App\Http\Controllers\Controller;
 
-class AttachmentController extends Controller
+class AttachmentController
 {
 
     ///////////////////////////////////////////////////////////////////////////

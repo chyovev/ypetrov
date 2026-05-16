@@ -3,10 +3,9 @@
 namespace App\Admin\Http\Controllers;
 
 use DB;
-use App\Http\Controllers\Controller;
 use App\Admin\Http\Requests\ReorderRequest;
 
-class ReorderController extends Controller
+class ReorderController
 {
 
     ///////////////////////////////////////////////////////////////////////////

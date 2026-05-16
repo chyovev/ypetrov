@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Essay;
 use Illuminate\View\View;
 
-class EssayController extends Controller
+class EssayController
 {
 
     ///////////////////////////////////////////////////////////////////////////

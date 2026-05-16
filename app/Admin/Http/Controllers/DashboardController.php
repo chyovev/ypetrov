@@ -3,9 +3,8 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Admin\Http\Requests\Dashboard\DashboardRequest;
-use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class DashboardController
 {
 
     ///////////////////////////////////////////////////////////////////////////

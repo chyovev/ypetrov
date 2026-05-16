@@ -6,7 +6,7 @@ use App\API\Http\Requests\LikeRequest;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
 
-class LikeController extends AbstractController
+class LikeController
 {
 
     ///////////////////////////////////////////////////////////////////////////

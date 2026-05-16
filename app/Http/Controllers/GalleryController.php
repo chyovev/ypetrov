@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GalleryImage;
 
-class GalleryController extends Controller
+class GalleryController
 {
     
     ///////////////////////////////////////////////////////////////////////////

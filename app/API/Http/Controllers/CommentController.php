@@ -6,7 +6,7 @@ use App\API\Http\Requests\CommentRequest;
 use App\Models\Visitor;
 use Illuminate\Http\Response;
 
-class CommentController extends AbstractController
+class CommentController
 {
 
     ///////////////////////////////////////////////////////////////////////////

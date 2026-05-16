@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchRequest;
 
-class SearchController extends Controller
+class SearchController
 {
 
     ///////////////////////////////////////////////////////////////////////////

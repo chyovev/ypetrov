@@ -4,10 +4,9 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\GalleryImage;
 use App\Admin\Http\Requests\GalleryImages\FormRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
-class GalleryImageController extends Controller
+class GalleryImageController
 {
 
     ///////////////////////////////////////////////////////////////////////////

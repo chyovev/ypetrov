@@ -4,10 +4,9 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\Essay;
 use App\Admin\Http\Requests\Essays\FormRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
-class EssayController extends Controller
+class EssayController
 {
 
     ///////////////////////////////////////////////////////////////////////////

@@ -4,10 +4,9 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\PressArticle;
 use App\Admin\Http\Requests\PressArticles\FormRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
-class PressArticleController extends Controller
+class PressArticleController
 {
 
     ///////////////////////////////////////////////////////////////////////////

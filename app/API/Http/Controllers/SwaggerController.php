@@ -3,9 +3,8 @@
 namespace App\API\Http\Controllers;
 
 use File;
-use App\Http\Controllers\Controller;
 
-class SwaggerController extends Controller
+class SwaggerController
 {
 
     ///////////////////////////////////////////////////////////////////////////

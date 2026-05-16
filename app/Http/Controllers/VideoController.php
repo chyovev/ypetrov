@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Video;
 use Illuminate\View\View;
 
-class VideoController extends Controller
+class VideoController
 {
 
     ///////////////////////////////////////////////////////////////////////////

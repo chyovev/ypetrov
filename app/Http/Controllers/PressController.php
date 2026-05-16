@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PressArticle;
 use Illuminate\View\View;
 
-class PressController extends Controller
+class PressController
 {
 
     ///////////////////////////////////////////////////////////////////////////

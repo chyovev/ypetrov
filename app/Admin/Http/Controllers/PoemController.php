@@ -4,10 +4,9 @@ namespace App\Admin\Http\Controllers;
 
 use App\Admin\Http\Requests\Poems\FormRequest;
 use App\Models\Poem;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
-class PoemController extends Controller
+class PoemController
 {
 
     ///////////////////////////////////////////////////////////////////////////

@@ -3,10 +3,9 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\ContactMessage;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ContactMessageController extends Controller
+class ContactMessageController
 {
 
     ///////////////////////////////////////////////////////////////////////////

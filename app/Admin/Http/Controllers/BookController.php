@@ -4,12 +4,11 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Poem;
-use App\Http\Controllers\Controller;
 use App\Admin\Http\Requests\Books\FormRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
-class BookController extends Controller
+class BookController
 {
 
     ///////////////////////////////////////////////////////////////////////////

@@ -3,13 +3,12 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use App\Admin\Http\Requests\Users\DeleteRequest;
 use App\Admin\Http\Requests\Users\StoreRequest;
 use App\Admin\Http\Requests\Users\UpdateRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserController extends Controller
+class UserController
 {
 
     ///////////////////////////////////////////////////////////////////////////

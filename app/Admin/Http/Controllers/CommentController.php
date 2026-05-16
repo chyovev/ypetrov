@@ -3,10 +3,9 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\Comment;
-use App\Http\Controllers\Controller;
 use App\Admin\Http\Requests\Comments\DeleteRequest;
 
-class CommentController extends Controller
+class CommentController
 {
 
     ///////////////////////////////////////////////////////////////////////////

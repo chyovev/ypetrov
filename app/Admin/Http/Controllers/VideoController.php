@@ -4,10 +4,9 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\Video;
 use App\Admin\Http\Requests\Videos\FormRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
-class VideoController extends Controller
+class VideoController
 {
 
     ///////////////////////////////////////////////////////////////////////////
