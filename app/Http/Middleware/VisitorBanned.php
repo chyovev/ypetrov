@@ -12,6 +12,11 @@ class VisitorBanned
 {
 
     ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private Visitor $visitor) {
+        //
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     /**
      * If a visitor has been banned, they can lose access
      * to certain sections of the website.
@@ -21,14 +26,9 @@ class VisitorBanned
      *     instance.
      * 
      * @throws VisitorBannedException
-     * @param  Request $request
-     * @param  Closure $next
-     * @return Response
      */
     public function handle(Request $request, Closure $next): Response {
-        $visitor = app(Visitor::class);
-
-        if ($visitor->isBanned()) {
+        if ($this->visitor->is_banned) {
             throw new VisitorBannedException(__('global.you_have_been_banned'));
         }
 

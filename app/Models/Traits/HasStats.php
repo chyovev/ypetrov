@@ -78,14 +78,11 @@ trait HasStats
      *     2. Increase its total_impressions counter
      *     3. Actually create an impression record for the visitor
      *        doing the request (which is registered as an instance)
-     * 
-     * @return void
      */
-    public function addImpression(): void {
+    public function addImpression(Visitor $visitor): void {
         $stats = $this->stats()->firstOrCreate();
         $stats->increment('total_impressions');
 
-        $visitor    = app(Visitor::class);
         $impression = $stats->impressions()->make();
         $impression->visitor()->associate($visitor);
         $impression->save();

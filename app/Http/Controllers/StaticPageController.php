@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\StaticPage;
+use App\Models\Visitor;
 use Illuminate\View\View;
 
 class StaticPageController
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    public function home(): View {
+    public function home(Visitor $visitor): View {
         $page = StaticPage::getBiography();
-        $page->addImpression();
+        $page->addImpression($visitor);
 
         $data = [
             'page' => $page,
@@ -21,9 +22,9 @@ class StaticPageController
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function chrestomathy(): View {
+    public function chrestomathy(Visitor $visitor): View {
         $page = StaticPage::getChrestomathy();
-        $page->addImpression();
+        $page->addImpression($visitor);
         
         $data = [
             'page'   => $page,

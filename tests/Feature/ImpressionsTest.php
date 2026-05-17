@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Book;
-use Illuminate\Database\QueryException;
+use App\Models\Visitor;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,6 +24,8 @@ class ImpressionsTest extends TestCase
      * is loaded through the controller.
      */
     public function test_successful_impression_registration(): void {
+        $this->app->instance(Visitor::class, Visitor::factory()->create());
+
         $book     = Book::factory()->active()->create();
         $endpoint = route('book', ['book' => $book]);
         
@@ -35,21 +37,4 @@ class ImpressionsTest extends TestCase
         $this->assertEquals(1, $book->getTotalImpressions());
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Impressions registration relies on a Visitor record which is
-     * registered as an instance by the RegisterVisitor middleware.
-     * Calling the addImpression() method on a statsable object
-     * would result in a databse exception since there will be no
-     * Visitor record instance.
-     */
-    public function test_unsuccessful_impression_registration(): void {
-        $book = Book::factory()->active()->create();
-
-        $this->assertEquals(0, $book->getTotalImpressions());
-
-        $this->expectException(QueryException::class);
-        
-        $book->addImpression();
-    }
 }

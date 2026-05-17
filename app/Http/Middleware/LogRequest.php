@@ -13,7 +13,7 @@ class LogRequest
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    public function __construct(private Router $router) {
+    public function __construct(private Router $router, private Visitor $visitor) {
         //
     }
 
@@ -29,9 +29,8 @@ class LogRequest
         $method   = $request->method();
         $url      = $request->getPathInfo();
         $endpoint = class_basename($this->router->getCurrentRoute()->getActionName());
-        $visitor  = app(Visitor::class);
 
-        $message  = "[{$method}] (Visitor #{$visitor->id}) {$url} [{$endpoint}]";
+        $message  = "[{$method}] (Visitor #{$this->visitor->id}) {$url} [{$endpoint}]";
 
         Log::channel('api')->info($message);
     }

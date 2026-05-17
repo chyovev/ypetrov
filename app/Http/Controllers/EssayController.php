@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Essay;
+use App\Models\Visitor;
 use Illuminate\View\View;
 
 class EssayController
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    public function view(Essay $essay): View {
-        $essay->addImpression();
+    public function view(Essay $essay, Visitor $visitor): View {
+        $essay->addImpression($visitor);
 
         $data = [
             'essay'  => $essay,

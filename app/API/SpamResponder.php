@@ -6,10 +6,16 @@ use Log;
 use Closure;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Spatie\Honeypot\SpamResponder\SpamResponder as SpamResponderInterface;
 
 class SpamResponder implements SpamResponderInterface
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private Visitor $visitor) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -18,16 +24,11 @@ class SpamResponder implements SpamResponderInterface
      * this responder which takes care of banning the current visitor.
      * From then on the request is passed onto the next middleware
      * (VisitorBanned) which in turn simply rejects the request.
-     * 
-     * @param Request $request
-     * @param Closure $next
      */
-    public function respond(Request $request, Closure $next) {
-        $visitor = app(Visitor::class);
+    public function respond(Request $request, Closure $next): Response {
+        Log::channel('api')->info("Marking visitor #{$this->visitor->id} as banned due to being a potential spammer");
 
-        Log::channel('api')->info("Marking visitor #{$visitor->id} as banned due to being a potential spammer");
-
-        $visitor->markAsBanned();
+        $this->visitor->markAsBanned();
 
         return $next($request);
     }

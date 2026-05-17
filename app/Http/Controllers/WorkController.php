@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Poem;
+use App\Models\Visitor;
 use Illuminate\View\View;
 
 class WorkController
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    public function get_book(Book $book): View {
-        $book->addImpression();
+    public function get_book(Book $book, Visitor $visitor): View {
+        $book->addImpression($visitor);
 
         $data = [
             'book'   => $book,
@@ -23,8 +24,8 @@ class WorkController
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function get_poem(Book $book, Poem $poem): View {
-        $poem->addImpression();
+    public function get_poem(Book $book, Poem $poem, Visitor $visitor): View {
+        $poem->addImpression($visitor);
 
         $data = [
             'book'   => $book,

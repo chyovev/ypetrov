@@ -102,16 +102,6 @@ class Visitor extends Model
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Some malicious visitors can be marked as banned.
-     * 
-     * @return bool
-     */
-    public function isBanned(): bool {
-        return (bool) $this->is_banned;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * Mark a visitor as banned.
      * 
      * @return bool

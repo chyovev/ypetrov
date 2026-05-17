@@ -18,7 +18,7 @@ class RegisterVisitorTest extends TestCase
 
     ///////////////////////////////////////////////////////////////////////////
     public function test_registering_visitor(): void {
-        $this->assertNull(app(Visitor::class)->id);
+        $this->assertNull($this->app->make(Visitor::class)->id);
 
         $this->mock(Request::class, function(MockInterface $mock): void {
             $mock->shouldReceive('ip')->andReturn('dcd3:1001:ffed:13bb:516c:51e2:c372:2304');
@@ -33,8 +33,8 @@ class RegisterVisitorTest extends TestCase
         $middleware = $this->app->make(RegisterVisitor::class);
         $middleware->handle($request, function(): Response { return new Response; });
 
-        $this->assertNotNull(app(Visitor::class)->id);
-        $this->assertSame('BG', app(Visitor::class)->country_code);
+        $this->assertNotNull($this->app->make(Visitor::class)->id);
+        $this->assertSame('BG', $this->app->make(Visitor::class)->country_code);
     }
 
 }
