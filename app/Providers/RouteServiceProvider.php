@@ -21,16 +21,14 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
-        $this->routes(function () {
-            Route::middleware(['web', 'api', 'anti.spam', 'banned'])
-                ->prefix('api')
+        $this->routes(function (): void {
+            Route::middleware([])
                 ->group(base_path('routes/api.php'));
 
-            Route::middleware('web')
+            Route::middleware([])
                 ->group(base_path('routes/web.php'));
 
-            Route::middleware('web')
-                ->prefix('admin')
+            Route::middleware([])
                 ->group(base_path('routes/admin.php'));
         });
 
@@ -45,10 +43,10 @@ class RouteServiceProvider extends ServiceProvider
      * passed to the macro will be processed (where condition).
      */
     private function addReorderMacro(): void {
-        Route::macro('reorder', function ($tables) {
+        Route::macro('reorder', function ($tables): void {
             $regex = implode('|', $tables);
 
-            Route::get('{table}/reorder',  [ReorderController::class, 'get_all_records'])->where('table', $regex)->name('admin.reorder');
+            Route::get('{table}/reorder',  [ReorderController::class, 'get_all_records'])->where('table', $regex)->name('reorder');
             Route::post('{table}/reorder', [ReorderController::class, 'save_reordered_records'])->where('table', $regex);
         });
     }

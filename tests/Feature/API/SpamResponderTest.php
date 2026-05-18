@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
+use Spatie\Honeypot\ProtectAgainstSpam;
 use Tests\TestCase;
 
 class SpamResponderTest extends TestCase
@@ -20,7 +21,7 @@ class SpamResponderTest extends TestCase
 
         $this->assertFalse($visitor->is_banned);
 
-        Route::post('/test', fn() => 'test')->middleware('anti.spam');
+        Route::post('/test', fn() => 'test')->middleware(ProtectAgainstSpam::class);
 
         // populating the spam field
         $data = [
