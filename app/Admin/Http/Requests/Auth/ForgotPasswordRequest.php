@@ -12,16 +12,6 @@ class ForgotPasswordRequest extends FormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Always allow the forgot password request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * NB! There's no need to use the 'exists' rule since the underlying
      *     password broker will automatically perform that check.
      */

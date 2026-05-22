@@ -13,16 +13,6 @@ class DashboardRequest extends HttpFormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Always allow the dashboard request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * Fetch total visitors grouped by country.
      * 
      * @return array

@@ -13,16 +13,6 @@ class FormRequest extends HttpFormRequest
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Always allow the store request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     public function rules(): array {
         return [
             'is_active' => ['required', 'boolean'],

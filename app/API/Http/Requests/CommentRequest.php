@@ -23,16 +23,6 @@ class CommentRequest extends FormRequest
 
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Always allow the store request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     public function rules(): array {
         return [
             'name'    => ['required', 'max:255'],

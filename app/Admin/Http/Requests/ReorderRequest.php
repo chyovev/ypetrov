@@ -8,16 +8,6 @@ class ReorderRequest extends FormRequest
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Always allow the reorder request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     public function rules(): array {
         return [
             'id'   => ['required', 'array'],

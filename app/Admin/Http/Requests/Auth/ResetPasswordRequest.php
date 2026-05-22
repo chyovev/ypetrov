@@ -12,16 +12,6 @@ class ResetPasswordRequest extends FormRequest
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Always allow the forgot password request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
     public function rules(): array {
         return [
             'token'    => ['required'],

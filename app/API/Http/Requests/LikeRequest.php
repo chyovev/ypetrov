@@ -24,16 +24,6 @@ class LikeRequest extends FormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Always allow the store request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
      * Create a comment using the currently registered visitor as its author.
      * 
      * @throws LikeException – object already liked by visitor

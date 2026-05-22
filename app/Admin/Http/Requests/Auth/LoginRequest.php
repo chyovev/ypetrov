@@ -8,16 +8,6 @@ class LoginRequest extends FormRequest
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Always allow the login request to go through.
-     * 
-     * @return bool
-     */
-    public function authorize(): bool {
-        return true;
-    }
-    
-    ///////////////////////////////////////////////////////////////////////////
     public function rules(): array {
         return [
             'email'    => ['required', 'email'],
