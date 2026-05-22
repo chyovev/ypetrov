@@ -29,7 +29,7 @@ class VisitorBanned
      */
     public function handle(Request $request, Closure $next): Response {
         if ($this->visitor->is_banned) {
-            throw new VisitorBannedException(__('global.you_have_been_banned'));
+            throw new VisitorBannedException;
         }
 
         return $next($request);

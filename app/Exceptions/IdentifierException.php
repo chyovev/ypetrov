@@ -2,18 +2,15 @@
 
 namespace App\Exceptions;
 
-use RuntimeException;
+use Illuminate\Http\Response;
+use Throwable;
 
-/**
- * In order for an interaction to be registered,
- * the request identifier should be decoded.
- * If this task fails, the IdentifierException
- * should be thrown.
- * 
- * @see \App\API\Http\Requests\InteractiveRequest
- */
-
-class IdentifierException extends RuntimeException
+class IdentifierException extends ApplicationException
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(string $message, ?Throwable $previous = null) {
+        parent::__construct($message, $previous, Response::HTTP_NOT_FOUND);
+    }
 
 }

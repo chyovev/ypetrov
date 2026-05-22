@@ -2,16 +2,14 @@
 
 namespace App\Exceptions;
 
-use RuntimeException;
+use Illuminate\Http\Response;
 
-/**
- * When a visitor attempts to like a statsable object
- * which they have already liked previously, the
- * LikeException will be thrown. Same goes for
- * revoking an already revoked given like. 
- */
-
-class LikeException extends RuntimeException
+class LikeException extends ApplicationException
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(string $message) {
+        parent::__construct($message, null, Response::HTTP_CONFLICT);
+    }
 
 }

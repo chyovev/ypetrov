@@ -1,6 +1,6 @@
 openapi: "3.1.0"
 info:
-  version: 1.0.0
+  version: 1.1.0
   title: Yosif Petrov website API
   summary: >
     Contains all API endpoints used by the actual application
@@ -28,11 +28,18 @@ paths:
               $ref: '#/components/schemas/ContactMessage'
       responses:
         201:
-          $ref: '#/components/responses/Created'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Your message has been successfully created!"
         400:
           $ref: '#/components/responses/BadRequest'
         403:
-          $ref: '#/components/responses/Forbidden'
+          $ref: '#/components/responses/Unauthorized'
         429:
           $ref: '#/components/responses/TooManyRequests'
 
@@ -52,9 +59,19 @@ paths:
         - $ref: '#/components/parameters/path/id'
       responses:
         201:
-          $ref: '#/components/responses/CreatedWithHtml'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Your comment has been successfully created!"
+                  html:
+                    type: string
+                    example: <div>New comment's HTML</div>
         403:
-          $ref: '#/components/responses/Forbidden'
+          $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
         429:
@@ -70,9 +87,16 @@ paths:
         - $ref: '#/components/parameters/path/id'
       responses:
         201:
-          $ref: '#/components/responses/Created'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Resource successfully liked!"
         403:
-          $ref: '#/components/responses/Forbidden'
+          $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
         409:
@@ -90,9 +114,9 @@ paths:
         - $ref: '#/components/parameters/path/id'
       responses:
         204:
-          $ref: '#/components/responses/NoContent'
+          description: Response contains no content
         403:
-          $ref: '#/components/responses/Forbidden'
+          $ref: '#/components/responses/Unauthorized'
         404:
           $ref: '#/components/responses/NotFound'
         409:
@@ -121,6 +145,7 @@ components:
         name:
           type: string
           maximum: 255
+          example: John Smith
         email:
           type: string
           format: email
@@ -128,6 +153,7 @@ components:
         message:
           type: string
           maximum: 65535
+          example: Hello, world!
 
     Comment:
       type: object
@@ -138,199 +164,64 @@ components:
         name:
           type: string
           maximum: 255
+          example: John Smith
         message:
           type: string
           maximum: 65535
+          example: Hello, world!
 
-    APIResponse:
+    ErrorResponse:
       type: object
-      required:
-        - success
-        - code
-        - message
       properties:
-        success:
-          type: boolean
-          description: Result of the request
-          example: false
-        code:
-          type: integer
-          description: HTTP status code of the response
-          example: 400
         message:
           type: string
-          description: >
-            User-friendly message describing the result of the request.
-            Defaults to the HTTP status name of the response
-          example: Bad Request # status name of code 400
+          example: The request could not be completed
+        errors:
+          type: object
+          properties:
+            key1:
+              type: array
+              items:
+                type: string
+                example: The key1 field is required
+            key2:
+              type: array
+              items:
+                type: string
+                example: The key2 field format is invalid
 
   responses:
-    # Resource created (201)
-    Created:
-      description: Resource created
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: true
-                  code:
-                    default: 201
-                  message:
-                    default: Resource successfully created!
-                  errors:
-                    default: []
-
-    # Resource created and returned as HTML in response (201)
-    CreatedWithHtml:
-      description: Resource created and returned as HTML in response
-      content:
-        application/json:
-          schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: true
-                  code:
-                    default: 201
-                  message:
-                    default: Resource successfully created!
-                  errors:
-                    default: []
-                  html:
-                    type: string
-                    example: <div>Newly created resource HTML</div>
-
-    # Response contains no content
-    NoContent:
-      description: Response contains no content
-
-    # Bad request (input validation failed) (400)
     BadRequest:
-      description: Bad Request – input validation failed
+      description: Bad Request (input validation failure)
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: false
-                  code:
-                    default: 400
-                  message:
-                    default: Bad Request
-                  errors:
-                    type: object
-                    properties:
-                      input_field:
-                        type: array
-                        items:
-                          type: string
-                          example: An example of an error related to the input_field 
+            $ref: '#/components/schemas/ErrorResponse'
 
-    # Forbidden (403)
-    Forbidden:
-      description: Visitor is banned
+    Unauthorized:
+      description: User has no access (potentially banned)
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: false
-                  code:
-                    default: 403
-                  message:
-                    default: Forbidden
-                  errors:
-                    type: object
-                    properties:
-                      generic:
-                        type: array
-                        items:
-                          type: string
-                          example: You have been banned
+            $ref: '#/components/schemas/ErrorResponse'
 
-    # Not Found (404)
     NotFound:
       description: Resource not found
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: false
-                  code:
-                    default: 404
-                  message:
-                    default: Not Found
-                  errors:
-                    type: object
-                    properties:
-                      generic:
-                        type: array
-                        items:
-                          type: string
-                          example: Resource not found
+            $ref: '#/components/schemas/ErrorResponse'
 
-    # Conflict (409)
     Conflict:
       description: Request is correct, but it cannot be finished due to a conflict
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: false
-                  code:
-                    default: 409
-                  message:
-                    default: Conflict
-                  errors:
-                    type: object
-                    properties:
-                      generic:
-                        type: array
-                        items:
-                          type: string
-                          example: Although correct, your request cannot be processed
+            $ref: '#/components/schemas/ErrorResponse'
 
-    # Too Many Requests (429)
     TooManyRequests:
       description: Too Many Requests in a short period of time
       content:
         application/json:
           schema:
-            allOf:
-              - $ref: '#/components/schemas/APIResponse'
-              - type: object
-                properties:
-                  success:
-                    default: false
-                  code:
-                    default: 429
-                  message:
-                    default: Too Many Requests
-                  errors:
-                    type: object
-                    properties:
-                      generic:
-                        type: array
-                        items:
-                          type: string
-                          example: You are sending too many requests in too short a period of time
+            $ref: '#/components/schemas/ErrorResponse'

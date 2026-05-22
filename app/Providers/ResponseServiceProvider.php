@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use Response;
-use Illuminate\Http\Response as HttpResponse;
+use App\Exceptions\ExceptionWrapper;
+use App\Exceptions\ApplicationException;
+use Illuminate\Http\Response;
 use Illuminate\Support\ServiceProvider;
+use Throwable;
 
 class ResponseServiceProvider extends ServiceProvider
 {
@@ -23,18 +25,15 @@ class ResponseServiceProvider extends ServiceProvider
 
     ///////////////////////////////////////////////////////////////////////////
     private function registerOkResponse(): void {
-        Response::macro('ok', function(array $properties = [], int $code = HttpResponse::HTTP_OK) {
-            $message  = HttpResponse::$statusTexts[$code];
+        response()->macro('ok', function(array $properties = [], int $code = Response::HTTP_OK): Response {
+            $message  = Response::$statusTexts[$code];
             $response = [
-                'success' => true,
-                'code'    => $code,
                 'message' => $message,
-                'errors'  => [],
             ];
 
             $response = array_merge($response, $properties);
 
-            return Response::make($response)->setStatusCode($code);
+            return response()->make($response)->setStatusCode($code);
         });
     }
 
@@ -43,23 +42,24 @@ class ResponseServiceProvider extends ServiceProvider
      * Used when deleting an object through the API.
      */
     private function registerEmptyResponse(): void {
-        Response::macro('empty', function () {
-            return Response::make()->setStatusCode(HttpResponse::HTTP_NO_CONTENT);
-        });
+        response()->macro('empty', fn(): Response  => 
+            response()->make()->setStatusCode(Response::HTTP_NO_CONTENT)
+        );
     }
 
     ///////////////////////////////////////////////////////////////////////////
     private function registerErrorResponse(): void {
-        Response::macro('error', function (array $errors, int $code = HttpResponse::HTTP_BAD_REQUEST) {
-            $message  = HttpResponse::$statusTexts[$code];
+        response()->macro('error', function (Throwable $e): Response {
+            if ( ! is_a($e, ApplicationException::class)) {
+                $e = ExceptionWrapper::wrap($e);
+            }
+
             $response = [
-                'success' => false,
-                'code'    => $code,
-                'message' => $message,
-                'errors'  => $errors,
+                'message' => $e->getMessage(),
+                'errors'  => $e->getErrors(),
             ];
 
-            return Response::make($response)->setStatusCode($code);
+            return response()->make($response)->setStatusCode($e->getCode());
         });
     }
 }

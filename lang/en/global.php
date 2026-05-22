@@ -90,5 +90,4 @@ return [
     'visitors_by_country'    => 'Visitors by country',
     'works'                  => 'Works',
     'yes'                    => 'Yes',
-    'you_have_been_banned'   => 'You have been banned',
 ];

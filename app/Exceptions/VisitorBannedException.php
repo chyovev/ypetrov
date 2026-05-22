@@ -2,16 +2,14 @@
 
 namespace App\Exceptions;
 
-use RuntimeException;
+use Illuminate\Http\Response;
 
-/**
- * Some malicious visitors can be banned from
- * accessing the website altogether. In such
- * cases the VisitorBanned middleware throws
- * the VisitorBannedException.
- */
-
-class VisitorBannedException extends RuntimeException
+class VisitorBannedException extends ApplicationException
 {
 
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct() {
+        parent::__construct(__('exception.unauthorized'), null, Response::HTTP_FORBIDDEN);
+    }
+    
 }

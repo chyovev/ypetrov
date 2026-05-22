@@ -90,5 +90,4 @@ return [
     'visitors_by_country'    => 'Посетители по държави',
     'works'                  => 'Творчество',
     'yes'                    => 'Да',
-    'you_have_been_banned'   => 'Нямате достъп до тази секция',
 ];
