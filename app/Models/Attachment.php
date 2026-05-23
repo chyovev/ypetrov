@@ -4,10 +4,13 @@ namespace App\Models;
 
 use LogicException;
 use App\Models\Helpers\Attachment\FileHelper;
+use App\Observers\AttachmentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+#[ObservedBy([AttachmentObserver::class])]
 class Attachment extends Model
 {
     use HasFactory;

@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Essay;
 use App\Models\Visitor;
+use App\Events\CommentCreated;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\Event;
 
 class CommentableTest extends TestCase
 {
@@ -19,6 +21,8 @@ class CommentableTest extends TestCase
 
     ///////////////////////////////////////////////////////////////////////////
     public function test_successful_comment_creation(): void {
+        Event::fake();
+
         $essay   = Essay::factory()->create();
         $visitor = Visitor::factory()->create();
         $name    = 'Someone';
@@ -26,6 +30,8 @@ class CommentableTest extends TestCase
         $essay->addComment($visitor, $name, $message);
 
         $this->assertEquals(1, $essay->comments()->count());
+        
+        Event::assertDispatched(CommentCreated::class);
     }
 
 }
