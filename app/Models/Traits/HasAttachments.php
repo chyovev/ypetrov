@@ -4,8 +4,6 @@ namespace App\Models\Traits;
 
 use App\Models\Attachment;
 use App\Models\Helpers\UploadHelper;
-use App\Models\Interfaces\Attachable;
-use App\Observers\AttachableObserver;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
@@ -33,21 +31,6 @@ trait HasAttachments
      */
     public function attachments(): MorphMany {
         return $this->morphMany(Attachment::class, 'attachable')->orderBy('order');
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Since there's no way to register an observer on all models
-     * implementing a certain interface in the event service provider,
-     * a work-around is to register it upon trait boot which is taken
-     * care of by the Eloquent constructor.
-     * 
-     * @see \Illuminate\Database\Eloquent\Model :: bootTraits()
-     */
-    public static function bootHasAttachments(): void {
-        if (is_a(static::class, Attachable::class, true)) {
-            static::observe(AttachableObserver::class);
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

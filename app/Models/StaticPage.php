@@ -10,11 +10,16 @@ use App\Models\Interfaces\Statsable;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use App\Observers\AttachableObserver;
+use App\Observers\CommentableObserver;
+use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\UseEloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[UseEloquentBuilder(StaticPageBuilder::class)]
+#[ObservedBy([CommentableObserver::class, AttachableObserver::class, StatsableObserver::class])]
 class StaticPage extends Model implements Attachable, Commentable, Statsable, SEO
 {
 
@@ -27,25 +32,10 @@ class StaticPage extends Model implements Attachable, Commentable, Statsable, SE
 
     use HasFactory;
 
-    /**
-     * The HasAttachments trait defines a polymorphic
-     * relationship to the Attachment model and registers
-     * a delete-event observer.
-     */
     use HasAttachments;
 
-    /**
-     * The HasComments trait defines a polymorphic
-     * relationship to the Comment model and registers
-     * a delete-event observer.
-     */
     use HasComments;
 
-    /**
-     * The HasStats trait defines a polymorphic
-     * relationship to the Stats model and registers
-     * a delete-event observer.
-     */
     use HasStats;
 
     /**

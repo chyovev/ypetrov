@@ -9,6 +9,9 @@ use App\Models\Interfaces\SEO;
 use App\Models\Scopes\ActiveScope;
 use App\Models\Traits\HasComments;
 use App\Models\Traits\HasStats;
+use App\Observers\CommentableObserver;
+use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,22 +19,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[ScopedBy([ActiveScope::class])]
+#[ObservedBy([CommentableObserver::class, StatsableObserver::class])]
 class Poem extends Model implements Commentable, Statsable, SEO
 {
     use HasFactory;
 
-    /**
-     * The HasComments trait defines a polymorphic
-     * relationship to the Comment model and registers
-     * a delete-event observer.
-     */
     use HasComments;
 
-    /**
-     * The HasStats trait defines a polymorphic
-     * relationship to the Stats model and registers
-     * a delete-event observer.
-     */
     use HasStats;
 
     /**

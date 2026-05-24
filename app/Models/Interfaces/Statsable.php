@@ -11,11 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * All models which have a polymorphic relationship to
  * the Stats model should implement this interface
  * and use the HasStats trait.
- * Statsable models have an observer which takes care
- * of polymorphic data clean-up during deletion.
  * 
  * @see \App\Models\Traits\HasStats
- * @see \App\Observers\StatsableObserver
  */
 
 interface Statsable extends Interactive

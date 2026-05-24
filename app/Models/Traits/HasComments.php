@@ -5,8 +5,6 @@ namespace App\Models\Traits;
 use DB;
 use App\Models\Comment;
 use App\Models\Visitor;
-use App\Models\Interfaces\Commentable;
-use App\Observers\CommentableObserver;
 use App\Events\CommentCreated;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -37,21 +35,6 @@ trait HasComments
         return $this
             ->morphMany(Comment::class, 'commentable')
             ->oldest('id');
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Since there's no way to register an observer on all models
-     * implementing a certain interface in the event service provider,
-     * a work-around is to register it upon trait boot which is taken
-     * care of by the Eloquent constructor.
-     * 
-     * @see \Illuminate\Database\Eloquent\Model :: bootTraits()
-     */
-    public static function bootHasComments(): void {
-        if (is_a(static::class, Commentable::class, true)) {
-            static::observe(CommentableObserver::class);
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

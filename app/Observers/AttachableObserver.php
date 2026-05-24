@@ -6,13 +6,6 @@ use App\Models\Interfaces\Attachable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
 
-/**
- * NB! Keep in mind the observer is registered upon object
- *     initialization, and NOT in the EventServiceProvider.
- * 
- * @see \App\Models\Traits\HasAttachments :: initializeHasAttachments()
- */
-
 class AttachableObserver
 {
 
@@ -83,17 +76,9 @@ class AttachableObserver
      *     method on each Attachment instance will fire up the
      *     Attachment observer which takes care of the file
      *     deletion.
-     * 
-     * @param  Attachable $object – object implementing the Attachable interface
-     * @return void
      */
-    public function deleted(Attachable $object): void {
-        // make sure the attachable object is *really* gone:
-        // if it's being soft deleted, its $exists property
-        // will remain true
-        if ( ! $object->exists) {
-            $object->attachments->each->delete();
-        }
+    public function deleted(Attachable $attachable): void {
+        $attachable->attachments->each->delete();
     }
 
 }

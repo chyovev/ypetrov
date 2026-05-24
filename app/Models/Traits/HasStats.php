@@ -2,12 +2,10 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Interfaces\Statsable;
 use App\Models\Like;
 use App\Models\Stats;
 use App\Models\Visitor;
 use App\Exceptions\LikeException;
-use App\Observers\StatsableObserver;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -53,21 +51,6 @@ trait HasStats
         return $this
             ->hasManyThrough(Like::class, Stats::class, 'statsable_id')
             ->where('statsable_type', static::class);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Since there's no way to register an observer on all models
-     * implementing a certain interface in the event service provider,
-     * a work-around is to register it upon trait boot which is taken
-     * care of by the Eloquent constructor.
-     * 
-     * @see \Illuminate\Database\Eloquent\Model :: bootTraits()
-     */
-    public static function bootHasStats(): void {
-        if (is_a(static::class, Statsable::class, true)) {
-            static::observe(StatsableObserver::class);
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -7,32 +7,22 @@ use App\Models\Interfaces\Statsable;
 use App\Models\Scopes\ActiveScope;
 use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasStats;
+use App\Observers\AttachableObserver;
+use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 #[ScopedBy([ActiveScope::class])]
+#[ObservedBy([AttachableObserver::class, StatsableObserver::class])]
 class GalleryImage extends Model implements Attachable, Statsable
 {
     use HasFactory;
 
-    /**
-     * The HasAttachments trait defines a polymorphic
-     * relationship to the Attachment model and registers
-     * a delete-event observer.
-     */
     use HasAttachments;
 
-    /**
-     * The HasStats trait defines a polymorphic
-     * relationship to the Stats model and registers
-     * a delete-event observer.
-     * 
-     * NB! The impression counter has not been activated
-     *     on gallery images since all records are loaded
-     *     at once.
-     */
     use HasStats;
 
     /**
