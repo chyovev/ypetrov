@@ -1,4 +1,4 @@
-<x-admin.layout route="admin.contact_messages.index">
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-12">

@@ -1,9 +1,7 @@
 @php
 $title = $galleryImage->exists ? __('global.edit')           : __('global.create');
-$route = $galleryImage->exists ? 'admin.gallery_images.edit' : 'admin.gallery_images.create';
-$param = $galleryImage->exists ? $galleryImage              : null;
 @endphp
-<x-admin.layout :$title :$route :$param>
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-lg-12">

@@ -4,10 +4,16 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\GalleryImage;
 use App\Admin\Http\Requests\GalleryImages\FormRequest;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class GalleryImageController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -24,6 +30,7 @@ class GalleryImageController
 
         return view('admin.gallery_images.index', [
             'galleryImages' => $query->paginate(20),
+            'breadcrumbs'   => $this->breadcrumbManager->getCrumbs('gallery_images.index'),
         ]);
     }
 
@@ -32,7 +39,10 @@ class GalleryImageController
      * Show the form for creating a new resource.
      */
     public function create() {
-        return view('admin.gallery_images.form', ['galleryImage' => new GalleryImage()]);
+        return view('admin.gallery_images.form', [
+            'galleryImage' => new GalleryImage,
+            'breadcrumbs'  => $this->breadcrumbManager->getCrumbs('gallery_images.create'),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +64,10 @@ class GalleryImageController
      * Show the form for editing the specified resource.
      */
     public function edit(GalleryImage $galleryImage) {
-        return view('admin.gallery_images.form', ['galleryImage' => $galleryImage]);
+        return view('admin.gallery_images.form', [
+            'galleryImage' => $galleryImage,
+            'breadcrumbs'  => $this->breadcrumbManager->getCrumbs('gallery_images.edit', $galleryImage),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////

@@ -3,10 +3,16 @@
 namespace App\Admin\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactMessageController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -22,7 +28,8 @@ class ContactMessageController
         }
 
         return view('admin.contact_messages.index', [
-            'messages' => $query->paginate(20),
+            'messages'    => $query->paginate(20),
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('contact_messages.index'),
         ]);
     }
 
@@ -34,7 +41,8 @@ class ContactMessageController
         $contactMessage->markAsRead();
         
         return view('admin.contact_messages.show', [
-            'message' => $contactMessage,
+            'message'     => $contactMessage,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('contact_messages.show', $contactMessage),
         ]);
     }
 

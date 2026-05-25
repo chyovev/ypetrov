@@ -6,10 +6,16 @@ use App\Models\User;
 use App\Admin\Http\Requests\Users\DeleteRequest;
 use App\Admin\Http\Requests\Users\StoreRequest;
 use App\Admin\Http\Requests\Users\UpdateRequest;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -23,7 +29,8 @@ class UserController
         }
 
         return view('admin.users.index', [
-            'users' => $query->paginate(20),
+            'users'       => $query->paginate(20),
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('users.index'),
         ]);
     }
 
@@ -32,7 +39,10 @@ class UserController
      * Show the form for creating a new resource.
      */
     public function create() {
-        return view('admin.users.form', ['user' => new User()]);
+        return view('admin.users.form', [
+            'user'        => new User,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('users.create'),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +64,10 @@ class UserController
      * Show the form for editing the specified resource.
      */
     public function edit(User $user) {
-        return view('admin.users.form', ['user' => $user]);
+        return view('admin.users.form', [
+            'user'        => $user,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('users.edit', $user),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////

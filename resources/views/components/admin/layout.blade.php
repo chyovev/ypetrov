@@ -41,7 +41,7 @@
         <div class="page-wrapper">
             <!-- Bread crumb -->
             <div class="row page-titles p-l-30">
-                <x-admin.breadcrumbs :$route :param="isset($param) ? $param : null" />
+                <x-admin.breadcrumbs :$breadcrumbs />
             </div>
 
             <!-- End Bread crumb -->

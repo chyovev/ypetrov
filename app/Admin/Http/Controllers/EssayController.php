@@ -4,10 +4,16 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\Essay;
 use App\Admin\Http\Requests\Essays\FormRequest;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class EssayController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -23,7 +29,8 @@ class EssayController
         }
 
         return view('admin.essays.index', [
-            'essays' => $query->paginate(20),
+            'essays'      => $query->paginate(20),
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('essays.index'),
         ]);
     }
 
@@ -32,7 +39,10 @@ class EssayController
      * Show the form for creating a new resource.
      */
     public function create() {
-        return view('admin.essays.form', ['essay' => new Essay()]);
+        return view('admin.essays.form', [
+            'essay'       => new Essay,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('essays.create'),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +64,10 @@ class EssayController
      * Show the form for editing the specified resource.
      */
     public function edit(Essay $essay) {
-        return view('admin.essays.form', ['essay' => $essay]);
+        return view('admin.essays.form', [
+            'essay'       => $essay,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('essays.edit', $essay),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////

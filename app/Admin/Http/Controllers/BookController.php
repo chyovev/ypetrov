@@ -5,11 +5,17 @@ namespace App\Admin\Http\Controllers;
 use App\Models\Book;
 use App\Models\Poem;
 use App\Admin\Http\Requests\Books\FormRequest;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class BookController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -25,7 +31,8 @@ class BookController
         }
 
         return view('admin.books.index', [
-            'books' => $query->paginate(20),
+            'books'       => $query->paginate(20),
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('books.index'),
         ]);
     }
 
@@ -37,8 +44,9 @@ class BookController
         $poems = $this->getAllPoems();
 
         return view('admin.books.form', [
-            'book'  => new Book(),
-            'poems' => $poems,
+            'book'        => new Book(),
+            'poems'       => $poems,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('books.create'),
         ]);
     }
 
@@ -73,8 +81,9 @@ class BookController
         $poems = $this->getAllPoems();
 
         return view('admin.books.form', [
-            'book'  => $book,
-            'poems' => $poems,
+            'book'        => $book,
+            'poems'       => $poems,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('books.edit', $book),
         ]);
     }
 

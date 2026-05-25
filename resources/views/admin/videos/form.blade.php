@@ -1,9 +1,7 @@
 @php
 $title = $video->exists ? __('global.edit')   : __('global.create');
-$route = $video->exists ? 'admin.videos.edit' : 'admin.videos.create';
-$param = $video->exists ? $video              : null;
 @endphp
-<x-admin.layout :$route :$param>
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-lg-12">

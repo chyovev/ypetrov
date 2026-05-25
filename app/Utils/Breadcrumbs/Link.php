@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Utils\Breadcrumbs;
+
+class Link
+{
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private string $title, private ?string $url) {
+        //
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getTitle(): string {
+        return $this->title;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function getUrl(): ?string {
+        return $this->url;
+    }
+
+}

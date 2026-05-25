@@ -4,10 +4,16 @@ namespace App\Admin\Http\Controllers;
 
 use App\Admin\Http\Requests\Poems\FormRequest;
 use App\Models\Poem;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class PoemController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -23,7 +29,8 @@ class PoemController
         }
 
         return view('admin.poems.index', [
-            'poems' => $query->paginate(20),
+            'poems'       => $query->paginate(20),
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('poems.index'),
         ]);
     }
 
@@ -32,7 +39,10 @@ class PoemController
      * Show the form for creating a new resource.
      */
     public function create() {
-        return view('admin.poems.form', ['poem' => new Poem()]);
+        return view('admin.poems.form', [
+            'poem'        => new Poem,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('poems.create'),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +64,10 @@ class PoemController
      * Show the form for editing the specified resource.
      */
     public function edit(Poem $poem) {
-        return view('admin.poems.form', ['poem' => $poem]);
+        return view('admin.poems.form', [
+            'poem'        => $poem,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('poems.edit', $poem),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////

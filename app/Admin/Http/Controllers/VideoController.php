@@ -4,10 +4,16 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\Video;
 use App\Admin\Http\Requests\Videos\FormRequest;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class VideoController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -23,7 +29,8 @@ class VideoController
         }
 
         return view('admin.videos.index', [
-            'videos' => $query->paginate(20),
+            'videos'      => $query->paginate(20),
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('videos.index'),
         ]);
     }
 
@@ -32,7 +39,10 @@ class VideoController
      * Show the form for creating a new resource.
      */
     public function create() {
-        return view('admin.videos.form', ['video' => new Video()]);
+        return view('admin.videos.form', [
+            'video'       => new Video,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('videos.create'),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +64,10 @@ class VideoController
      * Show the form for editing the specified resource.
      */
     public function edit(Video $video) {
-        return view('admin.videos.form', ['video' => $video]);
+        return view('admin.videos.form', [
+            'video'       => $video,
+            'breadcrumbs' => $this->breadcrumbManager->getCrumbs('videos.edit', $video),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////

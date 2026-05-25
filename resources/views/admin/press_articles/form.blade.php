@@ -1,9 +1,7 @@
 @php
 $title = $pressArticle->exists ? __('global.edit')           : __('global.create');
-$route = $pressArticle->exists ? 'admin.press_articles.edit' : 'admin.press_articles.create';
-$param = $pressArticle->exists ? $pressArticle              : null;
 @endphp
-<x-admin.layout :$title :$route :$param>
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-lg-12">

@@ -4,10 +4,16 @@ namespace App\Admin\Http\Controllers;
 
 use App\Models\PressArticle;
 use App\Admin\Http\Requests\PressArticles\FormRequest;
+use App\Utils\Breadcrumbs\BreadcrumbManager;
 use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
 
 class PressArticleController
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(private BreadcrumbManager $breadcrumbManager) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -24,6 +30,7 @@ class PressArticleController
 
         return view('admin.press_articles.index', [
             'pressArticles' => $query->paginate(20),
+            'breadcrumbs'   => $this->breadcrumbManager->getCrumbs('press_articles.index'),
         ]);
     }
 
@@ -32,7 +39,10 @@ class PressArticleController
      * Show the form for creating a new resource.
      */
     public function create() {
-        return view('admin.press_articles.form', ['pressArticle' => new PressArticle()]);
+        return view('admin.press_articles.form', [
+            'pressArticle' => new PressArticle,
+            'breadcrumbs'  => $this->breadcrumbManager->getCrumbs('press_articles.create'),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +64,10 @@ class PressArticleController
      * Show the form for editing the specified resource.
      */
     public function edit(PressArticle $pressArticle) {
-        return view('admin.press_articles.form', ['pressArticle' => $pressArticle]);
+        return view('admin.press_articles.form', [
+            'pressArticle' => $pressArticle,
+            'breadcrumbs'  => $this->breadcrumbManager->getCrumbs('press_articles.edit', $pressArticle),
+        ]);
     }
 
     ///////////////////////////////////////////////////////////////////////////

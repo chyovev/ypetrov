@@ -1,9 +1,7 @@
 @php
 $title = __('global.edit');
-$route = 'admin.static_pages.edit';
-$param = $staticPage;
 @endphp
-<x-admin.layout :$title :$route :$param>
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-lg-12">

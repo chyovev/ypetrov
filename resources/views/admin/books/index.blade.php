@@ -1,4 +1,4 @@
-<x-admin.layout route="admin.books.index">
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-12">

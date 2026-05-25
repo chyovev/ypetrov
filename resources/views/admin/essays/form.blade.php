@@ -1,9 +1,7 @@
 @php
 $title = $essay->exists ? __('global.edit')   : __('global.create');
-$route = $essay->exists ? 'admin.essays.edit' : 'admin.essays.create';
-$param = $essay->exists ? $essay              : null;
 @endphp
-<x-admin.layout :$title :$route :$param>
+<x-admin.layout :$breadcrumbs>
 
     <div class="row">
         <div class="col-lg-12">
