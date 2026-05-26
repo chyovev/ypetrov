@@ -39,7 +39,7 @@ class BreadcrumbTest extends TestCase
                 return "Prefix #{$param}";
             })
             ->url(function(int $param): string {
-                return route('home', ['test' => $param]);
+                return route('public.home', ['test' => $param]);
             });
 
         $this->assertSame('Prefix #1', $parent->getTitle(1));

@@ -14,7 +14,7 @@
         <div id="swagger-ui"></div>
         <!-- dynamic javascript variables used by the swagger initializer -->
         <script type="text/javascript">
-            let documentUrl = "{{ route('swagger_docs') }}",
+            let documentUrl = "{{ route('public.swagger_docs') }}",
                 csrfToken   = "{{ csrf_token() }}";
         </script>
         

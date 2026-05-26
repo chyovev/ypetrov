@@ -11,7 +11,7 @@ use App\Http\Controllers\SearchController;
 use App\API\Http\Controllers\SwaggerController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('web')->group(function(): void {
+Route::middleware('web')->name('public.')->group(function(): void {
     Route::get('/',                                    [StaticPageController::class, 'home'])->name('home');
     Route::get('/hristomatiya',                        [StaticPageController::class, 'chrestomathy'])->name('chrestomathy');
     Route::get('/za-yosif-petrov/{essay:slug}',        [EssayController::class, 'view'])->name('essay');

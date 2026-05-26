@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -59,10 +60,16 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions
             ->dontReport(ApplicationException::class)
-            ->render(function (Throwable $e, Request $request){
-                if ($request->is('api/*')) {
+            ->render(function (Throwable $e, Request $request): ?Response {
+                if ($request->routeIs('api.*')) {
                     return response()->error($e);
                 }
+
+                if ($request->routeIs('public.*')) {
+                    return response()->view('errors.404')->setStatusCode(Response::HTTP_NOT_FOUND);
+                }
+
+                return null;
             });
 
     })->create();

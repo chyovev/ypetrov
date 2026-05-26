@@ -3,7 +3,7 @@
         <div class="nav-wrapper-inner">
 
             <div class="logo-wrapper">
-                <a href="{{ route('home') }}" class="logo">Йосиф Петров</a>
+                <a href="{{ route('public.home') }}" class="logo">Йосиф Петров</a>
                 <span @class(["none" => isset($search) && $search !== ''])>(1909 – 2004)</span>
             </div>
 

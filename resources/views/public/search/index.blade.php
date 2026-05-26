@@ -9,7 +9,7 @@
 
                 <div class="search-form-fullpage center">
                     <h1>Търсене на стихотворение</h1>
-                    <form action="{{ route('search') }}" method="GET">
+                    <form action="{{ route('public.search') }}" method="GET">
                         <input type="text" name="s" value="{{ $search }}" placeholder="Въведете ключова дума" />
                         <input type="submit" value="Търси" />
                     </form>
@@ -36,12 +36,12 @@
                         @php $book = $books[$bookId]; @endphp
 
                         <div class="book-result-wrapper">
-                            <a href="{{ route('book', $book->slug) }}" class="book-title desktop-stickable">{{ $book->title }} ({{ $book->publish_year }})</a>
+                            <a href="{{ route('public.book', $book->slug) }}" class="book-title desktop-stickable">{{ $book->title }} ({{ $book->publish_year }})</a>
                             <div class="poem-result-wrapper">
 
                             @foreach ($poems as $poem)
                                 <div class="poem-result">
-                                    <a href="{{ route('poem', ['book' => $book, 'poem' => $poem]) }}">{!! highlightSubstring(strip_tags($poem->title), $search) !!}</a>
+                                    <a href="{{ route('public.poem', ['book' => $book, 'poem' => $poem]) }}">{!! highlightSubstring(strip_tags($poem->title), $search) !!}</a>
                                     @if ($poem->dedication)
                                         <em>{!! highlightSubstring($poem->dedication, $search) !!}</em>
                                     @endif

@@ -27,7 +27,7 @@ class ImpressionsTest extends TestCase
         $this->app->instance(Visitor::class, Visitor::factory()->create());
 
         $book     = Book::factory()->active()->create();
-        $endpoint = route('book', ['book' => $book]);
+        $endpoint = route('public.book', ['book' => $book]);
         
         $this->assertEquals(0, $book->getTotalImpressions());
 

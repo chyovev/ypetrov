@@ -55,7 +55,7 @@ class WorkControllerTest extends TestCase
 
     ///////////////////////////////////////////////////////////////////////////
     private function testBookPublicURL(Book $book): TestResponse {
-        $url = route('book', ['book' => $book], false);
+        $url = route('public.book', ['book' => $book], false);
 
         return $this->get($url);
     }
@@ -132,7 +132,7 @@ class WorkControllerTest extends TestCase
             'book' => $book,
             'poem' => $poem,
         ];
-        $url = route('poem', $params, false);
+        $url = route('public.poem', $params, false);
 
         return $this->get($url);
     }

@@ -20,7 +20,7 @@ class BreadcrumbManagerTest extends TestCase
     public function test_get_root_crumb(): void {
         $crumb = (new Breadcrumb('test'))
             ->title('Test')
-            ->url(route('home'));
+            ->url(route('public.home'));
 
         $this->mock(AdminCrumbs::class, function(MockInterface $mock) use($crumb): void {
             $mock->shouldReceive('get')->andReturn($crumb);
