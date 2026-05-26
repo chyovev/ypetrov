@@ -28,7 +28,7 @@ class StaticPageController
         
         $data = [
             'page'   => $page,
-            'seo'    => $page,
+            'seo'    => $page->getSeo(),
             'images' => $page->getImages(),
         ];
 

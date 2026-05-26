@@ -15,7 +15,7 @@ class PressController
 
         $data = [
             'article' => $article,
-            'seo'     => $article,
+            'seo'     => $article->getSeo(),
             'images'  => $article->getImages(),
         ];
 

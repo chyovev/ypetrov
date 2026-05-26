@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Utils\Seo;
 use App\Models\Interfaces\Attachable;
 use App\Models\Interfaces\Commentable;
-use App\Models\Interfaces\SEO;
+use App\Models\Interfaces\MetaData;
 use App\Models\Interfaces\Statsable;
 use App\Models\Scopes\ActiveScope;
 use App\Models\Traits\HasAttachments;
@@ -21,7 +22,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 #[ScopedBy([ActiveScope::class])]
 #[ObservedBy([CommentableObserver::class, AttachableObserver::class, StatsableObserver::class])]
-class PressArticle extends Model implements Attachable, Commentable, Statsable, SEO
+class PressArticle extends Model implements Attachable, Commentable, Statsable, MetaData
 {
     use HasFactory;
 
@@ -61,13 +62,8 @@ class PressArticle extends Model implements Attachable, Commentable, Statsable, 
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function getMetaTitle(): ?string {
-        return $this->title;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    public function getMetaDescription(): ?string {
-        return $this->text;
+    public function getSeo(): Seo {
+        return new Seo($this->title, $this->text);
     }
 
     ///////////////////////////////////////////////////////////////////////////

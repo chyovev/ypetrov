@@ -18,7 +18,7 @@ class VideoController
         $data = [
             'videos' => $videos,
             'video'  => $video,
-            'seo'    => $video,
+            'seo'    => $video->getSeo(),
             'images' => $video->getImages(),
         ];
 

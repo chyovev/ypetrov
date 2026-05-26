@@ -16,7 +16,7 @@ class WorkController
 
         $data = [
             'book'   => $book,
-            'seo'    => $book,
+            'seo'    => $book->getSeo(),
             'images' => $book->getImages(),
         ];
 
@@ -30,7 +30,7 @@ class WorkController
         $data = [
             'book'   => $book,
             'poem'   => $poem,
-            'seo'    => $poem,
+            'seo'    => $poem->getSeo(),
             'images' => $book->getImages(),
         ];
 

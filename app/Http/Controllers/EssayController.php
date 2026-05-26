@@ -15,7 +15,7 @@ class EssayController
 
         $data = [
             'essay'  => $essay,
-            'seo'    => $essay,
+            'seo'    => $essay->getSeo(),
             'images' => $essay->getImages(),
         ];
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Utils\Seo;
 use App\Http\Requests\SearchRequest;
 
 class SearchController
@@ -22,7 +23,7 @@ class SearchController
             'grouped' => $request->getResultsGroupedByBooks(),
             'search'  => $request->getSearchString(),
             'noindex' => true,
-            'seo'     => seo($request->getMetaTitle()),
+            'seo'     => new Seo($request->getMetaTitle()),
         ];
 
         return view('public.search.index', $data);

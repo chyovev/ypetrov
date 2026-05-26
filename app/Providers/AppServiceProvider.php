@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use View;
-use Blade;
 use Carbon\Carbon;
 use App\View\Composers\NavigationComposer;
+use App\View\Composers\SeoComposer;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 use Illuminate\Foundation\Http\Middleware\TrimStrings;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->setCarbonLocale();
         $this->setAdminPaginationTheme();
         $this->registerNavigationViewComposer();
-        $this->registerMetaBladeDirectives();
+        $this->registerSeoViewComposer();
         $this->defineTrimStringsExemptions();
         $this->overrideUnauthenticatedRedirect();
         $this->overrideAuthenticatedRedirect();
@@ -79,38 +79,14 @@ class AppServiceProvider extends ServiceProvider
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * The meta directives expect an object implementing
-     * the SEO interface to have been passed to the view
-     * under the $seo name. If no such object is passed,
-     * a default value is be used.
+     * Handle SEO meta tags in the public layout.
      */
-    private function registerMetaBladeDirectives(): void {
-        Blade::directive('metaTitle', function () {
-            return '<?php
-                if (isset($seo)) {
-                    $title = cleanString($seo->getMetaTitle());
-            
-                    echo "{$title} | Йосиф Петров (1909 – 2004)";
-                }
-                else {
-                    echo "Официален сайт в памет на поета Йосиф Петров (1909 – 2004)";
-                }
-            ?>';
-        });
-        
-        Blade::directive('metaDescription', function () {
-            return '<?php
-                if (isset($seo)) {
-                    $description = cleanString($seo->getMetaDescription());
-                }
+    private function registerSeoViewComposer(): void {
+        $views = [
+            'public.layout.default',
+        ];
 
-                if ( ! isset($description)) {
-                    $description = "Йосиф Петров е български поет, общественик и политик";
-                }
-
-                echo str($description)->words(50);
-            ?>';
-        });
+        View::composer($views, SeoComposer::class);
     }
 
     ///////////////////////////////////////////////////////////////////////////

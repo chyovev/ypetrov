@@ -1,7 +1,5 @@
 <?php
 
-use App\Helpers\SEO;
-
 /**
  * Split a string into words. Use preg_split instead of a
  * simple white-space splitter, as we need to get rid of
@@ -30,28 +28,4 @@ function highlightSubstring(string $text, string $string): string {
     $words = splitIntoWords($string);
 
     return preg_replace('/(' . implode('|', $words) . ')/ui', '<strong>$1</strong>', $text);
-}
-
-/**
- * Clean-up a string by removing all tags
- * and extra white spaces.
- * 
- * @param  string $string
- * @return string
- */
-function cleanString(string $string = null) {
-    return is_null($string)
-        ? $string
-        : trim(preg_replace('/\s+/', ' ', strip_tags($string)));
-}
-
-/**
- * Initialize SEO object for non-dynamic pages.
- * 
- * @param  string $title
- * @param  string|null $description
- * @return SEO
- */
-function seo(string $title, string $description = null): SEO {
-    return new SEO($title, $description);
 }
