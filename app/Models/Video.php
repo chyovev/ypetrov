@@ -14,6 +14,7 @@ use App\Models\Traits\HasStats;
 use App\Observers\AttachableObserver;
 use App\Observers\CommentableObserver;
 use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Collection;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 #[ScopedBy([ActiveScope::class])]
 #[ObservedBy([CommentableObserver::class, AttachableObserver::class, StatsableObserver::class])]
+#[Fillable(['is_active', 'title', 'slug', 'publish_date', 'summary', 'order'])]
 class Video extends Model implements Attachable, Commentable, Statsable, MetaData
 {
     use HasFactory;
@@ -33,24 +35,13 @@ class Video extends Model implements Attachable, Commentable, Statsable, MetaDat
 
     use HasStats;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    public $fillable = [
-        'is_active', 'title', 'slug', 'publish_date', 'summary', 'order',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'is_active'    => 'boolean',
-        'publish_date' => 'datetime',
-    ];
+    ///////////////////////////////////////////////////////////////////////////
+    public function casts(): array {
+        return [
+            'is_active'    => 'boolean',
+            'publish_date' => 'datetime',
+        ];
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     public function canBeCommentedOn(): bool {

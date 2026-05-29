@@ -14,6 +14,7 @@ use App\Models\Traits\HasStats;
 use App\Observers\AttachableObserver;
 use App\Observers\CommentableObserver;
 use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[ScopedBy([ActiveScope::class])]
 #[ObservedBy([CommentableObserver::class, AttachableObserver::class, StatsableObserver::class])]
+#[Fillable(['is_active', 'title', 'slug', 'text', 'publisher', 'publish_year', 'order'])]
 class Book extends Model implements Attachable, Commentable, Statsable, MetaData
 {
     use HasFactory;
@@ -32,15 +34,6 @@ class Book extends Model implements Attachable, Commentable, Statsable, MetaData
     use HasComments;
 
     use HasStats;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    public $fillable = [
-        'is_active', 'title', 'slug', 'text', 'publisher', 'publish_year', 'order',
-    ];
 
     ///////////////////////////////////////////////////////////////////////////
     /**

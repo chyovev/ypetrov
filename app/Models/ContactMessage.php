@@ -3,23 +3,15 @@
 namespace App\Models;
 
 use App\Models\Traits\HasVisitor;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
+#[Fillable(['is_read', 'name', 'email', 'message'])]
 class ContactMessage extends Model
 {
     use HasFactory, HasVisitor;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    public $fillable = [
-        'is_read', 'name', 'email', 'message',
-    ];
-
 
     ///////////////////////////////////////////////////////////////////////////
     /**

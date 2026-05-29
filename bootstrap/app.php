@@ -25,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
                 \Illuminate\Session\Middleware\StartSession::class,
                 \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+                \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
                 \App\Http\Middleware\RegisterVisitor::class,
             ])
@@ -36,7 +36,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
                 \Illuminate\Session\Middleware\StartSession::class,
                 \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+                \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
                 \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
                 \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
@@ -53,7 +53,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
                 \Illuminate\Session\Middleware\StartSession::class,
                 \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-                \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+                \Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class,
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
             ]);
     })

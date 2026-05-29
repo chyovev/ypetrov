@@ -9,6 +9,7 @@ use App\Models\Traits\HasAttachments;
 use App\Models\Traits\HasStats;
 use App\Observers\AttachableObserver;
 use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 #[ScopedBy([ActiveScope::class])]
 #[ObservedBy([AttachableObserver::class, StatsableObserver::class])]
+#[Fillable(['is_active', 'title', 'order'])]
 class GalleryImage extends Model implements Attachable, Statsable
 {
     use HasFactory;
@@ -24,15 +26,6 @@ class GalleryImage extends Model implements Attachable, Statsable
     use HasAttachments;
 
     use HasStats;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    public $fillable = [
-        'is_active', 'title', 'order',
-    ];
 
     ///////////////////////////////////////////////////////////////////////////
     /**

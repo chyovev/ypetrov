@@ -14,6 +14,7 @@ use App\Models\Traits\HasStats;
 use App\Observers\AttachableObserver;
 use App\Observers\CommentableObserver;
 use App\Observers\StatsableObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\UseEloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 
 #[UseEloquentBuilder(StaticPageBuilder::class)]
 #[ObservedBy([CommentableObserver::class, AttachableObserver::class, StatsableObserver::class])]
+#[Fillable(['title', 'text'])]
 class StaticPage extends Model implements Attachable, Commentable, Statsable, MetaData
 {
 
@@ -38,15 +40,6 @@ class StaticPage extends Model implements Attachable, Commentable, Statsable, Me
     use HasComments;
 
     use HasStats;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    public $fillable = [
-        'title', 'text',
-    ];
 
     ///////////////////////////////////////////////////////////////////////////
     /**

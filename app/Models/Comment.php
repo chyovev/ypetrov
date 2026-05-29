@@ -3,24 +3,16 @@
 namespace App\Models;
 
 use App\Models\Traits\HasVisitor;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[Fillable(['name', 'message'])]
 class Comment extends Model
 {
     use HasFactory, HasVisitor, SoftDeletes;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    public $fillable = [
-        'name', 'message',
-    ];
-
 
     ///////////////////////////////////////////////////////////////////////////
     /**

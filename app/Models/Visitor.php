@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+#[Fillable(['ip', 'country_code', 'is_banned'])]
 class Visitor extends Model
 {
     use HasFactory;
@@ -22,23 +24,12 @@ class Visitor extends Model
     const CREATED_AT = 'first_visit_date',
           UPDATED_AT = 'last_visit_date';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int,string>
-     */
-    protected $fillable = [
-        'ip', 'country_code', 'is_banned',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string,string>
-     */
-    protected $casts = [
-        'is_banned' => 'boolean',
-    ];
+    ///////////////////////////////////////////////////////////////////////////
+    public function casts(): array {
+        return [
+            'is_banned' => 'boolean',
+        ];
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
