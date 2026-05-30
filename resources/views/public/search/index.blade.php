@@ -25,35 +25,33 @@
                             Търсене за: <strong>«{{ $search }}»</strong>.
                             <br />
                             @if ($results->total())
-                                Резултати от <strong>{{ $results->firstItem() }}</strong> до <strong>{{ $results->lastItem() }}</strong> (от общо {{ $results->total() }}).
+                                Резултати от <strong>{{ $results->from() }}</strong> до <strong>{{ $results->to() }}</strong> (от общо {{ $results->total() }}).
                             @else
                                 Резултати: <strong>{{ $results->total() }}</strong>.
                             @endif
                         </div>
                     @endif
 
-                    @foreach ($grouped as $bookId => $poems)
-                        @php $book = $books[$bookId]; @endphp
-
+                    @foreach ($results->getData() as $book)
                         <div class="book-result-wrapper">
-                            <a href="{{ route('public.book', $book->slug) }}" class="book-title desktop-stickable">{{ $book->title }} ({{ $book->publish_year }})</a>
+                            <a href="{{ route('public.book', $book->get('slug')) }}" class="book-title desktop-stickable">{{ $book->get('title') }} ({{ $book->get('publish_year') }})</a>
                             <div class="poem-result-wrapper">
 
-                            @foreach ($poems as $poem)
+                            @foreach ($book->get('poems') as $poem)
                                 <div class="poem-result">
-                                    <a href="{{ route('public.poem', ['book' => $book, 'poem' => $poem]) }}">{!! highlightSubstring(strip_tags($poem->title), $search) !!}</a>
-                                    @if ($poem->dedication)
-                                        <em>{!! highlightSubstring($poem->dedication, $search) !!}</em>
+                                    <a href="{{ route('public.poem', ['book' => $book->get('slug'), 'poem' => $poem->get('slug')]) }}">{!! $poem->get('title') !!}</a>
+                                    @if ($poem->get('dedication'))
+                                        <em>{!! $poem->get('dedication') !!}</em>
                                     @endif
-                                    <div class="sample">{!! highlightSubstring($poem->showSearchContext($search), $search) !!}</div>
+                                    <div class="sample">{!! $poem->get('text') !!}</div>
                                 </div>
                             @endforeach
 
                             </div>
 
-                            @if ($cover = $book->getCoverImage())
+                            @if ($book->get('cover_image'))
                             <div class="cover-wrapper">
-                                <div class="img-wrapper desktop-stickable"><img src="{{ $cover }}" alt="{{ $book->title }}" /></div>
+                                <div class="img-wrapper desktop-stickable"><img src="{{ $book->get('cover_image') }}" alt="{{ $book->get('title') }}" /></div>
                             </div>
                             @endif
                             
@@ -61,7 +59,7 @@
                     @endforeach
 
                     {{-- pagination --}}
-                    {{ $results->withQueryString()->links() }}
+                    {{ $results->generatePagination() }}
                 </div>
 
             </div>

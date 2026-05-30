@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Utils\Seo;
 use App\Http\Requests\SearchRequest;
+use App\View\ViewModels\SearchViewModel;
 
 class SearchController
 {
@@ -15,13 +16,11 @@ class SearchController
      * @param SearchRequest $request
      */
     public function index(SearchRequest $request) {
-        $request->process();
+        $results = $request->process();
         
         $data = [
-            'results' => $request->getResults(),
-            'books'   => $request->getBooks(),
-            'grouped' => $request->getResultsGroupedByBooks(),
             'search'  => $request->getSearchString(),
+            'results' => new SearchViewModel($request->getSearchString(), $results),
             'noindex' => true,
             'seo'     => new Seo($request->getMetaTitle()),
         ];

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\Contexter;
 use App\Utils\Seo;
 use App\Models\Interfaces\Commentable;
 use App\Models\Interfaces\Statsable;
@@ -83,21 +82,6 @@ class Poem extends Model implements Commentable, Statsable, MetaData
      */
     public function isFullyActive(): bool {
         return $this->is_active && $this->books()->exists();
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * When the user searches for a keyword of a poem, it would
-     * make more sense for them to see the relevant context, i.e.
-     * that part of the poem which contains said word.
-     * 
-     * @param  string $search – keyword
-     * @return string
-     */
-    public function showSearchContext(string $search): string {
-        $helper = new Contexter($this->text, $search);
-
-        return $helper->extract();
     }
 
     ///////////////////////////////////////////////////////////////////////////
