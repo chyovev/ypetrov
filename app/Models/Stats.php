@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -51,29 +50,6 @@ class Stats extends Model
      */
     public function impressions(): HasMany {
         return $this->hasMany(Impression::class);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Local query scope to filter stats by poems.
-     * 
-     * @param  Builder $query – query being prepared
-     * @return void
-     */
-    public function scopeForPoems(Builder $query): void {
-        $query->forType(Poem::class);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Local query scope to filter stats by a certain type.
-     * 
-     * @param  Builder $query – query being prepared
-     * @param  string  $type  – statsable type (class name)
-     * @return void
-     */
-    public function scopeForType(Builder $query, string $type) {
-        $query->where('statsable_type', $type);
     }
 
 }

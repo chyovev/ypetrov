@@ -61,7 +61,7 @@
                 element: 'visitors-by-month',
                 resize: true,
                 data: [
-                    @foreach($visitors['monthly'] as $item)
+                    @foreach($stats->getMonthlyVisitors() as $item)
                     {
                         month:   '{{ \Carbon\Carbon::createFromFormat('Y-m', $item['month'])->translatedFormat('M Y') }}',
                         visitors: {{ $item['visitors'] }}
@@ -81,7 +81,7 @@
             Morris.Donut({
                 element: 'total-visitors-by-country',
                 data: [
-                    @foreach($visitors['by_country'] as $key => $item)
+                    @foreach($stats->getTotalVisitorsByCountry() as $key => $item)
                     {
                         label: '{{ \Carbon\Language::regions()[ $item['country_code'] ] ?? $item['country_code'] }}',
                         value: {{ $item['visitors'] }},
@@ -95,10 +95,10 @@
             Morris.Bar( {
                 element: 'poems-reads',
                 data: [
-                    @foreach($poems['reads'] as $stats)
+                    @foreach($stats->getTopReadPoems() as $item)
                     {
-                        y: '{{ $stats->statsable->title }}',
-                        a: {{ $stats->total_impressions }},
+                        y: '{{ $item->statsable->title }}',
+                        a: {{ $item->total_impressions }},
                     },
                     @endforeach
                 ],
@@ -113,10 +113,10 @@
             Morris.Bar( {
                 element: 'poems-likes',
                 data: [
-                    @foreach($poems['likes'] as $stats)
+                    @foreach($stats->getTopLikedPoems() as $item)
                     {
-                        y: '{{ $stats->statsable->title }}',
-                        a: {{ $stats->total_likes }},
+                        y: '{{ $item->statsable->title }}',
+                        a: {{ $item->total_likes }},
                     },
                     @endforeach
                 ],
@@ -131,7 +131,7 @@
             Morris.Bar( {
                 element: 'poems-comments',
                 data: [
-                    @foreach($poems['comments'] as $poem)
+                    @foreach($stats->getTopCommentedPoems() as $poem)
                     {
                         y: '{{ strip_tags($poem->title) }}',
                         a: {{ $poem->comments_count }},

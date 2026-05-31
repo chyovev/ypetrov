@@ -2,8 +2,9 @@
 
 namespace App\Admin\Http\Controllers;
 
-use App\Admin\Http\Requests\Dashboard\DashboardRequest;
 use App\Utils\Breadcrumbs\BreadcrumbManager;
+use App\View\ViewModels\DashboardViewModel;
+use Illuminate\View\View;
 
 class DashboardController
 {
@@ -14,17 +15,9 @@ class DashboardController
     }
     
     ///////////////////////////////////////////////////////////////////////////
-    public function index(DashboardRequest $request) {
+    public function index(): View {
         $data = [
-            'visitors' => [
-                'by_country' => $request->getTotalVisitorsByCountry(),
-                'monthly'    => $request->getMonthlyVisitors(),
-            ],
-            'poems' => [
-                'likes'    => $request->getTopLikedPoems(),
-                'reads'    => $request->getTopReadPoems(),
-                'comments' => $request->getTopCommentedPoems(),
-            ],
+            'stats'       => new DashboardViewModel,
             'breadcrumbs' => $this->breadcrumbManager->getCrumbs('dashboard'),
         ];
 

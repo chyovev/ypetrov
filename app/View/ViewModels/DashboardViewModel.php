@@ -1,48 +1,45 @@
 <?php
 
-namespace App\Admin\Http\Requests\Dashboard;
+namespace App\View\ViewModels;
 
+use Carbon\Carbon;
 use App\Models\Poem;
 use App\Models\Stats;
 use App\Models\Visitor;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Http\FormRequest as HttpFormRequest;
+use Illuminate\Support\Collection;
 
-class DashboardRequest extends HttpFormRequest
+class DashboardViewModel
 {
 
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Fetch total visitors grouped by country.
-     * 
-     * @return array
      */
-    public function getTotalVisitorsByCountry(): array {
+    public function getTotalVisitorsByCountry(): Collection {
         return Visitor::query()
-            ->hasCountryCode()
+            ->whereNotNull('country_code')
             ->selectRaw('country_code, COUNT(id) AS visitors')
-            ->groupByRaw('country_code', [])
+            ->groupByRaw('country_code')
             ->orderByRaw('visitors DESC')
             ->limit(5)
-            ->get()
-            ->toArray();
+            ->get();
     }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
      * Get recent visitors grouped by month and year.
-     * 
-     * @return array
      */
-    public function getMonthlyVisitors(): array {
+    public function getMonthlyVisitors(): Collection {
         return Visitor::query()
             ->selectRaw('DATE_FORMAT(last_visit_date, "%Y-%m") AS month, COUNT(id) AS visitors')
-            ->groupByRaw('month', [])
+            ->groupByRaw('month')
             ->orderByRaw('month ASC')
-            ->recentlyVisited(12)
+            ->whereBetween('last_visit_date', [
+                Carbon::now()->subMonths(12)->startOfDay(),
+                Carbon::now(),
+            ])
             ->limit(12)
-            ->get()
-            ->toArray();
+            ->get();
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -75,7 +72,7 @@ class DashboardRequest extends HttpFormRequest
     private function getTopPoemsStats(string $field): Collection {
         return Stats::query()
             ->with('statsable')
-            ->forPoems()
+            ->where('statsable_type', Poem::class)
             ->where($field, '>', 0)
             ->orderByDesc($field)
             ->limit(10)
@@ -84,13 +81,11 @@ class DashboardRequest extends HttpFormRequest
 
     ///////////////////////////////////////////////////////////////////////////
     /**
-     * Get top 10 most commented poems.
-     * 
      * @return Collection<Poem>
      */
     public function getTopCommentedPoems(): Collection {
         return Poem::query()
-            ->whereHas('comments', function() {})
+            ->has('comments')
             ->withCount('comments')
             ->orderByDesc('comments_count')
             ->limit(10)
