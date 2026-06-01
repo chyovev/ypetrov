@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Utils;
 
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;

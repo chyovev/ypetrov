@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Exception;
-use App\Helpers\IPLocator;
+use App\Utils\IPLocator;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -60,7 +60,10 @@ class RegisterVisitor
      * @throws ModelNotFoundException – no visitor record found
      */
     private function fetchVisitor(string $ip): Visitor {
-        $visitor = Visitor::hasIp($ip)->firstOrFail();
+        // hash the IP by applying inbound casting
+        // before fetching a visitor from the database
+        $ipHash  = (new Visitor(['ip_hash' => $ip]))->ip_hash;
+        $visitor = Visitor::where('ip_hash', $ipHash)->firstOrFail();
         
         // if the visitor has no country code (initial registration
         // attepmt was unsuccessful), try to detect it now
@@ -76,7 +79,7 @@ class RegisterVisitor
     ///////////////////////////////////////////////////////////////////////////
     private function createVisitor(string $ip): Visitor {
         return Visitor::create([
-            'ip'           => $ip,
+            'ip_hash'      => $ip, // field has mutator
             'country_code' => $this->getVisitorCountryCode($ip),
         ]);
     }

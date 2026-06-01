@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Helpers;
+namespace Tests\Feature\Utils;
 
 use Tests\TestCase;
-use App\Helpers\IPLocator;
+use App\Utils\IPLocator;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\HttpFoundation\Response;
