@@ -11,13 +11,8 @@ class UploadHelper
 {
 
     ///////////////////////////////////////////////////////////////////////////
-    public function __construct(private Attachable $attachable) {
-        // 
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    public function upload(UploadedFile $file): Attachment {
-        $attachment = $this->createRecord($file);
+    public function upload(Attachable $attachable, UploadedFile $file): Attachment {
+        $attachment = $this->createRecord($attachable, $file);
 
         $attachment->getFileHelper()->save($file->getContent());
 
@@ -27,16 +22,15 @@ class UploadHelper
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    private function createRecord(UploadedFile $file): Attachment {
+    private function createRecord(Attachable $attachable, UploadedFile $file): Attachment {
         $attachment = new Attachment([
             'original_file_name' => $file->getClientOriginalName(),
             'file_size'          => $file->getSize(),
             'mime_type'          => $file->getClientMimeType(),
-            'order'              => $this->attachable->attachments()->count() + 1,
+            'order'              => $attachable->attachments()->count() + 1,
         ]);
 
-        // action has observer
-        return $this->attachable->attachments()->save($attachment);
+        return $attachable->attachments()->save($attachment);
     }
 
 }

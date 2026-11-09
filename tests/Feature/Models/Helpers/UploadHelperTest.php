@@ -28,14 +28,13 @@ class UploadHelperTest extends TestCase
     public function test_successful_file_upload(): void {
         /** @var Book */
         $book     = Book::factory()->create();
-        $helper   = new UploadHelper($book);
         $tempFile = UploadedFile::fake()->create('Hello world.txt', 'Test');
         $md5      = md5_file($tempFile->path());
 
         $this->assertEquals(0, $book->attachments()->count());
         $this->assertFileExists($tempFile->path());
 
-        $attachment = $helper->upload($tempFile);
+        $attachment = $this->app->make(UploadHelper::class)->upload($book, $tempFile);
 
         $this->assertEquals(1, $book->attachments()->count());
         $this->assertFileDoesNotExist($tempFile->path());
@@ -61,9 +60,8 @@ class UploadHelperTest extends TestCase
         /** @var Book */
         $book     = Book::factory()->create();
         $tempFile = UploadedFile::fake()->create('Hello кирилица wor%ld.txt');
-        $helper   = new UploadHelper($book);
 
-        $attachment = $helper->upload($tempFile);
+        $attachment = $this->app->make(UploadHelper::class)->upload($book, $tempFile);
 
         $this->assertEquals('hello-kirilica-world.txt', $attachment->server_file_name);
     }
@@ -76,23 +74,22 @@ class UploadHelperTest extends TestCase
      */
     public function test_uploading_of_multiple_files_with_same_name(): void {
         /** @var Book */
-        $book   = Book::factory()->create();
-        $helper = new UploadHelper($book);
+        $book = Book::factory()->create();
         
         $tempFile1   = UploadedFile::fake()->create('file.txt');
-        $attachment1 = $helper->upload($tempFile1);
+        $attachment1 = $this->app->make(UploadHelper::class)->upload($book, $tempFile1);
         $this->assertFileExists($attachment1->getFileHelper()->getFilePath());
         $this->assertEquals('file.txt',   $attachment1->original_file_name);
         $this->assertEquals('file.txt',   $attachment1->server_file_name);
 
         $tempFile2   = UploadedFile::fake()->create('file.txt');
-        $attachment2 = $helper->upload($tempFile2);
+        $attachment2 = $this->app->make(UploadHelper::class)->upload($book, $tempFile2);
         $this->assertFileExists($attachment2->getFileHelper()->getFilePath());
         $this->assertEquals('file.txt',   $attachment1->original_file_name);
         $this->assertEquals('file_1.txt', $attachment2->server_file_name);
         
         $tempFile3   = UploadedFile::fake()->create('file.txt');
-        $attachment3 = $helper->upload($tempFile3);
+        $attachment3 = $this->app->make(UploadHelper::class)->upload($book, $tempFile3);
         $this->assertFileExists($attachment3->getFileHelper()->getFilePath());
         $this->assertEquals('file.txt',   $attachment1->original_file_name);
         $this->assertEquals('file_2.txt', $attachment3->server_file_name);

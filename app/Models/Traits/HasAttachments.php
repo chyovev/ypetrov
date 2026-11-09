@@ -3,9 +3,6 @@
 namespace App\Models\Traits;
 
 use App\Models\Attachment;
-use App\Models\Helpers\UploadHelper;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -31,14 +28,6 @@ trait HasAttachments
      */
     public function attachments(): MorphMany {
         return $this->morphMany(Attachment::class, 'attachable')->orderBy('order');
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    /**
-     * @throws FileNotFoundException – missing temp file path
-     */
-    public function uploadAttachment(UploadedFile $file): Attachment {
-        return (new UploadHelper($this))->upload($file);
     }
 
     ///////////////////////////////////////////////////////////////////////////

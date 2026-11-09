@@ -2,12 +2,22 @@
 
 namespace App\Observers;
 
+use App\Models\Helpers\UploadHelper;
 use App\Models\Interfaces\Attachable;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\ValidationException;
 
 class AttachableObserver
 {
+
+    ///////////////////////////////////////////////////////////////////////////
+    public function __construct(
+        private Request $request,
+        private UploadHelper $uploadHelper,
+    ) {
+        //
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     /**
@@ -32,7 +42,7 @@ class AttachableObserver
             'attachments.*' => ['file'],
         ];
 
-        request()->validate($rules);
+        $this->request->validate($rules);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -53,12 +63,12 @@ class AttachableObserver
      * NB! Keep in mind that at this point the attachments array should
      *     be validated beforehand.
      */
-    private function saveAttachmentsFromRequest(Attachable $object): void {
-        $allFiles = request()->allFiles();
+    private function saveAttachmentsFromRequest(Attachable $attachable): void {
+        $allFiles = $this->request->allFiles();
         $files    = collect($allFiles['attachments'] ?? []);
 
-        $files->each(function(UploadedFile $file) use ($object) {
-            $object->uploadAttachment($file);
+        $files->each(function(UploadedFile $file) use ($attachable): void {
+            $this->uploadHelper->upload($attachable, $file);
         });
     }
 
