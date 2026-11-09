@@ -74,7 +74,7 @@ class AttachableObserver
      *     collection (by calling the relationship method as
      *     a property) – from then on, calling the delete()
      *     method on each Attachment instance will fire up the
-     *     Attachment observer which takes care of the file
+     *     Attachment deleted event which takes care of the file
      *     deletion.
      */
     public function deleted(Attachable $attachable): void {

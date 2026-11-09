@@ -11,12 +11,8 @@ class AttachmentController
     /**
      * Delete a single attachment record.
      * 
-     * NB! Keep in mind that there's an attachment observer which takes
-     *     care of deleting the actual file once the record gets deleted,
-     *     but also may prevent the deletion in case it would disrupt
-     *     the attachable object's attachment settings.
-     * 
-     * @see \App\Observers\AttachmentObserver
+     * NB! Keep in mind that there's an event listener
+     *     deleting the actual physical file.
      */
     public function destroy(Attachment $attachment) {
         $attachment->delete();

@@ -4,15 +4,13 @@ namespace App\Models;
 
 use LogicException;
 use App\Events\AttachmentCreating;
+use App\Events\AttachmentDeleted;
 use App\Models\Helpers\Attachment\FileHelper;
-use App\Observers\AttachmentObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-#[ObservedBy([AttachmentObserver::class])]
 #[Fillable(['original_file_name', 'server_file_name', 'caption', 'file_size', 'mime_type', 'order'])]
 class Attachment extends Model
 {
@@ -20,6 +18,7 @@ class Attachment extends Model
 
     protected $dispatchesEvents = [
         'creating' => AttachmentCreating::class,
+        'deleted'  => AttachmentDeleted::class,
     ];
 
     ///////////////////////////////////////////////////////////////////////////

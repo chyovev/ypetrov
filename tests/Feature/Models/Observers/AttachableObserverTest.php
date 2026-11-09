@@ -23,7 +23,7 @@ class AttachableObserverTest extends TestCase
     /**
      * Once an attachable record gets deleted, all its attachment
      * records get cycled through and deleted individually.
-     * From then on, the Attachment observer catches this event
+     * From then on, the Attachment listener catches this event
      * and deletes the actual file.
      * 
      * NB! Observers for attachable models are registered

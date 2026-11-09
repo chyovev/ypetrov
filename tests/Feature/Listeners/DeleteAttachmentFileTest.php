@@ -1,15 +1,18 @@
 <?php
 
-namespace Tests\Feature\Models\Observers;
+namespace Tests\Feature\Listeners;
 
+use App\Events\AttachmentDeleted;
+use App\Listeners\DeleteAttachmentFile;
 use File;
 use App\Models\Attachment;
 use Tests\TestCase;
 use App\Models\Book;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Event;
 
-class AttachmentObserverTest extends TestCase
+class DeleteAttachmentFileTest extends TestCase
 {
 
     /**
@@ -20,42 +23,25 @@ class AttachmentObserverTest extends TestCase
 
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * Once an Attachment record gets deleted, its file
-     * gets deleted from the server, too.
-     * 
-     * NB! If an attachment is already loaded in memory either by itself
-     *     or as a part of a collection, deleting it won't automatically
-     *     purge it from the memory (which is not a bug, just something
-     *     to keep in mind)
-     */
-    public function test_attachment_observer_delete(): void {
+    public function test_attachment_file_deleted(): void {
         $book       = Book::factory()->create();
         $attachment = $this->addAttachment($book, 'test.txt');
 
-        $this->assertSame(1, $book->attachments()->count());
         $this->assertFileExists($attachment->getFileHelper()->getFilePath());
 
-        $this->assertCount(1, $book->attachments);
-        $this->assertNotNull($attachment);
-        $this->assertTrue($attachment->exists);
+        $event = new AttachmentDeleted($attachment);
+        $this->app->make(DeleteAttachmentFile::class)->handle($event);
 
-        $attachment->delete();
-
-        $this->assertSame(0, $book->attachments()->count());
         $this->assertFileDoesNotExist($attachment->getFileHelper()->getFilePath());
-
-        $this->assertCount(1, $book->attachments);
-        $this->assertNotNull($attachment);
-        $this->assertFalse($attachment->exists);
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function test_deleting_subfolders_when_last_file_of_same_object_is_deleted(): void {
+    public function test_attachment_file_deleted_subfolder_deleted(): void {
         $book       = Book::factory()->create();
         $attachment = $this->addAttachment($book, 'test.txt');
 
-        $attachment->delete();
+        $event = new AttachmentDeleted($attachment);
+        $this->app->make(DeleteAttachmentFile::class)->handle($event);
 
         $filePath          = $attachment->getFileHelper()->getFilePath();
         $parentIdFolder    = File::dirname($filePath);
@@ -67,7 +53,7 @@ class AttachmentObserverTest extends TestCase
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function test_not_deleting_subfolders_when_other_files_of_same_object_remaining(): void {
+    public function test_attachment_file_deleted_subfolder_not_deleted(): void {
         $book        = Book::factory()->create();
         $attachment1 = $this->addAttachment($book, 'test1.txt');
         $attachment2 = $this->addAttachment($book, 'test2.txt');
@@ -84,7 +70,8 @@ class AttachmentObserverTest extends TestCase
         $this->assertSame($parentIdFolder1,    $parentIdFolder2);
         $this->assertSame($parentClassFolder1, $parentClassFolder2);
 
-        $attachment1->delete();
+        $event = new AttachmentDeleted($attachment1);
+        $this->app->make(DeleteAttachmentFile::class)->handle($event);
 
         $this->assertFileDoesNotExist($filePath1);
         $this->assertFileExists($filePath2);
@@ -93,7 +80,7 @@ class AttachmentObserverTest extends TestCase
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function test_not_deleting_class_subfolder_when_files_of_other_objects_remaining(): void {
+    public function test_attachment_file_deleted_group_folder_not_deleted(): void {
         $book1       = Book::factory()->create();
         $attachment1 = $this->addAttachment($book1, 'test.txt');
 
@@ -112,7 +99,8 @@ class AttachmentObserverTest extends TestCase
         $this->assertNotSame($parentIdFolder1, $parentIdFolder2);
         $this->assertSame($parentClassFolder1, $parentClassFolder2);
 
-        $attachment1->delete();
+        $event = new AttachmentDeleted($attachment1);
+        $this->app->make(DeleteAttachmentFile::class)->handle($event);
 
         $this->assertFileDoesNotExist($filePath1);
         $this->assertFileExists($filePath2);
@@ -123,22 +111,19 @@ class AttachmentObserverTest extends TestCase
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    /**
-     * If the attachment is deleted quietly, this would bypass
-     * the observer and the file would not be deleted.
-     * (It still gets deleted afterwards by the tearDown method)
-     */
-    public function test_attachment_observer_delete_quietly(): void {
+    public function test_attachment_deleted_quietly_no_event_dispatched(): void {
+        Event::fake();
+
         $book       = Book::factory()->create();
         $attachment = $this->addAttachment($book, 'test.txt');
 
-        $this->assertSame(1, $book->attachments()->count());
         $this->assertFileExists($attachment->getFileHelper()->getFilePath());
 
         $attachment->deleteQuietly();
 
-        $this->assertSame(0, $book->attachments()->count());
         $this->assertFileExists($attachment->getFileHelper()->getFilePath());
+
+        Event::assertNotDispatched(AttachmentDeleted::class);
     }
 
     ///////////////////////////////////////////////////////////////////////////
