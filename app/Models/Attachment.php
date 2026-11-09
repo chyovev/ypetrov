@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use LogicException;
+use App\Events\AttachmentCreating;
 use App\Models\Helpers\Attachment\FileHelper;
 use App\Observers\AttachmentObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -16,6 +17,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Attachment extends Model
 {
     use HasFactory;
+
+    protected $dispatchesEvents = [
+        'creating' => AttachmentCreating::class,
+    ];
 
     ///////////////////////////////////////////////////////////////////////////
     /**

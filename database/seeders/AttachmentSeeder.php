@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use LogicException;
 use App\Models\Attachment;
 use App\Models\PressArticle;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 
 /**
@@ -24,14 +24,7 @@ use Illuminate\Database\Seeder;
 class AttachmentSeeder extends Seeder
 {
 
-    /**
-     * The server_file_name property of an Attachment
-     * is dynamically generated upon record creation
-     * by an AttachmentObserver.
-     * Therefore, model events should not be switched
-     * off when this seeder gets executed, hence no
-     * WithoutModelEvents trait.
-     */
+    use WithoutModelEvents;
 
     ///////////////////////////////////////////////////////////////////////////
     /**
