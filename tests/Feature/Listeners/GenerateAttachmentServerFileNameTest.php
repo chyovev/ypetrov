@@ -5,7 +5,6 @@ namespace Tests\Feature\Listeners;
 use App\Models\Attachment;
 use App\Models\Book;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class GenerateAttachmentServerFileNameTest extends TestCase
@@ -49,8 +48,7 @@ class GenerateAttachmentServerFileNameTest extends TestCase
 
         $book->attachments()->save($attachment1);
 
-        $file = UploadedFile::fake()->create('original.pdf');
-        $attachment1->getFileHelper()->save($file);
+        $attachment1->getFileHelper()->save('test');
 
         $attachment2 = Attachment::factory()->make([
             'original_file_name' => 'original.pdf',

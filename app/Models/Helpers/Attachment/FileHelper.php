@@ -2,10 +2,9 @@
 
 namespace App\Models\Helpers\Attachment;
 
-use File;
 use App\Models\Attachment;
 use App\Helpers\ThumbGenerator;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 
 class FileHelper
 {
@@ -16,11 +15,12 @@ class FileHelper
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    public function save(UploadedFile $file): void {
-        $targetName = $this->attachment->server_file_name;
-        $targetPath = $this->getBasePath();
+    public function save(string $contents): void {
+        $targetPath = $this->getFilePath();
 
-        $file->move($targetPath, $targetName);
+        File::ensureDirectoryExists(File::dirname($targetPath));
+        
+        File::put($targetPath, $contents);
 
         if ($this->attachment->isImage()) {
             ThumbGenerator::generate(

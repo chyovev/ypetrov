@@ -34,7 +34,7 @@ class FileHelperTest extends TestCase
         
         $file = UploadedFile::fake()->create('file.txt');
         
-        $helper->save($file);
+        $helper->save($file->getContent());
         
         $this->assertFileExists($helper->getFilePath());
         $this->assertFileDoesNotExist($helper->getThumbFilePath());
@@ -55,7 +55,7 @@ class FileHelperTest extends TestCase
         $this->assertFileDoesNotExist($helper->getFilePath());
         
         $file = UploadedFile::fake()->image('file.jpg', 1024, 768);
-        $helper->save($file);
+        $helper->save($file->getContent());
         
         $this->assertFileExists($helper->getFilePath());
         $this->assertFileExists($helper->getThumbFilePath());
@@ -74,7 +74,7 @@ class FileHelperTest extends TestCase
         $helper = $attachment->getFileHelper();
         $file   = UploadedFile::fake()->create('file.txt');
         
-        $helper->save($file);
+        $helper->save($file->getContent());
 
         $this->assertFileExists($helper->getFilePath());
 
@@ -130,7 +130,7 @@ class FileHelperTest extends TestCase
         $this->assertFileDoesNotExist($helper->getFilePath());
         
         $file = UploadedFile::fake()->image('file.jpg', 1024, 768);
-        $helper->save($file);
+        $helper->save($file->getContent());
 
         $this->assertSame(1024, $helper->getWidth());
         $this->assertSame(768,  $helper->getHeight());
@@ -150,8 +150,8 @@ class FileHelperTest extends TestCase
 
         $this->assertFileDoesNotExist($helper->getFilePath());
         
-        $file = UploadedFile::fake()->create('file.txt');
-        $helper->save($file);
+        $file = UploadedFile::fake()->createWithContent('file.txt', 'Lorem ipsum dolor');
+        $helper->save($file->getContent());
 
         $this->assertNull($helper->getWidth());
         $this->assertNull($helper->getHeight());

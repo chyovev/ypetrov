@@ -5,6 +5,7 @@ namespace App\Models\Helpers;
 use App\Models\Attachment;
 use App\Models\Interfaces\Attachable;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 
 class UploadHelper
 {
@@ -18,7 +19,9 @@ class UploadHelper
     public function upload(UploadedFile $file): Attachment {
         $attachment = $this->createRecord($file);
 
-        $attachment->getFileHelper()->save($file);
+        $attachment->getFileHelper()->save($file->getContent());
+
+        File::delete($file->path());
 
         return $attachment;
     }
