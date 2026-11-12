@@ -19,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware
+            ->alias([
+                'anti-spam' => \App\Http\Middleware\SpamDetector::class,
+            ])
             ->group('web', [
                 \App\Http\Middleware\RedirectRenamedPages::class,
                 \Illuminate\Cookie\Middleware\EncryptCookies::class,
@@ -42,7 +45,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
                 \App\Http\Middleware\RegisterVisitor::class,
-                \Spatie\Honeypot\ProtectAgainstSpam::class,
                 \App\Http\Middleware\VisitorBanned::class,
                 \App\Http\Middleware\LogRequest::class,
             ])
